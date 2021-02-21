@@ -8,4 +8,6 @@ import lombok.Data;
 public class InventoryObjectEffect {
     private HealthStatus healthStatus;
     private Stat stat;
+    private boolean isTemporary;
+    private boolean isOneShot;
 }
