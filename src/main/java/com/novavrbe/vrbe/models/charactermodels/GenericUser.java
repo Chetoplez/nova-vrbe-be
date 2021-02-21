@@ -13,4 +13,6 @@ public class GenericUser {
     private String gender;
     private String nickname;
     private String salt;
+    private String composedSecret;
+    private Date lastLogin;
 }
