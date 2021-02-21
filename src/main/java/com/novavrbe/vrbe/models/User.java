@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class UserPojo {
+public class User {
     private String name;
     private String lastname;
     private Date birthday;
