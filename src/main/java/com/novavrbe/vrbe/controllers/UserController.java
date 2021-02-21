@@ -2,7 +2,7 @@ package com.novavrbe.vrbe.controllers;
 
 import com.novavrbe.vrbe.business.UserBusiness;
 import com.novavrbe.vrbe.models.AddUserRequest;
-import com.novavrbe.vrbe.models.GenericUser;
+import com.novavrbe.vrbe.models.charactermodels.GenericUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;

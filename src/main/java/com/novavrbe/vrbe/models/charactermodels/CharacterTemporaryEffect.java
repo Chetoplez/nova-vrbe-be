@@ -1,11 +1,11 @@
 package com.novavrbe.vrbe.models.charactermodels;
 
-import com.novavrbe.vrbe.models.enumerations.HealthStatus;
 import com.novavrbe.vrbe.models.enumerations.Stat;
 import lombok.Data;
 
 @Data
-public class InventoryObjectEffect {
-    private HealthStatus healthStatus;
+public class CharacterTemporaryEffect {
+    private String id;
+    private Integer modifier;
     private Stat stat;
 }
