@@ -12,4 +12,5 @@ public class GenericUser {
     private String email;
     private String gender;
     private String nickname;
+    private String salt;
 }

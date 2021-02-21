@@ -1,14 +1,11 @@
 package com.novavrbe.vrbe.controllers;
 
 import com.novavrbe.vrbe.business.UserBusiness;
-import com.novavrbe.vrbe.models.AddUserRequest;
+import com.novavrbe.vrbe.models.*;
 import com.novavrbe.vrbe.models.charactermodels.GenericUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -22,24 +19,29 @@ public class UserController {
         return userBusiness.createUser(addUserRequest);
     }
 
-    public void login(){
-
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest login){
+        return userBusiness.login(login);
     }
 
-    public void logout(){
-
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponse> logout(@RequestBody LogoutRequest logoutRequest){
+        return userBusiness.logout(logoutRequest);
     }
 
-    public void getUser(){
-
+    @GetMapping("getuser")
+    public ResponseEntity<GetUserResponse> getUser(@RequestParam String characterId){
+        return userBusiness.getUser(characterId);
     }
 
-    public void getInventory(){
-
+    @GetMapping("getinventory")
+    public ResponseEntity<GetInventoryResponse> getInventory(@RequestParam String characterId){
+        return userBusiness.getInventory(characterId);
     }
 
-    public void updateInventory(){
-
+    @PostMapping("updateinventory")
+    public ResponseEntity<UpdateInventoryResponse> updateInventory(@RequestBody UpdateInventoryRequest updateInventoryRequest){
+        return userBusiness.updateInventory(updateInventoryRequest);
     }
 
 }
