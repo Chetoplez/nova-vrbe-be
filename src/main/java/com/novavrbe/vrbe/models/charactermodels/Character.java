@@ -21,6 +21,5 @@ public class Character {
     private ArrayList<CharacterStatistic> stats;
     private Integer health;
     private HealthStatus healthStatus;
-    private String inventoryId;
     private ArrayList<CharacterTemporaryEffect> effects;
 }

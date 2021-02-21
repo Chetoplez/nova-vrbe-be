@@ -7,7 +7,9 @@ import lombok.Data;
 @Data
 public class InventoryObjectEffect {
     private HealthStatus healthStatus;
+    private Integer healing;
     private Stat stat;
     private boolean isTemporary;
+    private Long duration;
     private boolean isOneShot;
 }
