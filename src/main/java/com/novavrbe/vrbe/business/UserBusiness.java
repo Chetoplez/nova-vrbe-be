@@ -2,11 +2,18 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.models.*;
 import com.novavrbe.vrbe.models.charactermodels.GenericUser;
+import com.novavrbe.vrbe.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserBusiness {
+
+    @Autowired
+    private UserRepository userRepository;
 
     public ResponseEntity<GenericUser> createUser(AddUserRequest addUserRequest){
 
@@ -24,6 +31,10 @@ public class UserBusiness {
     }
 
     public ResponseEntity<GetUserResponse> getUser(String characterId){
+        Optional<GenericUser> user = userRepository.findById(characterId);
+        if(user != null){
+
+        }
 
         return null;
     }

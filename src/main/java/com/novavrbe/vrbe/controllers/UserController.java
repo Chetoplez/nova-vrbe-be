@@ -29,13 +29,13 @@ public class UserController {
         return userBusiness.logout(logoutRequest);
     }
 
-    @GetMapping("getuser")
-    public ResponseEntity<GetUserResponse> getUser(@RequestParam String characterId){
+    @GetMapping("getuser/{characterId}")
+    public ResponseEntity<GetUserResponse> getUser(@PathVariable String characterId){
         return userBusiness.getUser(characterId);
     }
 
-    @GetMapping("getinventory")
-    public ResponseEntity<GetInventoryResponse> getInventory(@RequestParam String characterId){
+    @GetMapping("getinventory/{characterId}")
+    public ResponseEntity<GetInventoryResponse> getInventory(@PathVariable String characterId){
         return userBusiness.getInventory(characterId);
     }
 
