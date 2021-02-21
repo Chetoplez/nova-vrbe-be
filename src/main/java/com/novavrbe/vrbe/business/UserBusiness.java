@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,7 @@ public class UserBusiness {
     }
 
     public ResponseEntity<GetUserResponse> getUser(String characterId){
-        Optional<GenericUser> user = userRepository.findById(characterId);
+        ArrayList<GenericUser> user = (ArrayList<GenericUser>) userRepository.findAll();
         if(user != null){
 
         }

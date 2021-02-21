@@ -20,7 +20,7 @@ public class LoginUtils {
         boolean canLog = false;
 
         String psw = composePassword(user, password);
-        canLog = psw.equals(user.getComposedSecret());
+        canLog = psw.equals(user.getComposedsecret());
 
         return canLog;
     }

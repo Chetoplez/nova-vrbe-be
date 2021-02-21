@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS users;
 
-CREATE TABLE users (
+CREATE TABLE GenericUser (
   id VARCHAR(50) PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
   lastname VARCHAR(50) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE users (
   lastLogin DATE DEFAULT NULL
 );
 
-INSERT INTO users VALUES (
+INSERT INTO GenericUser VALUES (
  'ia224hfigf',
  'Nome Utente',
  'Cognome Utente',
@@ -25,3 +25,5 @@ INSERT INTO users VALUES (
  '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f',
  TO_DATE('21/02/2021', 'dd/mm/YYYY')
 );
+
+COMMIT;
