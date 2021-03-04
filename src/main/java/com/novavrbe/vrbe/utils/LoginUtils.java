@@ -2,7 +2,6 @@ package com.novavrbe.vrbe.utils;
 
 import com.google.common.hash.Hashing;
 import com.novavrbe.vrbe.models.charactermodels.GenericUser;
-import com.novavrbe.vrbe.models.charactermodels.User;
 
 import java.nio.charset.StandardCharsets;
 
@@ -17,7 +16,7 @@ public class LoginUtils {
         return psw;
     }
 
-    public static boolean canLogin(String password, User user){
+    public static boolean canLogin(String password, GenericUser user){
         boolean canLog = false;
 
         String psw = composePassword(user, password);

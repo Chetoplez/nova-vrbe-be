@@ -1,5 +1,6 @@
 package com.novavrbe.vrbe.utils;
 
+import ch.qos.logback.classic.boolex.GEventEvaluator;
 import com.novavrbe.vrbe.models.charactermodels.GenericUser;
 
 import java.security.SecureRandom;
@@ -20,6 +21,11 @@ public class UserUtils {
         user.setComposedsecret(LoginUtils.composePassword(user, password));
 
         return user;
+    }
+
+    public static void cleanUserSensitiveData(GenericUser user){
+        user.setSalt("");
+        user.setComposedsecret("");
     }
 
     public static String createSalt(){
