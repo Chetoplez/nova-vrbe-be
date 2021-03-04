@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,16 @@ public class UserBusiness {
     public ResponseEntity<GenericUser> createUser(AddUserRequest addUserRequest){
         ResponseEntity<GenericUser> response = null;
         UserPojo user = addUserRequest.getUserPojo();
+
+        if(!CollectionUtils.isEmpty(userRepository.findUsersByEmail(user.getEmail()))){
+            response = new ResponseEntity<GenericUser>(new GenericUser(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
         GenericUser genericUser = UserUtils.createGenericUser(user.getName(), user.getLastname(), user.getBirthday(), user.getGender(), user.getEmail(), user.getPassword(), user.getNickname());
+        //Remove private data
+        genericUser.setComposedsecret("");
+        genericUser.setSalt("");
 
         if(userRepository.save(genericUser) != null){
             response = new ResponseEntity<GenericUser>(genericUser, HttpStatus.OK);
