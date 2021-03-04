@@ -2,6 +2,7 @@ package com.novavrbe.vrbe.models.charactermodels;
 
 import com.novavrbe.vrbe.models.enumerations.Gender;
 import com.novavrbe.vrbe.models.enumerations.HealthStatus;
+import com.novavrbe.vrbe.models.enumerations.Roles;
 import com.novavrbe.vrbe.models.enumerations.Status;
 import lombok.Data;
 
@@ -22,4 +23,5 @@ public class Character {
     private Integer health;
     private HealthStatus healthStatus;
     private ArrayList<CharacterTemporaryEffect> effects;
+    private ArrayList<Roles> roles;
 }
