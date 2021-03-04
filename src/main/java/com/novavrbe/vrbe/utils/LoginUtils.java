@@ -1,13 +1,14 @@
 package com.novavrbe.vrbe.utils;
 
 import com.google.common.hash.Hashing;
+import com.novavrbe.vrbe.models.charactermodels.GenericUser;
 import com.novavrbe.vrbe.models.charactermodels.User;
 
 import java.nio.charset.StandardCharsets;
 
 public class LoginUtils {
 
-    public static String composePassword(User user, String password){
+    public static String composePassword(GenericUser user, String password){
         String psw = "";
         psw = password.concat(user != null ? user.getSalt() : "");
 
@@ -24,4 +25,5 @@ public class LoginUtils {
 
         return canLog;
     }
+
 }

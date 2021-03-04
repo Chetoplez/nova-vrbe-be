@@ -2,13 +2,16 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.models.*;
 import com.novavrbe.vrbe.models.charactermodels.GenericUser;
+import com.novavrbe.vrbe.models.charactermodels.UserPojo;
+import com.novavrbe.vrbe.repositories.GuildRepository;
 import com.novavrbe.vrbe.repositories.UserRepository;
+import com.novavrbe.vrbe.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 public class UserBusiness {
@@ -17,8 +20,17 @@ public class UserBusiness {
     private UserRepository userRepository;
 
     public ResponseEntity<GenericUser> createUser(AddUserRequest addUserRequest){
+        ResponseEntity<GenericUser> response = null;
+        UserPojo user = addUserRequest.getUserPojo();
+        GenericUser genericUser = UserUtils.createGenericUser(user.getName(), user.getLastname(), user.getBirthday(), user.getGender(), user.getEmail(), user.getPassword(), user.getNickname());
 
-        return null;
+        if(userRepository.save(genericUser) != null){
+            response = new ResponseEntity<GenericUser>(genericUser, HttpStatus.OK);
+        }else{
+            response = new ResponseEntity<GenericUser>(new GenericUser(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return response;
     }
 
     public ResponseEntity<LoginResponse> login(LoginRequest loginRequest){
@@ -33,9 +45,7 @@ public class UserBusiness {
 
     public ResponseEntity<GetUserResponse> getUser(String characterId){
         ArrayList<GenericUser> user = (ArrayList<GenericUser>) userRepository.findAll();
-        if(user != null){
 
-        }
 
         return null;
     }
