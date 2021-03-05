@@ -1,9 +1,9 @@
-package com.novavrbe.vrbe.models;
+package com.novavrbe.vrbe.models.charactercontroller;
 
 import com.novavrbe.vrbe.models.charactermodels.Inventory;
 import lombok.Data;
 
 @Data
-public class GetInventoryResponse {
+public class UpdateInventoryRequest {
     private Inventory inventory;
 }

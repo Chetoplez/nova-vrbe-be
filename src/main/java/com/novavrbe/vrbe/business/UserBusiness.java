@@ -1,8 +1,8 @@
 package com.novavrbe.vrbe.business;
 
-import com.novavrbe.vrbe.models.*;
 import com.novavrbe.vrbe.models.charactermodels.GenericUser;
 import com.novavrbe.vrbe.models.charactermodels.UserPojo;
+import com.novavrbe.vrbe.models.usercontroller.*;
 import com.novavrbe.vrbe.repositories.UserRepository;
 import com.novavrbe.vrbe.utils.LoginUtils;
 import com.novavrbe.vrbe.utils.UserUtils;

@@ -1,10 +1,7 @@
 package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.models.GetCharacterResponse;
-import com.novavrbe.vrbe.models.GetInventoryResponse;
-import com.novavrbe.vrbe.models.UpdateInventoryRequest;
-import com.novavrbe.vrbe.models.UpdateInventoryResponse;
+import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.repositories.CharacterRepository;
 import com.novavrbe.vrbe.utils.CharacterUtils;
@@ -14,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -22,6 +18,11 @@ public class CharacterBusiness {
 
     @Autowired
     private CharacterRepository characterRepository;
+
+    public ResponseEntity<AddCharacterResponse> addCharacter(AddCharacterRequest addCharacterRequest){
+
+        return null;
+    }
 
     public ResponseEntity<GetCharacterResponse> getCharacter(String characterId){
         ResponseEntity<GetCharacterResponse> response = null;

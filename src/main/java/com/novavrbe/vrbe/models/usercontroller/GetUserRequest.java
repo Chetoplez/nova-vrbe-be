@@ -1,9 +1,9 @@
-package com.novavrbe.vrbe.models;
+package com.novavrbe.vrbe.models.usercontroller;
 
 import com.novavrbe.vrbe.models.charactermodels.UserPojo;
 import lombok.Data;
 
 @Data
-public class AddUserRequest {
+public class GetUserRequest {
     private UserPojo userPojo;
 }

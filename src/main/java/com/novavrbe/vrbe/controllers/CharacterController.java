@@ -1,10 +1,7 @@
 package com.novavrbe.vrbe.controllers;
 
 import com.novavrbe.vrbe.business.CharacterBusiness;
-import com.novavrbe.vrbe.models.GetCharacterResponse;
-import com.novavrbe.vrbe.models.GetInventoryResponse;
-import com.novavrbe.vrbe.models.UpdateInventoryRequest;
-import com.novavrbe.vrbe.models.UpdateInventoryResponse;
+import com.novavrbe.vrbe.models.charactercontroller.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +12,11 @@ public class CharacterController {
 
     @Autowired
     private CharacterBusiness characterBusiness;
+
+    @PutMapping("")
+    public ResponseEntity<AddCharacterResponse> addCharacter(@RequestBody AddCharacterRequest addCharacterRequest){
+        return characterBusiness.addCharacter(addCharacterRequest);
+    }
 
     @GetMapping("getcharacter/{characterId}")
     public ResponseEntity<GetCharacterResponse> getCharacter(@PathVariable String characterId){

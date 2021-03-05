@@ -1,4 +1,4 @@
-package com.novavrbe.vrbe.models;
+package com.novavrbe.vrbe.models.charactercontroller;
 
 import lombok.Data;
 
