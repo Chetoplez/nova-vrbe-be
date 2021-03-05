@@ -1,4 +1,4 @@
-package com.novavrbe.vrbe.models.charactermodels;
+package com.novavrbe.vrbe.dto;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Table
 @Entity
 @Data
-public class GenericUser {
+public class GenericUserDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

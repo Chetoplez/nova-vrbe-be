@@ -1,9 +1,9 @@
 package com.novavrbe.vrbe.models.usercontroller;
 
-import com.novavrbe.vrbe.models.charactermodels.GenericUser;
+import com.novavrbe.vrbe.dto.GenericUserDto;
 import lombok.Data;
 
 @Data
 public class GetUserResponse {
-    private GenericUser user;
+    private GenericUserDto user;
 }

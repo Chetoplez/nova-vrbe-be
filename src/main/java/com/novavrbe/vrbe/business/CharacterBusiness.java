@@ -41,6 +41,7 @@ public class CharacterBusiness {
             CharacterUtils.fillCharacterHistoryFromDto(character, characterRepositoryService.retrieveCharacterHistory(cID));
             CharacterUtils.fillCharacterDescriptionFromDto(character, characterRepositoryService.retrieveCharacterDescription(cID));
             CharacterUtils.fillCharacterStatisticsFromDto(character, characterRepositoryService.retrieveCharacterStatistics(cID));
+            CharacterUtils.fillCharacterTemporaryEffectsFromDto(character, characterRepositoryService.retrieveCharacterTemporaryEffects(cID));
 
             getCharacterResponse.setCharacter(character);
             response = new ResponseEntity<GetCharacterResponse>(getCharacterResponse, HttpStatus.OK);

@@ -1,15 +1,14 @@
 package com.novavrbe.vrbe.utils;
 
-import ch.qos.logback.classic.boolex.GEventEvaluator;
-import com.novavrbe.vrbe.models.charactermodels.GenericUser;
+import com.novavrbe.vrbe.dto.GenericUserDto;
 
 import java.security.SecureRandom;
 import java.util.Base64;
 
 public class UserUtils {
 
-    public static GenericUser createGenericUser(String name, String lastname, String birthday, String gender, String email, String password, String nickname){
-        GenericUser user = new GenericUser();
+    public static GenericUserDto createGenericUser(String name, String lastname, String birthday, String gender, String email, String password, String nickname){
+        GenericUserDto user = new GenericUserDto();
 
         user.setName(name);
         user.setLastname(lastname);
@@ -23,7 +22,7 @@ public class UserUtils {
         return user;
     }
 
-    public static void cleanUserSensitiveData(GenericUser user){
+    public static void cleanUserSensitiveData(GenericUserDto user){
         user.setSalt("");
         user.setComposedsecret("");
     }

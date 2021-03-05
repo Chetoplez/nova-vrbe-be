@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class CharacterTemporaryEffect {
-    private String id;
+    private Integer id;
     private Integer modifier;
     private Stat stat;
 }

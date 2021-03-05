@@ -1,7 +1,7 @@
 package com.novavrbe.vrbe.business;
 
-import com.novavrbe.vrbe.models.charactermodels.GenericUser;
-import com.novavrbe.vrbe.models.charactermodels.UserPojo;
+import com.novavrbe.vrbe.dto.GenericUserDto;
+import com.novavrbe.vrbe.models.charactermodels.UserDtoPojo;
 import com.novavrbe.vrbe.models.usercontroller.*;
 import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
 import com.novavrbe.vrbe.utils.LoginUtils;
@@ -22,22 +22,22 @@ public class UserBusiness {
     @Autowired
     private UserRepositoryService userRepositoryService;
 
-    public ResponseEntity<GenericUser> createUser(AddUserRequest addUserRequest){
-        ResponseEntity<GenericUser> response = null;
-        UserPojo user = addUserRequest.getUserPojo();
+    public ResponseEntity<GenericUserDto> createUser(AddUserRequest addUserRequest){
+        ResponseEntity<GenericUserDto> response = null;
+        UserDtoPojo user = addUserRequest.getUserPojo();
 
         if(!CollectionUtils.isEmpty(userRepositoryService.findUsersByEmail(user.getEmail()))){
-            response = new ResponseEntity<GenericUser>(new GenericUser(), HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<GenericUserDto>(new GenericUserDto(), HttpStatus.BAD_REQUEST);
             return response;
         }
 
-        GenericUser genericUser = UserUtils.createGenericUser(user.getName(), user.getLastname(), user.getBirthday(), user.getGender(), user.getEmail(), user.getPassword(), user.getNickname());
+        GenericUserDto genericUserDto = UserUtils.createGenericUser(user.getName(), user.getLastname(), user.getBirthday(), user.getGender(), user.getEmail(), user.getPassword(), user.getNickname());
 
-        if(userRepositoryService.saveUser(genericUser) != null){
-            UserUtils.cleanUserSensitiveData(genericUser);
-            response = new ResponseEntity<GenericUser>(genericUser, HttpStatus.OK);
+        if(userRepositoryService.saveUser(genericUserDto) != null){
+            UserUtils.cleanUserSensitiveData(genericUserDto);
+            response = new ResponseEntity<GenericUserDto>(genericUserDto, HttpStatus.OK);
         }else{
-            response = new ResponseEntity<GenericUser>(new GenericUser(), HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity<GenericUserDto>(new GenericUserDto(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return response;
@@ -50,9 +50,9 @@ public class UserBusiness {
         loginResponse.setSuccess(false);
 
         if(loginRequest != null && StringUtils.hasText(loginRequest.getEmail()) && StringUtils.hasText(loginRequest.getPsw())){
-            List<GenericUser> users = userRepositoryService.findUsersByEmail(loginRequest.getEmail());
+            List<GenericUserDto> users = userRepositoryService.findUsersByEmail(loginRequest.getEmail());
             if(!CollectionUtils.isEmpty(users)){
-                GenericUser user = users.get(0);
+                GenericUserDto user = users.get(0);
                 loginResponse.setSuccess(LoginUtils.canLogin(loginRequest.getPsw(), user));
             }
         }
@@ -75,7 +75,7 @@ public class UserBusiness {
         }
 
         BigDecimal id = new BigDecimal(characterId);
-        GenericUser user = userRepositoryService.findUsersById(id);
+        GenericUserDto user = userRepositoryService.findUsersById(id);
 
         if(user != null){
             GetUserResponse getUserResponse = new GetUserResponse();

@@ -1,19 +1,18 @@
 package com.novavrbe.vrbe.utils;
 
-import com.novavrbe.vrbe.dto.CharacterDescriptionDto;
-import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.dto.CharacterHistoryDto;
-import com.novavrbe.vrbe.dto.CharacterStatisticsDto;
+import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.models.charactermodels.*;
 import com.novavrbe.vrbe.models.enumerations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CharacterUtils {
 
@@ -94,6 +93,28 @@ public class CharacterUtils {
         statistic.setModified(modifier);
 
         return statistic;
+    }
+
+    public static void fillCharacterTemporaryEffectsFromDto(Character character, List<CharacterTemporaryEffectDto> effects){
+        if(character != null && !CollectionUtils.isEmpty(effects)){
+            ArrayList<CharacterTemporaryEffect> characterTemporaryEffects = new ArrayList<>();
+            effects.stream()
+                    .forEach(effect -> {
+                        characterTemporaryEffects.add(buildCharacterTemporaryEffect(effect));
+                    });
+
+            character.setEffects(characterTemporaryEffects);
+        }
+    }
+
+    public static CharacterTemporaryEffect buildCharacterTemporaryEffect(CharacterTemporaryEffectDto dto){
+        CharacterTemporaryEffect effect = new CharacterTemporaryEffect();
+
+        effect.setId(dto.getId());
+        effect.setModifier(dto.getModifier());
+        effect.setStat(Stat.valueOf(dto.getStat()));
+
+        return effect;
     }
 
 }

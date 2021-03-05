@@ -1,16 +1,12 @@
 package com.novavrbe.vrbe.repositories.impl;
 
-import com.novavrbe.vrbe.dto.CharacterDescriptionDto;
-import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.dto.CharacterHistoryDto;
-import com.novavrbe.vrbe.dto.CharacterStatisticsDto;
-import com.novavrbe.vrbe.repositories.CharacterDescriptionRepository;
-import com.novavrbe.vrbe.repositories.CharacterHistoryRepository;
-import com.novavrbe.vrbe.repositories.CharacterRepository;
-import com.novavrbe.vrbe.repositories.CharacterStatisticRepository;
+import com.novavrbe.vrbe.dto.*;
+import com.novavrbe.vrbe.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +20,8 @@ public class CharacterRepositoryService {
     private CharacterDescriptionRepository characterDescriptionRepository;
     @Autowired
     private CharacterStatisticRepository characterStatisticRepository;
+    @Autowired
+    private CharacterTemporaryEffectsRepository characterTemporaryEffectsRepository;
 
     public CharacterDto retrieveCharacterFromId(Integer characterId){
         CharacterDto characterDto = null;
@@ -62,6 +60,16 @@ public class CharacterRepositoryService {
         }
 
         return characterStatisticsDto;
+    }
+
+    public List<CharacterTemporaryEffectDto> retrieveCharacterTemporaryEffects(Integer characterId){
+        List<CharacterTemporaryEffectDto> effects = new ArrayList<>();
+
+        if(characterId != null){
+            effects = characterTemporaryEffectsRepository.findTemporaryEffectForUser(characterId);
+        }
+
+        return effects;
     }
 
 

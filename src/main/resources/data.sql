@@ -118,4 +118,12 @@ INSERT INTO CharactersStatistics VALUES(
     0
 )
 
+CREATE TABLE CharacterTemporaryEffect(
+    id NUMBER NOT NULL AUTO_INCREMENT,
+    characterId NUMBER NOT NULL,
+    modifier NUMBER NOT NULL,
+    stat VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 COMMIT;
