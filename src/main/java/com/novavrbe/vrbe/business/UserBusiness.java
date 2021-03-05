@@ -3,7 +3,7 @@ package com.novavrbe.vrbe.business;
 import com.novavrbe.vrbe.models.charactermodels.GenericUser;
 import com.novavrbe.vrbe.models.charactermodels.UserPojo;
 import com.novavrbe.vrbe.models.usercontroller.*;
-import com.novavrbe.vrbe.repositories.UserRepository;
+import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
 import com.novavrbe.vrbe.utils.LoginUtils;
 import com.novavrbe.vrbe.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +15,25 @@ import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserBusiness {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepositoryService userRepositoryService;
 
     public ResponseEntity<GenericUser> createUser(AddUserRequest addUserRequest){
         ResponseEntity<GenericUser> response = null;
         UserPojo user = addUserRequest.getUserPojo();
 
-        if(!CollectionUtils.isEmpty(userRepository.findUsersByEmail(user.getEmail()))){
+        if(!CollectionUtils.isEmpty(userRepositoryService.findUsersByEmail(user.getEmail()))){
             response = new ResponseEntity<GenericUser>(new GenericUser(), HttpStatus.BAD_REQUEST);
             return response;
         }
 
         GenericUser genericUser = UserUtils.createGenericUser(user.getName(), user.getLastname(), user.getBirthday(), user.getGender(), user.getEmail(), user.getPassword(), user.getNickname());
 
-        if(userRepository.save(genericUser) != null){
+        if(userRepositoryService.saveUser(genericUser) != null){
             UserUtils.cleanUserSensitiveData(genericUser);
             response = new ResponseEntity<GenericUser>(genericUser, HttpStatus.OK);
         }else{
@@ -51,7 +50,7 @@ public class UserBusiness {
         loginResponse.setSuccess(false);
 
         if(loginRequest != null && StringUtils.hasText(loginRequest.getEmail()) && StringUtils.hasText(loginRequest.getPsw())){
-            List<GenericUser> users = userRepository.findUsersByEmail(loginRequest.getEmail());
+            List<GenericUser> users = userRepositoryService.findUsersByEmail(loginRequest.getEmail());
             if(!CollectionUtils.isEmpty(users)){
                 GenericUser user = users.get(0);
                 loginResponse.setSuccess(LoginUtils.canLogin(loginRequest.getPsw(), user));
@@ -76,11 +75,11 @@ public class UserBusiness {
         }
 
         BigDecimal id = new BigDecimal(characterId);
-        Optional<GenericUser> user = userRepository.findById(id);
+        GenericUser user = userRepositoryService.findUsersById(id);
 
         if(user != null){
             GetUserResponse getUserResponse = new GetUserResponse();
-            getUserResponse.setUser(user.get());
+            getUserResponse.setUser(user);
             response = new ResponseEntity<GetUserResponse>(getUserResponse, HttpStatus.BAD_REQUEST);
         }
 
