@@ -4,6 +4,7 @@ import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.models.charactermodels.*;
 import com.novavrbe.vrbe.models.enumerations.*;
+import com.sun.istack.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -19,6 +20,7 @@ public class CharacterUtils {
     static Logger logger = LoggerFactory.getLogger(CharacterUtils.class);
     static final Integer MIN_LEVEL = 1;
     static final Integer DEFAULT_HEALTH = 500;
+    static final Integer DEFAULT_STAT = 5;
 
     public static void fillCharacterFieldsFromDto(Character character, CharacterDto dto){
         if(character != null && dto != null){
@@ -149,6 +151,89 @@ public class CharacterUtils {
                 characterDto.setTotalExperience(BigDecimal.ZERO);
             }
         }
+    }
+
+    public static CharacterHistoryDto buildCharacterHistoryForDto(Integer id, Character character){
+        CharacterHistoryDto historyDto = null;
+
+        if(character != null){
+            historyDto = new CharacterHistoryDto();
+            historyDto.setHistoryId(id);
+            if(character.getHistory() != null){
+                historyDto.setHistory(character.getHistory().getHistory());
+            }
+        }
+
+        return historyDto;
+    }
+
+    public static CharacterDescriptionDto buildCharacterDescriptionForDto(Integer id, Character character){
+        CharacterDescriptionDto historyDto = null;
+
+        if(character != null){
+            historyDto = new CharacterDescriptionDto();
+            historyDto.setDescriptionId(id);
+            if(character.getDescription() != null){
+                historyDto.setDescription(character.getDescription().getDescription());
+            }
+        }
+
+        return historyDto;
+    }
+
+    public static CharacterStatisticsDto buildCharacterStatisticForDto(Integer id, Character character){
+        CharacterStatisticsDto statisticsDto = null;
+
+        if(character != null){
+            statisticsDto = new CharacterStatisticsDto();
+            statisticsDto.setCharacterId(id);
+            if(!CollectionUtils.isEmpty(character.getStats())){
+                mapStatListsToStatisticDto(character.getStats(), statisticsDto);
+            }else{
+                buildDefaultStatisticDto(statisticsDto);
+            }
+        }
+
+        return statisticsDto;
+    }
+
+    public static void mapStatListsToStatisticDto(ArrayList<CharacterStatistic> stats, @NotNull CharacterStatisticsDto statisticsDto){
+        stats.stream().forEach(stat -> {
+            switch (stat.getStatName()){
+                case FORZA:
+                    statisticsDto.setForza(stat.getBaseStat());
+                    statisticsDto.setForzaModifier(stat.getModified());
+                    break;
+                case SAGGEZZA:
+                    statisticsDto.setSaggezza(stat.getBaseStat());
+                    statisticsDto.setSaggezzaModifier(stat.getModified());
+                    break;
+                case DESTREZZA:
+                    statisticsDto.setDestrezza(stat.getBaseStat());
+                    statisticsDto.setDestrezzaModifier(stat.getModified());
+                    break;
+                case COSTITUZIONE:
+                    statisticsDto.setCostituzione(stat.getBaseStat());
+                    statisticsDto.setCostituzioneModifier(stat.getModified());
+                case INTELLIGENZA:
+                    statisticsDto.setIntelligenza(stat.getBaseStat());
+                    statisticsDto.setIntelligenzaModifier(stat.getModified());
+                default: break;
+            }
+        });
+    }
+
+    public static void buildDefaultStatisticDto(CharacterStatisticsDto statisticsDto){
+        statisticsDto.setCostituzione(DEFAULT_STAT);
+        statisticsDto.setCostituzioneModifier(BigDecimal.ZERO);
+        statisticsDto.setDestrezza(DEFAULT_STAT);
+        statisticsDto.setDestrezzaModifier(BigDecimal.ZERO);
+        statisticsDto.setForza(DEFAULT_STAT);
+        statisticsDto.setForzaModifier(BigDecimal.ZERO);
+        statisticsDto.setSaggezza(DEFAULT_STAT);
+        statisticsDto.setSaggezzaModifier(BigDecimal.ZERO);
+        statisticsDto.setIntelligenza(DEFAULT_STAT);
+        statisticsDto.setIntelligenzaModifier(BigDecimal.ZERO);
     }
 
 }

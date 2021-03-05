@@ -79,7 +79,26 @@ public class CharacterRepositoryService {
 
         CharacterDto characterDto = CharacterUtils.buildCharacterDtoFromCharacter(userId, character);
 
-        saved = characterRepository.save(characterDto) != null;
+        if(characterDto != null){
+            saved = characterRepository.save(characterDto) != null;
+            if(saved){
+                CharacterHistoryDto historyDto = CharacterUtils.buildCharacterHistoryForDto(userId, character);
+                if(historyDto != null){
+                    characterHistoryRepository.save(historyDto);
+                }
+
+                CharacterDescriptionDto characterDescriptionDto = CharacterUtils.buildCharacterDescriptionForDto(userId, character);
+                if(characterDescriptionDto != null){
+                    characterDescriptionRepository.save(characterDescriptionDto);
+                }
+
+                CharacterStatisticsDto characterStatisticsDto = CharacterUtils.buildCharacterStatisticForDto(userId, character);
+                if(characterStatisticsDto != null){
+                    characterStatisticRepository.save(characterStatisticsDto);
+                }
+
+            }
+        }
 
         return saved;
     }
