@@ -29,19 +29,9 @@ public class UserController {
         return userBusiness.logout(logoutRequest);
     }
 
-    @GetMapping("getuser/{characterId}")
-    public ResponseEntity<GetUserResponse> getUser(@PathVariable String characterId){
-        return userBusiness.getUser(characterId);
-    }
-
-    @GetMapping("getinventory/{characterId}")
-    public ResponseEntity<GetInventoryResponse> getInventory(@PathVariable String characterId){
-        return userBusiness.getInventory(characterId);
-    }
-
-    @PostMapping("updateinventory")
-    public ResponseEntity<UpdateInventoryResponse> updateInventory(@RequestBody UpdateInventoryRequest updateInventoryRequest){
-        return userBusiness.updateInventory(updateInventoryRequest);
+    @GetMapping("getuser/{userId}")
+    public ResponseEntity<GetUserResponse> getUser(@PathVariable String userId){
+        return userBusiness.getUser(userId);
     }
 
 }

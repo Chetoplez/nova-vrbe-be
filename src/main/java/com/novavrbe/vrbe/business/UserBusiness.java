@@ -78,19 +78,13 @@ public class UserBusiness {
         BigDecimal id = new BigDecimal(characterId);
         Optional<GenericUser> user = userRepository.findById(id);
 
-        if(user.get() != null){
-            //TODO non appena abbiamo le tabelle del character
+        if(user != null){
+            GetUserResponse getUserResponse = new GetUserResponse();
+            getUserResponse.setUser(user.get());
+            response = new ResponseEntity<GetUserResponse>(getUserResponse, HttpStatus.BAD_REQUEST);
         }
 
         return response;
-    }
-
-    public ResponseEntity<GetInventoryResponse> getInventory(String characterId){
-        return null;
-    }
-
-    public ResponseEntity<UpdateInventoryResponse> updateInventory(UpdateInventoryRequest request){
-        return null;
     }
 
 }

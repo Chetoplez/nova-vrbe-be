@@ -53,4 +53,17 @@ CREATE TABLE Characters (
   PRIMARY KEY (characterId)
 );
 
+INSERT INTO Characters VALUES (
+ 1,
+ 'Marzio Paparzio',
+ 'url',
+ 'M',
+ 'PLEBEO',
+ 1,
+ 100,
+ 100,
+ 'SAZIO',
+ 'USER'
+);
+
 COMMIT;
