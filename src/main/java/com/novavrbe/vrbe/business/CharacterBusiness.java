@@ -1,8 +1,12 @@
 package com.novavrbe.vrbe.business;
 
+import com.novavrbe.vrbe.dto.CharacterDescriptionDto;
 import com.novavrbe.vrbe.dto.CharacterDto;
+import com.novavrbe.vrbe.dto.CharacterHistoryDto;
 import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
+import com.novavrbe.vrbe.repositories.CharacterDescriptionRepository;
+import com.novavrbe.vrbe.repositories.CharacterHistoryRepository;
 import com.novavrbe.vrbe.repositories.CharacterRepository;
 import com.novavrbe.vrbe.utils.CharacterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,10 @@ public class CharacterBusiness {
 
     @Autowired
     private CharacterRepository characterRepository;
+    @Autowired
+    private CharacterHistoryRepository characterHistoryRepository;
+    @Autowired
+    private CharacterDescriptionRepository characterDescriptionRepository;
 
     public ResponseEntity<AddCharacterResponse> addCharacter(AddCharacterRequest addCharacterRequest){
 
@@ -40,6 +48,8 @@ public class CharacterBusiness {
 
             Character character = new Character();
             CharacterUtils.fillCharacterFieldsFromDto(character, characterDto.get());
+            CharacterUtils.fillCharacterHistoryFromDto(character, retrieveCharacterHistory(cID));
+            CharacterUtils.fillCharacterDescriptionFromDto(character, retrieveCharacterDescription(cID));
 
             getCharacterResponse.setCharacter(character);
             response = new ResponseEntity<GetCharacterResponse>(getCharacterResponse, HttpStatus.OK);
@@ -56,5 +66,24 @@ public class CharacterBusiness {
 
     public ResponseEntity<UpdateInventoryResponse> updateInventory(UpdateInventoryRequest request){
         return null;
+    }
+
+    private CharacterHistoryDto retrieveCharacterHistory(Integer historyId){
+        CharacterHistoryDto historyDto = null;
+        if(historyId != null){
+            Optional<CharacterHistoryDto> dto = characterHistoryRepository.findById(historyId);
+            historyDto = dto != null && dto.get() != null ? dto.get() : null;
+        }
+        return historyDto;
+    }
+
+    private CharacterDescriptionDto retrieveCharacterDescription(Integer descriptionId){
+        CharacterDescriptionDto descriptionDto = null;
+        if(descriptionId != null){
+            Optional<CharacterDescriptionDto> dto = characterDescriptionRepository.findById(descriptionId);
+            descriptionDto = dto != null && dto.get() != null ? dto.get() : null;
+        }
+
+        return descriptionDto;
     }
 }

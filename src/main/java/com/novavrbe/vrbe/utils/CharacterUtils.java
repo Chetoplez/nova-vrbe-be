@@ -1,7 +1,11 @@
 package com.novavrbe.vrbe.utils;
 
+import com.novavrbe.vrbe.dto.CharacterDescriptionDto;
 import com.novavrbe.vrbe.dto.CharacterDto;
+import com.novavrbe.vrbe.dto.CharacterHistoryDto;
 import com.novavrbe.vrbe.models.charactermodels.Character;
+import com.novavrbe.vrbe.models.charactermodels.CharacterDescription;
+import com.novavrbe.vrbe.models.charactermodels.CharacterHistory;
 import com.novavrbe.vrbe.models.charactermodels.CharacterLevel;
 import com.novavrbe.vrbe.models.enumerations.Gender;
 import com.novavrbe.vrbe.models.enumerations.HealthStatus;
@@ -46,4 +50,25 @@ public class CharacterUtils {
             character.setRoles(roles);
         }
     }
+
+    public static void fillCharacterHistoryFromDto(Character character, CharacterHistoryDto historyDto){
+        if(character != null && historyDto != null){
+            CharacterHistory history = new CharacterHistory();
+            history.setHistory(historyDto.getHistory());
+            history.setHistoryId(historyDto.getHistoryId());
+
+            character.setHistory(history);
+        }
+    }
+
+    public static void fillCharacterDescriptionFromDto(Character character, CharacterDescriptionDto descriptionDto){
+        if(character != null && descriptionDto != null){
+            CharacterDescription description = new CharacterDescription();
+            description.setDescriptionId(descriptionDto.getDescriptionId());
+            description.setDescription(descriptionDto.getDescription());
+
+            character.setDescription(description);
+        }
+    }
+
 }

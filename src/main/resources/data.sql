@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS guild;
 DROP TABLE IF EXISTS characters;
+DROP TABLE IF EXISTS CharactersHistory;
+DROP TABLE IF EXISTS CharactersDescription;
 
 CREATE TABLE GenericUser (
   id VARCHAR(50) NOT NULL AUTO_INCREMENT,
@@ -66,6 +68,21 @@ INSERT INTO Characters VALUES (
  500,
  'SAZIO',
  'USER'
+);
+
+CREATE TABLE CharactersHistory(
+    historyId NUMBER PRIMARY KEY,
+    history VARCHAR(500)
+);
+
+INSERT INTO CharactersHistory VALUES(
+    1,
+    "Questa e' la storia di come la mia vita e' cambiata, capovolta, sottosopra e' finita"
+)
+
+CREATE TABLE CharactersDescription(
+    descriptionId NUMBER PRIMARY KEY,
+    description VARCHAR(500)
 );
 
 COMMIT;

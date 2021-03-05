@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class CharacterDescription {
-    private String descriptionId;
+    private Integer descriptionId;
     private String description;
 }

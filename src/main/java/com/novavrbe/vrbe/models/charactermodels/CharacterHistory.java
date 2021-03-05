@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class CharacterHistory {
-    private String historyId;
+    private Integer historyId;
     private String history;
 }
