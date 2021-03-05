@@ -48,6 +48,7 @@ CREATE TABLE Characters (
   clevel NUMBER NOT NULL,
   experience NUMBER NOT NULL,
   totalExperience NUMBER NOT NULL,
+  health NUMBER NOT NULL,
   healthStatus VARCHAR(20) NOT NULL,
   role VARCHAR(20) NOT NULL,
   PRIMARY KEY (characterId)
@@ -62,6 +63,7 @@ INSERT INTO Characters VALUES (
  1,
  100,
  100,
+ 500,
  'SAZIO',
  'USER'
 );
