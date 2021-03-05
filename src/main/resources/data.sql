@@ -77,8 +77,8 @@ CREATE TABLE CharactersHistory(
 
 INSERT INTO CharactersHistory VALUES(
     1,
-    "Questa e' la storia di come la mia vita e' cambiata, capovolta, sottosopra e' finita"
-)
+    'Questa e la storia di come la mia vita e cambiata, capovolta, sottosopra e finita'
+);
 
 CREATE TABLE CharactersDescription(
     descriptionId NUMBER PRIMARY KEY,
@@ -87,8 +87,8 @@ CREATE TABLE CharactersDescription(
 
 INSERT INTO CharactersDescription VALUES(
     1,
-    "Uno strafigo che riesce a sbucciare le mele utilizzando il mento"
-)
+    'Uno strafigo che riesce a sbucciare le mele utilizzando il mento'
+);
 
 CREATE TABLE CharactersStatistics(
     characterId NUMBER PRIMARY KEY NOT NULL,
@@ -116,7 +116,7 @@ INSERT INTO CharactersStatistics VALUES(
     0,
     5,
     0
-)
+);
 
 CREATE TABLE CharacterTemporaryEffect(
     id NUMBER NOT NULL AUTO_INCREMENT,
