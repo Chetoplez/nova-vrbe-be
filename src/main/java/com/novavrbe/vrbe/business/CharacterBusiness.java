@@ -5,6 +5,7 @@ import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.utils.CharacterUtils;
+import com.novavrbe.vrbe.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,26 @@ public class CharacterBusiness {
     private CharacterRepositoryService characterRepositoryService;
 
     public ResponseEntity<AddCharacterResponse> addCharacter(AddCharacterRequest addCharacterRequest){
+        ResponseEntity<AddCharacterResponse> response = null;
 
-        return null;
+        if(addCharacterRequest.getCharacter() == null || !ValidateUtils.validateCharacter(addCharacterRequest.getCharacter())){
+            response = new ResponseEntity<>(new AddCharacterResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        AddCharacterResponse addCharacterResponse = new AddCharacterResponse();
+        addCharacterResponse.setSuccess(characterRepositoryService.saveNewCharacter(addCharacterRequest.getUserId(), addCharacterRequest.getCharacter()));
+
+        response = new ResponseEntity<>(addCharacterResponse, addCharacterResponse.isSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return response;
     }
 
     public ResponseEntity<GetCharacterResponse> getCharacter(String characterId){
         ResponseEntity<GetCharacterResponse> response = null;
 
         if(!StringUtils.hasText(characterId)){
-            response = new ResponseEntity<GetCharacterResponse>(new GetCharacterResponse(), HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<>(new GetCharacterResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
 

@@ -5,5 +5,6 @@ import lombok.Data;
 
 @Data
 public class AddCharacterRequest {
+    private Integer userId;
     private Character character;
 }

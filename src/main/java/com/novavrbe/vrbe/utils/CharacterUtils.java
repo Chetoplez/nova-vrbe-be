@@ -17,6 +17,8 @@ import java.util.List;
 public class CharacterUtils {
 
     static Logger logger = LoggerFactory.getLogger(CharacterUtils.class);
+    static final Integer MIN_LEVEL = 1;
+    static final Integer DEFAULT_HEALTH = 500;
 
     public static void fillCharacterFieldsFromDto(Character character, CharacterDto dto){
         if(character != null && dto != null){
@@ -115,6 +117,38 @@ public class CharacterUtils {
         effect.setStat(Stat.valueOf(dto.getStat()));
 
         return effect;
+    }
+
+    public static CharacterDto buildCharacterDtoFromCharacter(Integer characterId, Character character){
+        CharacterDto characterDto = null;
+        if(character != null){
+            characterDto = new CharacterDto();
+            characterDto.setCharacterId(characterId);
+            characterDto.setCharacterName(character.getCharacterName());
+            characterDto.setCharacterIcon(character.getCharacterIcon() != null ? character.getCharacterIcon().toString() : "");
+            characterDto.setGender(character.getGender().name());
+            characterDto.setStatus(character.getStatus() != null ? character.getStatus().name() : Status.PLEBEO.name());
+            characterDto.setHealth(character.getHealth() != null ? character.getHealth() : DEFAULT_HEALTH);
+            characterDto.setHealthStatus(character.getHealthStatus() != null ? character.getHealthStatus().name() : HealthStatus.SAZIO.name());
+            characterDto.setRole(!CollectionUtils.isEmpty(character.getRoles()) ? character.getRoles().get(0).name() : Roles.USER.name());
+
+            buildCharacterLevelForDto(character, characterDto);
+        }
+        return characterDto;
+    }
+
+    public static void buildCharacterLevelForDto(Character character, CharacterDto characterDto){
+        if(character != null && characterDto != null){
+            if(character.getLevel() != null){
+                characterDto.setLevel(character.getLevel().getLevel());
+                characterDto.setExperience(character.getLevel().getExperience());
+                characterDto.setTotalExperience(character.getLevel().getTotalExperience());
+            }else{
+                characterDto.setLevel(MIN_LEVEL);
+                characterDto.setExperience(BigDecimal.ZERO);
+                characterDto.setTotalExperience(BigDecimal.ZERO);
+            }
+        }
     }
 
 }

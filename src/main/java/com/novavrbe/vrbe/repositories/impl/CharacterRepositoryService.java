@@ -1,7 +1,9 @@
 package com.novavrbe.vrbe.repositories.impl;
 
 import com.novavrbe.vrbe.dto.*;
+import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.repositories.*;
+import com.novavrbe.vrbe.utils.CharacterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +72,16 @@ public class CharacterRepositoryService {
         }
 
         return effects;
+    }
+
+    public boolean saveNewCharacter(Integer userId, Character character){
+        boolean saved = true;
+
+        CharacterDto characterDto = CharacterUtils.buildCharacterDtoFromCharacter(userId, character);
+
+        saved = characterRepository.save(characterDto) != null;
+
+        return saved;
     }
 
 
