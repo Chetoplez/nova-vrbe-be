@@ -85,4 +85,37 @@ CREATE TABLE CharactersDescription(
     description VARCHAR(500)
 );
 
+INSERT INTO CharactersDescription VALUES(
+    1,
+    "Uno strafigo che riesce a sbucciare le mele utilizzando il mento"
+)
+
+CREATE TABLE CharactersStatistics(
+    characterId NUMBER PRIMARY KEY NOT NULL,
+    forza NUMBER NOT NULL,
+    forzaModifier NUMBER NOT NULL,
+    destrezza NUMBER NOT NULL,
+    destrezzaModifier NUMBER NOT NULL,
+    costituzione NUMBER NOT NULL,
+    costituzioneModifier NUMBER NOT NULL,
+    intelligenza NUMBER NOT NULL,
+    intelligenzaModifier NUMBER NOT NULL,
+    saggezza NUMBER NOT NULL,
+    saggezzaModifier NUMBER NOT NULL
+);
+
+INSERT INTO CharactersStatistics VALUES(
+    1,
+    5,
+    0,
+    5,
+    0,
+    5,
+    0,
+    5,
+    0,
+    5,
+    0
+)
+
 COMMIT;

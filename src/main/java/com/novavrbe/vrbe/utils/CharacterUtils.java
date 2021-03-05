@@ -3,17 +3,14 @@ package com.novavrbe.vrbe.utils;
 import com.novavrbe.vrbe.dto.CharacterDescriptionDto;
 import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.CharacterHistoryDto;
+import com.novavrbe.vrbe.dto.CharacterStatisticsDto;
 import com.novavrbe.vrbe.models.charactermodels.Character;
-import com.novavrbe.vrbe.models.charactermodels.CharacterDescription;
-import com.novavrbe.vrbe.models.charactermodels.CharacterHistory;
-import com.novavrbe.vrbe.models.charactermodels.CharacterLevel;
-import com.novavrbe.vrbe.models.enumerations.Gender;
-import com.novavrbe.vrbe.models.enumerations.HealthStatus;
-import com.novavrbe.vrbe.models.enumerations.Roles;
-import com.novavrbe.vrbe.models.enumerations.Status;
+import com.novavrbe.vrbe.models.charactermodels.*;
+import com.novavrbe.vrbe.models.enumerations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -69,6 +66,34 @@ public class CharacterUtils {
 
             character.setDescription(description);
         }
+    }
+
+    public static void fillCharacterStatisticsFromDto(Character character, CharacterStatisticsDto characterStatisticsDto){
+        if(character != null && characterStatisticsDto != null){
+            ArrayList<CharacterStatistic> stats = new ArrayList<>();
+
+            CharacterStatistic strenght = buildCharacterStat(Stat.FORZA, characterStatisticsDto.getForza(), characterStatisticsDto.getForzaModifier());
+            stats.add(strenght);
+            CharacterStatistic intelligence = buildCharacterStat(Stat.INTELLIGENZA, characterStatisticsDto.getIntelligenza(), characterStatisticsDto.getIntelligenzaModifier());
+            stats.add(intelligence);
+            CharacterStatistic wisdom = buildCharacterStat(Stat.SAGGEZZA, characterStatisticsDto.getSaggezza(), characterStatisticsDto.getSaggezzaModifier());
+            stats.add(wisdom);
+            CharacterStatistic dexterity = buildCharacterStat(Stat.DESTREZZA, characterStatisticsDto.getDestrezza(), characterStatisticsDto.getDestrezzaModifier());
+            stats.add(dexterity);
+            CharacterStatistic constitution = buildCharacterStat(Stat.COSTITUZIONE, characterStatisticsDto.getCostituzione(), characterStatisticsDto.getCostituzioneModifier());
+            stats.add(constitution);
+
+            character.setStats(stats);
+        }
+    }
+
+    public static CharacterStatistic buildCharacterStat(Stat stat, Integer base, BigDecimal modifier){
+        CharacterStatistic statistic = new CharacterStatistic();
+        statistic.setStatName(stat);
+        statistic.setBaseStat(base);
+        statistic.setModified(modifier);
+
+        return statistic;
     }
 
 }

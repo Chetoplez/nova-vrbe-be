@@ -3,11 +3,13 @@ package com.novavrbe.vrbe.business;
 import com.novavrbe.vrbe.dto.CharacterDescriptionDto;
 import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.CharacterHistoryDto;
+import com.novavrbe.vrbe.dto.CharacterStatisticsDto;
 import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.repositories.CharacterDescriptionRepository;
 import com.novavrbe.vrbe.repositories.CharacterHistoryRepository;
 import com.novavrbe.vrbe.repositories.CharacterRepository;
+import com.novavrbe.vrbe.repositories.CharacterStatisticRepository;
 import com.novavrbe.vrbe.utils.CharacterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,8 @@ public class CharacterBusiness {
     private CharacterHistoryRepository characterHistoryRepository;
     @Autowired
     private CharacterDescriptionRepository characterDescriptionRepository;
+    @Autowired
+    private CharacterStatisticRepository characterStatisticRepository;
 
     public ResponseEntity<AddCharacterResponse> addCharacter(AddCharacterRequest addCharacterRequest){
 
@@ -43,13 +47,14 @@ public class CharacterBusiness {
         Integer cID = Integer.parseInt(characterId);
 
         Optional<CharacterDto> characterDto = characterRepository.findById(cID);
-        if(characterDto != null){
+        if(characterDto != null && characterDto.get() != null){
             GetCharacterResponse getCharacterResponse = new GetCharacterResponse();
 
             Character character = new Character();
             CharacterUtils.fillCharacterFieldsFromDto(character, characterDto.get());
             CharacterUtils.fillCharacterHistoryFromDto(character, retrieveCharacterHistory(cID));
             CharacterUtils.fillCharacterDescriptionFromDto(character, retrieveCharacterDescription(cID));
+            CharacterUtils.fillCharacterStatisticsFromDto(character, retrieveCharacterStatistics(cID));
 
             getCharacterResponse.setCharacter(character);
             response = new ResponseEntity<GetCharacterResponse>(getCharacterResponse, HttpStatus.OK);
@@ -85,5 +90,15 @@ public class CharacterBusiness {
         }
 
         return descriptionDto;
+    }
+
+    private CharacterStatisticsDto retrieveCharacterStatistics(Integer characterId){
+        CharacterStatisticsDto characterStatisticsDto = null;
+        if(characterId != null){
+            Optional<CharacterStatisticsDto> dto = characterStatisticRepository.findById(characterId);
+            characterStatisticsDto = dto != null && dto.get() != null ? dto.get() : null;
+        }
+
+        return characterStatisticsDto;
     }
 }
