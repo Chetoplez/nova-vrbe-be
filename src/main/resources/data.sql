@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS guild;
+DROP TABLE IF EXISTS characters;
 
 CREATE TABLE GenericUser (
   id VARCHAR(50) NOT NULL AUTO_INCREMENT,
@@ -36,6 +37,20 @@ CREATE TABLE Guild (
 INSERT INTO Guild VALUES (
  1,
  'Gilda'
+);
+
+CREATE TABLE Characters (
+  characterId NUMBER PRIMARY KEY,
+  characterName VARCHAR(50) NOT NULL,
+  characterIcon VARCHAR(250) NOT NULL,
+  gender VARCHAR(2) NOT NULL,
+  status VARCHAR(15) NOT NULL,
+  clevel NUMBER NOT NULL,
+  experience NUMBER NOT NULL,
+  totalExperience NUMBER NOT NULL,
+  healthStatus VARCHAR(20) NOT NULL,
+  role VARCHAR(20) NOT NULL,
+  PRIMARY KEY (characterId)
 );
 
 COMMIT;
