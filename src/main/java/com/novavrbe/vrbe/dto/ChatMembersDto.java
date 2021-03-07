@@ -7,12 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Data
-@Table(name = "CharactersDescription")
 @Entity
-public class CharacterDescriptionDto {
+@Table(name = "ChatMembers")
+@Data
+public class ChatMembersDto {
     @Id
-    private Integer descriptionId;
+    private String chatId;
     @Column
-    private String description;
+    private Integer characterId;
 }

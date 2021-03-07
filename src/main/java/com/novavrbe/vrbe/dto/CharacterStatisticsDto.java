@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Data
-@Table
+@Table(name = "CharactersStatistics")
 @Entity
 public class CharacterStatisticsDto {
     @Id

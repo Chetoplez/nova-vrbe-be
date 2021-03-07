@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Table
+@Table(name = "GenericUser")
 @Entity
 @Data
 public class GenericUserDto {
