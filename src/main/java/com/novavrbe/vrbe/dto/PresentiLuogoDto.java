@@ -2,17 +2,17 @@ package com.novavrbe.vrbe.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
+@Table(name = "PresentiLuogo")
 @Entity
-@Table(name = "ChatMembers")
 @Data
-public class ChatMembersDto {
+public class PresentiLuogoDto implements Serializable {
     @Id
-    private Integer chatId;
-    @Column
     private Integer characterId;
+    @Id
+    private Integer idLuogo;
 }

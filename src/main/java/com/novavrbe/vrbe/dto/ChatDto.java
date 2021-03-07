@@ -2,10 +2,8 @@ package com.novavrbe.vrbe.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "Chat")
@@ -13,9 +11,10 @@ import javax.persistence.Table;
 public class ChatDto {
 
     @Id
-    private String chatId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer chatId;
     @Column
-    private String creationDate;
+    private Date creationDate;
     @Column
     private Boolean active;
     @Column
@@ -26,5 +25,7 @@ public class ChatDto {
     private Integer characterId;
     @Column
     private String expirationDate;
+    @Column
+    private Boolean fixed;
 
 }

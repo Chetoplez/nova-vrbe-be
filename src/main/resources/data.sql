@@ -3,6 +3,11 @@ DROP TABLE IF EXISTS guild;
 DROP TABLE IF EXISTS characters;
 DROP TABLE IF EXISTS CharactersHistory;
 DROP TABLE IF EXISTS CharactersDescription;
+DROP TABLE IF EXISTS Chat;
+DROP TABLE IF EXISTS PresentiLuogo;
+DROP TABLE IF EXISTS ChatMessages;
+DROP TABLE IF EXISTS Luoghi;
+DROP TABLE IF EXISTS ChatMembers;
 
 CREATE TABLE GenericUser (
   id VARCHAR(50) NOT NULL AUTO_INCREMENT,
@@ -125,5 +130,39 @@ CREATE TABLE CharacterTemporaryEffect(
     stat VARCHAR(15) NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE Chat(
+    chatId NUMBER AUTO_INCREMENT NOT NULL,
+    creationDate DATE NOT NULL,
+    active BIT NOT NULL,
+    idLuogo NUMBER NOT NULL,
+    privateChat BIT NOT NULL,
+    characterId NUMBER NOT NULL,
+    expirationDate DATE NULL,
+    fixed BIT NOT NULL,
+    PRIMARY KEY (chatId)
+);
+
+CREATE TABLE ChatMembers(
+    chatId NUMBER NOT NULL,
+    characterId NUMBER NOT NULL
+);
+
+CREATE TABLE PresentiLuogo(
+    idLuogo NUMBER NOT NULL,
+    characterId NUMBER NOT NULL,
+    PRIMARY KEY(idLuogo, characterId)
+);
+
+CREATE TABLE Luoghi(
+    idLuogo NUMBER AUTO_INCREMENT NOT NULL,
+    descr VARCHAR(MAX),
+    nomeLuogo VARCHAR(100),
+    statoLuogo VARCHAR(100),
+    immagine VARCHAR(200),
+    PRIMARY KEY(idLuogo)
+);
+
+
 
 COMMIT;
