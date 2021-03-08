@@ -1,0 +1,8 @@
+/target
+/logs
+/sonar-report
+.idea
+.project
+.classpath
+/bin/
+
