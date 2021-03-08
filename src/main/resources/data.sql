@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS Luoghi;
 DROP TABLE IF EXISTS ChatMembers;
 DROP TABLE IF EXISTS Inventory;
 DROP TABLE IF EXISTS InventoryObject;
+DROP TABLE IF EXISTS InventoryObjectEffect;
 
 CREATE TABLE GenericUser (
   id VARCHAR(50) NOT NULL AUTO_INCREMENT,
@@ -191,5 +192,17 @@ CREATE TABLE InventoryObject(
     duration NUMBER,
     PRIMARY KEY(id)
 );
+
+CREATE TABLE InventoryObjectEffect(
+    id NUMBER NOT NULL,
+    inventoryObjectId NUMBER NOT NULL,
+    healthStatus VARCHAR(15),
+    healing NUMBER,
+    stat VARCHAR(15),
+    isTemporary BIT,
+    duration NUMBER,
+    isOneShot BIT
+);
+
 
 COMMIT;
