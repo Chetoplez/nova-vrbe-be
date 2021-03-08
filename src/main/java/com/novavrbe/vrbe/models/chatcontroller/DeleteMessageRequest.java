@@ -5,4 +5,4 @@ import lombok.Data;
 @Data
 public class DeleteMessageRequest {
     private String chatId;
-    private ChatMessage chatMessage;}
+    private String messageId;}
