@@ -2,10 +2,12 @@ package com.novavrbe.vrbe.repositories.impl;
 
 import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
+import com.novavrbe.vrbe.models.charactermodels.InventoryObjectAssociation;
 import com.novavrbe.vrbe.repositories.*;
 import com.novavrbe.vrbe.utils.CharacterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,14 @@ public class CharacterRepositoryService {
     private CharacterStatisticRepository characterStatisticRepository;
     @Autowired
     private CharacterTemporaryEffectsRepository characterTemporaryEffectsRepository;
+    @Autowired
+    private InventoryRepository inventoryRepository;
+    @Autowired
+    private InventoryObjectEffectRepository inventoryObjectEffectRepository;
+    @Autowired
+    private InventoryObjectRepository inventoryObjectRepository;
+    @Autowired
+    private CharacterInventoryObjectRepository characterInventoryObjectRepository;
 
     public CharacterDto retrieveCharacterFromId(Integer characterId){
         CharacterDto characterDto = null;
@@ -64,6 +74,37 @@ public class CharacterRepositoryService {
         return characterStatisticsDto;
     }
 
+    public List<InventoryObjectAssociation> retrieveCharacterObjects(Integer characterId){
+        final List<InventoryObjectAssociation> objects = new ArrayList<>();
+
+        if(characterId != null){
+            List<CharacterInventoryObjectDto> allCharacterObjects = characterInventoryObjectRepository.findCharacterObjects(characterId);
+            if(!CollectionUtils.isEmpty(allCharacterObjects)){
+                allCharacterObjects.stream()
+                        .forEach(obj -> {
+                            InventoryObjectAssociation association = new InventoryObjectAssociation();
+                            association.setCharacterInventoryObjectDto(obj);
+                            InventoryObjectDto inventoryObjectDto = retrieveInventoryObject(obj.getIdInventoryObject());
+                            if(inventoryObjectDto != null){
+                                association.setInventoryObjectDto(inventoryObjectDto);
+                                objects.add(association);
+                            }
+                        });
+            }
+        }
+
+        return objects;
+    }
+
+    public InventoryObjectDto retrieveInventoryObject(Integer objectId){
+        InventoryObjectDto objectDto = null;
+        if(objectId != null){
+            Optional<InventoryObjectDto> dto = inventoryObjectRepository.findById(objectId);
+            objectDto = dto != null && dto.get() != null ? dto.get() : null;
+        }
+        return objectDto;
+    }
+
     public List<CharacterTemporaryEffectDto> retrieveCharacterTemporaryEffects(Integer characterId){
         List<CharacterTemporaryEffectDto> effects = new ArrayList<>();
 
@@ -72,6 +113,17 @@ public class CharacterRepositoryService {
         }
 
         return effects;
+    }
+
+    public InventoryDto retrieveCharacterInventory(Integer characterId){
+        InventoryDto inventoryDto = null;
+
+        if(characterId != null){
+            Optional<InventoryDto> inventory = inventoryRepository.findById(characterId);
+            inventoryDto = inventory != null && inventory.get() != null ? inventory.get() : null;
+        }
+
+        return inventoryDto;
     }
 
     public boolean saveNewCharacter(Integer userId, Character character){

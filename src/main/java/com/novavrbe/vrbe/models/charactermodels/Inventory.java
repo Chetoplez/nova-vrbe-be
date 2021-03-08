@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 @Data
 public class Inventory {
-    private String inventoryId;
+    private Integer inventoryId;
     private Integer gold;
     private ArrayList<InventoryObject> items;
 }

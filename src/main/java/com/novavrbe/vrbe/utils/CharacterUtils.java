@@ -224,16 +224,55 @@ public class CharacterUtils {
     }
 
     public static void buildDefaultStatisticDto(CharacterStatisticsDto statisticsDto){
-        statisticsDto.setCostituzione(DEFAULT_STAT);
-        statisticsDto.setCostituzioneModifier(BigDecimal.ZERO);
-        statisticsDto.setDestrezza(DEFAULT_STAT);
-        statisticsDto.setDestrezzaModifier(BigDecimal.ZERO);
-        statisticsDto.setForza(DEFAULT_STAT);
-        statisticsDto.setForzaModifier(BigDecimal.ZERO);
-        statisticsDto.setSaggezza(DEFAULT_STAT);
-        statisticsDto.setSaggezzaModifier(BigDecimal.ZERO);
-        statisticsDto.setIntelligenza(DEFAULT_STAT);
-        statisticsDto.setIntelligenzaModifier(BigDecimal.ZERO);
+        if(statisticsDto != null){
+            statisticsDto.setCostituzione(DEFAULT_STAT);
+            statisticsDto.setCostituzioneModifier(BigDecimal.ZERO);
+            statisticsDto.setDestrezza(DEFAULT_STAT);
+            statisticsDto.setDestrezzaModifier(BigDecimal.ZERO);
+            statisticsDto.setForza(DEFAULT_STAT);
+            statisticsDto.setForzaModifier(BigDecimal.ZERO);
+            statisticsDto.setSaggezza(DEFAULT_STAT);
+            statisticsDto.setSaggezzaModifier(BigDecimal.ZERO);
+            statisticsDto.setIntelligenza(DEFAULT_STAT);
+            statisticsDto.setIntelligenzaModifier(BigDecimal.ZERO);
+        }
+    }
+
+    public static void mapInventoryDtoToInventory(Inventory inventory, InventoryDto inventoryDto){
+        if(inventory != null && inventoryDto != null){
+            inventory.setGold(inventoryDto.getGold() != null ? inventoryDto.getGold().intValue() : 0);
+            inventory.setInventoryId(inventoryDto.getCharacterId());
+        }
+    }
+
+    public static void fillInventoryWithObjects(Inventory inventory, List<InventoryObjectAssociation> associations){
+        if(inventory != null && !CollectionUtils.isEmpty(associations)){
+            inventory.setItems(new ArrayList<>());
+            associations.stream().forEach(
+                    association -> {
+                        inventory.getItems().add(createInventoryObjectFromDtos(association.getInventoryObjectDto(), association.getCharacterInventoryObjectDto()));
+                    }
+            );
+        }
+    }
+
+    public static InventoryObject createInventoryObjectFromDtos(InventoryObjectDto inventoryObjectDto, CharacterInventoryObjectDto characterInventoryObjectDto){
+        InventoryObject object = new InventoryObject();
+
+        object.setId(characterInventoryObjectDto.getIdInventoryObject());
+        object.setName(inventoryObjectDto.getName());
+        object.setDescription(inventoryObjectDto.getDescription());
+        object.setQuantity(characterInventoryObjectDto.getQuantity());
+        object.setEquipment(inventoryObjectDto.isEquipment());
+        object.setInUse(characterInventoryObjectDto.getInUse());
+        object.setRare(inventoryObjectDto.isRare());
+        object.setCategory(ObjectCategory.valueOf(inventoryObjectDto.getCategory()));
+        object.setBodyPart(BodyPart.valueOf(inventoryObjectDto.getBodyPart()));
+        object.setAcquiringDate(characterInventoryObjectDto.getAcquiringDate());
+        object.setDuration(characterInventoryObjectDto.getDuration());
+
+
+        return object;
     }
 
 }

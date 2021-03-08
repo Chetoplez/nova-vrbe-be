@@ -1,8 +1,10 @@
 package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.CharacterDto;
+import com.novavrbe.vrbe.dto.InventoryDto;
 import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
+import com.novavrbe.vrbe.models.charactermodels.Inventory;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.utils.CharacterUtils;
 import com.novavrbe.vrbe.utils.ValidateUtils;
@@ -65,7 +67,27 @@ public class CharacterBusiness {
     }
 
     public ResponseEntity<GetInventoryResponse> getInventory(String characterId){
-        return null;
+        ResponseEntity<GetInventoryResponse> response = null;
+
+        if(!StringUtils.hasText(characterId)){
+            response = new ResponseEntity<>(new GetInventoryResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        Integer charactedId = Integer.valueOf(characterId);
+
+        InventoryDto inventoryDto = characterRepositoryService.retrieveCharacterInventory(charactedId);
+        if(inventoryDto == null){
+            response = new ResponseEntity<>(new GetInventoryResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        Inventory inventory = new Inventory();
+        CharacterUtils.mapInventoryDtoToInventory(inventory, inventoryDto);
+        CharacterUtils.fillInventoryWithObjects(inventory, characterRepositoryService.retrieveCharacterObjects(charactedId));
+
+
+        return response;
     }
 
     public ResponseEntity<UpdateInventoryResponse> updateInventory(UpdateInventoryRequest request){
