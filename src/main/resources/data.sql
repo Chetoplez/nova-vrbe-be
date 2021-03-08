@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS ChatMembers;
 DROP TABLE IF EXISTS Inventory;
 DROP TABLE IF EXISTS InventoryObject;
 DROP TABLE IF EXISTS InventoryObjectEffect;
+DROP TABLE IF EXISTS CharacterInventoryObject;
 
 CREATE TABLE GenericUser (
   id VARCHAR(50) NOT NULL AUTO_INCREMENT,
@@ -202,6 +203,17 @@ CREATE TABLE InventoryObjectEffect(
     isTemporary BIT,
     duration NUMBER,
     isOneShot BIT
+);
+
+CREATE TABLE CharacterInventoryObject(
+    idInventoryObject NUMBER NOT NULL,
+    characterId NUMBER NOT NULL,
+    quantity NUMBER,
+    inUse BIT,
+    duration NUMBER,
+    acquiringDate DATE,
+    acquiredBy INTEGER,
+    PRIMARY KEY(idInventoryObject, characterId)
 );
 
 
