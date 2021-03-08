@@ -155,7 +155,7 @@ CREATE TABLE PresentiLuogo(
 );
 
 CREATE TABLE Luoghi(
-    idLuogo NUMBER AUTO_INCREMENT NOT NULL,
+    idLuogo NUMBER  NOT NULL AUTO_INCREMENT,
     descr VARCHAR(MAX),
     nomeLuogo VARCHAR(100),
     statoLuogo VARCHAR(100),
@@ -164,11 +164,11 @@ CREATE TABLE Luoghi(
 );
 
 insert into Luoghi values
-('Il forum è la piazza principale della cittadina dove si svolgono le maggiori attività economiche e sociali, si trovano gli edifici di governo e quelli finanizari. Si tratta di una piazza porticata con colonnato su tre lati circodata da vari edifici',
-'Forum',
-'','');
+(1,'Il forum è la piazza principale della cittadina dove si svolgono le maggiori attività economiche e sociali, si trovano gli edifici di governo e quelli finanziari. Si tratta di una piazza porticata con colonnato su tre lati circodata da vari edifici',
+'Forum','','');
 
-insert into Luoghi values ('Porta di ingresso posta sul Decumano del Municipium. Vi sono due torrette di avvisatamento e sulle mura è posto un camminamenento che corre attorno alla fortificazione. Accanto al portone principali, vi sono due altre porte utilizzate per il passaggio di cicili',
+insert into Luoghi values (
+2,'Porta di ingresso posta sul Decumano del Municipium. Vi sono due torrette di avvisatamento e sulle mura è posto un camminamenento che corre attorno alla fortificazione. Accanto al portone principali, vi sono due altre porte utilizzate per il passaggio di civili',
 'Porta Decumana', '','');
 
 
