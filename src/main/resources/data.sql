@@ -163,6 +163,13 @@ CREATE TABLE Luoghi(
     PRIMARY KEY(idLuogo)
 );
 
+insert into Luoghi values
+('Il forum è la piazza principale della cittadina dove si svolgono le maggiori attività economiche e sociali, si trovano gli edifici di governo e quelli finanizari. Si tratta di una piazza porticata con colonnato su tre lati circodata da vari edifici',
+'Forum',
+'','');
+
+insert into Luoghi values ('Porta di ingresso posta sul Decumano del Municipium. Vi sono due torrette di avvisatamento e sulle mura è posto un camminamenento che corre attorno alla fortificazione. Accanto al portone principali, vi sono due altre porte utilizzate per il passaggio di cicili',
+'Porta Decumana', '','');
 
 
 COMMIT;
