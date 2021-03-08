@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 public class InventoryObject {
-    private String id;
+    private Integer id;
     private String name;
     private String description;
     private Integer quantity;

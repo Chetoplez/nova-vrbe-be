@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS PresentiLuogo;
 DROP TABLE IF EXISTS ChatMessages;
 DROP TABLE IF EXISTS Luoghi;
 DROP TABLE IF EXISTS ChatMembers;
+DROP TABLE IF EXISTS Inventory;
+DROP TABLE IF EXISTS InventoryObject;
 
 CREATE TABLE GenericUser (
   id VARCHAR(50) NOT NULL AUTO_INCREMENT,
@@ -171,5 +173,23 @@ insert into Luoghi values (
 2,'Porta di ingresso posta sul Decumano del Municipium. Vi sono due torrette di avvisatamento e sulle mura è posto un camminamenento che corre attorno alla fortificazione. Accanto al portone principali, vi sono due altre porte utilizzate per il passaggio di civili',
 'Porta Decumana', '','');
 
+
+CREATE TABLE Inventory(
+    characterId NUMBER NOT NULL,
+    gold NUMBER,
+    PRIMARY KEY(characterId)
+);
+
+CREATE TABLE InventoryObject(
+    id NUMBER NOT NULL,
+    name VARCHAR(50) NOT NULL
+    description VARCHAR(50) NOT NULL,
+    isEquipment BIT NOT NULL,
+    isRare BIT NOT NULL,
+    category VARCHAR(15) NOT NULL,
+    bodyPart VARCHAR(15),
+    duration NUMBER,
+    PRIMARY KEY(id)
+);
 
 COMMIT;
