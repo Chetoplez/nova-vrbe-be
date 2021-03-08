@@ -1,5 +1,6 @@
 package com.novavrbe.vrbe.dto;
 
+import com.novavrbe.vrbe.models.enumerations.ChatAction;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,12 +15,10 @@ public class ChatMessageDto {
     private Integer id;
     @Column
     private Integer chatId;
-    @Column
+    @Column (name = "cAction")
     private String action;
     @Column
     private String carica;
-    @Column
-    private String idAzione;
     @Column
     private String img;
     @Column
@@ -30,7 +29,7 @@ public class ChatMessageDto {
     private String tag;
     @Column
     private String testo;
-    @Column
+    @Column (name = "cTimestamp")
     private Date timestamp;
     @Column
     private String tooltip_carica;

@@ -175,6 +175,19 @@ insert into Luoghi values (
 2,'Porta di ingresso posta sul Decumano del Municipium. Vi sono due torrette di avvisatamento e sulle mura è posto un camminamenento che corre attorno alla fortificazione. Accanto al portone principali, vi sono due altre porte utilizzate per il passaggio di civili',
 'Porta Decumana', '','');
 
+CREATE TABLE ChatMessages (
+    ID NUMBER NOT NULL AUTO_INCREMENT,
+    CHATID NUMBER  NOT NULL,
+    cACTION VARCHAR(12) NOT NULL,
+    CARICA VARCHAR(50),
+    IMG VARCHAR(500),
+    RECEIVER VARCHAR(100),
+    SENDER VARCHAR(100) NOT NULL,
+    TAG VARCHAR (50),
+    TESTO TEXT,
+    CTIMESTAMP DATE NOT NULL,
+    TOOLTIP_CARICA VARCHAR NOT NULL
+);
 
 CREATE TABLE Inventory(
     characterId NUMBER NOT NULL,

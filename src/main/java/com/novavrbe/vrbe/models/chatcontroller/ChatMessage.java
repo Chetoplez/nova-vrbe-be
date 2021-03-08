@@ -8,9 +8,8 @@ import java.util.Date;
 @Data
 public class ChatMessage {
     private String id;
-    private ChatAction action;
+    private String action;
     private String carica;
-    private String idAzione;
     private String img;
     private String receiver;
     private String sender;
