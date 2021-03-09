@@ -8,12 +8,14 @@ import com.sun.istack.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CharacterUtils {
 
@@ -197,6 +199,15 @@ public class CharacterUtils {
         return statisticsDto;
     }
 
+    public static InventoryDto buildInventoryForDto(Integer characterId, BigDecimal gold){
+        InventoryDto inventoryDto = null;
+
+        inventoryDto.setCharacterId(characterId);
+        inventoryDto.setGold(gold);
+
+        return inventoryDto;
+    }
+
     public static void mapStatListsToStatisticDto(ArrayList<CharacterStatistic> stats, @NotNull CharacterStatisticsDto statisticsDto){
         stats.stream().forEach(stat -> {
             switch (stat.getStatName()){
@@ -254,6 +265,41 @@ public class CharacterUtils {
                     }
             );
         }
+    }
+
+    public static void fillInventoryObjectsWithEffects(@NotNull Inventory inventory, List<InventoryObjectEffectAssociation> effects){
+        if(!CollectionUtils.isEmpty(effects) && !CollectionUtils.isEmpty(inventory.getItems())){
+
+            inventory.getItems().stream().forEach(
+                    item -> {
+                        List<InventoryObjectEffectAssociation> objectEffects = effects.stream()
+                                .filter( effect -> {
+                                    return effect.getObjectId() == item.getId();
+                                })
+                                .collect(Collectors.toList());
+                        if(!CollectionUtils.isEmpty(objectEffects)){
+                            InventoryObjectEffectAssociation association = objectEffects.get(0);
+                            item.setModifiers(new ArrayList<>());
+                            association.getEffects().stream().forEach( effect -> {
+                                item.getModifiers().add(createEffectFromDto(effect));
+                            });
+                        }
+                    }
+            );
+        }
+    }
+
+    public static InventoryObjectEffect createEffectFromDto(@NotNull InventoryObjectEffectDto effectDto){
+        InventoryObjectEffect effect = new InventoryObjectEffect();
+
+        effect.setTemporary(effectDto.getIsTemporary());
+        effect.setDuration(effectDto.getDuration());
+        effect.setHealing(effectDto.getHealing());
+        effect.setHealthStatus(StringUtils.hasText(effectDto.getHealthStatus()) ? HealthStatus.valueOf(effectDto.getHealthStatus()) : null);
+        effect.setOneShot(effectDto.getIsOneShot());
+        effect.setStat(StringUtils.hasText(effectDto.getStat()) ? Stat.valueOf(effectDto.getStat()) : null);
+
+        return effect;
     }
 
     public static InventoryObject createInventoryObjectFromDtos(InventoryObjectDto inventoryObjectDto, CharacterInventoryObjectDto characterInventoryObjectDto){

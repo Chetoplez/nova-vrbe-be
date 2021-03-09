@@ -74,7 +74,7 @@ public class CharacterBusiness {
             return response;
         }
 
-        Integer charactedId = Integer.valueOf(characterId);
+        Integer charactedId = Integer.parseInt(characterId);
 
         InventoryDto inventoryDto = characterRepositoryService.retrieveCharacterInventory(charactedId);
         if(inventoryDto == null){
@@ -85,7 +85,11 @@ public class CharacterBusiness {
         Inventory inventory = new Inventory();
         CharacterUtils.mapInventoryDtoToInventory(inventory, inventoryDto);
         CharacterUtils.fillInventoryWithObjects(inventory, characterRepositoryService.retrieveCharacterObjects(charactedId));
+        CharacterUtils.fillInventoryObjectsWithEffects(inventory, characterRepositoryService.retrieveInventoryObjectEffects(inventory));
 
+        GetInventoryResponse inventoryResponse = new GetInventoryResponse();
+        inventoryResponse.setInventory(inventory);
+        response = new ResponseEntity<>(inventoryResponse, HttpStatus.OK);
 
         return response;
     }

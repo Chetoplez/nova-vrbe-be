@@ -2,13 +2,16 @@ package com.novavrbe.vrbe.repositories.impl;
 
 import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
+import com.novavrbe.vrbe.models.charactermodels.Inventory;
 import com.novavrbe.vrbe.models.charactermodels.InventoryObjectAssociation;
+import com.novavrbe.vrbe.models.charactermodels.InventoryObjectEffectAssociation;
 import com.novavrbe.vrbe.repositories.*;
 import com.novavrbe.vrbe.utils.CharacterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -126,6 +129,34 @@ public class CharacterRepositoryService {
         return inventoryDto;
     }
 
+    public List<InventoryObjectEffectAssociation> retrieveInventoryObjectEffects(Inventory inventory){
+        final List<InventoryObjectEffectAssociation> associations = new ArrayList<>();
+
+        if(!CollectionUtils.isEmpty(inventory.getItems())){
+            inventory.getItems().stream()
+                    .forEach( item -> {
+                        InventoryObjectEffectAssociation association = new InventoryObjectEffectAssociation();
+
+                        List<InventoryObjectEffectDto> effects = retrieveInventoryObjectEffectsDto(item.getId());
+                        if(!CollectionUtils.isEmpty(effects)){
+                            association.setObjectId(item.getId());
+                            association.setEffects(effects);
+                            associations.add(association);
+                        }
+                    });
+        }
+
+        return associations;
+    }
+
+    public List<InventoryObjectEffectDto> retrieveInventoryObjectEffectsDto(Integer objectId){
+        List<InventoryObjectEffectDto> effects = new ArrayList<>();
+
+        effects = inventoryObjectEffectRepository.findEffectsForObject(objectId);
+
+        return effects;
+    }
+
     public boolean saveNewCharacter(Integer userId, Character character){
         boolean saved = true;
 
@@ -147,6 +178,11 @@ public class CharacterRepositoryService {
                 CharacterStatisticsDto characterStatisticsDto = CharacterUtils.buildCharacterStatisticForDto(userId, character);
                 if(characterStatisticsDto != null){
                     characterStatisticRepository.save(characterStatisticsDto);
+                }
+
+                InventoryDto inventoryDto = CharacterUtils.buildInventoryForDto(characterDto.getCharacterId(), BigDecimal.ZERO);
+                if(inventoryDto != null){
+                    inventoryRepository.save(inventoryDto);
                 }
 
             }
