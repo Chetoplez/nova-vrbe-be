@@ -197,7 +197,7 @@ CREATE TABLE Inventory(
 
 CREATE TABLE InventoryObject(
     id NUMBER NOT NULL,
-    name VARCHAR(50) NOT NULL
+    name VARCHAR(50) NOT NULL,
     description VARCHAR(50) NOT NULL,
     isEquipment BIT NOT NULL,
     isRare BIT NOT NULL,

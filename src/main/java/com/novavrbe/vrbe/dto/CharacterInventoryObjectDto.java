@@ -2,16 +2,14 @@ package com.novavrbe.vrbe.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
 @Table(name="CharacterInventoryObject")
 @Entity
 @Data
+@IdClass(IdCharacterInventoryObject.class)
 public class CharacterInventoryObjectDto implements Serializable{
     @Id
     private Integer idInventoryObject;
