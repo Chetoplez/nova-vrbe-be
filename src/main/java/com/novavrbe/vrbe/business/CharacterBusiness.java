@@ -95,7 +95,19 @@ public class CharacterBusiness {
     }
 
     public ResponseEntity<UpdateInventoryResponse> updateInventory(UpdateInventoryRequest request){
-        return null;
+        ResponseEntity<UpdateInventoryResponse> response = null;
+
+        if(request == null || request.getInventory() == null || (request.getInventory() != null &&request.getInventory().getInventoryId() == null)){
+            response = new ResponseEntity<>(new UpdateInventoryResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        UpdateInventoryResponse inventoryResponse = new UpdateInventoryResponse();
+        inventoryResponse.setInventory(request.getInventory());
+
+        response = new ResponseEntity<>(inventoryResponse, characterRepositoryService.updateInventory(request.getInventory()) ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+
+        return response;
     }
 
 

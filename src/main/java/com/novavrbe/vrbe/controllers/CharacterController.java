@@ -13,22 +13,22 @@ public class CharacterController {
     @Autowired
     private CharacterBusiness characterBusiness;
 
-    @PutMapping("")
+    @PutMapping("/")
     public ResponseEntity<AddCharacterResponse> addCharacter(@RequestBody AddCharacterRequest addCharacterRequest){
         return characterBusiness.addCharacter(addCharacterRequest);
     }
 
-    @GetMapping("getcharacter/{characterId}")
+    @GetMapping("/getcharacter/{characterId}")
     public ResponseEntity<GetCharacterResponse> getCharacter(@PathVariable String characterId){
         return characterBusiness.getCharacter(characterId);
     }
 
-    @GetMapping("getinventory/{characterId}")
+    @GetMapping("/getinventory/{characterId}")
     public ResponseEntity<GetInventoryResponse> getInventory(@PathVariable String characterId){
         return characterBusiness.getInventory(characterId);
     }
 
-    @PostMapping("updateinventory")
+    @PatchMapping("/updateinventory")
     public ResponseEntity<UpdateInventoryResponse> updateInventory(@RequestBody UpdateInventoryRequest updateInventoryRequest){
         return characterBusiness.updateInventory(updateInventoryRequest);
     }
