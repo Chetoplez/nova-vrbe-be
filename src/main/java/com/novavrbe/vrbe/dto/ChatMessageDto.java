@@ -30,7 +30,7 @@ public class ChatMessageDto {
     @Column
     private String testo;
     @Column (name = "cTimestamp")
-    private Date timestamp;
+    private long timestamp;
     @Column
     private String tooltip_carica;
 }

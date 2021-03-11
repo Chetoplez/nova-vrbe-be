@@ -10,9 +10,7 @@ public interface CharacterTemporaryEffectsRepository extends CrudRepository<Char
 
     default List<CharacterTemporaryEffectDto> findTemporaryEffectForUser(Integer characterId){
         return findAll(
-                (root, query, cb) -> {
-                    return cb.equal(root.get("characterId"), characterId);
-                }
+                (root, query, cb) -> cb.equal(root.get("characterId"), characterId)
         );
     }
 }

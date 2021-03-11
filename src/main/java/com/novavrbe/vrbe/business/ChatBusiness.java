@@ -34,6 +34,7 @@ public class ChatBusiness {
         ChatMessageDto dbDto =  chatRepositoryService.addNewChatMessage(messageDto);
         AddMessageResponse messageResponse = new AddMessageResponse();
         messageResponse.setChatRetrieved(dbDto != null);
+
         response = new ResponseEntity<>(messageResponse,HttpStatus.OK);
 
         return response;

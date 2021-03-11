@@ -2,6 +2,7 @@ package com.novavrbe.vrbe.models.chatcontroller;
 
 import com.novavrbe.vrbe.models.enumerations.ChatAction;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -15,6 +16,6 @@ public class ChatMessage {
     private String sender;
     private String tag;
     private String testo;
-    private Date timestamp;
+    private long  timestamp;
     private String tooltip_carica;
 }
