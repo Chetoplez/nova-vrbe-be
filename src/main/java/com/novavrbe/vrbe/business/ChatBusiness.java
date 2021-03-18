@@ -18,6 +18,11 @@ public class ChatBusiness {
     @Autowired
     private ChatRepositoryService chatRepositoryService;
 
+    /**
+     * Questo metodo permette di inserire un messaggio in chat.
+     * @param request Oggetto contenente i parametri per inserire il messaggio. Id della chat attuale, messaggio da insierire
+     * @return TRUE se inserito correttamente ; FALSE altrimenti
+     */
     public ResponseEntity<AddMessageResponse> addMessage(AddMessageRequest request){
         ResponseEntity<AddMessageResponse> response ;
         ChatMessage newMessage = request.getChatMessage();
@@ -40,6 +45,11 @@ public class ChatBusiness {
         return response;
     }
 
+    /**
+     * Metodo che permette di cancellare un messaggio della chat.
+     * @param request DeleteMessageRequest che ha dentro i parametri per canchellare
+     * @return TRUE se l'operazione è andata a buon fine; FALSE altrimenti
+     */
     public ResponseEntity<DeleteMessageResponse> deleteMessage(DeleteMessageRequest request){
         ResponseEntity<DeleteMessageResponse> response = null;
 
@@ -51,6 +61,13 @@ public class ChatBusiness {
         return response;
     }
 
+    /**
+     * Questo metodo ritora la lista dei messaggi presenti nella chat in cui siamo attualmente. I messaggi non vengono tornati tutti, ma solo quelli dall'ora
+     * attuale ed indietro per window millisecondi.
+     * @param id il chatId
+     * @param window finestra temporale da cui prendere i messaggi, occhio. è in millisecondi!
+     * @return La lista dei messaggi della chat da time.now() - window
+     */
     public ResponseEntity<GetChatResponse> getChatById(String id, String window) {
         ResponseEntity<GetChatResponse> response ;
         List<ChatMessageDto> chatList ;

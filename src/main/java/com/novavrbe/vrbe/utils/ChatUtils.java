@@ -50,4 +50,6 @@ public class ChatUtils {
 
          return _temp;
     }
+
+    /*Qui dentro ci va il metodo per contare quanti exp assegnare??*/
 }
