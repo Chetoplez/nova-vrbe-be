@@ -215,7 +215,8 @@ CREATE TABLE InventoryObjectEffect(
     stat VARCHAR(15),
     isTemporary BIT,
     duration NUMBER,
-    isOneShot BIT
+    isOneShot BIT,
+    modifier NUMBER
 );
 
 CREATE TABLE CharacterInventoryObject(

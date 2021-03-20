@@ -32,4 +32,9 @@ public class CharacterController {
     public ResponseEntity<UpdateInventoryResponse> updateInventory(@RequestBody UpdateInventoryRequest updateInventoryRequest){
         return characterBusiness.updateInventory(updateInventoryRequest);
     }
+
+    @PostMapping("/equip")
+    public ResponseEntity<EquipItemResponse> equipItem(@RequestBody EquipItemRequest equipItemRequest){
+        return characterBusiness.equipItem(equipItemRequest);
+    }
 }

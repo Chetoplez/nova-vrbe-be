@@ -22,6 +22,8 @@ public class InventoryObjectEffectDto {
     @Column
     private String stat;
     @Column
+    private Integer modifier;
+    @Column
     private Boolean isTemporary;
     @Column
     private Long duration;

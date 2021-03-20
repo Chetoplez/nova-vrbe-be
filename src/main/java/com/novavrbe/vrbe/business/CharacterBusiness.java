@@ -2,9 +2,12 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.InventoryDto;
+import com.novavrbe.vrbe.dto.InventoryObjectEffectDto;
 import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.models.charactermodels.Inventory;
+import com.novavrbe.vrbe.models.charactermodels.InventoryObject;
+import com.novavrbe.vrbe.models.charactermodels.InventoryObjectAssociation;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.utils.CharacterUtils;
 import com.novavrbe.vrbe.utils.ValidateUtils;
@@ -12,7 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CharacterBusiness {
@@ -111,4 +118,47 @@ public class CharacterBusiness {
     }
 
 
+    public ResponseEntity<EquipItemResponse> equipItem(EquipItemRequest request) {
+        ResponseEntity<EquipItemResponse> response = null;
+
+        if(request == null || request.getCharacterId() == null || request.getItemId() == null){
+            response = new ResponseEntity<>(new EquipItemResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        CharacterDto character = characterRepositoryService.retrieveCharacterFromId(request.getCharacterId());
+        if(character == null){
+            response = new ResponseEntity<>(new EquipItemResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        List<InventoryObjectAssociation> objects = characterRepositoryService.retrieveCharacterObjects(request.getCharacterId());
+        if(!CollectionUtils.isEmpty(objects)){
+            List<InventoryObjectAssociation> itemDto = objects.stream().filter(association -> {
+                return association.getCharacterInventoryObjectDto().getIdInventoryObject() == request.getItemId();
+            }).collect(Collectors.toList());
+            if(!CollectionUtils.isEmpty(itemDto)){
+                InventoryObjectAssociation item = itemDto.get(0);
+
+                //Equipaggiamento
+                if(item.getInventoryObjectDto().isEquipment()){
+                    item.getCharacterInventoryObjectDto().setInUse(request.isRemove() ? false : true);
+                    characterRepositoryService.equipItem(item.getCharacterInventoryObjectDto());
+                }else{
+                    //Oggetto one shot
+                    List<InventoryObjectEffectDto> effectDtoList = characterRepositoryService.retrieveInventoryObjectEffectsDto(item.getInventoryObjectDto().getId());
+                    if(!CollectionUtils.isEmpty(effectDtoList)){
+                        effectDtoList.stream().forEach( effect -> {
+                            characterRepositoryService.applyEffect(request.getCharacterId(), effect);
+                        });
+                    }
+
+                    characterRepositoryService.decreaseQuantityOrRemoveObject(request.getCharacterId(), item);
+                }
+
+            }
+        }
+
+        return response;
+    }
 }

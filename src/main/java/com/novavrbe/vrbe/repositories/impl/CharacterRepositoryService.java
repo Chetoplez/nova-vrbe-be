@@ -7,9 +7,11 @@ import com.novavrbe.vrbe.models.charactermodels.InventoryObjectAssociation;
 import com.novavrbe.vrbe.models.charactermodels.InventoryObjectEffectAssociation;
 import com.novavrbe.vrbe.repositories.*;
 import com.novavrbe.vrbe.utils.CharacterUtils;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -191,12 +193,47 @@ public class CharacterRepositoryService {
         return saved;
     }
 
-    public boolean updateInventory(Inventory inventory){
+    public boolean updateInventory(@NotNull Inventory inventory){
         boolean saved = true;
 
-
+        //TODO
 
         return saved;
+    }
+
+    public void applyEffect(@NotNull Integer characterId, @NotNull InventoryObjectEffectDto effectDto){
+        if(effectDto.getIsOneShot()){
+            CharacterDto character = retrieveCharacterFromId(characterId);
+            if(StringUtils.hasText(effectDto.getHealthStatus())){
+                character.setHealthStatus(effectDto.getHealthStatus());
+            }
+            if(effectDto.getHealing() != null){
+                character.setHealth(character.getHealth() + effectDto.getHealing());
+            }
+            characterRepository.save(character);
+        }
+
+        if(effectDto.getIsTemporary()){
+            CharacterTemporaryEffectDto newEffect = new CharacterTemporaryEffectDto();
+            newEffect.setCharacterId(characterId);
+            newEffect.setStat(effectDto.getStat());
+            newEffect.setModifier(effectDto.getModifier());
+            characterTemporaryEffectsRepository.save(newEffect);
+        }
+    }
+
+    public void decreaseQuantityOrRemoveObject(@NotNull Integer characterId, @NotNull InventoryObjectAssociation association){
+        Integer newQuantity = association.getCharacterInventoryObjectDto().getQuantity() - 1;
+        if(newQuantity > 0){
+            association.getCharacterInventoryObjectDto().setQuantity(newQuantity);
+            characterInventoryObjectRepository.save(association.getCharacterInventoryObjectDto());
+        }else{
+            characterInventoryObjectRepository.delete(association.getCharacterInventoryObjectDto());
+        }
+    }
+
+    public void equipItem(@NotNull CharacterInventoryObjectDto characterInventoryObjectDto){
+        characterInventoryObjectRepository.save(characterInventoryObjectDto);
     }
 
 }
