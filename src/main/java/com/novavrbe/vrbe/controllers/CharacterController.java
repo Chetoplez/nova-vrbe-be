@@ -37,4 +37,10 @@ public class CharacterController {
     public ResponseEntity<EquipItemResponse> equipItem(@RequestBody EquipItemRequest equipItemRequest){
         return characterBusiness.equipItem(equipItemRequest);
     }
+
+    @PostMapping("/lenditem")
+    public ResponseEntity<LendItemResponse> lendItem(@RequestBody LendItemRequest lendItemRequest){
+        return characterBusiness.lendItem(lendItemRequest);
+    }
+
 }

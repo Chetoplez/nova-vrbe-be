@@ -1,12 +1,12 @@
 package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.CharacterDto;
+import com.novavrbe.vrbe.dto.CharacterInventoryObjectDto;
 import com.novavrbe.vrbe.dto.InventoryDto;
 import com.novavrbe.vrbe.dto.InventoryObjectEffectDto;
 import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.models.charactermodels.Inventory;
-import com.novavrbe.vrbe.models.charactermodels.InventoryObject;
 import com.novavrbe.vrbe.models.charactermodels.InventoryObjectAssociation;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.utils.CharacterUtils;
@@ -133,6 +133,8 @@ public class CharacterBusiness {
         }
 
         List<InventoryObjectAssociation> objects = characterRepositoryService.retrieveCharacterObjects(request.getCharacterId());
+        EquipItemResponse equipItemResponse = new EquipItemResponse();
+
         if(!CollectionUtils.isEmpty(objects)){
             List<InventoryObjectAssociation> itemDto = objects.stream().filter(association -> {
                 return association.getCharacterInventoryObjectDto().getIdInventoryObject() == request.getItemId();
@@ -155,9 +157,39 @@ public class CharacterBusiness {
 
                     characterRepositoryService.decreaseQuantityOrRemoveObject(request.getCharacterId(), item);
                 }
-
+                equipItemResponse.setEquipped(true);
             }
         }
+
+        response = new ResponseEntity<>(equipItemResponse, HttpStatus.OK);
+
+        return response;
+    }
+
+    public ResponseEntity<LendItemResponse> lendItem(LendItemRequest request) {
+        ResponseEntity<LendItemResponse> response = null;
+
+        if(request == null || request.getFromCharacterId() == null || request.getFromObjectId() == null || request.getToCharacterId() == null){
+            response = new ResponseEntity<>(new LendItemResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        LendItemResponse lendItemResponse = new LendItemResponse();
+
+        List<InventoryObjectAssociation> objects = characterRepositoryService.retrieveCharacterObjects(request.getFromCharacterId());
+        if(!CollectionUtils.isEmpty(objects)){
+            List<InventoryObjectAssociation> items = objects.stream().filter(association -> {
+                return association.getCharacterInventoryObjectDto().getIdInventoryObject() == request.getFromObjectId();
+            }).collect(Collectors.toList());
+
+            if(!CollectionUtils.isEmpty(items)){
+                InventoryObjectAssociation item = items.get(0);
+                characterRepositoryService.lendItemToAnotherCharacter(request.getToCharacterId(), item);
+                lendItemResponse.setLended(true);
+            }
+        }
+
+        response = new ResponseEntity<>(lendItemResponse, HttpStatus.OK);
 
         return response;
     }

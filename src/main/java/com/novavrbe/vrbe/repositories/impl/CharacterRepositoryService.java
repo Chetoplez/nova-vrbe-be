@@ -236,4 +236,18 @@ public class CharacterRepositoryService {
         characterInventoryObjectRepository.save(characterInventoryObjectDto);
     }
 
+    public void lendItemToAnotherCharacter(@NotNull Integer toCharacterId, @NotNull InventoryObjectAssociation association){
+        Integer newQuantity = association.getCharacterInventoryObjectDto().getQuantity() - 1;
+        if(newQuantity > 0){
+            characterInventoryObjectRepository.delete(association.getCharacterInventoryObjectDto());
+        }else{
+            association.getCharacterInventoryObjectDto().setQuantity(newQuantity);
+            characterInventoryObjectRepository.save(association.getCharacterInventoryObjectDto());
+        }
+
+        association.getCharacterInventoryObjectDto().setCharacterId(toCharacterId);
+        association.getCharacterInventoryObjectDto().setQuantity(1);
+        characterInventoryObjectRepository.save(association.getCharacterInventoryObjectDto());
+    }
+
 }
