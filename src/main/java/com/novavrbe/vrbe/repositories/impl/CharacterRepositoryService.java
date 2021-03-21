@@ -199,7 +199,8 @@ public class CharacterRepositoryService {
     public boolean updateInventory(@NotNull Inventory inventory){
         boolean saved = true;
 
-        //TODO
+        InventoryDto inventoryDto = CharacterUtils.buildInventoryForDto(inventory.getInventoryId(), new BigDecimal(inventory.getGold()));
+        inventoryRepository.save(inventoryDto);
 
         return saved;
     }
