@@ -27,4 +27,6 @@ public class InventoryObjectDto {
     private String bodyPart;
     @Column
     private Long duration;
+    @Column
+    private String url;
 }

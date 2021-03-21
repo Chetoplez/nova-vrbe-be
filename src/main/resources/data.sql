@@ -195,8 +195,10 @@ CREATE TABLE Inventory(
     PRIMARY KEY(characterId)
 );
 
+insert into Inventory values(1,1895);
+
 CREATE TABLE InventoryObject(
-    id NUMBER NOT NULL,
+    id NUMBER NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     description VARCHAR(50) NOT NULL,
     isEquipment BIT NOT NULL,
@@ -204,7 +206,12 @@ CREATE TABLE InventoryObject(
     category VARCHAR(15) NOT NULL,
     bodyPart VARCHAR(15),
     duration NUMBER,
+    url VARCHAR(500),
     PRIMARY KEY(id)
+);
+
+INSERT INTO InventoryObject VALUES(
+1,'elmo centurio','elmo con cresta trasversale',1,0,'ARMOR','HEAD',8,''
 );
 
 CREATE TABLE InventoryObjectEffect(
@@ -219,6 +226,8 @@ CREATE TABLE InventoryObjectEffect(
     modifier NUMBER
 );
 
+INSERT INTO InventoryObjectEffect VALUES(1,1,'NONE',3,'COSTITUZIONE',0,99999,0,4 );
+
 CREATE TABLE CharacterInventoryObject(
     idInventoryObject NUMBER NOT NULL,
     characterId NUMBER NOT NULL,
@@ -230,5 +239,6 @@ CREATE TABLE CharacterInventoryObject(
     PRIMARY KEY(idInventoryObject, characterId)
 );
 
+INSERT INTO CharacterInventoryObject VALUES (1,1,1,0,88,'2021-03-18',1);
 
 COMMIT;

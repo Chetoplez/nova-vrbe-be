@@ -21,4 +21,5 @@ public class InventoryObject {
     private Date acquiringDate;
     private Long duration;
     private ArrayList<InventoryObjectEffect> modifiers;
+    private String url;
 }
