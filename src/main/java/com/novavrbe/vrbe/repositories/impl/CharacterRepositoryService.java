@@ -44,7 +44,7 @@ public class CharacterRepositoryService {
         CharacterDto characterDto = null;
         if(characterId != null){
             Optional<CharacterDto> dto = characterRepository.findById(characterId);
-            characterDto = dto != null && dto.get() != null ? dto.get() : null;
+            characterDto = dto != null && dto.isPresent() ? dto.get() : null;
         }
 
         return characterDto;
@@ -54,7 +54,7 @@ public class CharacterRepositoryService {
         CharacterHistoryDto historyDto = null;
         if(historyId != null){
             Optional<CharacterHistoryDto> dto = characterHistoryRepository.findById(historyId);
-            historyDto = dto != null && dto.get() != null ? dto.get() : null;
+            historyDto = dto != null && dto.isPresent() ? dto.get() : null;
         }
         return historyDto;
     }
@@ -63,7 +63,7 @@ public class CharacterRepositoryService {
         CharacterDescriptionDto descriptionDto = null;
         if(descriptionId != null){
             Optional<CharacterDescriptionDto> dto = characterDescriptionRepository.findById(descriptionId);
-            descriptionDto = dto != null && dto.get() != null ? dto.get() : null;
+            descriptionDto = dto != null && dto.isPresent() ? dto.get() : null;
         }
 
         return descriptionDto;
@@ -73,7 +73,7 @@ public class CharacterRepositoryService {
         CharacterStatisticsDto characterStatisticsDto = null;
         if(characterId != null){
             Optional<CharacterStatisticsDto> dto = characterStatisticRepository.findById(characterId);
-            characterStatisticsDto = dto != null && dto.get() != null ? dto.get() : null;
+            characterStatisticsDto = dto != null && dto.isPresent() ? dto.get() : null;
         }
 
         return characterStatisticsDto;
@@ -105,7 +105,7 @@ public class CharacterRepositoryService {
         InventoryObjectDto objectDto = null;
         if(objectId != null){
             Optional<InventoryObjectDto> dto = inventoryObjectRepository.findById(objectId);
-            objectDto = dto != null && dto.get() != null ? dto.get() : null;
+            objectDto = dto != null && dto.isPresent() ? dto.get() : null;
         }
         return objectDto;
     }
@@ -125,7 +125,7 @@ public class CharacterRepositoryService {
 
         if(characterId != null){
             Optional<InventoryDto> inventory = inventoryRepository.findById(characterId);
-            inventoryDto = inventory != null && inventory.get() != null ? inventory.get() : null;
+            inventoryDto = inventory != null && inventory.isPresent() ? inventory.get() : null;
         }
 
         return inventoryDto;
@@ -167,6 +167,9 @@ public class CharacterRepositoryService {
         if(characterDto != null){
             saved = characterRepository.save(characterDto) != null;
             if(saved){
+                characterDto.setCharacterId(userId);
+                character.setCharacterId(userId.toString());
+
                 CharacterHistoryDto historyDto = CharacterUtils.buildCharacterHistoryForDto(userId, character);
                 if(historyDto != null){
                     characterHistoryRepository.save(historyDto);

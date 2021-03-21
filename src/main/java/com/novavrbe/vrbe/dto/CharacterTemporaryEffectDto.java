@@ -11,7 +11,7 @@ public class CharacterTemporaryEffectDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+    @Column(name = "CHARACTER_ID")
     private Integer characterId;
     @Column
     private Integer modifier;

@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Data
 public class InventoryDto {
     @Id
+    @Column(name = "CHARACTER_ID")
     private Integer characterId;
     @Column
     private BigDecimal gold;

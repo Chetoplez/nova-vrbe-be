@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS GenericUser;
 DROP TABLE IF EXISTS guild;
-DROP TABLE IF EXISTS characters;
+DROP TABLE IF EXISTS Characters;
 DROP TABLE IF EXISTS CharactersHistory;
 DROP TABLE IF EXISTS CharactersDescription;
 DROP TABLE IF EXISTS Chat;
@@ -51,25 +51,25 @@ INSERT INTO Guild VALUES (
 );
 
 CREATE TABLE Characters (
-  characterId NUMBER PRIMARY KEY,
-  characterName VARCHAR(50) NOT NULL,
-  characterIcon VARCHAR(250) NOT NULL,
-  gender VARCHAR(2) NOT NULL,
+  CHARACTER_ID NUMBER PRIMARY KEY,
+  CHARACTER_NAME VARCHAR(50) NOT NULL,
+  CHARACTER_ICON VARCHAR(250) NOT NULL,
+  gender VARCHAR(10) NOT NULL,
   status VARCHAR(15) NOT NULL,
   clevel NUMBER NOT NULL,
   experience NUMBER NOT NULL,
-  totalExperience NUMBER NOT NULL,
+  TOTAL_EXPERIENCE NUMBER NOT NULL,
   health NUMBER NOT NULL,
-  healthStatus VARCHAR(20) NOT NULL,
+  HEALTH_STATUS VARCHAR(20) NOT NULL,
   role VARCHAR(20) NOT NULL,
-  PRIMARY KEY (characterId)
+  PRIMARY KEY (CHARACTER_ID)
 );
 
 INSERT INTO Characters VALUES (
  1,
  'Marzio Paparzio',
- 'url',
- 'M',
+ 'https://www.icon.com',
+ 'MASCHIO',
  'PLEBEO',
  1,
  100,
@@ -80,7 +80,7 @@ INSERT INTO Characters VALUES (
 );
 
 CREATE TABLE CharactersHistory(
-    historyId NUMBER PRIMARY KEY,
+    CHISTORY_ID NUMBER PRIMARY KEY,
     history VARCHAR(500)
 );
 
@@ -90,7 +90,7 @@ INSERT INTO CharactersHistory VALUES(
 );
 
 CREATE TABLE CharactersDescription(
-    descriptionId NUMBER PRIMARY KEY,
+    DESCRIPTION_ID NUMBER PRIMARY KEY,
     description VARCHAR(500)
 );
 
@@ -100,7 +100,7 @@ INSERT INTO CharactersDescription VALUES(
 );
 
 CREATE TABLE CharactersStatistics(
-    characterId NUMBER PRIMARY KEY NOT NULL,
+    CHARACTER_ID NUMBER PRIMARY KEY NOT NULL,
     forza NUMBER NOT NULL,
     forzaModifier NUMBER NOT NULL,
     destrezza NUMBER NOT NULL,
@@ -129,7 +129,7 @@ INSERT INTO CharactersStatistics VALUES(
 
 CREATE TABLE CharacterTemporaryEffect(
     id NUMBER NOT NULL AUTO_INCREMENT,
-    characterId NUMBER NOT NULL,
+    CHARACTER_ID NUMBER NOT NULL,
     modifier NUMBER NOT NULL,
     stat VARCHAR(15) NOT NULL,
     PRIMARY KEY (id)
@@ -190,9 +190,9 @@ CREATE TABLE ChatMessages (
 );
 
 CREATE TABLE Inventory(
-    characterId NUMBER NOT NULL,
+    CHARACTER_ID NUMBER NOT NULL,
     gold NUMBER,
-    PRIMARY KEY(characterId)
+    PRIMARY KEY(CHARACTER_ID)
 );
 
 insert into Inventory values(1,1895);

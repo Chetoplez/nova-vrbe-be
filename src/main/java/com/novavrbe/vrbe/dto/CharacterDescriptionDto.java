@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Entity
 public class CharacterDescriptionDto {
     @Id
+    @Column(name = "DESCRIPTION_ID")
     private Integer descriptionId;
     @Column
     private String description;

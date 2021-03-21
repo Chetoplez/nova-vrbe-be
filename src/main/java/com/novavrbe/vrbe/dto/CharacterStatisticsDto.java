@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Entity
 public class CharacterStatisticsDto {
     @Id
+    @Column(name = "CHARACTER_ID")
     private Integer characterId;
     @Column
     private Integer forza;

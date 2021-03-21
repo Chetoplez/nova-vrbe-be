@@ -15,7 +15,7 @@ public class ValidateUtils {
     static {
         maxFieldLenght.put(CHARACTER_NAME, 50);
         maxFieldLenght.put(CHARACTER_ICON, 250);
-        maxFieldLenght.put(GENDER, 2);
+        maxFieldLenght.put(GENDER, 10);
     }
 
     public static boolean validateCharacter(Character character){

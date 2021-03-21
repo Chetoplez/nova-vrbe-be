@@ -13,10 +13,11 @@ import java.math.BigDecimal;
 @Entity
 public class CharacterDto {
     @Id
+    @Column(name = "CHARACTER_ID")
     private Integer characterId;
-    @Column
+    @Column(name = "CHARACTER_NAME")
     private String characterName;
-    @Column
+    @Column(name = "CHARACTER_ICON")
     private String characterIcon;
     @Column
     private String gender;
@@ -26,11 +27,11 @@ public class CharacterDto {
     private Integer level;
     @Column
     private BigDecimal experience;
-    @Column
+    @Column(name = "TOTAL_EXPERIENCE")
     private BigDecimal totalExperience;
     @Column
     private Integer health;
-    @Column
+    @Column(name = "HEALTH_STATUS")
     private String healthStatus;
     @Column
     private String role;

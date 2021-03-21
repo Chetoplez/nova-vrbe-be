@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Entity
 public class CharacterHistoryDto {
     @Id
+    @Column(name = "CHISTORY_ID")
     private Integer historyId;
     @Column
     private String history;

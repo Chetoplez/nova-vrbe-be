@@ -26,7 +26,7 @@ public class CharacterUtils {
 
     public static void fillCharacterFieldsFromDto(Character character, CharacterDto dto){
         if(character != null && dto != null){
-            character.setCharacterId(dto.toString());
+            character.setCharacterId(dto.getCharacterId().toString());
             character.setCharacterName(dto.getCharacterName());
             try {
                 URL characterIcon = new URL(dto.getCharacterIcon());
@@ -199,11 +199,11 @@ public class CharacterUtils {
         return statisticsDto;
     }
 
-    public static InventoryDto buildInventoryForDto(Integer characterId, BigDecimal gold){
-        InventoryDto inventoryDto = null;
+    public static InventoryDto buildInventoryForDto(@NotNull Integer characterId, BigDecimal gold){
+        InventoryDto inventoryDto = new InventoryDto();
 
         inventoryDto.setCharacterId(characterId);
-        inventoryDto.setGold(gold);
+        inventoryDto.setGold(gold != null ? gold : BigDecimal.ZERO);
 
         return inventoryDto;
     }
