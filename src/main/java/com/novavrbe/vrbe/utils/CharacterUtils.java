@@ -13,6 +13,8 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -319,6 +321,19 @@ public class CharacterUtils {
 
 
         return object;
+    }
+
+    public static CharacterInventoryObjectDto mapInventoryObjectToCharacterInventoryObject(InventoryObjectDto dto, Integer characterId){
+        CharacterInventoryObjectDto item = new CharacterInventoryObjectDto();
+
+        item.setIdInventoryObject(dto.getId());
+        item.setQuantity(1);
+        item.setCharacterId(characterId);
+        item.setInUse(false);
+        item.setDuration(dto.getDuration());
+        item.setAcquiringDate(new Date(Instant.now().toEpochMilli()));
+
+        return item;
     }
 
 }

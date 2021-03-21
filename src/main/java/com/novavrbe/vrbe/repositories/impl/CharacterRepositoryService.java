@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CharacterRepositoryService {
@@ -252,6 +253,36 @@ public class CharacterRepositoryService {
         association.getCharacterInventoryObjectDto().setCharacterId(toCharacterId);
         association.getCharacterInventoryObjectDto().setQuantity(1);
         characterInventoryObjectRepository.save(association.getCharacterInventoryObjectDto());
+    }
+
+    public InventoryObjectDto retrieveInventoryItem(@NotNull Integer objectId){
+        InventoryObjectDto objectDto = null;
+
+        Optional<InventoryObjectDto> item = inventoryObjectRepository.findById(objectId);
+        objectDto = item != null && item.isPresent() ? item.get() : null;
+
+        return objectDto;
+    }
+
+    public boolean addItemToPlayerInventory(@NotNull Integer characterId, @NotNull InventoryObjectDto item, @NotNull Integer quantity){
+        boolean added = false;
+
+        List<CharacterInventoryObjectDto> characterItems = characterInventoryObjectRepository.findCharacterObjects(characterId);
+        if(!CollectionUtils.isEmpty(characterItems)){
+            List<CharacterInventoryObjectDto> items = characterItems.stream()
+                    .filter( citem -> {
+                        return citem.getIdInventoryObject() == item.getId();
+                    })
+                    .collect(Collectors.toList());
+            CharacterInventoryObjectDto citem = items.get(0);
+            citem.setQuantity(citem.getQuantity() + quantity);
+            characterInventoryObjectRepository.save(citem);
+        }else{
+            CharacterInventoryObjectDto newItem = CharacterUtils.mapInventoryObjectToCharacterInventoryObject(item, characterId);
+            characterInventoryObjectRepository.save(newItem);
+        }
+
+        return added;
     }
 
 }

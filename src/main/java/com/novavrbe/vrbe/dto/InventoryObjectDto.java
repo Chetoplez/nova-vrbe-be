@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Entity
 public class InventoryObjectDto {
     @Id
+    @Column(name = "ITEM_ID")
     private Integer id;
     @Column
     private String name;

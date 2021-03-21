@@ -198,7 +198,7 @@ CREATE TABLE Inventory(
 insert into Inventory values(1,1895);
 
 CREATE TABLE InventoryObject(
-    id NUMBER NOT NULL AUTO_INCREMENT,
+    ITEM_ID NUMBER NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     description VARCHAR(50) NOT NULL,
     isEquipment BIT NOT NULL,
@@ -207,7 +207,7 @@ CREATE TABLE InventoryObject(
     bodyPart VARCHAR(15),
     duration NUMBER,
     url VARCHAR(500),
-    PRIMARY KEY(id)
+    PRIMARY KEY(ITEM_ID)
 );
 
 INSERT INTO InventoryObject VALUES(

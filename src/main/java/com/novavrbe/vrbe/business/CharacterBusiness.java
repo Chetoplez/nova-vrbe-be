@@ -1,8 +1,8 @@
 package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.dto.CharacterInventoryObjectDto;
 import com.novavrbe.vrbe.dto.InventoryDto;
+import com.novavrbe.vrbe.dto.InventoryObjectDto;
 import com.novavrbe.vrbe.dto.InventoryObjectEffectDto;
 import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
@@ -53,7 +53,7 @@ public class CharacterBusiness {
 
         Integer cID = Integer.parseInt(characterId);
 
-        CharacterDto characterDto = characterRepositoryService.retrieveCharacterFromId(cID);
+        CharacterDto characterDto = retrieveCharacterFromId(cID);
         if(characterDto != null){
             GetCharacterResponse getCharacterResponse = new GetCharacterResponse();
 
@@ -126,7 +126,7 @@ public class CharacterBusiness {
             return response;
         }
 
-        CharacterDto character = characterRepositoryService.retrieveCharacterFromId(request.getCharacterId());
+        CharacterDto character = retrieveCharacterFromId(request.getCharacterId());
         if(character == null){
             response = new ResponseEntity<>(new EquipItemResponse(), HttpStatus.BAD_REQUEST);
             return response;
@@ -192,5 +192,34 @@ public class CharacterBusiness {
         response = new ResponseEntity<>(lendItemResponse, HttpStatus.OK);
 
         return response;
+    }
+
+    public ResponseEntity<AddItemResponse> addItem(AddItemRequest request) {
+        ResponseEntity<AddItemResponse> response = null;
+
+        if(request == null || request.getCharacterId() == null || request.getItemId() == null || request.getQuantity() == null){
+            response = new ResponseEntity<>(new AddItemResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        CharacterDto character = retrieveCharacterFromId(request.getCharacterId());
+        InventoryObjectDto inventoryObjectDto = characterRepositoryService.retrieveInventoryItem(request.getItemId());
+
+        if(character == null || inventoryObjectDto == null){
+            response = new ResponseEntity<>(new AddItemResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        AddItemResponse addItemResponse = new AddItemResponse();
+
+        addItemResponse.setSuccess(characterRepositoryService.addItemToPlayerInventory(character.getCharacterId(), inventoryObjectDto, request.getQuantity()));
+        response = new ResponseEntity<>(addItemResponse, HttpStatus.OK);
+
+        return response;
+    }
+
+    private CharacterDto retrieveCharacterFromId(Integer id){
+        CharacterDto character = characterRepositoryService.retrieveCharacterFromId(id);
+        return  character;
     }
 }
