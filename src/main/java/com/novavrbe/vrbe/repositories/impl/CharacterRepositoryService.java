@@ -243,6 +243,8 @@ public class CharacterRepositoryService {
 
     public void lendItemToAnotherCharacter(@NotNull Integer toCharacterId, @NotNull InventoryObjectAssociation association){
         Integer newQuantity = association.getCharacterInventoryObjectDto().getQuantity() - 1;
+
+        //TODO Ma qui, il caso non dovrebbe essere al contrario?
         if(newQuantity > 0){
             characterInventoryObjectRepository.delete(association.getCharacterInventoryObjectDto());
         }else{
