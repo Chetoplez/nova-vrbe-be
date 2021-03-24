@@ -210,8 +210,8 @@ CREATE TABLE InventoryObject(
     PRIMARY KEY(ITEM_ID)
 );
 
-INSERT INTO InventoryObject VALUES(
-1,'elmo centurio','elmo con cresta trasversale',1,0,'ARMOR','HEAD',8,''
+INSERT INTO InventoryObject(ITEM_ID,name,description,isEquipment,isRare,category,bodyPart,duration,url) VALUES(
+1,'elmo centurio','elmo con cresta trasversale',1,0,'ARMOR','HEAD',8,'https://www.coltelleriazoppi.com/wp-content/uploads/2010/11/p-35893-I6053.09.jpg'
 );
 
 CREATE TABLE InventoryObjectEffect(
@@ -235,7 +235,7 @@ CREATE TABLE CharacterInventoryObject(
     inUse BIT,
     duration NUMBER,
     acquiringDate DATE,
-    acquiredBy INTEGER,
+    acquiredBy NUMBER,
     PRIMARY KEY(idInventoryObject, characterId)
 );
 
