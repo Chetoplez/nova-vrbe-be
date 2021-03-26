@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS GenericUser;
 DROP TABLE IF EXISTS guild;
+DROP TABLE IF EXISTS guildBank;
 DROP TABLE IF EXISTS Characters;
 DROP TABLE IF EXISTS CharactersHistory;
 DROP TABLE IF EXISTS CharactersDescription;
@@ -41,13 +42,35 @@ INSERT INTO GenericUser VALUES (
 );
 
 CREATE TABLE Guild (
-  id VARCHAR(50) PRIMARY KEY,
-  name VARCHAR(50) NOT NULL
+  GUILD_ID NUMBER PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  description varchar(300),
+  guild_img varchar(250),
+  ATTIVO BIT,
+  statute TEXT,
+  announcement VARCHAR(500),
+  PRIMARY KEY (GUILD_ID)
 );
 
-INSERT INTO Guild VALUES (
+INSERT INTO GUILD VALUES (
  1,
- 'Gilda'
+ 'Legio XIII Gemina',
+ 'I Conquistatori della repubblica',
+ '',
+ 1,
+ 'un sacco di testo qui dentro',
+ 'un Annuncio bello e accattivante qui dentro, una roba fighissima'
+);
+
+CREATE TABLE GUILDBANK (
+GUILD_ID NUMBER PRIMARY KEY,
+amount NUMBER,
+PRIMARY KEY(GUILD_ID)
+);
+
+insert into GUILDBANK values (
+   1,
+   5000
 );
 
 CREATE TABLE Characters (
