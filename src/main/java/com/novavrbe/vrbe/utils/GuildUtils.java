@@ -2,8 +2,13 @@ package com.novavrbe.vrbe.utils;
 
 import com.novavrbe.vrbe.dto.GuildBankDTO;
 import com.novavrbe.vrbe.dto.GuildDTO;
+import com.novavrbe.vrbe.dto.GuildRoleDTO;
 import com.novavrbe.vrbe.models.guildcontroller.Guild;
+import com.novavrbe.vrbe.models.guildcontroller.GuildRole;
 import com.sun.istack.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuildUtils {
 
@@ -19,5 +24,25 @@ public class GuildUtils {
         guild.setStatute(guildDTO.getStatute());
         guild.setBankAmount(bankDTO.getAmount());
         return guild;
+    }
+
+    public static List<GuildRole> prepareGuildRoles(@NotNull List<GuildRoleDTO> roleDTO) {
+        List<GuildRole> _tmp = new ArrayList<>();
+        for (GuildRoleDTO role: roleDTO) {
+            GuildRole guildRole = new GuildRole();
+
+            guildRole.setGuild_id(role.getGuild_id());
+            guildRole.setRole_id(role.getRole_id());
+            guildRole.setName(role.getName());
+            guildRole.setSalary(role.getSalary());
+            guildRole.setIsManager(role.getIsManager());
+            guildRole.setRole_img(role.getRole_img());
+            guildRole.setDescription(role.getDescription());
+            guildRole.setGuild_level(role.getGuild_level());
+
+            _tmp.add(guildRole);
+        }
+
+        return _tmp;
     }
 }

@@ -1,6 +1,9 @@
 DROP TABLE IF EXISTS GenericUser;
 DROP TABLE IF EXISTS guild;
 DROP TABLE IF EXISTS guildBank;
+DROP TABLE IF EXISTS GUILDROLE;
+DROP TABLE IF EXISTS GUILDMEMBER;
+DROP TABLE IF EXISTS CHARACTER_CV;
 DROP TABLE IF EXISTS Characters;
 DROP TABLE IF EXISTS CharactersHistory;
 DROP TABLE IF EXISTS CharactersDescription;
@@ -71,6 +74,42 @@ PRIMARY KEY(GUILD_ID)
 insert into GUILDBANK values (
    1,
    5000
+);
+
+CREATE TABLE GUILDROLE (
+ROLE_ID NUMBER NOT NULL,
+GUILD_ID NUMBER NOT NULL,
+NAME VARCHAR(50) NOT NULL,
+SALARY NUMBER NOT NULL,
+MANAGER BIT NOT NULL,
+ROLE_IMG VARCHAR(250),
+DESCRIPTION VARCHAR(300),
+GUILD_LEVEL NUMBER NOT NULL,
+PRIMARY KEY (ROLE_ID,GUILD_ID)
+);
+
+INSERT INTO GUILDROLE VALUES
+(1,1,'Legionario',30,0,'','Soldato di truppa preposto a formare le prime linee di combattimento',1)
+,(2,1,'Optio',50,0,'','Soldato Esperto braccio destro del centurione, a lui vengono affidati compiti di gestione e addestramento',2)
+,(3,1,'Centurio',90,0,'','Il capo di una centuria, commina punizioni e allena la truppa. La sua parola è legge per i suoi sottoposti',3)
+,(4,1,'Tribunus',130,0,'','Ufficiale in comando al Legatus Legionis, organizza le centurie e dispone per la logistica ',4)
+,(5,1,'Legatus',200,1,'','Il comandante in carica della legione, decide promozioni e allontanamenti, ha facolta di vita o morte dei suoi soldati',5);
+
+
+CREATE TABLE GUILDMEMBER (
+CHARACTER_ID NUMBER NOT NULL,
+ROLE_ID NUMBER NOT NULL,
+PRIMARY KEY(CHARACTER_ID,ROLE_ID)
+);
+
+insert into GUILDMEMBER VALUES (
+1,5);
+
+CREATE TABLE CHARACTER_CV (
+CHARACTER_ID NUMBER NOT NULL,
+ROLE_ID NUMBER NOT NULL,
+ENROLLMENT_DATE DATE,
+PRIMARY KEY (CHARACTER_ID,ROLE_ID,ENROLLMENT_DATE)
 );
 
 CREATE TABLE Characters (

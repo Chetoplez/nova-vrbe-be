@@ -13,6 +13,11 @@ public class GuildBankRepositoryService {
     @Autowired
     private GuildBankRepository guildBankRepository;
 
+    /**
+     * Torna il saldo del conto della gilda
+     * @param guildId id della gilda
+     * @return l'ammontare della gilda
+     */
     public GuildBankDTO getGuildBank(Integer guildId){
         GuildBankDTO bankDTO = null;
         if(guildId != null){
