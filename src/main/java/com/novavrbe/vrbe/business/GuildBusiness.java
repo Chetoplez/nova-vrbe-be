@@ -3,11 +3,9 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.GuildBankDTO;
 import com.novavrbe.vrbe.dto.GuildDTO;
+import com.novavrbe.vrbe.dto.GuildMemberListDTO;
 import com.novavrbe.vrbe.dto.GuildRoleDTO;
-import com.novavrbe.vrbe.models.guildcontroller.GetGuildResponse;
-import com.novavrbe.vrbe.models.guildcontroller.GetGuildRoleReponse;
-import com.novavrbe.vrbe.models.guildcontroller.Guild;
-import com.novavrbe.vrbe.models.guildcontroller.GuildRole;
+import com.novavrbe.vrbe.models.guildcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.GuildBankRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.GuildRoleRepositoryService;
@@ -69,5 +67,23 @@ public class GuildBusiness {
     return  response;
     }
 
+    /**
+     * Torna i membri di una gilda
+     * @param guildId L'id della gilda
+     * @return
+     */
+    public ResponseEntity<GetGuildMemberListDTOResponse> getGuildMembers(String guildId){
+        ResponseEntity<GetGuildMemberListDTOResponse> response;
+        if(!StringUtils.hasText(guildId)){
+            response = new ResponseEntity<>(new GetGuildMemberListDTOResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        List<GuildMemberListDTO> members = guildRepositoryService.getGuildMembers(Integer.parseInt(guildId));
+        GetGuildMemberListDTOResponse res = new GetGuildMemberListDTOResponse();
+        res.setMembers(members);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return  response;
+    }
 
 }

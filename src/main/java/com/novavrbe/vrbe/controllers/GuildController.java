@@ -1,5 +1,6 @@
 package com.novavrbe.vrbe.controllers;
 import com.novavrbe.vrbe.business.GuildBusiness;
+import com.novavrbe.vrbe.models.guildcontroller.GetGuildMemberListDTOResponse;
 import com.novavrbe.vrbe.models.guildcontroller.GetGuildResponse;
 import com.novavrbe.vrbe.models.guildcontroller.GetGuildRoleReponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,10 @@ public class GuildController {
     @GetMapping("/role/guildid={guildId}")
     public ResponseEntity<GetGuildRoleReponse> getGuildRole(@PathVariable String guildId){
         return guildBusiness.getGuildRole(guildId);
+    }
+
+    @GetMapping("/members/guildid={guildId}")
+    public ResponseEntity<GetGuildMemberListDTOResponse> getGuildMembers(@PathVariable String guildId){
+        return guildBusiness.getGuildMembers(guildId);
     }
 }

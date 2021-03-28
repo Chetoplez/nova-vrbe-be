@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS guild;
 DROP TABLE IF EXISTS guildBank;
 DROP TABLE IF EXISTS GUILDROLE;
 DROP TABLE IF EXISTS GUILDMEMBER;
+
 DROP TABLE IF EXISTS CHARACTER_CV;
 DROP TABLE IF EXISTS Characters;
 DROP TABLE IF EXISTS CharactersHistory;
@@ -42,6 +43,91 @@ INSERT INTO GenericUser VALUES (
  'ciaoiosonoilsaledellavita',
  '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f',
  '21/02/2021'
+);
+
+CREATE TABLE Characters (
+  CHARACTER_ID NUMBER PRIMARY KEY,
+  CHARACTER_NAME VARCHAR(50) NOT NULL,
+  CHARACTER_ICON VARCHAR(250) NOT NULL,
+  gender VARCHAR(10) NOT NULL,
+  status VARCHAR(15) NOT NULL,
+  clevel NUMBER NOT NULL,
+  experience NUMBER NOT NULL,
+  TOTAL_EXPERIENCE NUMBER NOT NULL,
+  health NUMBER NOT NULL,
+  HEALTH_STATUS VARCHAR(20) NOT NULL,
+  role VARCHAR(20) NOT NULL,
+  PRIMARY KEY (CHARACTER_ID)
+);
+
+INSERT INTO Characters VALUES (
+ 1,
+ 'Marzio Paparzio',
+ 'https://www.icon.com',
+ 'MASCHIO',
+ 'PLEBEO',
+ 1,
+ 100,
+ 100,
+ 100,
+ 'SAZIO',
+ 'USER'
+);
+
+CREATE TABLE CharactersHistory(
+    CHISTORY_ID NUMBER PRIMARY KEY,
+    history VARCHAR(500)
+);
+
+INSERT INTO CharactersHistory VALUES(
+    1,
+    'Questa e la storia di come la mia vita e cambiata, capovolta, sottosopra e finita'
+);
+
+CREATE TABLE CharactersDescription(
+    DESCRIPTION_ID NUMBER PRIMARY KEY,
+    description VARCHAR(500)
+);
+
+INSERT INTO CharactersDescription VALUES(
+    1,
+    'Uno strafigo che riesce a sbucciare le mele utilizzando il mento'
+);
+
+CREATE TABLE CharactersStatistics(
+    CHARACTER_ID NUMBER PRIMARY KEY NOT NULL,
+    forza NUMBER NOT NULL,
+    forzaModifier NUMBER NOT NULL,
+    destrezza NUMBER NOT NULL,
+    destrezzaModifier NUMBER NOT NULL,
+    costituzione NUMBER NOT NULL,
+    costituzioneModifier NUMBER NOT NULL,
+    intelligenza NUMBER NOT NULL,
+    intelligenzaModifier NUMBER NOT NULL,
+    saggezza NUMBER NOT NULL,
+    saggezzaModifier NUMBER NOT NULL
+);
+
+INSERT INTO CharactersStatistics VALUES(
+    1,
+    5,
+    0,
+    5,
+    0,
+    5,
+    0,
+    5,
+    0,
+    5,
+    0
+);
+
+CREATE TABLE CharacterTemporaryEffect(
+    id NUMBER NOT NULL AUTO_INCREMENT,
+    CHARACTER_ID NUMBER NOT NULL,
+    modifier NUMBER NOT NULL,
+    stat VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE Guild (
@@ -102,99 +188,29 @@ ROLE_ID NUMBER NOT NULL,
 PRIMARY KEY(CHARACTER_ID,ROLE_ID)
 );
 
-insert into GUILDMEMBER VALUES (
-1,5);
+insert into GUILDMEMBER VALUES
+(1,5);
+
+CREATE VIEW IF NOT EXISTS V_GUILDMEMBERS AS
+SELECT
+ GR.GUILD_ID AS GUILD_ID,
+ GR.ROLE_ID AS ROLE_ID,
+ CH.CHARACTER_ID AS CHARACTER_ID,
+ CH.CHARACTER_NAME AS CHARACTER_NAME,
+ GR.GUILD_LEVEL AS GUILD_LEVEL,
+ GR.NAME AS GUILD_NAME,
+ GR.ROLE_IMG AS ROLE_IMG
+FROM GUILDMEMBER GM
+JOIN GUILDROLE GR
+ON GM.ROLE_ID = GR.ROLE_ID
+JOIN CHARACTERS AS CH
+ON CH.CHARACTER_ID = GM.CHARACTER_ID;
 
 CREATE TABLE CHARACTER_CV (
 CHARACTER_ID NUMBER NOT NULL,
 ROLE_ID NUMBER NOT NULL,
 ENROLLMENT_DATE DATE,
 PRIMARY KEY (CHARACTER_ID,ROLE_ID,ENROLLMENT_DATE)
-);
-
-CREATE TABLE Characters (
-  CHARACTER_ID NUMBER PRIMARY KEY,
-  CHARACTER_NAME VARCHAR(50) NOT NULL,
-  CHARACTER_ICON VARCHAR(250) NOT NULL,
-  gender VARCHAR(10) NOT NULL,
-  status VARCHAR(15) NOT NULL,
-  clevel NUMBER NOT NULL,
-  experience NUMBER NOT NULL,
-  TOTAL_EXPERIENCE NUMBER NOT NULL,
-  health NUMBER NOT NULL,
-  HEALTH_STATUS VARCHAR(20) NOT NULL,
-  role VARCHAR(20) NOT NULL,
-  PRIMARY KEY (CHARACTER_ID)
-);
-
-INSERT INTO Characters VALUES (
- 1,
- 'Marzio Paparzio',
- 'https://www.icon.com',
- 'MASCHIO',
- 'PLEBEO',
- 1,
- 100,
- 100,
- 500,
- 'SAZIO',
- 'USER'
-);
-
-CREATE TABLE CharactersHistory(
-    CHISTORY_ID NUMBER PRIMARY KEY,
-    history VARCHAR(500)
-);
-
-INSERT INTO CharactersHistory VALUES(
-    1,
-    'Questa e la storia di come la mia vita e cambiata, capovolta, sottosopra e finita'
-);
-
-CREATE TABLE CharactersDescription(
-    DESCRIPTION_ID NUMBER PRIMARY KEY,
-    description VARCHAR(500)
-);
-
-INSERT INTO CharactersDescription VALUES(
-    1,
-    'Uno strafigo che riesce a sbucciare le mele utilizzando il mento'
-);
-
-CREATE TABLE CharactersStatistics(
-    CHARACTER_ID NUMBER PRIMARY KEY NOT NULL,
-    forza NUMBER NOT NULL,
-    forzaModifier NUMBER NOT NULL,
-    destrezza NUMBER NOT NULL,
-    destrezzaModifier NUMBER NOT NULL,
-    costituzione NUMBER NOT NULL,
-    costituzioneModifier NUMBER NOT NULL,
-    intelligenza NUMBER NOT NULL,
-    intelligenzaModifier NUMBER NOT NULL,
-    saggezza NUMBER NOT NULL,
-    saggezzaModifier NUMBER NOT NULL
-);
-
-INSERT INTO CharactersStatistics VALUES(
-    1,
-    5,
-    0,
-    5,
-    0,
-    5,
-    0,
-    5,
-    0,
-    5,
-    0
-);
-
-CREATE TABLE CharacterTemporaryEffect(
-    id NUMBER NOT NULL AUTO_INCREMENT,
-    CHARACTER_ID NUMBER NOT NULL,
-    modifier NUMBER NOT NULL,
-    stat VARCHAR(15) NOT NULL,
-    PRIMARY KEY (id)
 );
 
 CREATE TABLE Chat(
