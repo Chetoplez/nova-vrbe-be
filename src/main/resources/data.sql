@@ -149,6 +149,15 @@ INSERT INTO GUILD VALUES (
  1,
  'un sacco di testo qui dentro',
  'un Annuncio bello e accattivante qui dentro, una roba fighissima'
+),
+(
+ 2,
+ 'Medici',
+ 'Studiosi delle arti curatorie, fedeli al giuramento di Ippocrate',
+ '',
+ 1,
+ 'lo statuto dei medici',
+ 'un Annuncio bello e accattivante qui dentro, una roba fighissima , ma dei medici'
 );
 
 CREATE TABLE GUILDBANK (
@@ -160,7 +169,7 @@ PRIMARY KEY(GUILD_ID)
 insert into GUILDBANK values (
    1,
    5000
-);
+),(2,5000);
 
 CREATE TABLE GUILDROLE (
 ROLE_ID NUMBER NOT NULL,
@@ -175,11 +184,12 @@ PRIMARY KEY (ROLE_ID,GUILD_ID)
 );
 
 INSERT INTO GUILDROLE VALUES
-(1,1,'Legionario',30,0,'','Soldato di truppa preposto a formare le prime linee di combattimento',1)
-,(2,1,'Optio',50,0,'','Soldato Esperto braccio destro del centurione, a lui vengono affidati compiti di gestione e addestramento',2)
-,(3,1,'Centurio',90,0,'','Il capo di una centuria, commina punizioni e allena la truppa. La sua parola è legge per i suoi sottoposti',3)
-,(4,1,'Tribunus',130,0,'','Ufficiale in comando al Legatus Legionis, organizza le centurie e dispone per la logistica ',4)
-,(5,1,'Legatus',200,1,'','Il comandante in carica della legione, decide promozioni e allontanamenti, ha facolta di vita o morte dei suoi soldati',5);
+(1,1,'Legionario',30,0,'','Soldato di truppa preposto a formare le prime linee di combattimento',10)
+,(2,1,'Optio',50,0,'','Soldato Esperto braccio destro del centurione, a lui vengono affidati compiti di gestione e addestramento',20)
+,(3,1,'Centurio',90,0,'','Il capo di una centuria, commina punizioni e allena la truppa. La sua parola è legge per i suoi sottoposti',30)
+,(4,1,'Tribunus',130,0,'','Ufficiale in comando al Legatus Legionis, organizza le centurie e dispone per la logistica ',40)
+,(5,1,'Legatus',200,1,'','Il comandante in carica della legione, decide promozioni e allontanamenti, ha facolta di vita o morte dei suoi soldati',50)
+,(6,2,'Discipulo',30,0,'','Colui che si è appena iniziato allo studio delle arti mediche, non ha ancora effettuato il giuramento ad Ippocrate',10);
 
 
 CREATE TABLE GUILDMEMBER (
@@ -247,10 +257,8 @@ CREATE TABLE Luoghi(
 
 insert into Luoghi values
 (1,'Il forum è la piazza principale della cittadina dove si svolgono le maggiori attività economiche e sociali, si trovano gli edifici di governo e quelli finanziari. Si tratta di una piazza porticata con colonnato su tre lati circodata da vari edifici',
-'Forum','','');
-
-insert into Luoghi values (
-2,'Porta di ingresso posta sul Decumano del Municipium. Vi sono due torrette di avvisatamento e sulle mura è posto un camminamenento che corre attorno alla fortificazione. Accanto al portone principali, vi sono due altre porte utilizzate per il passaggio di civili',
+'Forum','',''),
+(2,'Porta di ingresso posta sul Decumano del Municipium. Vi sono due torrette di avvisatamento e sulle mura è posto un camminamenento che corre attorno alla fortificazione. Accanto al portone principali, vi sono due altre porte utilizzate per il passaggio di civili',
 'Porta Decumana', '','');
 
 CREATE TABLE ChatMessages (

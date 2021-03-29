@@ -1,7 +1,6 @@
 package com.novavrbe.vrbe.dto;
 
 import lombok.Data;
-import org.hibernate.annotations.Immutable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,22 +16,22 @@ public class GuildMemberListDTO {
     @Column(name = "GUILD_ID")
     private Integer GUILD_ID;
 
-    @Column
+    @Column(name = "ROLE_ID")
     private Integer ROLE_ID;
 
-    @Column
-    private Integer CHARACHER_ID;
+    @Column(name = "CHARACTER_ID")
+    private Integer CHARACTER_ID;
 
-    @Column
+    @Column(name = "CHARACTER_NAME")
     private String CHARACTER_NAME;
 
-    @Column
+    @Column(name = "GUILD_LEVEL")
     private Integer GUILD_LEVEL;
 
-    @Column
+    @Column(name = "GUILD_NAME")
     private String GUILD_NAME;
 
-    @Column
+    @Column(name = "ROLE_IMG")
     private String ROLE_IMG;
 
 }
