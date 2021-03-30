@@ -1,36 +1,3 @@
-DROP TABLE IF EXISTS GenericUser;
-DROP TABLE IF EXISTS guild;
-DROP TABLE IF EXISTS guildBank;
-DROP TABLE IF EXISTS GUILDROLE;
-DROP TABLE IF EXISTS GUILDMEMBER;
-
-DROP TABLE IF EXISTS CHARACTER_CV;
-DROP TABLE IF EXISTS Characters;
-DROP TABLE IF EXISTS CharactersHistory;
-DROP TABLE IF EXISTS CharactersDescription;
-DROP TABLE IF EXISTS Chat;
-DROP TABLE IF EXISTS PresentiLuogo;
-DROP TABLE IF EXISTS ChatMessages;
-DROP TABLE IF EXISTS Luoghi;
-DROP TABLE IF EXISTS ChatMembers;
-DROP TABLE IF EXISTS Inventory;
-DROP TABLE IF EXISTS InventoryObject;
-DROP TABLE IF EXISTS InventoryObjectEffect;
-DROP TABLE IF EXISTS CharacterInventoryObject;
-
-CREATE TABLE GenericUser (
-  id VARCHAR(50) NOT NULL AUTO_INCREMENT,
-  name VARCHAR(50) NOT NULL,
-  lastname VARCHAR(50) NOT NULL,
-  birthday VARCHAR(20) DEFAULT NULL,
-  email VARCHAR(100) NOT NULL,
-  gender VARCHAR(2) NOT NULL,
-  nickname VARCHAR(100) NOT NULL,
-  salt VARCHAR(100) NOT NULL,
-  composedSecret VARCHAR(256) NOT NULL,
-  lastLogin VARCHAR(20) DEFAULT NULL,
-  PRIMARY KEY (id)
-);
 
 INSERT INTO GenericUser VALUES (
  1,
@@ -45,20 +12,6 @@ INSERT INTO GenericUser VALUES (
  '21/02/2021'
 );
 
-CREATE TABLE Characters (
-  CHARACTER_ID NUMBER PRIMARY KEY,
-  CHARACTER_NAME VARCHAR(50) NOT NULL,
-  CHARACTER_ICON VARCHAR(250) NOT NULL,
-  gender VARCHAR(10) NOT NULL,
-  status VARCHAR(15) NOT NULL,
-  clevel NUMBER NOT NULL,
-  experience NUMBER NOT NULL,
-  TOTAL_EXPERIENCE NUMBER NOT NULL,
-  health NUMBER NOT NULL,
-  HEALTH_STATUS VARCHAR(20) NOT NULL,
-  role VARCHAR(20) NOT NULL,
-  PRIMARY KEY (CHARACTER_ID)
-);
 
 INSERT INTO Characters VALUES (
  1,
@@ -74,39 +27,19 @@ INSERT INTO Characters VALUES (
  'USER'
 );
 
-CREATE TABLE CharactersHistory(
-    CHISTORY_ID NUMBER PRIMARY KEY,
-    history VARCHAR(500)
-);
 
 INSERT INTO CharactersHistory VALUES(
     1,
     'Questa e la storia di come la mia vita e cambiata, capovolta, sottosopra e finita'
 );
 
-CREATE TABLE CharactersDescription(
-    DESCRIPTION_ID NUMBER PRIMARY KEY,
-    description VARCHAR(500)
-);
 
 INSERT INTO CharactersDescription VALUES(
     1,
     'Uno strafigo che riesce a sbucciare le mele utilizzando il mento'
 );
 
-CREATE TABLE CharactersStatistics(
-    CHARACTER_ID NUMBER PRIMARY KEY NOT NULL,
-    forza NUMBER NOT NULL,
-    forzaModifier NUMBER NOT NULL,
-    destrezza NUMBER NOT NULL,
-    destrezzaModifier NUMBER NOT NULL,
-    costituzione NUMBER NOT NULL,
-    costituzioneModifier NUMBER NOT NULL,
-    intelligenza NUMBER NOT NULL,
-    intelligenzaModifier NUMBER NOT NULL,
-    saggezza NUMBER NOT NULL,
-    saggezzaModifier NUMBER NOT NULL
-);
+
 
 INSERT INTO CharactersStatistics VALUES(
     1,
@@ -122,24 +55,7 @@ INSERT INTO CharactersStatistics VALUES(
     0
 );
 
-CREATE TABLE CharacterTemporaryEffect(
-    id NUMBER NOT NULL AUTO_INCREMENT,
-    CHARACTER_ID NUMBER NOT NULL,
-    modifier NUMBER NOT NULL,
-    stat VARCHAR(15) NOT NULL,
-    PRIMARY KEY (id)
-);
 
-CREATE TABLE Guild (
-  GUILD_ID NUMBER PRIMARY KEY,
-  name VARCHAR(50) NOT NULL,
-  description varchar(300),
-  guild_img varchar(250),
-  ATTIVO BIT,
-  statute TEXT,
-  announcement VARCHAR(500),
-  PRIMARY KEY (GUILD_ID)
-);
 
 INSERT INTO GUILD VALUES (
  1,
@@ -160,28 +76,14 @@ INSERT INTO GUILD VALUES (
  'un Annuncio bello e accattivante qui dentro, una roba fighissima , ma dei medici'
 );
 
-CREATE TABLE GUILDBANK (
-GUILD_ID NUMBER PRIMARY KEY,
-amount NUMBER,
-PRIMARY KEY(GUILD_ID)
-);
+
 
 insert into GUILDBANK values (
    1,
    5000
 ),(2,5000);
 
-CREATE TABLE GUILDROLE (
-ROLE_ID NUMBER NOT NULL,
-GUILD_ID NUMBER NOT NULL,
-NAME VARCHAR(50) NOT NULL,
-SALARY NUMBER NOT NULL,
-MANAGER BIT NOT NULL,
-ROLE_IMG VARCHAR(250),
-DESCRIPTION VARCHAR(300),
-GUILD_LEVEL NUMBER NOT NULL,
-PRIMARY KEY (ROLE_ID,GUILD_ID)
-);
+
 
 INSERT INTO GUILDROLE VALUES
 (1,1,'Legionario',30,0,'','Soldato di truppa preposto a formare le prime linee di combattimento',10)
@@ -192,68 +94,11 @@ INSERT INTO GUILDROLE VALUES
 ,(6,2,'Discipulo',30,0,'','Colui che si è appena iniziato allo studio delle arti mediche, non ha ancora effettuato il giuramento ad Ippocrate',10);
 
 
-CREATE TABLE GUILDMEMBER (
-CHARACTER_ID NUMBER NOT NULL,
-ROLE_ID NUMBER NOT NULL,
-PRIMARY KEY(CHARACTER_ID,ROLE_ID)
-);
 
 insert into GUILDMEMBER VALUES
 (1,5);
 
-CREATE VIEW IF NOT EXISTS V_GUILDMEMBERS AS
-SELECT
- GR.GUILD_ID AS GUILD_ID,
- GR.ROLE_ID AS ROLE_ID,
- CH.CHARACTER_ID AS CHARACTER_ID,
- CH.CHARACTER_NAME AS CHARACTER_NAME,
- GR.GUILD_LEVEL AS GUILD_LEVEL,
- GR.NAME AS GUILD_NAME,
- GR.ROLE_IMG AS ROLE_IMG
-FROM GUILDMEMBER GM
-JOIN GUILDROLE GR
-ON GM.ROLE_ID = GR.ROLE_ID
-JOIN CHARACTERS AS CH
-ON CH.CHARACTER_ID = GM.CHARACTER_ID;
 
-CREATE TABLE CHARACTER_CV (
-CHARACTER_ID NUMBER NOT NULL,
-ROLE_ID NUMBER NOT NULL,
-ENROLLMENT_DATE DATE,
-PRIMARY KEY (CHARACTER_ID,ROLE_ID,ENROLLMENT_DATE)
-);
-
-CREATE TABLE Chat(
-    chatId NUMBER AUTO_INCREMENT NOT NULL,
-    creationDate DATE NOT NULL,
-    active BIT NOT NULL,
-    idLuogo NUMBER NOT NULL,
-    privateChat BIT NOT NULL,
-    characterId NUMBER NOT NULL,
-    expirationDate DATE NULL,
-    fixed BIT NOT NULL,
-    PRIMARY KEY (chatId)
-);
-
-CREATE TABLE ChatMembers(
-    chatId NUMBER NOT NULL,
-    characterId NUMBER NOT NULL
-);
-
-CREATE TABLE PresentiLuogo(
-    idLuogo NUMBER NOT NULL,
-    characterId NUMBER NOT NULL,
-    PRIMARY KEY(idLuogo, characterId)
-);
-
-CREATE TABLE Luoghi(
-    idLuogo NUMBER  NOT NULL AUTO_INCREMENT,
-    descr VARCHAR(MAX),
-    nomeLuogo VARCHAR(100),
-    statoLuogo VARCHAR(100),
-    immagine VARCHAR(200),
-    PRIMARY KEY(idLuogo)
-);
 
 insert into Luoghi values
 (1,'Il forum è la piazza principale della cittadina dove si svolgono le maggiori attività economiche e sociali, si trovano gli edifici di governo e quelli finanziari. Si tratta di una piazza porticata con colonnato su tre lati circodata da vari edifici',
@@ -261,69 +106,20 @@ insert into Luoghi values
 (2,'Porta di ingresso posta sul Decumano del Municipium. Vi sono due torrette di avvisatamento e sulle mura è posto un camminamenento che corre attorno alla fortificazione. Accanto al portone principali, vi sono due altre porte utilizzate per il passaggio di civili',
 'Porta Decumana', '','');
 
-CREATE TABLE ChatMessages (
-    ID NUMBER NOT NULL AUTO_INCREMENT,
-    CHATID NUMBER  NOT NULL,
-    cACTION VARCHAR(12) NOT NULL,
-    CARICA VARCHAR(50),
-    IMG VARCHAR(500),
-    RECEIVER VARCHAR(100),
-    SENDER VARCHAR(100) NOT NULL,
-    TAG VARCHAR (50),
-    TESTO TEXT,
-    CTIMESTAMP DOUBLE NOT NULL,
-    TOOLTIP_CARICA VARCHAR NOT NULL
-);
 
-CREATE TABLE Inventory(
-    CHARACTER_ID NUMBER NOT NULL,
-    gold NUMBER,
-    PRIMARY KEY(CHARACTER_ID)
-);
 
 insert into Inventory values(1,1895);
 
-CREATE TABLE InventoryObject(
-    ITEM_ID NUMBER NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    description VARCHAR(50) NOT NULL,
-    isEquipment BIT NOT NULL,
-    isRare BIT NOT NULL,
-    category VARCHAR(15) NOT NULL,
-    bodyPart VARCHAR(15),
-    duration NUMBER,
-    url VARCHAR(500),
-    PRIMARY KEY(ITEM_ID)
-);
+
 
 INSERT INTO InventoryObject(ITEM_ID,name,description,isEquipment,isRare,category,bodyPart,duration,url) VALUES(
 1,'elmo centurio','elmo con cresta trasversale',1,0,'ARMOR','HEAD',8,'https://www.coltelleriazoppi.com/wp-content/uploads/2010/11/p-35893-I6053.09.jpg'
 );
 
-CREATE TABLE InventoryObjectEffect(
-    id NUMBER NOT NULL,
-    inventoryObjectId NUMBER NOT NULL,
-    healthStatus VARCHAR(15),
-    healing NUMBER,
-    stat VARCHAR(15),
-    isTemporary BIT,
-    duration NUMBER,
-    isOneShot BIT,
-    modifier NUMBER
-);
+
 
 INSERT INTO InventoryObjectEffect VALUES(1,1,'NONE',3,'COSTITUZIONE',0,99999,0,4 );
 
-CREATE TABLE CharacterInventoryObject(
-    idInventoryObject NUMBER NOT NULL,
-    characterId NUMBER NOT NULL,
-    quantity NUMBER,
-    inUse BIT,
-    duration NUMBER,
-    acquiringDate DATE,
-    acquiredBy NUMBER,
-    PRIMARY KEY(idInventoryObject, characterId)
-);
 
 INSERT INTO CharacterInventoryObject VALUES (1,1,1,0,88,'2021-03-18',1);
 
