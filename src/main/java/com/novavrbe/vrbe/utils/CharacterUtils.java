@@ -336,15 +336,22 @@ public class CharacterUtils {
         return item;
     }
 
+    /**
+     * metodo per riempire il job di un character
+     * @param character il personaggio da fillare
+     * @param retriveCharacterJob il job da lui svolto, puoi essere null.
+     */
     public static void fillCharacterJobFromDto(Character character, GuildMemberListDTO retriveCharacterJob) {
-        CharacterJob characterJob = new CharacterJob();
-
-        characterJob.setGuildId(retriveCharacterJob.getGUILD_ID());
-        characterJob.setRoleId(retriveCharacterJob.getROLE_ID());
-        characterJob.setRoleName(retriveCharacterJob.getROLE_NAME());
-        characterJob.setRole_img(retriveCharacterJob.getROLE_IMG());
-        characterJob.setSpecification("");
-
+        CharacterJob characterJob = null;
+        if(retriveCharacterJob != null) {
+            characterJob = new CharacterJob();
+            //Sono gildato da qualche parte
+            characterJob.setGuildId(retriveCharacterJob.getGUILD_ID());
+            characterJob.setRoleId(retriveCharacterJob.getROLE_ID());
+            characterJob.setRoleName(retriveCharacterJob.getROLE_NAME());
+            characterJob.setRole_img(retriveCharacterJob.getROLE_IMG());
+            characterJob.setSpecification("");
+        }
         character.setCharacterJob(characterJob);
     }
 }
