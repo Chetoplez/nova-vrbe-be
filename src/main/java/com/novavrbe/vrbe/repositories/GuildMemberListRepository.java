@@ -5,7 +5,6 @@ import com.novavrbe.vrbe.dto.GuildMemberListDTO;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +16,9 @@ public interface GuildMemberListRepository extends CrudRepository<GuildMemberLis
         );
     }
 
-    default GuildMemberListDTO getGuildMemberbyID(Integer characterid){
-        Optional<GuildMemberListDTO> dto = findById(characterid);
-        GuildMemberListDTO member = dto.isPresent() ? dto.get() : null;
-        return member;
+    default Optional<GuildMemberListDTO> getGuildMemberbyID(Integer characterid){
+
+        return findOne(((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("CHARACTER_ID"),characterid)));
 
     }
 }

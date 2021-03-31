@@ -6,9 +6,7 @@ import com.novavrbe.vrbe.dto.GuildDTO;
 import com.novavrbe.vrbe.dto.GuildMemberListDTO;
 import com.novavrbe.vrbe.dto.GuildRoleDTO;
 import com.novavrbe.vrbe.models.guildcontroller.*;
-import com.novavrbe.vrbe.repositories.impl.GuildBankRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
-import com.novavrbe.vrbe.repositories.impl.GuildRoleRepositoryService;
 import com.novavrbe.vrbe.utils.GuildUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +19,9 @@ import java.util.List;
 @Service
 public class GuildBusiness {
 
+
     @Autowired
     private GuildRepositoryService guildRepositoryService;
-    @Autowired
-    private GuildBankRepositoryService guildBankRepositoryService;
-    @Autowired
-    private GuildRoleRepositoryService guildRoleRepositoryService;
 
     /**
      * Torna le informazioni della gilda
@@ -44,7 +39,7 @@ public class GuildBusiness {
             return response;
         }
         guildDTO = guildRepositoryService.getGuildById(Integer.parseInt(guildId));
-        guildBankDTO = guildBankRepositoryService.getGuildBank(Integer.parseInt(guildId));
+        guildBankDTO = guildRepositoryService.getGuildBank(Integer.parseInt(guildId));
         if(guildDTO != null && guildBankDTO != null){
             guild = GuildUtils.createGuildObject(guildDTO,guildBankDTO);
             GetGuildResponse guildResponse = new GetGuildResponse();
@@ -68,7 +63,7 @@ public class GuildBusiness {
             return response;
         }
 
-        List<GuildRoleDTO> roleDTO = guildRoleRepositoryService.getRoleByGuildId(Integer.parseInt(guildId));
+        List<GuildRoleDTO> roleDTO = guildRepositoryService.getRoleByGuildId(Integer.parseInt(guildId));
         List<GuildRole> guildRoleList =  GuildUtils.prepareGuildRoles(roleDTO);
         GetGuildRoleReponse res = new GetGuildRoleReponse();
         res.setGuildRoleList(guildRoleList);
@@ -88,7 +83,6 @@ public class GuildBusiness {
             response = new ResponseEntity<>(new GetGuildMemberListDTOResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
-
         List<GuildMemberListDTO> members = guildRepositoryService.getGuildMembers(Integer.parseInt(guildId));
         GetGuildMemberListDTOResponse res = new GetGuildMemberListDTOResponse();
         res.setMembers(members);

@@ -28,7 +28,7 @@ public class CharacterBusiness {
     private CharacterRepositoryService characterRepositoryService;
 
     public ResponseEntity<AddCharacterResponse> addCharacter(AddCharacterRequest addCharacterRequest){
-        ResponseEntity<AddCharacterResponse> response = null;
+        ResponseEntity<AddCharacterResponse> response;
 
         if(addCharacterRequest.getCharacter() == null || !ValidateUtils.validateCharacter(addCharacterRequest.getCharacter())){
             response = new ResponseEntity<>(new AddCharacterResponse(), HttpStatus.BAD_REQUEST);
@@ -63,6 +63,7 @@ public class CharacterBusiness {
             CharacterUtils.fillCharacterDescriptionFromDto(character, characterRepositoryService.retrieveCharacterDescription(cID));
             CharacterUtils.fillCharacterStatisticsFromDto(character, characterRepositoryService.retrieveCharacterStatistics(cID));
             CharacterUtils.fillCharacterTemporaryEffectsFromDto(character, characterRepositoryService.retrieveCharacterTemporaryEffects(cID));
+            CharacterUtils.fillCharacterJobFromDto(character, characterRepositoryService.retriveCharacterJob(cID));
 
             getCharacterResponse.setCharacter(character);
             response = new ResponseEntity<GetCharacterResponse>(getCharacterResponse, HttpStatus.OK);

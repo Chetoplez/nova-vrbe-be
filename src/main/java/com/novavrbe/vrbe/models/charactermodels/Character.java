@@ -14,6 +14,7 @@ public class Character {
     private String characterId;
     private String characterName;
     private URL characterIcon;
+    private CharacterJob characterJob;
     private URL charachterImg;
     private CharacterHistory history;
     private CharacterDescription description;

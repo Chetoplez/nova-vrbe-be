@@ -40,6 +40,8 @@ public class CharacterRepositoryService {
     private InventoryObjectRepository inventoryObjectRepository;
     @Autowired
     private CharacterInventoryObjectRepository characterInventoryObjectRepository;
+    @Autowired
+    private GuildMemberListRepository characterGuildRepository;
 
     public CharacterDto retrieveCharacterFromId(Integer characterId){
         CharacterDto characterDto = null;
@@ -287,4 +289,10 @@ public class CharacterRepositoryService {
         return added;
     }
 
+    public GuildMemberListDTO retriveCharacterJob(Integer cID) {
+        GuildMemberListDTO cJob = null;
+        Optional<GuildMemberListDTO> dto = characterGuildRepository.getGuildMemberbyID(cID);
+        cJob = dto.orElse(null);
+        return cJob;
+    }
 }
