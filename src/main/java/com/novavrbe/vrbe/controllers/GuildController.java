@@ -31,4 +31,9 @@ public class GuildController {
     public ResponseEntity<AddMemberResponse> addMember(@RequestBody AddMemberRequest addMemberRequest){
     return guildBusiness.addMember(addMemberRequest);
     }
+
+    @PatchMapping("/member/promote")
+    public ResponseEntity<PromoteMemberResponse> promoteMember(@RequestBody PromoteMemberRequest promoteMemberRequest){
+        return guildBusiness.promoteGuildMember(promoteMemberRequest);
+    }
 }

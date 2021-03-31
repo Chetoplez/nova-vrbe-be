@@ -38,8 +38,7 @@ public class ChatBusiness {
         //Qui uso il mio service per inserire a Databse il messaggio :)
         ChatMessageDto dbDto =  chatRepositoryService.addNewChatMessage(messageDto);
         AddMessageResponse messageResponse = new AddMessageResponse();
-        messageResponse.setChatRetrieved(dbDto != null);
-
+        messageResponse.setChatRetrieved(true);
         response = new ResponseEntity<>(messageResponse,HttpStatus.OK);
 
         return response;

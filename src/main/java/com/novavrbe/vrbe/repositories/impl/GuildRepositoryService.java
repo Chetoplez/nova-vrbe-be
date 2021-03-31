@@ -39,7 +39,7 @@ public class GuildRepositoryService {
         GuildDTO guildDTO = null;
         if (guildId != null) {
             Optional<GuildDTO> dto = guildRepository.findById(guildId);
-            guildDTO = dto.isPresent() ? dto.get() : null;
+            guildDTO = dto.orElse(null);
         }
 
         return guildDTO;
@@ -59,9 +59,9 @@ public class GuildRepositoryService {
     }
 
     public boolean checkGuildPresence(Integer charachaterId) {
-        boolean isPresente = false;
+        boolean isPresente;
         Optional<GuildMemberDTO> member = memberRepo.findById(charachaterId);
-        isPresente = member.isPresent() ? true : false;
+        isPresente = member.isPresent();
         return isPresente;
     }
 
@@ -82,13 +82,27 @@ public class GuildRepositoryService {
         boolean promoted = false;
         //intanto mi becco il ruolo ricoperto dal pg
         Optional<GuildMemberDTO> member = memberRepo.findById(characterId);
-        Integer role_id = member.get().getROLE_ID();
-        Optional<GuildRoleDTO> dto =  roleRepository.findById(role_id);
-
-        //TODO qui c'è da fare una select che torna il role_id del Ruolo successivo all'attuale.
-        Integer newRoleId = roleRepository.getNextRoleId(dto.get().getGuild_id(), dto.get().getGuild_level());
-
-
+        Integer role_id;
+        role_id = member.map(GuildMemberDTO::getROLE_ID).orElse(null);
+        Optional<GuildRoleDTO> dto = (role_id != null) ? roleRepository.findById(role_id) : Optional.empty();
+        if(dto.isPresent()){
+        List<GuildRoleDTO> listofpossibile = roleRepository.getPossibleNextRoles(dto.get().getGuild_id(),dto.get().getGuild_level());
+        if(listofpossibile.size() > 0){
+        Integer roleLevel = 2000;
+        Integer newRoleid = 0;
+        for (GuildRoleDTO temp: listofpossibile) {
+            if(temp.getGuild_level() < roleLevel){
+                roleLevel = temp.getGuild_level();
+                newRoleid = temp.getRole_id();
+                promoted = true;
+            }
+        }
+        GuildMemberDTO newRole = new GuildMemberDTO();
+        newRole.setROLE_ID(newRoleid);
+        newRole.setCHARACTER_ID(characterId);
+        GuildMemberDTO save = memberRepo.save(newRole);
+        }
+        }
         return promoted;
     }
 }

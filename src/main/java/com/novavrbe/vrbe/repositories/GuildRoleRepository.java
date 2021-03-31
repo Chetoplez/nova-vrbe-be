@@ -1,7 +1,9 @@
 package com.novavrbe.vrbe.repositories;
 
 import com.novavrbe.vrbe.dto.GuildRoleDTO;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -15,9 +17,11 @@ public interface GuildRoleRepository extends CrudRepository<GuildRoleDTO,Integer
 
     }
 
-    //TODO da implementare una query: SELECT TOP 1 ROLE_ID FROM GUILDROLES WHERE GUILD_ID = guild_id and GUILD_LEVEL > guild_level order by GUILD_LEVEL ASC
-    default Integer getNextRoleId(Integer guild_id, Integer guild_level){
 
-        return null;
+    default List<GuildRoleDTO> getPossibleNextRoles(Integer guild_id, Integer guild_level){
+        Specification<GuildRoleDTO> levelSpec = (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThan(root.get("guild_level"), guild_level);
+        Specification<GuildRoleDTO> guildId = (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("guild_id"),guild_id);
+
+        return findAll(Specification.where(levelSpec).and(guildId));
     }
 }

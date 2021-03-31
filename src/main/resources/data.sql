@@ -10,6 +10,30 @@ INSERT INTO GenericUser VALUES (
  'ciaoiosonoilsaledellavita',
  '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f',
  '21/02/2021'
+),
+(
+ 2,
+ 'Ciccio ',
+ 'Putin',
+ '22/12/1989',
+ 'email@email.it',
+ 'M',
+ 'password:puppa',
+ 'ciaoiosonoilsaledellavita',
+ '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f',
+ '21/02/2021'
+),
+(
+ 3,
+ 'Ajeje ',
+ 'Brazorf',
+ '22/12/1989',
+ 'email@email.it',
+ 'M',
+ 'password:puppa',
+ 'ciaoiosonoilsaledellavita',
+ '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f',
+ '21/02/2021'
 );
 
 
@@ -25,19 +49,55 @@ INSERT INTO Characters VALUES (
  100,
  'SAZIO',
  'USER'
-);
+),(
+   2,
+   'Sergio Claudio',
+   'https://www.icon.com',
+   'MASCHIO',
+   'PLEBEO',
+   1,
+   100,
+   100,
+   100,
+   'SAZIO',
+   'USER'
+  ),(
+       3,
+       'Gaio Cesare',
+       'https://www.icon.com',
+       'MASCHIO',
+       'PLEBEO',
+       1,
+       100,
+       100,
+       100,
+       'SAZIO',
+       'USER'
+      );
 
 
 INSERT INTO CharactersHistory VALUES(
     1,
     'Questa e la storia di come la mia vita e cambiata, capovolta, sottosopra e finita'
-);
+),(
+      2,
+      'Questa e di uno di noi, anche lui nato per caso in via Gluk'
+  ),(
+        3,
+        'Nel mezzo del cammin di nostra vita mi trovai per una selrva oscura e dissi: minchia mi pessi'
+    );
 
 
 INSERT INTO CharactersDescription VALUES(
     1,
     'Uno strafigo che riesce a sbucciare le mele utilizzando il mento'
-);
+),(
+      2,
+      'alto bello un fotomodello'
+  ),(
+        3,
+        'basso , tarchiato ma con un cuore cosi'
+    );
 
 
 
@@ -53,7 +113,31 @@ INSERT INTO CharactersStatistics VALUES(
     0,
     5,
     0
-);
+),(
+      2,
+      5,
+      0,
+      5,
+      0,
+      5,
+      0,
+      5,
+      0,
+      5,
+      0
+  ),(
+        3,
+        5,
+        0,
+        5,
+        0,
+        5,
+        0,
+        5,
+        0,
+        5,
+        0
+    );
 
 
 
@@ -96,7 +180,7 @@ INSERT INTO GUILDROLE VALUES
 
 
 insert into GUILDMEMBER VALUES
-(1,5);
+(1,1);
 
 
 
@@ -109,8 +193,6 @@ insert into Luoghi values
 
 
 insert into Inventory values(1,1895);
-
-
 
 INSERT INTO InventoryObject(ITEM_ID,name,description,isEquipment,isRare,category,bodyPart,duration,url) VALUES(
 1,'elmo centurio','elmo con cresta trasversale',1,0,'ARMOR','HEAD',8,'https://www.coltelleriazoppi.com/wp-content/uploads/2010/11/p-35893-I6053.09.jpg'

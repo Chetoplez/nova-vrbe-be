@@ -28,8 +28,8 @@ public class GuildMemberListDTO {
     @Column(name = "GUILD_LEVEL")
     private Integer GUILD_LEVEL;
 
-    @Column(name = "GUILD_NAME")
-    private String GUILD_NAME;
+    @Column(name = "ROLE_NAME")
+    private String ROLE_NAME;
 
     @Column(name = "ROLE_IMG")
     private String ROLE_IMG;

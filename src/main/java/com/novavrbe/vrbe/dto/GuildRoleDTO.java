@@ -6,11 +6,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Table(name = "GUILDROLE")
 @Data
 @Entity
-public class GuildRoleDTO {
+public class GuildRoleDTO implements Serializable {
+    
     @Id
     @Column
     private Integer role_id;
