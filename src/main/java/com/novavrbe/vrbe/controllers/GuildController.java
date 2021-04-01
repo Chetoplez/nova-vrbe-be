@@ -32,12 +32,17 @@ public class GuildController {
     return guildBusiness.addMember(addMemberRequest);
     }
 
-    @PatchMapping("/member/promote")
+    @DeleteMapping("/members/deletemember")
+    public ResponseEntity<DeleteMemberResponse> deleteMember(@RequestBody DeleteMemberRequest deleteMemberRequest){
+        return guildBusiness.deleteMember(deleteMemberRequest);
+    }
+
+    @PatchMapping("/members/promote")
     public ResponseEntity<PromoteMemberResponse> promoteMember(@RequestBody PromoteMemberRequest promoteMemberRequest){
         return guildBusiness.promoteGuildMember(promoteMemberRequest);
     }
 
-    @PatchMapping("/member/degradate")
+    @PatchMapping("/members/degradate")
     public ResponseEntity<DegradeMemberResponse> degradadeMember(@RequestBody DegradateMemberRequest degradeRequest){
         return guildBusiness.degradeGuildMember(degradeRequest);
     }

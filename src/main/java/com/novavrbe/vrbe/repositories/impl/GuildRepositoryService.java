@@ -78,6 +78,13 @@ public class GuildRepositoryService {
         return saved;
     }
 
+    public void deleteMember (Integer roleId, Integer characterId){
+        GuildMemberDTO toDelete = new GuildMemberDTO();
+        toDelete.setCHARACTER_ID(characterId);
+        toDelete.setROLE_ID(roleId);
+        guildMemeberRepository.delete(toDelete);
+    }
+
     public boolean promoteMember(Integer characterId){
         boolean promoted = false;
         //intanto mi becco il ruolo ricoperto dal pg

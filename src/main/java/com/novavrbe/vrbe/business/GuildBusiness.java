@@ -118,6 +118,21 @@ public class GuildBusiness {
         return response;
     }
 
+    public ResponseEntity<DeleteMemberResponse> deleteMember(DeleteMemberRequest deleteMemberRequest){
+        ResponseEntity<DeleteMemberResponse> response ;
+        if(!StringUtils.hasText(deleteMemberRequest.getCharacter_id()) || !StringUtils.hasText(deleteMemberRequest.getRole_id())){
+            response = new ResponseEntity<>(new DeleteMemberResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer roleId = Integer.parseInt(deleteMemberRequest.getRole_id());
+        Integer cId = Integer.parseInt(deleteMemberRequest.getCharacter_id());
+        guildRepositoryService.deleteMember(roleId,cId);
+        DeleteMemberResponse res = new DeleteMemberResponse();
+        res.setDeleted(!guildRepositoryService.checkGuildPresence(cId));
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+    }
+
     /**
      * Promuove un pg nella scala gerarchica della sua Gilda.
      * @param promoteMember richiesta contenente l'id del character e il l'id della gilda.
@@ -143,6 +158,12 @@ public class GuildBusiness {
         return response;
     }
 
+
+    /**
+     * Degrada nella scala gerarchica della gilda di appartenenza un membro
+     * @param degradeMemberRequest richiesta formata da roleId e Character id del membro da degradare. Non espelle.
+     * @return true se è stato degradato con successo, false altrimenti
+     */
     public ResponseEntity<DegradeMemberResponse> degradeGuildMember(DegradateMemberRequest degradeMemberRequest) {
         ResponseEntity<DegradeMemberResponse> response;
         if(!StringUtils.hasText(degradeMemberRequest.getGuild_id()) || !StringUtils.hasText(degradeMemberRequest.getCharacter_id())){
