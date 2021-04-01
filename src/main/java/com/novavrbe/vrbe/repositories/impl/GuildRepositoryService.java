@@ -106,6 +106,34 @@ public class GuildRepositoryService {
         return promoted;
     }
 
+    public boolean degradeMember(Integer characterId){
+        boolean degradated = false;
+        Optional<GuildMemberDTO> member = guildMemeberRepository.findById(characterId);
+        Integer role_id;
+        role_id = member.map(GuildMemberDTO::getROLE_ID).orElse(null);
+        Optional<GuildRoleDTO> dto = (role_id != null) ? guildRoleRepository.findById(role_id) : Optional.empty();
+        if(dto.isPresent()){
+            List<GuildRoleDTO> listofpossibile = guildRoleRepository.getPossiblePrevtRoles(dto.get().getGuild_id(),dto.get().getGuild_level());
+            if(listofpossibile.size() > 0){
+                Integer roleLevel = 1;
+                Integer newRoleid = 9999;
+                for (GuildRoleDTO temp: listofpossibile) {
+                    if(temp.getGuild_level() > roleLevel){
+                        roleLevel = temp.getGuild_level();
+                        newRoleid = temp.getRole_id();
+                        degradated = true;
+                    }
+                }
+                GuildMemberDTO newRole = new GuildMemberDTO();
+                newRole.setROLE_ID(newRoleid);
+                newRole.setCHARACTER_ID(characterId);
+                GuildMemberDTO save = guildMemeberRepository.save(newRole);
+
+            }
+        }
+        return degradated;
+    }
+
 
     /**
      * Torna il saldo del conto della gilda
@@ -116,7 +144,7 @@ public class GuildRepositoryService {
         GuildBankDTO bankDTO = null;
         if(guildId != null){
             Optional<GuildBankDTO> dto = guildBankRepository.findById(guildId);
-            bankDTO = dto.isPresent() ? dto.get() : null;
+            bankDTO = dto.orElse(null);
 
         }
         return bankDTO;

@@ -36,4 +36,9 @@ public class GuildController {
     public ResponseEntity<PromoteMemberResponse> promoteMember(@RequestBody PromoteMemberRequest promoteMemberRequest){
         return guildBusiness.promoteGuildMember(promoteMemberRequest);
     }
+
+    @PatchMapping("/member/degradate")
+    public ResponseEntity<DegradeMemberResponse> degradadeMember(@RequestBody DegradateMemberRequest degradeRequest){
+        return guildBusiness.degradeGuildMember(degradeRequest);
+    }
 }

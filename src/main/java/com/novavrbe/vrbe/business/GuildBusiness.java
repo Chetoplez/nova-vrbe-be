@@ -142,4 +142,24 @@ public class GuildBusiness {
         }
         return response;
     }
+
+    public ResponseEntity<DegradeMemberResponse> degradeGuildMember(DegradateMemberRequest degradeMemberRequest) {
+        ResponseEntity<DegradeMemberResponse> response;
+        if(!StringUtils.hasText(degradeMemberRequest.getGuild_id()) || !StringUtils.hasText(degradeMemberRequest.getCharacter_id())){
+            response = new ResponseEntity<>(new DegradeMemberResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer character_id = Integer.parseInt(degradeMemberRequest.getCharacter_id());
+        Integer guildId = Integer.parseInt(degradeMemberRequest.getGuild_id());
+        if(guildRepositoryService.degradeMember(character_id)){
+            DegradeMemberResponse res = new DegradeMemberResponse();
+            res.setDegradated(true);
+            response = new ResponseEntity<>(res, HttpStatus.OK);
+        }else {
+            DegradeMemberResponse res = new DegradeMemberResponse();
+            res.setDegradated(false);
+            response = new ResponseEntity<>(res, HttpStatus.OK);
+        }
+        return response;
+    }
 }

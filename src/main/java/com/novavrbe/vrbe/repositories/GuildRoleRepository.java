@@ -24,4 +24,11 @@ public interface GuildRoleRepository extends CrudRepository<GuildRoleDTO,Integer
 
         return findAll(Specification.where(levelSpec).and(guildId));
     }
+
+    default List<GuildRoleDTO> getPossiblePrevtRoles(Integer guild_id, Integer guild_level){
+        Specification<GuildRoleDTO> levelSpec = (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThan(root.get("guild_level"), guild_level);
+        Specification<GuildRoleDTO> guildId = (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("guild_id"),guild_id);
+
+        return findAll(Specification.where(levelSpec).and(guildId));
+    }
 }
