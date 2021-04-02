@@ -6,6 +6,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class GetGuildMemberListDTOResponse {
-    private List<GuildMemberListDTO> members;
+public class GetGuildMemberResponse {
+    private List<GuildMember> members;
 }

@@ -14,11 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class GuildBusiness {
 
+    //TODO aggiungere a tutti i metodi gestionali l'ID dell character che sta eseguendo,in modo da verificare che possegga questo diritto.
 
     @Autowired
     private GuildRepositoryService guildRepositoryService;
@@ -77,14 +79,20 @@ public class GuildBusiness {
      * @param guildId L'id della gilda
      * @return I membri di una gilda con le info.
      */
-    public ResponseEntity<GetGuildMemberListDTOResponse> getGuildMembers(String guildId){
-        ResponseEntity<GetGuildMemberListDTOResponse> response;
+    public ResponseEntity<GetGuildMemberResponse> getGuildMembers(String guildId){
+        ResponseEntity<GetGuildMemberResponse> response;
+        List<GuildMember> members = new ArrayList<>();
         if(!StringUtils.hasText(guildId)){
-            response = new ResponseEntity<>(new GetGuildMemberListDTOResponse(), HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<>(new GetGuildMemberResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
-        List<GuildMemberListDTO> members = guildRepositoryService.getGuildMembers(Integer.parseInt(guildId));
-        GetGuildMemberListDTOResponse res = new GetGuildMemberListDTOResponse();
+        List<GuildMemberListDTO> membersDTO = guildRepositoryService.getGuildMembers(Integer.parseInt(guildId));
+        GetGuildMemberResponse res = new GetGuildMemberResponse();
+        for (GuildMemberListDTO tmp: membersDTO) {
+            GuildMember newMember = GuildUtils.getMemberfromDTO(tmp);
+            members.add(newMember);
+        }
+
         res.setMembers(members);
         response = new ResponseEntity<>(res,HttpStatus.OK);
         return  response;
@@ -105,7 +113,7 @@ public class GuildBusiness {
             return response;
         }
         //vedo se il pg è già dentro una gilda, come? lo cerco tra i guildMembers!
-        if(!guildRepositoryService.checkGuildPresence(Integer.parseInt(characterId))){
+        if(!guildRepositoryService.checkEnrollment(Integer.parseInt(characterId))){
             //Se sono qui dentro, il pg non è arruolato da nessuna parte.
             AddMemberResponse res = new AddMemberResponse();
             res.setAdded(guildRepositoryService.addMember(Integer.parseInt(roleId), Integer.parseInt(characterId)));
@@ -128,7 +136,7 @@ public class GuildBusiness {
         Integer cId = Integer.parseInt(deleteMemberRequest.getCharacter_id());
         guildRepositoryService.deleteMember(roleId,cId);
         DeleteMemberResponse res = new DeleteMemberResponse();
-        res.setDeleted(!guildRepositoryService.checkGuildPresence(cId));
+        res.setDeleted(!guildRepositoryService.checkEnrollment(cId));
         response = new ResponseEntity<>(res,HttpStatus.OK);
         return response;
     }
@@ -182,5 +190,39 @@ public class GuildBusiness {
             response = new ResponseEntity<>(res, HttpStatus.OK);
         }
         return response;
+    }
+
+
+
+    public ResponseEntity<CheckGuildPermissionResponse> checkGuildPermission(CheckGuildPermissionRequest request) {
+
+        ResponseEntity<CheckGuildPermissionResponse> response;
+        if(!StringUtils.hasText(request.getCharacterId()) || !StringUtils.hasText(request.getGuildId())){
+            response = new ResponseEntity<>(new CheckGuildPermissionResponse(),HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer charachterId = Integer.parseInt(request.getCharacterId());
+        Integer guildId = Integer.parseInt(request.getGuildId());
+
+        GuildPermission perm = guildRepositoryService.checkGuildPermission(charachterId,guildId);
+        CheckGuildPermissionResponse res = new CheckGuildPermissionResponse();
+        res.setManager(perm.isManager());
+        res.setPresent(perm.isPresente());
+        response = new ResponseEntity<>(res, HttpStatus.OK);
+        return response;
+
+
+    }
+
+
+    /**
+     * Controlla se chi sta effettuando l'azione, ne ha il privilegio.
+     * @param executorId il characterId di chi ha chiamato il metodo
+     * @return true se sei il manager di quella gilda, false altrimenti
+     */
+
+    //TODO da implementare.
+    private boolean hasManagerRight(Integer executorId){
+        return false;
     }
 }

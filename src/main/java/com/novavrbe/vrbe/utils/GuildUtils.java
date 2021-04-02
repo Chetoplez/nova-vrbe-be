@@ -2,8 +2,10 @@ package com.novavrbe.vrbe.utils;
 
 import com.novavrbe.vrbe.dto.GuildBankDTO;
 import com.novavrbe.vrbe.dto.GuildDTO;
+import com.novavrbe.vrbe.dto.GuildMemberListDTO;
 import com.novavrbe.vrbe.dto.GuildRoleDTO;
 import com.novavrbe.vrbe.models.guildcontroller.Guild;
+import com.novavrbe.vrbe.models.guildcontroller.GuildMember;
 import com.novavrbe.vrbe.models.guildcontroller.GuildRole;
 import com.sun.istack.NotNull;
 
@@ -44,5 +46,18 @@ public class GuildUtils {
         }
 
         return _tmp;
+    }
+
+    public static GuildMember getMemberfromDTO(@NotNull GuildMemberListDTO tmp) {
+        GuildMember newMember = new GuildMember();
+        newMember.setCHARACTER_ID(tmp.getCHARACTER_ID());
+        newMember.setROLE_ID(tmp.getROLE_ID());
+        newMember.setGUILD_ID(tmp.getGUILD_ID());
+        newMember.setGUILD_LEVEL(tmp.getGUILD_LEVEL());
+        newMember.setCHARACTER_NAME(tmp.getCHARACTER_NAME());
+        newMember.setROLE_IMG(tmp.getROLE_IMG());
+        newMember.setROLE_NAME(tmp.getROLE_NAME());
+
+        return newMember;
     }
 }

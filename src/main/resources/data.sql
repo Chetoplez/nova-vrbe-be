@@ -76,28 +76,16 @@ INSERT INTO Characters VALUES (
       );
 
 
-INSERT INTO CharactersHistory VALUES(
-    1,
-    'Questa e la storia di come la mia vita e cambiata, capovolta, sottosopra e finita'
-),(
-      2,
-      'Questa e di uno di noi, anche lui nato per caso in via Gluk'
-  ),(
-        3,
-        'Nel mezzo del cammin di nostra vita mi trovai per una selrva oscura e dissi: minchia mi pessi'
-    );
+INSERT INTO CharactersHistory VALUES
+(1,'Questa e la storia di come la mia vita e cambiata, capovolta, sottosopra e finita'),
+(2,'Questa e la storia di uno di noi, anche lui nato per caso in via Gluk'),
+(3,'Nel mezzo del cammin di nostra vita mi trovai per una selrva oscura e dissi: minchia mi pessi');
 
 
-INSERT INTO CharactersDescription VALUES(
-    1,
-    'Uno strafigo che riesce a sbucciare le mele utilizzando il mento'
-),(
-      2,
-      'alto bello un fotomodello'
-  ),(
-        3,
-        'basso , tarchiato ma con un cuore cosi'
-    );
+INSERT INTO CharactersDescription VALUES
+(1,'Uno strafigo che riesce a sbucciare le mele utilizzando il mento'),
+(2,'alto bello un fotomodello'),
+(3,'basso , tarchiato ma con un cuore cosi');
 
 
 
@@ -175,7 +163,11 @@ INSERT INTO GUILDROLE VALUES
 ,(3,1,'Centurio',90,0,'','Il capo di una centuria, commina punizioni e allena la truppa. La sua parola è legge per i suoi sottoposti',30)
 ,(4,1,'Tribunus',130,0,'','Ufficiale in comando al Legatus Legionis, organizza le centurie e dispone per la logistica ',40)
 ,(5,1,'Legatus',200,1,'','Il comandante in carica della legione, decide promozioni e allontanamenti, ha facolta di vita o morte dei suoi soldati',50)
-,(6,2,'Discipulo',30,0,'','Colui che si è appena iniziato allo studio delle arti mediche, non ha ancora effettuato il giuramento ad Ippocrate',10);
+,(6,2,'Discipulo',30,0,'','Colui che si è appena iniziato allo studio delle arti mediche, non ha ancora effettuato il giuramento ad Ippocrate',10)
+,(7,2,'Balneator',90,0,'','Il gestore della parte termale, colui che conosce il corpo, le arti dei massaggi e degli unguenti',20)
+,(8,2,'Medicus',90,0,'','Scieziato dell arte medica, riesce a a curare malanni, ferite e sa come alleviare dolori',21)
+,(9,2,'Medicus Specialistis',130,0,'','Un medico specializzato in un settore che conosce a fondo la sua materia e le varie tecniche di cura, oltre alla medicina generale',40)
+,(10,2,'Primarius',200,0,'','Il gestore della valetudinaria del municipium, da compiti, lezioni, promozioni e sanzioni. Un medico esperto sia nell arte medica che quella governativa',50);
 
 
 

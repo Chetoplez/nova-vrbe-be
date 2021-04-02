@@ -23,7 +23,7 @@ public class GuildController {
     }
 
     @GetMapping("/members/guildid={guildId}")
-    public ResponseEntity<GetGuildMemberListDTOResponse> getGuildMembers(@PathVariable String guildId){
+    public ResponseEntity<GetGuildMemberResponse> getGuildMembers(@PathVariable String guildId){
         return guildBusiness.getGuildMembers(guildId);
     }
 
@@ -45,5 +45,10 @@ public class GuildController {
     @PatchMapping("/members/degradate")
     public ResponseEntity<DegradeMemberResponse> degradadeMember(@RequestBody DegradateMemberRequest degradeRequest){
         return guildBusiness.degradeGuildMember(degradeRequest);
+    }
+
+    @PostMapping("/members/checkguildPermission/")
+    public ResponseEntity<CheckGuildPermissionResponse> checkGuildPermission(@RequestBody CheckGuildPermissionRequest request){
+        return guildBusiness.checkGuildPermission(request);
     }
 }

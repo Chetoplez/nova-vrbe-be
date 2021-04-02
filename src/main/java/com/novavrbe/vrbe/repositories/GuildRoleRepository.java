@@ -3,7 +3,6 @@ package com.novavrbe.vrbe.repositories;
 import com.novavrbe.vrbe.dto.GuildRoleDTO;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.novavrbe.vrbe.repositories.impl;
 
 import com.novavrbe.vrbe.dto.*;
+import com.novavrbe.vrbe.models.guildcontroller.GuildPermission;
 import com.novavrbe.vrbe.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,16 +54,57 @@ public class GuildRepositoryService {
     public List<GuildMemberListDTO> getGuildMembers(Integer guildId){
         List<GuildMemberListDTO> members = new ArrayList<>();
         if(guildId != null){
-            members = guildMemberListRepository.findMembers(guildId);
+            members = guildMemberListRepository.findMembersByGuildId(guildId);
         }
         return members;
     }
 
-    public boolean checkGuildPresence(Integer charachaterId) {
+    /**
+     * Torna il ruolo ricoperto dalla gilda di quel pg
+     * @param characterId l'id del pg
+     * @return le info sul ruolo o null
+     */
+    public GuildMemberListDTO getGuildMember(Integer characterId){
+        GuildMemberListDTO tmp;
+        Optional<GuildMemberListDTO> dto =guildMemberListRepository.getGuildMemberbyID(characterId);
+        tmp = dto.isEmpty()? null : dto.get();
+        return tmp;
+    }
+
+    /**
+     * Verifica che un character appartenga ad una qualunque gilda
+     * @param charachaterId id del character
+     * @return vero se non sei disoccupato, false altrimenti
+     */
+    public boolean checkEnrollment(Integer charachaterId) {
         boolean isPresente;
         Optional<GuildMemberDTO> member = guildMemeberRepository.findById(charachaterId);
         isPresente = member.isPresent();
         return isPresente;
+    }
+
+    /**
+     * Torna le permission che hai per la gilda che stai vedendo.
+     * @param charachaterId il characterId del pg
+     * @param guildId la gilda che stai cercando di visualizzare
+     * @return le permissiona associate al tuo pg.
+     */
+    public GuildPermission checkGuildPermission(Integer charachaterId, Integer guildId) {
+        GuildPermission permission = new GuildPermission();
+        Optional<GuildMemberListDTO> dto = guildMemberListRepository.getGuildMemberbyID(charachaterId);
+        if(dto.isPresent() && dto.get().getGUILD_ID().equals(guildId)) {
+         //Sei arruolato e sei nella gilda che stai visualizzando, capiamo se sei il capo :)
+            permission.setPresente(true);
+            List<GuildRoleDTO> listOfRoles = getRoleByGuildId(guildId);
+            for (GuildRoleDTO role: listOfRoles) {
+              if(role.getRole_id().equals(dto.get().getROLE_ID()))
+                 permission.setManager(role.getIsManager());
+            }
+        }else {
+           permission.setManager(false);
+           permission.setPresente(false);
+        }
+    return permission;
     }
 
     public boolean addMember(Integer roleid, Integer characterId) {

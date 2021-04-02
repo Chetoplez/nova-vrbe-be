@@ -289,6 +289,11 @@ public class CharacterRepositoryService {
         return added;
     }
 
+    /**
+     * Torna il mestiere del pg con i suoi parametri
+     * @param cID characterID di cui si vuole il mestiere
+     * @return le informazioni del mestiere svolto , null altrimenti
+     */
     public GuildMemberListDTO retriveCharacterJob(Integer cID) {
         GuildMemberListDTO cJob = null;
         Optional<GuildMemberListDTO> dto = characterGuildRepository.getGuildMemberbyID(cID);

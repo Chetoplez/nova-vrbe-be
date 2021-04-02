@@ -10,10 +10,11 @@ import java.util.Optional;
 
 public interface GuildMemberListRepository extends CrudRepository<GuildMemberListDTO, Integer>, JpaSpecificationExecutor<GuildMemberListDTO> {
 
-    default List<GuildMemberListDTO> findMembers(Integer guildId) {
+    default List<GuildMemberListDTO> findMembersByGuildId(Integer guildId) {
         return findAll(
                 (root, query, criteriaBuilder)-> criteriaBuilder.equal(root.get("GUILD_ID"), guildId)
         );
+
     }
 
     default Optional<GuildMemberListDTO> getGuildMemberbyID(Integer characterid){
