@@ -28,7 +28,7 @@ public class CharacterBusiness {
     private CharacterRepositoryService characterRepositoryService;
 
     public ResponseEntity<AddCharacterResponse> addCharacter(AddCharacterRequest addCharacterRequest){
-        ResponseEntity<AddCharacterResponse> response = null;
+        ResponseEntity<AddCharacterResponse> response;
 
         if(addCharacterRequest.getCharacter() == null || !ValidateUtils.validateCharacter(addCharacterRequest.getCharacter())){
             response = new ResponseEntity<>(new AddCharacterResponse(), HttpStatus.BAD_REQUEST);
@@ -62,6 +62,7 @@ public class CharacterBusiness {
             CharacterUtils.fillCharacterHistoryFromDto(character, characterRepositoryService.retrieveCharacterHistory(cID));
             CharacterUtils.fillCharacterDescriptionFromDto(character, characterRepositoryService.retrieveCharacterDescription(cID));
             CharacterUtils.fillCharacterTemporaryEffectsFromDto(character, characterRepositoryService.retrieveCharacterTemporaryEffects(cID));
+            CharacterUtils.fillCharacterJobFromDto(character, characterRepositoryService.retriveCharacterJob(cID));
 
             //TODO recuperare statistiche derivanti da equipaggiamento e Applicare a statistiche date da valori temporanee e armatura
             CharacterUtils.fillCharacterStatisticsFromDto(character, characterRepositoryService.retrieveCharacterStatistics(cID));

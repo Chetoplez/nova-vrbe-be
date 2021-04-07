@@ -14,6 +14,8 @@ public class Character {
     private String characterId;
     private String characterName;
     private URL characterIcon;
+    private CharacterJob characterJob;
+    private URL charachterImg;
     private CharacterHistory history;
     private CharacterDescription description;
     private Gender gender;
@@ -23,5 +25,6 @@ public class Character {
     private Integer health;
     private HealthStatus healthStatus;
     private ArrayList<CharacterTemporaryEffect> effects;
+    private CharacterMaritalStatus maritalStatus;
     private ArrayList<Roles> roles;
 }

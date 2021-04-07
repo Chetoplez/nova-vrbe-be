@@ -40,6 +40,8 @@ public class CharacterRepositoryService {
     private InventoryObjectRepository inventoryObjectRepository;
     @Autowired
     private CharacterInventoryObjectRepository characterInventoryObjectRepository;
+    @Autowired
+    private GuildMemberListRepository characterGuildRepository;
 
     public CharacterDto retrieveCharacterFromId(Integer characterId){
         CharacterDto characterDto = null;
@@ -243,6 +245,8 @@ public class CharacterRepositoryService {
 
     public void lendItemToAnotherCharacter(@NotNull Integer toCharacterId, @NotNull InventoryObjectAssociation association){
         Integer newQuantity = association.getCharacterInventoryObjectDto().getQuantity() - 1;
+
+        //TODO Ma qui, il caso non dovrebbe essere al contrario?
         if(newQuantity > 0){
             characterInventoryObjectRepository.delete(association.getCharacterInventoryObjectDto());
         }else{
@@ -285,4 +289,15 @@ public class CharacterRepositoryService {
         return added;
     }
 
+    /**
+     * Torna il mestiere del pg con i suoi parametri
+     * @param cID characterID di cui si vuole il mestiere
+     * @return le informazioni del mestiere svolto , null altrimenti
+     */
+    public GuildMemberListDTO retriveCharacterJob(Integer cID) {
+        GuildMemberListDTO cJob = null;
+        Optional<GuildMemberListDTO> dto = characterGuildRepository.getGuildMemberbyID(cID);
+        cJob = dto.orElse(null);
+        return cJob;
+    }
 }
