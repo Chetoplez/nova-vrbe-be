@@ -61,8 +61,10 @@ public class CharacterBusiness {
             CharacterUtils.fillCharacterFieldsFromDto(character, characterDto);
             CharacterUtils.fillCharacterHistoryFromDto(character, characterRepositoryService.retrieveCharacterHistory(cID));
             CharacterUtils.fillCharacterDescriptionFromDto(character, characterRepositoryService.retrieveCharacterDescription(cID));
-            CharacterUtils.fillCharacterStatisticsFromDto(character, characterRepositoryService.retrieveCharacterStatistics(cID));
             CharacterUtils.fillCharacterTemporaryEffectsFromDto(character, characterRepositoryService.retrieveCharacterTemporaryEffects(cID));
+
+            //TODO recuperare statistiche derivanti da equipaggiamento e Applicare a statistiche date da valori temporanee e armatura
+            CharacterUtils.fillCharacterStatisticsFromDto(character, characterRepositoryService.retrieveCharacterStatistics(cID));
 
             getCharacterResponse.setCharacter(character);
             response = new ResponseEntity<GetCharacterResponse>(getCharacterResponse, HttpStatus.OK);
@@ -144,6 +146,7 @@ public class CharacterBusiness {
 
                 //Equipaggiamento
                 if(item.getInventoryObjectDto().isEquipment()){
+                    //TODO GESTIRE IL CASO DELLE DUE MANI
                     item.getCharacterInventoryObjectDto().setInUse(request.isRemove() ? false : true);
                     characterRepositoryService.equipItem(item.getCharacterInventoryObjectDto());
                 }else{
