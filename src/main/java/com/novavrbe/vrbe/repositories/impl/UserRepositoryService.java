@@ -1,6 +1,7 @@
 package com.novavrbe.vrbe.repositories.impl;
 
 import com.novavrbe.vrbe.dto.GenericUserDto;
+import com.novavrbe.vrbe.models.usercontroller.GameUserDetails;
 import com.novavrbe.vrbe.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,17 @@ public class UserRepositoryService {
         GenericUserDto user = null;
         Optional<GenericUserDto> dto = userRepository.findById(id);
         user = dto != null && dto.get() != null ? dto.get() : null;
+
+        return user;
+    }
+
+    public GameUserDetails retrieveUser(String characterId){
+        GameUserDetails user = null;
+
+        GenericUserDto userDto = findUsersById(new BigDecimal(characterId));
+        if(userDto != null){
+            user = new GameUserDetails();
+        }
 
         return user;
     }
