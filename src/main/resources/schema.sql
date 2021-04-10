@@ -12,7 +12,7 @@ CREATE TABLE GenericUser (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Characters (
+CREATE TABLE Characters ( --manca il riferimento al'id del genericUser
   CHARACTER_ID NUMBER PRIMARY KEY,
   CHARACTER_NAME VARCHAR(50) NOT NULL,
   CHARACTER_ICON VARCHAR(250) NOT NULL,
