@@ -3,7 +3,7 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.GuildBankDTO;
 import com.novavrbe.vrbe.dto.GuildDTO;
-import com.novavrbe.vrbe.dto.GuildMemberListDTO;
+import com.novavrbe.vrbe.dto.V_GuildMembers;
 import com.novavrbe.vrbe.dto.GuildRoleDTO;
 import com.novavrbe.vrbe.models.guildcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
@@ -86,9 +86,9 @@ public class GuildBusiness {
             response = new ResponseEntity<>(new GetGuildMemberResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
-        List<GuildMemberListDTO> membersDTO = guildRepositoryService.getGuildMembers(Integer.parseInt(guildId));
+        List<V_GuildMembers> membersDTO = guildRepositoryService.getGuildMembers(Integer.parseInt(guildId));
         GetGuildMemberResponse res = new GetGuildMemberResponse();
-        for (GuildMemberListDTO tmp: membersDTO) {
+        for (V_GuildMembers tmp: membersDTO) {
             GuildMember newMember = GuildUtils.getMemberfromDTO(tmp);
             members.add(newMember);
         }
@@ -209,6 +209,7 @@ public class GuildBusiness {
         res.setManager(perm.isManager());
         res.setPresent(perm.isPresente());
         response = new ResponseEntity<>(res, HttpStatus.OK);
+
         return response;
 
 

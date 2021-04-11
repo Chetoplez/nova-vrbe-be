@@ -49,12 +49,12 @@ public class GuildRepositoryService {
     /**
      * Torna i membri appartenenenti alla gilda
      * @param guildId L'id della gilda di cui vuoi i conoscere i membri
-     * @return Lista dei membri GuildMemberListDTO
+     * @return Lista dei membri V_GuildMembers
      */
-    public List<GuildMemberListDTO> getGuildMembers(Integer guildId){
-        List<GuildMemberListDTO> members = new ArrayList<>();
+    public List<V_GuildMembers> getGuildMembers(Integer guildId){
+        List<V_GuildMembers> members = new ArrayList<>();
         if(guildId != null){
-            members = guildMemberListRepository.findMembersByGuildId(guildId);
+            members = guildMemberListRepository.findAllByGuildId(guildId);
         }
         return members;
     }
@@ -64,9 +64,9 @@ public class GuildRepositoryService {
      * @param characterId l'id del pg
      * @return le info sul ruolo o null
      */
-    public GuildMemberListDTO getGuildMember(Integer characterId){
-        GuildMemberListDTO tmp;
-        Optional<GuildMemberListDTO> dto =guildMemberListRepository.getGuildMemberbyID(characterId);
+    public V_GuildMembers getGuildMember(Integer characterId){
+        V_GuildMembers tmp;
+        Optional<V_GuildMembers> dto =guildMemberListRepository.findByCharacterId(characterId);
         tmp = dto.isEmpty()? null : dto.get();
         return tmp;
     }
@@ -91,13 +91,13 @@ public class GuildRepositoryService {
      */
     public GuildPermission checkGuildPermission(Integer charachaterId, Integer guildId) {
         GuildPermission permission = new GuildPermission();
-        Optional<GuildMemberListDTO> dto = guildMemberListRepository.getGuildMemberbyID(charachaterId);
-        if(dto.isPresent() && dto.get().getGUILD_ID().equals(guildId)) {
+        Optional<V_GuildMembers> dto = guildMemberListRepository.findByCharacterId(charachaterId);
+        if(dto.isPresent() && dto.get().getGuildId().equals(guildId)) {
          //Sei arruolato e sei nella gilda che stai visualizzando, capiamo se sei il capo :)
             permission.setPresente(true);
             List<GuildRoleDTO> listOfRoles = getRoleByGuildId(guildId);
             for (GuildRoleDTO role: listOfRoles) {
-              if(role.getRole_id().equals(dto.get().getROLE_ID()))
+              if(role.getRole_id().equals(dto.get().getRoleId()))
                  permission.setManager(role.getIsManager());
             }
         }else {

@@ -294,9 +294,9 @@ public class CharacterRepositoryService {
      * @param cID characterID di cui si vuole il mestiere
      * @return le informazioni del mestiere svolto , null altrimenti
      */
-    public GuildMemberListDTO retriveCharacterJob(Integer cID) {
-        GuildMemberListDTO cJob = null;
-        Optional<GuildMemberListDTO> dto = characterGuildRepository.getGuildMemberbyID(cID);
+    public V_GuildMembers retriveCharacterJob(Integer cID) {
+        V_GuildMembers cJob = null;
+        Optional<V_GuildMembers> dto = characterGuildRepository.findByCharacterId(cID);
         cJob = dto.orElse(null);
         return cJob;
     }
