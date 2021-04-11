@@ -85,4 +85,24 @@ public class ChatBusiness {
 
         return response;
     }
+
+    /**
+     * Mi dice, per quella chatId se c'è un messaggio più recente rispetto all'ultimo aggiornamento che hai, in quel caso torna true
+     * @param id l'id della chat
+     * @param tms il timestamp del tuo ultimo aggiornamento
+     * @return true se a database, per quell'ID c'è un timestamp maggiore, false altrimenti
+     */
+    public ResponseEntity<IsChatUpdatedResponse> isChatUpdated(String id, String tms) {
+        ResponseEntity<IsChatUpdatedResponse> response;
+        if(!StringUtils.hasText(id) || !StringUtils.hasText((tms))){
+            response = new ResponseEntity<>(new IsChatUpdatedResponse(),HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer chatId = Integer.parseInt(id);
+        Long lastUpdate = Long.parseLong(tms);
+        IsChatUpdatedResponse res = new IsChatUpdatedResponse();
+        res.setUpdated(chatRepositoryService.isUpdated(chatId,lastUpdate));
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+    }
 }

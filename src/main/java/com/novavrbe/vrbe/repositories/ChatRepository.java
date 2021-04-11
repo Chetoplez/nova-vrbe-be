@@ -23,4 +23,5 @@ public interface ChatRepository extends CrudRepository<ChatMessageDto, Integer>,
         return findAll(Specification.where(chatidspec).and(messageFrom));
     }
 
+    List<ChatMessageDto> findByChatIdAndTimestampGreaterThan(Integer chatId, Long lastUpdate);
 }
