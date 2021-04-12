@@ -49,6 +49,11 @@ public class GuildController {
         return guildBusiness.degradeGuildMember(degradeRequest);
     }
 
+    @GetMapping("/members/getcharactercv/characterId={characterId}")
+    public ResponseEntity<CharacterCvResponse> getCharacterCv(@PathVariable String characterId){
+        return guildBusiness.getCharacterCv(characterId);
+    }
+
     @PostMapping("/members/checkguildpermission")
     public ResponseEntity<CheckGuildPermissionResponse> checkGuildPermission(@RequestBody CheckGuildPermissionRequest request){
         return guildBusiness.checkGuildPermission(request);

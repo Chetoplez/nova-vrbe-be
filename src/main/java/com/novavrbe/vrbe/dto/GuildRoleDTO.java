@@ -11,13 +11,13 @@ import java.io.Serializable;
 @Table(name = "GUILDROLE")
 @Data
 @Entity
-public class GuildRoleDTO implements Serializable {
+public class GuildRoleDTO {
     
     @Id
     @Column
-    private Integer role_id;
+    private Integer roleId;
     @Column
-    private Integer guild_id;
+    private Integer guildId;
     @Column
     private String name;
     @Column
@@ -29,5 +29,5 @@ public class GuildRoleDTO implements Serializable {
     @Column
     private String description;
     @Column
-    private Integer guild_level;
+    private Integer guildLevel;
 }
