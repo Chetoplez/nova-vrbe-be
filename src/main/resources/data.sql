@@ -184,7 +184,7 @@ insert into Luoghi values
 
 
 
-insert into Inventory values(1,1895);
+insert into Inventory(character_id,gold) values(1,1895);
 
 INSERT INTO InventoryObject(ITEM_ID,name,description,isEquipment,isRare,category,bodyPart,duration,url) VALUES(
 1,'elmo centurio','elmo con cresta trasversale',1,0,'ARMOR','HEAD',8,'https://www.coltelleriazoppi.com/wp-content/uploads/2010/11/p-35893-I6053.09.jpg'
@@ -192,9 +192,9 @@ INSERT INTO InventoryObject(ITEM_ID,name,description,isEquipment,isRare,category
 
 
 
-INSERT INTO InventoryObjectEffect VALUES(1,1,'NONE',3,'COSTITUZIONE',0,99999,0,4 );
+INSERT INTO InventoryObjectEffect(effect_ID,INVENTORYOBJECTID,HEALTHSTATUS,HEALING,STAT,ISTEMPORARY,DURATION,ISONESHOT,MODIFIER) VALUES(1,1,'NONE',3,'COSTITUZIONE',0,99999,0,4 );
 
 
-INSERT INTO CharacterInventoryObject VALUES (1,1,1,0,88,'2021-03-18',1);
+INSERT INTO CharacterInventoryObject(idInventoryObject,characterId,quantity,inUse,duration,acquiringDate,acquiredBy) VALUES (1,1,1,0,88,'2021-03-18',1);
 
 COMMIT;
