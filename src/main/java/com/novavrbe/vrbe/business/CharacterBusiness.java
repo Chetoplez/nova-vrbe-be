@@ -242,21 +242,22 @@ public class CharacterBusiness {
         characterRepositoryService.equipItem(item.getCharacterInventoryObjectDto());
 
         //Altrimenti se lo si sta equipaggiando, bisogna controllare la parte del corpo. Se esiste gia un equipaggiamento per la stessa parte del corpo, va rimosso
-        objects.stream().forEach(
+        if(!remove){
+            objects.stream().forEach(
                     equipment -> {
                         if(item.getCharacterInventoryObjectDto().getIdInventoryObject() != equipment.getCharacterInventoryObjectDto().getIdInventoryObject() && Boolean.TRUE.equals(equipment.getCharacterInventoryObjectDto().getInUse())){
                             //Stessa parte del corpo
                             // Oppure caso speciale per armi a due mani
                             if(item.getInventoryObjectDto().getBodyPart().equalsIgnoreCase(equipment.getInventoryObjectDto().getBodyPart())
-                                || (
+                                    || (
                                     BodyPart.DUAL_WIELD.name().equalsIgnoreCase(item.getInventoryObjectDto().getBodyPart())
-                                    && (BodyPart.HAND.name().equalsIgnoreCase(equipment.getInventoryObjectDto().getBodyPart()))
-                                )){
-                                    equipment.getCharacterInventoryObjectDto().setInUse(false);
-                                    characterRepositoryService.equipItem(equipment.getCharacterInventoryObjectDto());
+                                            && (BodyPart.HAND.name().equalsIgnoreCase(equipment.getInventoryObjectDto().getBodyPart()))
+                            )){
+                                equipment.getCharacterInventoryObjectDto().setInUse(false);
+                                characterRepositoryService.equipItem(equipment.getCharacterInventoryObjectDto());
                             }
                         }
                     });
-
+        }
     }
 }
