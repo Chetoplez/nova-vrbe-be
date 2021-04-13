@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Data
 public class InventoryObjectEffectDto {
     @Id
-    private Integer id;
+    private Integer effect_id;
     @Column
     private Integer inventoryObjectId;
     @Column

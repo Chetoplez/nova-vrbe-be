@@ -33,14 +33,14 @@ public class GuildUtils {
         for (GuildRoleDTO role: roleDTO) {
             GuildRole guildRole = new GuildRole();
 
-            guildRole.setGuild_id(role.getGuild_id());
-            guildRole.setRole_id(role.getRole_id());
+            guildRole.setGuild_id(role.getGuildId());
+            guildRole.setRole_id(role.getRoleId());
             guildRole.setName(role.getName());
             guildRole.setSalary(role.getSalary());
             guildRole.setIsManager(role.getIsManager());
             guildRole.setRole_img(role.getRole_img());
             guildRole.setDescription(role.getDescription());
-            guildRole.setGuild_level(role.getGuild_level());
+            guildRole.setGuild_level(role.getGuildLevel());
 
             _tmp.add(guildRole);
         }
