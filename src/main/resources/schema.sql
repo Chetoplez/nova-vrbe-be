@@ -37,15 +37,10 @@ CREATE TABLE CharactersDescription(
 CREATE TABLE CharactersStatistics(
     CHARACTER_ID NUMBER PRIMARY KEY NOT NULL,
     forza NUMBER NOT NULL,
-    forzaModifier NUMBER NOT NULL,
     destrezza NUMBER NOT NULL,
-    destrezzaModifier NUMBER NOT NULL,
     costituzione NUMBER NOT NULL,
-    costituzioneModifier NUMBER NOT NULL,
     intelligenza NUMBER NOT NULL,
-    intelligenzaModifier NUMBER NOT NULL,
-    saggezza NUMBER NOT NULL,
-    saggezzaModifier NUMBER NOT NULL
+    saggezza NUMBER NOT NULL
 );
 
 CREATE TABLE CharacterTemporaryEffect(

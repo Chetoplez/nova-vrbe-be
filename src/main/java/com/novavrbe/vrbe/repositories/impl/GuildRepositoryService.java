@@ -70,7 +70,7 @@ public class GuildRepositoryService {
     public V_GuildMembers getGuildMember(Integer characterId){
         V_GuildMembers tmp;
         Optional<V_GuildMembers> dto =guildMemberListRepository.findByCharacterId(characterId);
-        tmp = dto.isEmpty()? null : dto.get();
+        tmp = !dto.isPresent() ? null : dto.get();
         return tmp;
     }
 

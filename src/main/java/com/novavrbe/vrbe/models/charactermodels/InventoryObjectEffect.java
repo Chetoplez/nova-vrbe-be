@@ -12,4 +12,5 @@ public class InventoryObjectEffect {
     private boolean isTemporary;
     private Long duration;
     private boolean isOneShot;
+    private Integer modifier;
 }

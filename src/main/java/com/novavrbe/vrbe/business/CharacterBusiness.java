@@ -64,8 +64,13 @@ public class CharacterBusiness {
             CharacterUtils.fillCharacterTemporaryEffectsFromDto(character, characterRepositoryService.retrieveCharacterTemporaryEffects(cID));
             CharacterUtils.fillCharacterJobFromDto(character, characterRepositoryService.retriveCharacterJob(cID));
 
-            //TODO recuperare statistiche derivanti da equipaggiamento e Applicare a statistiche date da valori temporanee e armatura
             CharacterUtils.fillCharacterStatisticsFromDto(character, characterRepositoryService.retrieveCharacterStatistics(cID));
+
+            Inventory inventory = new Inventory();
+            CharacterUtils.fillInventoryWithObjects(inventory, characterRepositoryService.retrieveCharacterObjects(cID));
+            CharacterUtils.fillInventoryObjectsWithEffects(inventory, characterRepositoryService.retrieveInventoryObjectEffects(inventory));
+            CharacterUtils.addModifiedStatsFromEffects(inventory, character);
+
 
             getCharacterResponse.setCharacter(character);
             response = new ResponseEntity<GetCharacterResponse>(getCharacterResponse, HttpStatus.OK);

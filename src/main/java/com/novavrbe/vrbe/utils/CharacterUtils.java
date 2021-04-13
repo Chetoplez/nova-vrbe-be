@@ -79,26 +79,25 @@ public class CharacterUtils {
         if(character != null && characterStatisticsDto != null){
             ArrayList<CharacterStatistic> stats = new ArrayList<>();
 
-            CharacterStatistic strenght = buildCharacterStat(Stat.FORZA, characterStatisticsDto.getForza(), characterStatisticsDto.getForzaModifier());
+            CharacterStatistic strenght = buildCharacterStat(Stat.FORZA, characterStatisticsDto.getForza());
             stats.add(strenght);
-            CharacterStatistic intelligence = buildCharacterStat(Stat.INTELLIGENZA, characterStatisticsDto.getIntelligenza(), characterStatisticsDto.getIntelligenzaModifier());
+            CharacterStatistic intelligence = buildCharacterStat(Stat.INTELLIGENZA, characterStatisticsDto.getIntelligenza());
             stats.add(intelligence);
-            CharacterStatistic wisdom = buildCharacterStat(Stat.SAGGEZZA, characterStatisticsDto.getSaggezza(), characterStatisticsDto.getSaggezzaModifier());
+            CharacterStatistic wisdom = buildCharacterStat(Stat.SAGGEZZA, characterStatisticsDto.getSaggezza());
             stats.add(wisdom);
-            CharacterStatistic dexterity = buildCharacterStat(Stat.DESTREZZA, characterStatisticsDto.getDestrezza(), characterStatisticsDto.getDestrezzaModifier());
+            CharacterStatistic dexterity = buildCharacterStat(Stat.DESTREZZA, characterStatisticsDto.getDestrezza());
             stats.add(dexterity);
-            CharacterStatistic constitution = buildCharacterStat(Stat.COSTITUZIONE, characterStatisticsDto.getCostituzione(), characterStatisticsDto.getCostituzioneModifier());
+            CharacterStatistic constitution = buildCharacterStat(Stat.COSTITUZIONE, characterStatisticsDto.getCostituzione());
             stats.add(constitution);
 
             character.setStats(stats);
         }
     }
 
-    public static CharacterStatistic buildCharacterStat(Stat stat, Integer base, BigDecimal modifier){
+    public static CharacterStatistic buildCharacterStat(Stat stat, Integer base){
         CharacterStatistic statistic = new CharacterStatistic();
         statistic.setStatName(stat);
         statistic.setBaseStat(base);
-        statistic.setModified(modifier);
 
         return statistic;
     }
@@ -215,22 +214,17 @@ public class CharacterUtils {
             switch (stat.getStatName()){
                 case FORZA:
                     statisticsDto.setForza(stat.getBaseStat());
-                    statisticsDto.setForzaModifier(stat.getModified());
                     break;
                 case SAGGEZZA:
                     statisticsDto.setSaggezza(stat.getBaseStat());
-                    statisticsDto.setSaggezzaModifier(stat.getModified());
                     break;
                 case DESTREZZA:
                     statisticsDto.setDestrezza(stat.getBaseStat());
-                    statisticsDto.setDestrezzaModifier(stat.getModified());
                     break;
                 case COSTITUZIONE:
                     statisticsDto.setCostituzione(stat.getBaseStat());
-                    statisticsDto.setCostituzioneModifier(stat.getModified());
                 case INTELLIGENZA:
                     statisticsDto.setIntelligenza(stat.getBaseStat());
-                    statisticsDto.setIntelligenzaModifier(stat.getModified());
                 default: break;
             }
         });
@@ -239,15 +233,10 @@ public class CharacterUtils {
     public static void buildDefaultStatisticDto(CharacterStatisticsDto statisticsDto){
         if(statisticsDto != null){
             statisticsDto.setCostituzione(DEFAULT_STAT);
-            statisticsDto.setCostituzioneModifier(BigDecimal.ZERO);
             statisticsDto.setDestrezza(DEFAULT_STAT);
-            statisticsDto.setDestrezzaModifier(BigDecimal.ZERO);
             statisticsDto.setForza(DEFAULT_STAT);
-            statisticsDto.setForzaModifier(BigDecimal.ZERO);
             statisticsDto.setSaggezza(DEFAULT_STAT);
-            statisticsDto.setSaggezzaModifier(BigDecimal.ZERO);
             statisticsDto.setIntelligenza(DEFAULT_STAT);
-            statisticsDto.setIntelligenzaModifier(BigDecimal.ZERO);
         }
     }
 
@@ -291,6 +280,24 @@ public class CharacterUtils {
         }
     }
 
+    public static void addModifiedStatsFromEffects(@NotNull Inventory inventory, @NotNull Character character){
+        if(!CollectionUtils.isEmpty(inventory.getItems())){
+            inventory.getItems().stream().forEach(item -> {
+                item.getModifiers().stream().forEach(modifier -> {
+                    if(modifier.getStat() != null && modifier.getModifier() != null){
+
+                        character.getStats().stream().forEach( stat -> {
+                            if(stat.equals(modifier.getStat())){
+                                stat.setModified( stat.getModified() != null ? stat.getModified().add(new BigDecimal(modifier.getModifier())) : new BigDecimal(modifier.getModifier()));
+                            }
+                        });
+
+                    }
+                });
+            });
+        }
+    }
+
     public static InventoryObjectEffect createEffectFromDto(@NotNull InventoryObjectEffectDto effectDto){
         InventoryObjectEffect effect = new InventoryObjectEffect();
 
@@ -300,6 +307,7 @@ public class CharacterUtils {
         effect.setHealthStatus(StringUtils.hasText(effectDto.getHealthStatus()) ? HealthStatus.valueOf(effectDto.getHealthStatus()) : null);
         effect.setOneShot(effectDto.getIsOneShot());
         effect.setStat(StringUtils.hasText(effectDto.getStat()) ? Stat.valueOf(effectDto.getStat()) : null);
+        effect.setModifier(effectDto.getModifier());
 
         return effect;
     }
