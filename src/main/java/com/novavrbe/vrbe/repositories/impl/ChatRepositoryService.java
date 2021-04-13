@@ -5,6 +5,7 @@ import com.novavrbe.vrbe.repositories.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /***
@@ -32,7 +33,13 @@ public class ChatRepositoryService {
      * @return la lista dei messaggi di quella chat partendo dal time.now - la windows
      */
     public List<ChatMessageDto> getChatMessages(Integer id, Long window) {
-        return chatRepository.findMessageByChatId(id, window);
-
+        return chatRepository.findByChatIdAndTimestampGreaterThan(id, window);
     }
+
+    public boolean isUpdated(Integer chatId, Long lastUpdate){
+        List<ChatMessageDto> newMessages = new ArrayList<>();
+        newMessages = chatRepository.findByChatIdAndTimestampGreaterThan(chatId,lastUpdate);
+        return newMessages.size() > 0;
+    }
+
 }

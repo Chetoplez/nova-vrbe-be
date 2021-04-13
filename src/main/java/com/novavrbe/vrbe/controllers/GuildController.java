@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+
 @RequestMapping("/guild")
+
 public class GuildController {
 
     @Autowired
@@ -47,7 +49,12 @@ public class GuildController {
         return guildBusiness.degradeGuildMember(degradeRequest);
     }
 
-    @PostMapping("/members/checkguildPermission/")
+    @GetMapping("/members/getcharactercv/characterId={characterId}")
+    public ResponseEntity<CharacterCvResponse> getCharacterCv(@PathVariable String characterId){
+        return guildBusiness.getCharacterCv(characterId);
+    }
+
+    @PostMapping("/members/checkguildpermission")
     public ResponseEntity<CheckGuildPermissionResponse> checkGuildPermission(@RequestBody CheckGuildPermissionRequest request){
         return guildBusiness.checkGuildPermission(request);
     }

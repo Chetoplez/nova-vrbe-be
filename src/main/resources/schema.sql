@@ -12,7 +12,7 @@ CREATE TABLE GenericUser (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Characters (
+CREATE TABLE Characters ( --manca il riferimento al'id del genericUser
   CHARACTER_ID NUMBER PRIMARY KEY,
   CHARACTER_NAME VARCHAR(50) NOT NULL,
   CHARACTER_ICON VARCHAR(250) NOT NULL,
@@ -109,8 +109,8 @@ ON CH.CHARACTER_ID = GM.CHARACTER_ID;
 
 
 CREATE TABLE CHARACTER_CV (
-CHARACTER_ID NUMBER NOT NULL,
-ROLE_ID NUMBER NOT NULL,
+CHARACTER_ID INT NOT NULL,
+ROLE_ID INT NOT NULL,
 ENROLLMENT_DATE DATE,
 PRIMARY KEY (CHARACTER_ID,ROLE_ID,ENROLLMENT_DATE)
 );
@@ -181,25 +181,25 @@ CREATE TABLE InventoryObject(
 );
 
 CREATE TABLE InventoryObjectEffect(
-    id NUMBER NOT NULL,
-    inventoryObjectId NUMBER NOT NULL,
+    effect_id INT NOT NULL,
+    inventoryObjectId INT NOT NULL,
     healthStatus VARCHAR(15),
-    healing NUMBER,
+    healing INT,
     stat VARCHAR(15),
     isTemporary BIT,
-    duration NUMBER,
+    duration INT,
     isOneShot BIT,
-    modifier NUMBER
+    modifier INT
 );
 
 CREATE TABLE CharacterInventoryObject(
-    idInventoryObject NUMBER NOT NULL,
-    characterId NUMBER NOT NULL,
-    quantity NUMBER,
+    idInventoryObject INT NOT NULL,
+    characterId INT NOT NULL,
+    quantity INT,
     inUse BIT,
-    duration NUMBER,
+    duration INT,
     acquiringDate DATE,
-    acquiredBy NUMBER,
+    acquiredBy INT,
     PRIMARY KEY(idInventoryObject, characterId)
 );
 

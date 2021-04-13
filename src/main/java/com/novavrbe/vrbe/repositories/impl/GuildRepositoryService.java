@@ -31,6 +31,9 @@ public class GuildRepositoryService {
     @Autowired
     private GuildBankRepository guildBankRepository;
 
+    @Autowired
+    private CharacterCvRepository characterCvRepository;
+
     /**
      * Torna le informazioni della gilda dato il suo id
      * @param guildId id della gilda
@@ -49,12 +52,12 @@ public class GuildRepositoryService {
     /**
      * Torna i membri appartenenenti alla gilda
      * @param guildId L'id della gilda di cui vuoi i conoscere i membri
-     * @return Lista dei membri GuildMemberListDTO
+     * @return Lista dei membri V_GuildMembers
      */
-    public List<GuildMemberListDTO> getGuildMembers(Integer guildId){
-        List<GuildMemberListDTO> members = new ArrayList<>();
+    public List<V_GuildMembers> getGuildMembers(Integer guildId){
+        List<V_GuildMembers> members = new ArrayList<>();
         if(guildId != null){
-            members = guildMemberListRepository.findMembersByGuildId(guildId);
+            members = guildMemberListRepository.findAllByGuildId(guildId);
         }
         return members;
     }
@@ -64,9 +67,9 @@ public class GuildRepositoryService {
      * @param characterId l'id del pg
      * @return le info sul ruolo o null
      */
-    public GuildMemberListDTO getGuildMember(Integer characterId){
-        GuildMemberListDTO tmp;
-        Optional<GuildMemberListDTO> dto =guildMemberListRepository.getGuildMemberbyID(characterId);
+    public V_GuildMembers getGuildMember(Integer characterId){
+        V_GuildMembers tmp;
+        Optional<V_GuildMembers> dto =guildMemberListRepository.findByCharacterId(characterId);
         tmp = dto.isEmpty()? null : dto.get();
         return tmp;
     }
@@ -91,13 +94,13 @@ public class GuildRepositoryService {
      */
     public GuildPermission checkGuildPermission(Integer charachaterId, Integer guildId) {
         GuildPermission permission = new GuildPermission();
-        Optional<GuildMemberListDTO> dto = guildMemberListRepository.getGuildMemberbyID(charachaterId);
-        if(dto.isPresent() && dto.get().getGUILD_ID().equals(guildId)) {
+        Optional<V_GuildMembers> dto = guildMemberListRepository.findByCharacterId(charachaterId);
+        if(dto.isPresent() && dto.get().getGuildId().equals(guildId)) {
          //Sei arruolato e sei nella gilda che stai visualizzando, capiamo se sei il capo :)
             permission.setPresente(true);
             List<GuildRoleDTO> listOfRoles = getRoleByGuildId(guildId);
             for (GuildRoleDTO role: listOfRoles) {
-              if(role.getRole_id().equals(dto.get().getROLE_ID()))
+              if(role.getRoleId().equals(dto.get().getRoleId()))
                  permission.setManager(role.getIsManager());
             }
         }else {
@@ -135,14 +138,14 @@ public class GuildRepositoryService {
         role_id = member.map(GuildMemberDTO::getROLE_ID).orElse(null);
         Optional<GuildRoleDTO> dto = (role_id != null) ? guildRoleRepository.findById(role_id) : Optional.empty();
         if(dto.isPresent()){
-        List<GuildRoleDTO> listofpossibile = guildRoleRepository.getPossibleNextRoles(dto.get().getGuild_id(),dto.get().getGuild_level());
+        List<GuildRoleDTO> listofpossibile = guildRoleRepository.findByGuildIdAndGuildLevelGreaterThan(dto.get().getGuildId(),dto.get().getGuildLevel());
         if(listofpossibile.size() > 0){
         Integer roleLevel = 2000;
         Integer newRoleid = 0;
         for (GuildRoleDTO temp: listofpossibile) {
-            if(temp.getGuild_level() < roleLevel){
-                roleLevel = temp.getGuild_level();
-                newRoleid = temp.getRole_id();
+            if(temp.getGuildLevel() < roleLevel){
+                roleLevel = temp.getGuildLevel();
+                newRoleid = temp.getRoleId();
                 promoted = true;
             }
         }
@@ -162,14 +165,14 @@ public class GuildRepositoryService {
         role_id = member.map(GuildMemberDTO::getROLE_ID).orElse(null);
         Optional<GuildRoleDTO> dto = (role_id != null) ? guildRoleRepository.findById(role_id) : Optional.empty();
         if(dto.isPresent()){
-            List<GuildRoleDTO> listofpossibile = guildRoleRepository.getPossiblePrevtRoles(dto.get().getGuild_id(),dto.get().getGuild_level());
+            List<GuildRoleDTO> listofpossibile = guildRoleRepository.findByGuildIdAndGuildLevelLessThan(dto.get().getGuildId(),dto.get().getGuildLevel());
             if(listofpossibile.size() > 0){
                 Integer roleLevel = 1;
                 Integer newRoleid = 9999;
                 for (GuildRoleDTO temp: listofpossibile) {
-                    if(temp.getGuild_level() > roleLevel){
-                        roleLevel = temp.getGuild_level();
-                        newRoleid = temp.getRole_id();
+                    if(temp.getGuildLevel() > roleLevel){
+                        roleLevel = temp.getGuildLevel();
+                        newRoleid = temp.getRoleId();
                         degradated = true;
                     }
                 }
@@ -240,8 +243,20 @@ public class GuildRepositoryService {
     public List<GuildRoleDTO> getRoleByGuildId(Integer guildId) {
         List<GuildRoleDTO> tmp = new ArrayList<>();
         if(guildId != null){
-            tmp = guildRoleRepository.findAllGuildRoleById(guildId);
+            tmp = guildRoleRepository.findByGuildId(guildId);
         }
         return tmp  ;
+    }
+
+    public List<CharacterCvDTO> getCharacterCv(Integer cId) {
+        List<CharacterCvDTO> roles;
+        roles = characterCvRepository.findAllByCharacterIdOrderByEnrollmentDateDesc(cId);
+        return roles;
+    }
+
+    public GuildRoleDTO getRoleById(Integer roleId) {
+        Optional<GuildRoleDTO> dto;
+        dto = guildRoleRepository.findById(roleId);
+        return dto.get();
     }
 }

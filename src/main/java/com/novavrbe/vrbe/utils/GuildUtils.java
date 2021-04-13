@@ -2,7 +2,7 @@ package com.novavrbe.vrbe.utils;
 
 import com.novavrbe.vrbe.dto.GuildBankDTO;
 import com.novavrbe.vrbe.dto.GuildDTO;
-import com.novavrbe.vrbe.dto.GuildMemberListDTO;
+import com.novavrbe.vrbe.dto.V_GuildMembers;
 import com.novavrbe.vrbe.dto.GuildRoleDTO;
 import com.novavrbe.vrbe.models.guildcontroller.Guild;
 import com.novavrbe.vrbe.models.guildcontroller.GuildMember;
@@ -33,14 +33,14 @@ public class GuildUtils {
         for (GuildRoleDTO role: roleDTO) {
             GuildRole guildRole = new GuildRole();
 
-            guildRole.setGuild_id(role.getGuild_id());
-            guildRole.setRole_id(role.getRole_id());
+            guildRole.setGuild_id(role.getGuildId());
+            guildRole.setRole_id(role.getRoleId());
             guildRole.setName(role.getName());
             guildRole.setSalary(role.getSalary());
             guildRole.setIsManager(role.getIsManager());
             guildRole.setRole_img(role.getRole_img());
             guildRole.setDescription(role.getDescription());
-            guildRole.setGuild_level(role.getGuild_level());
+            guildRole.setGuild_level(role.getGuildLevel());
 
             _tmp.add(guildRole);
         }
@@ -48,15 +48,15 @@ public class GuildUtils {
         return _tmp;
     }
 
-    public static GuildMember getMemberfromDTO(@NotNull GuildMemberListDTO tmp) {
+    public static GuildMember getMemberfromDTO(@NotNull V_GuildMembers tmp) {
         GuildMember newMember = new GuildMember();
-        newMember.setCHARACTER_ID(tmp.getCHARACTER_ID());
-        newMember.setROLE_ID(tmp.getROLE_ID());
-        newMember.setGUILD_ID(tmp.getGUILD_ID());
-        newMember.setGUILD_LEVEL(tmp.getGUILD_LEVEL());
-        newMember.setCHARACTER_NAME(tmp.getCHARACTER_NAME());
-        newMember.setROLE_IMG(tmp.getROLE_IMG());
-        newMember.setROLE_NAME(tmp.getROLE_NAME());
+        newMember.setCHARACTER_ID(tmp.getCharacterId());
+        newMember.setROLE_ID(tmp.getRoleId());
+        newMember.setGUILD_ID(tmp.getGuildId());
+        newMember.setGUILD_LEVEL(tmp.getGuildLevel());
+        newMember.setCHARACTER_NAME(tmp.getCharacterName());
+        newMember.setROLE_IMG(tmp.getRoleImg());
+        newMember.setROLE_NAME(tmp.getRoleName());
 
         return newMember;
     }

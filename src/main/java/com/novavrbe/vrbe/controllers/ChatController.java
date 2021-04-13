@@ -15,7 +15,7 @@ public class ChatController {
     @Autowired
     private ChatBusiness chatBusiness;
 
-    @PutMapping("/addmessage")
+    @PostMapping("/addmessage")
     public ResponseEntity<AddMessageResponse> addMessage(@RequestBody AddMessageRequest request){
         System.out.println("passo da qui, infame: "+request.getChatId());
         System.out.println("Vediamo il timpestamp di merda:" +request.getChatMessage().getTimestamp());
@@ -31,6 +31,11 @@ public class ChatController {
     @DeleteMapping("/deletemessage")
     public ResponseEntity<DeleteMessageResponse> deleteMessage(DeleteMessageRequest request){
         return  chatBusiness.deleteMessage(request);
+    }
+
+    @GetMapping("/ischatupdate/chatId={chatId}&timestamp={tms}")
+    public ResponseEntity<IsChatUpdatedResponse> isChatUpdate(@PathVariable String chatId, @PathVariable String tms){
+        return chatBusiness.isChatUpdated(chatId,tms);
     }
 
 }

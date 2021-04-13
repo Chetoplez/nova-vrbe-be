@@ -1,10 +1,7 @@
 package com.novavrbe.vrbe.business;
 
 
-import com.novavrbe.vrbe.dto.GuildBankDTO;
-import com.novavrbe.vrbe.dto.GuildDTO;
-import com.novavrbe.vrbe.dto.GuildMemberListDTO;
-import com.novavrbe.vrbe.dto.GuildRoleDTO;
+import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.guildcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
 import com.novavrbe.vrbe.utils.GuildUtils;
@@ -86,9 +83,9 @@ public class GuildBusiness {
             response = new ResponseEntity<>(new GetGuildMemberResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
-        List<GuildMemberListDTO> membersDTO = guildRepositoryService.getGuildMembers(Integer.parseInt(guildId));
+        List<V_GuildMembers> membersDTO = guildRepositoryService.getGuildMembers(Integer.parseInt(guildId));
         GetGuildMemberResponse res = new GetGuildMemberResponse();
-        for (GuildMemberListDTO tmp: membersDTO) {
+        for (V_GuildMembers tmp: membersDTO) {
             GuildMember newMember = GuildUtils.getMemberfromDTO(tmp);
             members.add(newMember);
         }
@@ -209,6 +206,7 @@ public class GuildBusiness {
         res.setManager(perm.isManager());
         res.setPresent(perm.isPresente());
         response = new ResponseEntity<>(res, HttpStatus.OK);
+
         return response;
 
 
@@ -224,5 +222,35 @@ public class GuildBusiness {
     //TODO da implementare.
     private boolean hasManagerRight(Integer executorId){
         return false;
+    }
+
+    /**
+     * Torna il curriculum del pg se ne ha uno.
+     * @param characterId il character id
+     * @return una lista dei ruoli ricorperti con la data di arruolamento
+     */
+    public ResponseEntity<CharacterCvResponse> getCharacterCv(String characterId) {
+        ResponseEntity<CharacterCvResponse> response;
+        List<CharacterCv> curriculumPg = new ArrayList<>();
+        if(!StringUtils.hasText(characterId)){
+            response = new ResponseEntity<>(new CharacterCvResponse(),HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer cId = Integer.parseInt(characterId);
+        List<CharacterCvDTO> cvDTOS = guildRepositoryService.getCharacterCv(cId);
+        for (CharacterCvDTO dto: cvDTOS ) {
+            CharacterCv tmp = new CharacterCv();
+            GuildRoleDTO roleInfo;
+            roleInfo = guildRepositoryService.getRoleById(dto.getRoleId());
+            tmp.setImg(roleInfo.getRole_img());
+            tmp.setRoleName(roleInfo.getName());
+            tmp.setEnrolmentDate(dto.getEnrollmentDate());
+            curriculumPg.add(tmp);
+        }
+
+        CharacterCvResponse res = new CharacterCvResponse();
+        res.setCurruculumPg(curriculumPg);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
     }
 }
