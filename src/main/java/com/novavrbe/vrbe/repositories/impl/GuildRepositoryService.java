@@ -6,6 +6,7 @@ import com.novavrbe.vrbe.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -117,6 +118,7 @@ public class GuildRepositoryService {
             newMember.setCHARACTER_ID(characterId);
             newMember.setROLE_ID(roleid);
             GuildMemberDTO savedMember = guildMemeberRepository.save(newMember);
+            updateCharacterCV(savedMember.getCHARACTER_ID(),savedMember.getROLE_ID(), new Date(new java.util.Date().getTime()));
             saved = true;
         }
 
@@ -258,5 +260,22 @@ public class GuildRepositoryService {
         Optional<GuildRoleDTO> dto;
         dto = guildRoleRepository.findById(roleId);
         return dto.get();
+    }
+
+    public void updateCharacterCV(Integer character_id, Integer roleId, java.sql.Date date) {
+        CharacterCvDTO nuovoRecord = new CharacterCvDTO();
+        CharacterCvDTO actualCVRole = characterCvRepository.findAllByCharacterIdAndEnrollmentDateEquals(character_id,date);
+        if(actualCVRole != null ){
+            //vuol dire che oggi ho già un record nel cv, devo aggiornare
+            actualCVRole.setRoleId(roleId);
+            characterCvRepository.save(actualCVRole);
+
+        }else{
+            nuovoRecord.setCharacterId(character_id);
+            nuovoRecord.setEnrollmentDate(date);
+            nuovoRecord.setRoleId(roleId);
+            characterCvRepository.save(nuovoRecord);
+        }
+
     }
 }
