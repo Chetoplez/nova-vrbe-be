@@ -6,23 +6,21 @@ import org.hibernate.annotations.Immutable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 
 @Immutable
 @Data
-public class V_GuildMembers implements Serializable {
+public class V_GuildMembers {
 
-
-    @Column(name = "GUILD_ID")
+    @Column(name = "GUILDID")
     private Integer guildId;
-    @Id
-    @Column(name = "ROLE_ID")
-    private Integer roleId;
 
-    @Column(name = "CHARACTER_ID")
+    @Column(name = "ROLEID")
+    private Integer roleId;
+    @Id
+    @Column(name = "CHARACTERID")
     private Integer characterId;
 
     @Column(name = "CHARACTER_NAME")
