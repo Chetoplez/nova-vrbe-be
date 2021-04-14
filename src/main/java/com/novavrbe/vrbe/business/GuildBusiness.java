@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -150,8 +151,9 @@ public class GuildBusiness {
             return response;
         }
         Integer character_id = Integer.parseInt(promoteMember.getCharacter_id());
-        Integer guildId = Integer.parseInt(promoteMember.getGuild_id());
+
         if(guildRepositoryService.promoteMember(character_id)){
+            updateCharacterCV(character_id);
             PromoteMemberResponse res = new PromoteMemberResponse();
             res.setPromoted(true);
             response = new ResponseEntity<>(res, HttpStatus.OK);
@@ -176,8 +178,9 @@ public class GuildBusiness {
             return response;
         }
         Integer character_id = Integer.parseInt(degradeMemberRequest.getCharacter_id());
-        Integer guildId = Integer.parseInt(degradeMemberRequest.getGuild_id());
+
         if(guildRepositoryService.degradeMember(character_id)){
+            updateCharacterCV(character_id);
             DegradeMemberResponse res = new DegradeMemberResponse();
             res.setDegradated(true);
             response = new ResponseEntity<>(res, HttpStatus.OK);
@@ -189,6 +192,16 @@ public class GuildBusiness {
         return response;
     }
 
+    /**
+     * aggiorna il CV di un character.
+     * @param character_id
+     */
+    private void updateCharacterCV(Integer character_id) {
+        V_GuildMembers actualRole = guildRepositoryService.getGuildMember(character_id);
+        if(actualRole != null){
+            guildRepositoryService.updateCharacterCV(character_id,actualRole.getRoleId(),new java.sql.Date(new Date().getTime()));
+        }
+    }
 
 
     public ResponseEntity<CheckGuildPermissionResponse> checkGuildPermission(CheckGuildPermissionRequest request) {
