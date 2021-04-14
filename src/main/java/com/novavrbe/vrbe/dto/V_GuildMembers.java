@@ -13,15 +13,15 @@ import java.io.Serializable;
 
 @Immutable
 @Data
-public class V_GuildMembers implements Serializable {
+public class V_GuildMembers  {
 
 
     @Column(name = "GUILD_ID")
     private Integer guildId;
-    @Id
+
     @Column(name = "ROLE_ID")
     private Integer roleId;
-
+    @Id
     @Column(name = "CHARACTER_ID")
     private Integer characterId;
 
