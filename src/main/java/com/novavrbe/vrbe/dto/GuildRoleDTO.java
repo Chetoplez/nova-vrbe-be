@@ -28,6 +28,6 @@ public class GuildRoleDTO {
     private String role_img;
     @Column
     private String description;
-    @Column
+    @Column(name = "GUILDLEVEL")
     private Integer guildLevel;
 }

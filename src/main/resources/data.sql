@@ -142,7 +142,7 @@ insert into GUILDBANK values (
 
 
 
-INSERT INTO GUILDROLE VALUES
+INSERT INTO GUILDROLE(ROLEID,GUILDID,NAME,SALARY,MANAGER,ROLE_IMG,description,GUILDLEVEL) VALUES
 (1,1,'Legionario',30,0,'','Soldato di truppa preposto a formare le prime linee di combattimento',10)
 ,(2,1,'Optio',50,0,'','Soldato Esperto braccio destro del centurione, a lui vengono affidati compiti di gestione e addestramento',20)
 ,(3,1,'Centurio',90,0,'','Il capo di una centuria, commina punizioni e allena la truppa. La sua parola è legge per i suoi sottoposti',30)

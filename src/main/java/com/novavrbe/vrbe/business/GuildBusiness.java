@@ -118,7 +118,7 @@ public class GuildBusiness {
         }else {
             AddMemberResponse res = new AddMemberResponse();
             res.setAdded(false);
-            response = new ResponseEntity<>(res,HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<>(res,HttpStatus.OK);
         }
         return response;
     }
