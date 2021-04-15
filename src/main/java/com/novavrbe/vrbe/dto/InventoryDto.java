@@ -16,5 +16,5 @@ public class InventoryDto {
     @Column(name = "CHARACTER_ID")
     private Integer characterId;
     @Column
-    private BigDecimal gold;
+    private Integer gold;
 }

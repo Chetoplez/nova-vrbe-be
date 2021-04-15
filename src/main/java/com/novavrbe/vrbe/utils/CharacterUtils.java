@@ -200,11 +200,11 @@ public class CharacterUtils {
         return statisticsDto;
     }
 
-    public static InventoryDto buildInventoryForDto(@NotNull Integer characterId, BigDecimal gold){
+    public static InventoryDto buildInventoryForDto(@NotNull Integer characterId, Integer gold){
         InventoryDto inventoryDto = new InventoryDto();
 
         inventoryDto.setCharacterId(characterId);
-        inventoryDto.setGold(gold != null ? gold : BigDecimal.ZERO);
+        inventoryDto.setGold(gold != null ? gold : 0);
 
         return inventoryDto;
     }

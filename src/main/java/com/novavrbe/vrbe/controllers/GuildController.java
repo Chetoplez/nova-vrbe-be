@@ -58,4 +58,15 @@ public class GuildController {
     public ResponseEntity<CheckGuildPermissionResponse> checkGuildPermission(@RequestBody CheckGuildPermissionRequest request){
         return guildBusiness.checkGuildPermission(request);
     }
+
+    @PatchMapping("/members/withdraw")
+    public ResponseEntity<OperationBankResponse> withdraw(@RequestBody OperationBankRequest request){
+        return guildBusiness.withdraw(request);
+    }
+
+    @PatchMapping("/members/deposit")
+    public ResponseEntity<OperationBankResponse> deposit(@RequestBody OperationBankRequest request){
+        return guildBusiness.deposit(request);
+    }
+
 }

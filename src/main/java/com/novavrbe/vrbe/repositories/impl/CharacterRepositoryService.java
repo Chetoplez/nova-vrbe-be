@@ -188,7 +188,7 @@ public class CharacterRepositoryService {
                     characterStatisticRepository.save(characterStatisticsDto);
                 }
 
-                InventoryDto inventoryDto = CharacterUtils.buildInventoryForDto(characterDto.getCharacterId(), BigDecimal.ZERO);
+                InventoryDto inventoryDto = CharacterUtils.buildInventoryForDto(characterDto.getCharacterId(), 0);
                 if(inventoryDto != null){
                     inventoryRepository.save(inventoryDto);
                 }
@@ -202,7 +202,7 @@ public class CharacterRepositoryService {
     public boolean updateInventory(@NotNull Inventory inventory){
         boolean saved = true;
 
-        InventoryDto inventoryDto = CharacterUtils.buildInventoryForDto(inventory.getInventoryId(), new BigDecimal(inventory.getGold()));
+        InventoryDto inventoryDto = CharacterUtils.buildInventoryForDto(inventory.getInventoryId(), new Integer(inventory.getGold()));
         inventoryRepository.save(inventoryDto);
 
         return saved;
@@ -299,5 +299,26 @@ public class CharacterRepositoryService {
         Optional<V_GuildMembers> dto = characterGuildRepository.findByCharacterId(cID);
         cJob = dto.orElse(null);
         return cJob;
+    }
+
+
+    public Boolean deposit(int characterId, int amount) {
+        Optional<InventoryDto> inventoryDto = inventoryRepository.findById(characterId);
+        if(inventoryDto.isPresent()){
+            inventoryDto.get().setGold(inventoryDto.get().getGold() + amount);
+            inventoryRepository.save(inventoryDto.get());
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean withdraw(int characterId, int amount) {
+        Optional<InventoryDto> inventoryDto = inventoryRepository.findById(characterId);
+        if(inventoryDto.isPresent() && inventoryDto.get().getGold() > amount){
+            inventoryDto.get().setGold(inventoryDto.get().getGold() - amount);
+            inventoryRepository.save(inventoryDto.get());
+            return true;
+        }
+        return false;
     }
 }

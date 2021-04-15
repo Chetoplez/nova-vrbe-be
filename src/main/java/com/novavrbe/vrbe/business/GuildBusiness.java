@@ -3,6 +3,11 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.guildcontroller.*;
+import com.novavrbe.vrbe.repositories.CharacterRepository;
+import com.novavrbe.vrbe.repositories.GuildMemeberRepository;
+import com.novavrbe.vrbe.repositories.GuildRepository;
+import com.novavrbe.vrbe.repositories.InventoryRepository;
+import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
 import com.novavrbe.vrbe.utils.GuildUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +27,9 @@ public class GuildBusiness {
 
     @Autowired
     private GuildRepositoryService guildRepositoryService;
+
+    @Autowired
+    private CharacterRepositoryService characterRepositoryService;
 
     /**
      * Torna le informazioni della gilda
@@ -226,14 +234,59 @@ public class GuildBusiness {
     }
 
 
+    public ResponseEntity<OperationBankResponse> withdraw(OperationBankRequest request) {
+
+        ResponseEntity<OperationBankResponse> response;
+        OperationBankResponse res = new OperationBankResponse();
+        if(StringUtils.hasText(request.getCharacterId()) && StringUtils.hasText(request.getGuildId()) && StringUtils.hasText(request.getAmount())){
+        if(hasManagerRight(Integer.parseInt(request.getCharacterId()))) {
+           Boolean withdrawBank = (guildRepositoryService.withdraw(Integer.parseInt(request.getGuildId()), Integer.parseInt(request.getAmount())));
+           Boolean depositCharacter = withdrawBank ? characterRepositoryService.deposit(Integer.parseInt(request.getCharacterId()), Integer.parseInt(request.getAmount())) : false;
+           res.setOperationOk(withdrawBank && depositCharacter);
+            return  new ResponseEntity<>(res, HttpStatus.OK);
+         }
+        else {
+            res.setOperationOk(false);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        }
+        } else {
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public ResponseEntity<OperationBankResponse> deposit(OperationBankRequest request) {
+        ResponseEntity<OperationBankResponse> response;
+        OperationBankResponse res = new OperationBankResponse();
+        if (StringUtils.hasText(request.getCharacterId()) && StringUtils.hasText(request.getGuildId()) && StringUtils.hasText(request.getAmount())) {
+            if (hasManagerRight(Integer.parseInt(request.getCharacterId()))) {
+                Boolean withdrawCharacter = characterRepositoryService.withdraw(Integer.parseInt(request.getCharacterId()), Integer.parseInt(request.getAmount())) ;
+                Boolean deposit = withdrawCharacter ? (guildRepositoryService.deposit(Integer.parseInt(request.getGuildId()), Integer.parseInt(request.getAmount()))) : false;
+                res.setOperationOk(deposit && withdrawCharacter);
+                return  new ResponseEntity<>(res, HttpStatus.OK);
+            }
+            else {
+                res.setOperationOk(false);
+                return new ResponseEntity<>(res, HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     /**
      * Controlla se chi sta effettuando l'azione, ne ha il privilegio.
      * @param executorId il characterId di chi ha chiamato il metodo
      * @return true se sei il manager di quella gilda, false altrimenti
      */
 
-    //TODO da implementare.
     private boolean hasManagerRight(Integer executorId){
+        //dal executorID prendi il character per intero e selezioni il role, con il role entri nella tabella e vedi se è un manager
+        V_GuildMembers member = guildRepositoryService.getGuildMember(executorId);
+        GuildRoleDTO role = null;
+        if(member != null){
+              role =  guildRepositoryService.getRoleById(member.getRoleId());
+                return role.getIsManager();
+        }
         return false;
     }
 
