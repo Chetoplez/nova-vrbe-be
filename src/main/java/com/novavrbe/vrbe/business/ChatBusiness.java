@@ -1,7 +1,10 @@
 package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.ChatMessageDto;
+import com.novavrbe.vrbe.models.charactermodels.CharacterStatistic;
 import com.novavrbe.vrbe.models.chatcontroller.*;
+import com.novavrbe.vrbe.models.enumerations.ChatAction;
+import com.novavrbe.vrbe.models.enumerations.Stat;
 import com.novavrbe.vrbe.repositories.impl.ChatRepositoryService;
 import com.novavrbe.vrbe.utils.ChatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class ChatBusiness {
@@ -103,6 +108,46 @@ public class ChatBusiness {
         IsChatUpdatedResponse res = new IsChatUpdatedResponse();
         res.setUpdated(chatRepositoryService.isUpdated(chatId,lastUpdate));
         response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+    }
+
+    /**
+     * Genera un lancio casuale dei dadi basandosi sulle statische del giocatore
+     * @param request request per generare il valore casuali di dado
+     * @return torna true se è andato a buone fine, false altrimenti
+     */
+    public ResponseEntity<AddMessageResponse> rollDice(RollDiceRequest request) {
+        ResponseEntity<AddMessageResponse> response = null;
+        if(!StringUtils.hasText(request.getCharachterId()) || !StringUtils.hasText(request.getStatName()) || !StringUtils.hasText(request.getChatId())){
+            response = new ResponseEntity<>(new AddMessageResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer chatId = Integer.parseInt(request.getChatId());
+        Integer cId = Integer.parseInt(request.getCharachterId());
+        String stat = request.getStatName();
+
+        //Mi prendo il valore della stat inclusa del modificatore
+        CharacterStatistic statValue = chatRepositoryService.getStatValue(cId, Stat.valueOf(stat));
+        //Da questo valore , genero un numero casuale da 1 al massimo valore della stat.
+        int maxStatValue = statValue.getBaseStat() + statValue.getModified().intValue();
+        int randomNum = ThreadLocalRandom.current().nextInt(1, maxStatValue + 1);
+        //Bene, abbiamo generato il valore random del dado basato sulla statistica (eventualmente modificata), ora inseriamo un messaggio
+        String testo = "Lancia un Dado su " + stat +": "+"Il risultato è "+randomNum+" su "+maxStatValue;
+
+        ChatMessageDto diceMessage = new ChatMessageDto();
+        diceMessage.setChatId(chatId);
+        diceMessage.setAction(ChatAction.DADI.name());
+        diceMessage.setCarica(request.getCarica());
+        diceMessage.setSender(request.getSender());
+        diceMessage.setImg(request.getImg());
+        diceMessage.setTag(request.getTag());
+        diceMessage.setTimestamp(new Date().getTime());
+        diceMessage.setTooltip_carica(diceMessage.getCarica());
+        diceMessage.setTesto(testo);
+        chatRepositoryService.addNewChatMessage(diceMessage);
+        AddMessageResponse res = new AddMessageResponse();
+        res.setChatRetrieved(true);
+        response = new ResponseEntity<>(res, HttpStatus.OK);
         return response;
     }
 }

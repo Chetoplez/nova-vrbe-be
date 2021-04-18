@@ -38,42 +38,9 @@ INSERT INTO GenericUser VALUES (
 
 
 INSERT INTO Characters VALUES (
- 1,
- 'Marzio Paparzio',
- 'https://www.icon.com',
- 'MASCHIO',
- 'PLEBEO',
- 1,
- 100,
- 100,
- 100,
- 'SAZIO',
- 'USER'
-),(
-   2,
-   'Sergio Claudio',
-   'https://www.icon.com',
-   'MASCHIO',
-   'PLEBEO',
-   1,
-   100,
-   100,
-   100,
-   'SAZIO',
-   'USER'
-  ),(
-       3,
-       'Gaio Cesare',
-       'https://www.icon.com',
-       'MASCHIO',
-       'PLEBEO',
-       1,
-       100,
-       100,
-       100,
-       'SAZIO',
-       'USER'
-      );
+ 1, 'Marzio Paparzio', 'https://www.icon.com', 'MASCHIO', 'PLEBEO', 1, 100, 100, 100, 'SAZIO', 'USER'),
+ (2,'Sergio Claudio','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER'),
+ (3,'Gaio Cesare','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER');
 
 
 INSERT INTO CharactersHistory VALUES
@@ -89,28 +56,10 @@ INSERT INTO CharactersDescription VALUES
 
 
 
-INSERT INTO CharactersStatistics VALUES(
-    1,
-    5,
-    5,
-    5,
-    5,
-    5
-),(
-      2,
-      5,
-      5,
-      5,
-      5,
-      5
-  ),(
-        3,
-        5,
-        5,
-        5,
-        5,
-        5
-    );
+INSERT INTO CharactersStatistics VALUES
+(1,5,5,5,5,5),
+(2,5,5,5,5,5),
+(3,5,5,5,5,5);
 
 
 
