@@ -26,6 +26,8 @@ public class ChatMessageDto {
     @Column
     private String sender;
     @Column
+    private String characterId;
+    @Column
     private String tag;
     @Column
     private String testo;
