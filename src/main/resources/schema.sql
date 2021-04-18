@@ -23,7 +23,7 @@ CREATE TABLE Characters ( --manca il riferimento al'id del genericUser
   TOTAL_EXPERIENCE NUMBER NOT NULL,
   health NUMBER NOT NULL,
   HEALTH_STATUS VARCHAR(20) NOT NULL,
-  role VARCHAR(20) NOT NULL,
+  role VARCHAR(20) NOT NULL, --diverso dal roleId (admin ecc..profili abilitativi)
   PRIMARY KEY (CHARACTER_ID)
 );
 CREATE TABLE CharactersHistory(
@@ -149,6 +149,7 @@ CREATE TABLE ChatMessages (
     IMG VARCHAR(500),
     RECEIVER VARCHAR(100),
     SENDER VARCHAR(100) NOT NULL,
+    CHARACTERID INT ,
     TAG VARCHAR (50),
     TESTO TEXT,
     CTIMESTAMP DOUBLE NOT NULL,
@@ -196,4 +197,11 @@ CREATE TABLE CharacterInventoryObject(
     acquiredBy INT,
     PRIMARY KEY(idInventoryObject, characterId)
 );
+
+CREATE TABLE DAILYEXP (
+CHARACTERID INT,
+DAILYEXP INT ,
+EXPDATE DATE,
+PRIMARY KEY (CHARACTERID,EXPDATE)
+)
 
