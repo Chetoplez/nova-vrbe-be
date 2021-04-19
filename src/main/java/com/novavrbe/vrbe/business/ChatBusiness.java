@@ -47,7 +47,7 @@ public class ChatBusiness {
 
         if(newMessage.getAction().equalsIgnoreCase(ChatAction.PARLA.name()) && couldUpdateDailyExp(Integer.parseInt(newMessage.getCharacterId()))){
             //Se siamo qui aggiungiamo gli xp
-            valueExp = getExperienceFromActionMessage(newMessage.getTesto());
+            Integer valueExp = getExperienceFromActionMessage(newMessage.getTesto());
             addDailyExp(Integer.parseInt(newMessage.getCharacterId()),valueExp);
         }
 
@@ -67,6 +67,11 @@ public class ChatBusiness {
 
     }
 
+    /**
+     * Mi dice se il pg ha raggiunto o meno la soglia massima giornaliera di EXP
+     * @param characterId l'id del pg
+     * @return true se ancora può accumulare exp o false altrimenti
+     */
     private Boolean couldUpdateDailyExp(Integer characterId){
         return chatRepositoryService.couldUpdateDailyExp(characterId);
     }
@@ -158,7 +163,7 @@ public class ChatBusiness {
         Integer cId = Integer.parseInt(request.getCharachterId());
         String stat = request.getStatName();
 
-        //Mi prendo il valore della stat inclusa del modificatore
+        //Mi prendo il valore della stat inclusa del modificatore (che può essere zero)
         CharacterStatistic statValue = chatRepositoryService.getStatValue(cId, Stat.valueOf(stat));
         //Da questo valore , genero un numero casuale da 1 al massimo valore della stat.
         int maxStatValue = statValue.getBaseStat() + statValue.getModified().intValue();
