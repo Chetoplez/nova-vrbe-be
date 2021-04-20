@@ -129,6 +129,8 @@ CREATE TABLE ChatMembers(
 CREATE TABLE PresentiLuogo(
     idLuogo NUMBER NOT NULL,
     characterId NUMBER NOT NULL,
+    available BIT NOT NULL,
+    messaggio TEXT,
     PRIMARY KEY(idLuogo, characterId)
 );
 
@@ -140,6 +142,16 @@ CREATE TABLE Luoghi(
     immagine VARCHAR(200),
     PRIMARY KEY(idLuogo)
 );
+
+CREATE VIEW `V_PRESENTI` AS
+SELECT
+pres.idLuogo,loc.nomeLuogo,ch.CHARACTER_NAME as characterName,ch.CHARACTER_ID as characterId,ch.CHARACTER_ICON,pres.messaggio,pres.available
+FROM
+presentiluogo AS PRES
+JOIN characters AS CH
+on pres.characterId = ch.CHARACTER_ID
+JOIN LUOGHI AS LOC
+on pres.idLuogo = loc.idLuogo;
 
 CREATE TABLE ChatMessages (
     ID NUMBER NOT NULL AUTO_INCREMENT,
