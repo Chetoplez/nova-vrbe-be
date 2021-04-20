@@ -2,6 +2,7 @@ package com.novavrbe.vrbe.dto;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,7 +13,12 @@ import java.io.Serializable;
 @Data
 public class PresentiLuogoDto implements Serializable {
     @Id
+    @Column
     private Integer characterId;
-    @Id
+    @Column
     private Integer idLuogo;
+    @Column
+    private boolean available;
+    @Column
+    private String messaggio;
 }

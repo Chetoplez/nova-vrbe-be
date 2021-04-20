@@ -38,4 +38,9 @@ public class ChatController {
         return chatBusiness.isChatUpdated(chatId,tms);
     }
 
+    @PostMapping("/dice")
+    public ResponseEntity<AddMessageResponse> rollDice(@RequestBody RollDiceRequest request){
+        return chatBusiness.rollDice(request);
+    }
+
 }

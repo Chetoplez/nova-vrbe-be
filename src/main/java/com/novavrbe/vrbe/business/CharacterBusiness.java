@@ -8,6 +8,7 @@ import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.models.charactermodels.Inventory;
 import com.novavrbe.vrbe.models.charactermodels.InventoryObjectAssociation;
+import com.novavrbe.vrbe.models.enumerations.BodyPart;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.utils.CharacterUtils;
 import com.novavrbe.vrbe.utils.ValidateUtils;
@@ -64,8 +65,13 @@ public class CharacterBusiness {
             CharacterUtils.fillCharacterTemporaryEffectsFromDto(character, characterRepositoryService.retrieveCharacterTemporaryEffects(cID));
             CharacterUtils.fillCharacterJobFromDto(character, characterRepositoryService.retriveCharacterJob(cID));
 
-            //TODO recuperare statistiche derivanti da equipaggiamento e Applicare a statistiche date da valori temporanee e armatura
             CharacterUtils.fillCharacterStatisticsFromDto(character, characterRepositoryService.retrieveCharacterStatistics(cID));
+
+            Inventory inventory = new Inventory();
+            CharacterUtils.fillInventoryWithObjects(inventory, characterRepositoryService.retrieveCharacterObjects(cID));
+            CharacterUtils.fillInventoryObjectsWithEffects(inventory, characterRepositoryService.retrieveInventoryObjectEffects(inventory));
+            CharacterUtils.addModifiedStatsFromEffects(inventory, character);
+
 
             getCharacterResponse.setCharacter(character);
             response = new ResponseEntity<GetCharacterResponse>(getCharacterResponse, HttpStatus.OK);
@@ -144,22 +150,12 @@ public class CharacterBusiness {
             }).collect(Collectors.toList());
             if(!CollectionUtils.isEmpty(itemDto)){
                 InventoryObjectAssociation item = itemDto.get(0);
-
                 //Equipaggiamento
                 if(item.getInventoryObjectDto().isEquipment()){
-                    //TODO GESTIRE IL CASO DELLE DUE MANI
-                    item.getCharacterInventoryObjectDto().setInUse(request.isRemove() ? false : true);
-                    characterRepositoryService.equipItem(item.getCharacterInventoryObjectDto());
-                }else{
-                    //Oggetto one shot
-                    List<InventoryObjectEffectDto> effectDtoList = characterRepositoryService.retrieveInventoryObjectEffectsDto(item.getInventoryObjectDto().getId());
-                    if(!CollectionUtils.isEmpty(effectDtoList)){
-                        effectDtoList.stream().forEach( effect -> {
-                            characterRepositoryService.applyEffect(request.getCharacterId(), effect);
-                        });
-                    }
 
-                    characterRepositoryService.decreaseQuantityOrRemoveObject(request.getCharacterId(), item);
+                    equipItemAndCheckCompability(item, objects, request.isRemove());
+                }else{
+                    applyOneEffectItem(request.getCharacterId(), item);
                 }
                 equipItemResponse.setEquipped(true);
             }
@@ -225,5 +221,43 @@ public class CharacterBusiness {
     private CharacterDto retrieveCharacterFromId(Integer id){
         CharacterDto character = characterRepositoryService.retrieveCharacterFromId(id);
         return  character;
+    }
+
+    private void applyOneEffectItem(Integer characterId, InventoryObjectAssociation item){
+        //Oggetto one shot
+        List<InventoryObjectEffectDto> effectDtoList = characterRepositoryService.retrieveInventoryObjectEffectsDto(item.getInventoryObjectDto().getId());
+        if(!CollectionUtils.isEmpty(effectDtoList)){
+            effectDtoList.stream().forEach( effect -> {
+                characterRepositoryService.applyEffect(characterId, effect);
+            });
+        }
+
+        characterRepositoryService.decreaseQuantityOrRemoveObject(characterId, item);
+    }
+
+    private void equipItemAndCheckCompability(InventoryObjectAssociation item, List<InventoryObjectAssociation> objects, boolean remove){
+        //Se si sceglie di rimuovere un equipaggiamento, va bene cosi
+
+        item.getCharacterInventoryObjectDto().setInUse(!remove);
+        characterRepositoryService.equipItem(item.getCharacterInventoryObjectDto());
+
+        //Altrimenti se lo si sta equipaggiando, bisogna controllare la parte del corpo. Se esiste gia un equipaggiamento per la stessa parte del corpo, va rimosso
+        if(!remove){
+            objects.stream().forEach(
+                    equipment -> {
+                        if(item.getCharacterInventoryObjectDto().getIdInventoryObject() != equipment.getCharacterInventoryObjectDto().getIdInventoryObject() && Boolean.TRUE.equals(equipment.getCharacterInventoryObjectDto().getInUse())){
+                            //Stessa parte del corpo
+                            // Oppure caso speciale per armi a due mani
+                            if(item.getInventoryObjectDto().getBodyPart().equalsIgnoreCase(equipment.getInventoryObjectDto().getBodyPart())
+                                    || (
+                                    BodyPart.DUAL_WIELD.name().equalsIgnoreCase(item.getInventoryObjectDto().getBodyPart())
+                                            && (BodyPart.HAND.name().equalsIgnoreCase(equipment.getInventoryObjectDto().getBodyPart()))
+                            )){
+                                equipment.getCharacterInventoryObjectDto().setInUse(false);
+                                characterRepositoryService.equipItem(equipment.getCharacterInventoryObjectDto());
+                            }
+                        }
+                    });
+        }
     }
 }

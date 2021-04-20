@@ -1,22 +1,32 @@
 package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.ChatMessageDto;
+import com.novavrbe.vrbe.models.charactermodels.CharacterStatistic;
 import com.novavrbe.vrbe.models.chatcontroller.*;
+import com.novavrbe.vrbe.models.enumerations.ChatAction;
+import com.novavrbe.vrbe.models.enumerations.ChatAction;
+import com.novavrbe.vrbe.models.enumerations.Stat;
 import com.novavrbe.vrbe.repositories.impl.ChatRepositoryService;
 import com.novavrbe.vrbe.utils.ChatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class ChatBusiness {
 
     @Autowired
     private ChatRepositoryService chatRepositoryService;
+
+    @Autowired
+    private Environment env;
 
     /**
      * Questo metodo permette di inserire un messaggio in chat.
@@ -35,6 +45,12 @@ public class ChatBusiness {
         //Devo trasformarare la request nell'oggetto da infilare nel database
         ChatMessageDto messageDto = ChatUtils.fillMessageDto(newMessage,chatId);
 
+        if(newMessage.getAction().equalsIgnoreCase(ChatAction.PARLA.name()) && couldUpdateDailyExp(Integer.parseInt(newMessage.getCharacterId()))){
+            //Se siamo qui aggiungiamo gli xp
+            Integer valueExp = getExperienceFromActionMessage(newMessage.getTesto());
+            addDailyExp(Integer.parseInt(newMessage.getCharacterId()),valueExp);
+        }
+
         //Qui uso il mio service per inserire a Databse il messaggio :)
         ChatMessageDto dbDto =  chatRepositoryService.addNewChatMessage(messageDto);
         AddMessageResponse messageResponse = new AddMessageResponse();
@@ -42,6 +58,22 @@ public class ChatBusiness {
         response = new ResponseEntity<>(messageResponse,HttpStatus.OK);
 
         return response;
+    }
+
+
+    private Integer getExperienceFromActionMessage(String text){
+
+       return ( (Integer.parseInt(env.getProperty("chat.message.action.length.minvalue")) < text.length()) || (text.length() > Integer.parseInt(env.getProperty("chat.message.action.length.maxvalue"))) ) ? Integer.parseInt( env.getProperty("chat.message.exp.maxvalue")) : Integer.parseInt(env.getProperty("chat.message.exp.minvalue"));
+
+    }
+
+    /**
+     * Mi dice se il pg ha raggiunto o meno la soglia massima giornaliera di EXP
+     * @param characterId l'id del pg
+     * @return true se ancora può accumulare exp o false altrimenti
+     */
+    private Boolean couldUpdateDailyExp(Integer characterId){
+        return chatRepositoryService.couldUpdateDailyExp(characterId);
     }
 
     /**
@@ -103,6 +135,56 @@ public class ChatBusiness {
         IsChatUpdatedResponse res = new IsChatUpdatedResponse();
         res.setUpdated(chatRepositoryService.isUpdated(chatId,lastUpdate));
         response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+    }
+
+    /**
+     * Aggiorn l'esperienza del pg e allinea la tabella dell'esperienza giornaliera.
+     * @param characterId l'id del pg da aggiornare
+     * @param exp il valore il base alla lunghezza dell'azione scritta
+     *
+     */
+    private void addDailyExp(Integer characterId, Integer exp){
+        chatRepositoryService.addDailyExp(characterId, exp);
+    }
+
+    /**
+     * Genera un lancio casuale dei dadi basandosi sulle statische del giocatore
+     * @param request request per generare il valore casuali di dado
+     * @return torna true se è andato a buone fine, false altrimenti
+     */
+    public ResponseEntity<AddMessageResponse> rollDice(RollDiceRequest request) {
+        ResponseEntity<AddMessageResponse> response = null;
+        if(!StringUtils.hasText(request.getCharachterId()) || !StringUtils.hasText(request.getStatName()) || !StringUtils.hasText(request.getChatId())){
+            response = new ResponseEntity<>(new AddMessageResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer chatId = Integer.parseInt(request.getChatId());
+        Integer cId = Integer.parseInt(request.getCharachterId());
+        String stat = request.getStatName();
+
+        //Mi prendo il valore della stat inclusa del modificatore (che può essere zero)
+        CharacterStatistic statValue = chatRepositoryService.getStatValue(cId, Stat.valueOf(stat));
+        //Da questo valore , genero un numero casuale da 1 al massimo valore della stat.
+        int maxStatValue = statValue.getBaseStat() + statValue.getModified().intValue();
+        int randomNum = ThreadLocalRandom.current().nextInt(1, maxStatValue + 1);
+        //Bene, abbiamo generato il valore random del dado basato sulla statistica (eventualmente modificata), ora inseriamo un messaggio
+        String testo = "Lancia un Dado su " + stat +": "+"Il risultato è "+randomNum+" su "+maxStatValue;
+
+        ChatMessageDto diceMessage = new ChatMessageDto();
+        diceMessage.setChatId(chatId);
+        diceMessage.setAction(ChatAction.DADI.name());
+        diceMessage.setCarica(request.getCarica());
+        diceMessage.setSender(request.getSender());
+        diceMessage.setImg(request.getImg());
+        diceMessage.setTag(request.getTag());
+        diceMessage.setTimestamp(new Date().getTime());
+        diceMessage.setTooltip_carica(diceMessage.getCarica());
+        diceMessage.setTesto(testo);
+        chatRepositoryService.addNewChatMessage(diceMessage);
+        AddMessageResponse res = new AddMessageResponse();
+        res.setChatRetrieved(true);
+        response = new ResponseEntity<>(res, HttpStatus.OK);
         return response;
     }
 }

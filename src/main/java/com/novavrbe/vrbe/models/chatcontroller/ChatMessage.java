@@ -14,6 +14,7 @@ public class ChatMessage {
     private String img;
     private String receiver;
     private String sender;
+    private String characterId;
     private String tag;
     private String testo;
     private long  timestamp;

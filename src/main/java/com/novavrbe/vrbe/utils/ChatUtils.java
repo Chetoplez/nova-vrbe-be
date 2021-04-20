@@ -17,6 +17,7 @@ public class ChatUtils {
         dto.setCarica(message.getCarica());
         dto.setTooltip_carica(message.getTooltip_carica());
         dto.setSender(message.getSender());
+        dto.setCharacterId(message.getCharacterId());
         dto.setReceiver(message.getReceiver());
 
         dto.setChatId(Integer.parseInt(chatId));
@@ -39,6 +40,7 @@ public class ChatUtils {
             tmp.setImg(dtoMessage.getImg());
             tmp.setReceiver(dtoMessage.getReceiver());
             tmp.setSender(dtoMessage.getSender());
+            tmp.setCharacterId(dtoMessage.getCharacterId());
             tmp.setTag(dtoMessage.getTag());
             tmp.setTesto(dtoMessage.getTesto());
             tmp.setTimestamp(dtoMessage.getTimestamp());

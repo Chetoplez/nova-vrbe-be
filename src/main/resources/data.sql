@@ -38,42 +38,9 @@ INSERT INTO GenericUser VALUES (
 
 
 INSERT INTO Characters VALUES (
- 1,
- 'Marzio Paparzio',
- 'https://www.icon.com',
- 'MASCHIO',
- 'PLEBEO',
- 1,
- 100,
- 100,
- 100,
- 'SAZIO',
- 'USER'
-),(
-   2,
-   'Sergio Claudio',
-   'https://www.icon.com',
-   'MASCHIO',
-   'PLEBEO',
-   1,
-   100,
-   100,
-   100,
-   'SAZIO',
-   'USER'
-  ),(
-       3,
-       'Gaio Cesare',
-       'https://www.icon.com',
-       'MASCHIO',
-       'PLEBEO',
-       1,
-       100,
-       100,
-       100,
-       'SAZIO',
-       'USER'
-      );
+ 1, 'Marzio Paparzio', 'https://www.icon.com', 'MASCHIO', 'PLEBEO', 1, 100, 100, 100, 'SAZIO', 'USER'),
+ (2,'Sergio Claudio','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER'),
+ (3,'Gaio Cesare','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER');
 
 
 INSERT INTO CharactersHistory VALUES
@@ -89,43 +56,10 @@ INSERT INTO CharactersDescription VALUES
 
 
 
-INSERT INTO CharactersStatistics VALUES(
-    1,
-    5,
-    0,
-    5,
-    0,
-    5,
-    0,
-    5,
-    0,
-    5,
-    0
-),(
-      2,
-      5,
-      0,
-      5,
-      0,
-      5,
-      0,
-      5,
-      0,
-      5,
-      0
-  ),(
-        3,
-        5,
-        0,
-        5,
-        0,
-        5,
-        0,
-        5,
-        0,
-        5,
-        0
-    );
+INSERT INTO CharactersStatistics VALUES
+(1,5,5,5,5,5),
+(2,5,5,5,5,5),
+(3,5,5,5,5,5);
 
 
 
@@ -157,7 +91,7 @@ insert into GUILDBANK values (
 
 
 
-INSERT INTO GUILDROLE VALUES
+INSERT INTO GUILDROLE(ROLEID,GUILDID,NAME,SALARY,MANAGER,ROLE_IMG,description,GUILDLEVEL) VALUES
 (1,1,'Legionario',30,0,'','Soldato di truppa preposto a formare le prime linee di combattimento',10)
 ,(2,1,'Optio',50,0,'','Soldato Esperto braccio destro del centurione, a lui vengono affidati compiti di gestione e addestramento',20)
 ,(3,1,'Centurio',90,0,'','Il capo di una centuria, commina punizioni e allena la truppa. La sua parola è legge per i suoi sottoposti',30)
@@ -176,7 +110,8 @@ insert into GUILDMEMBER VALUES
 
 
 
-insert into Luoghi values
+insert into Luoghi(idLuogo,descr,nomeLuogo,immagine, statoLuogo) values
+(0,'In giro per la colonia','In giro', '',''),
 (1,'Il forum è la piazza principale della cittadina dove si svolgono le maggiori attività economiche e sociali, si trovano gli edifici di governo e quelli finanziari. Si tratta di una piazza porticata con colonnato su tre lati circodata da vari edifici',
 'Forum','',''),
 (2,'Porta di ingresso posta sul Decumano del Municipium. Vi sono due torrette di avvisatamento e sulle mura è posto un camminamenento che corre attorno alla fortificazione. Accanto al portone principali, vi sono due altre porte utilizzate per il passaggio di civili',
@@ -192,7 +127,8 @@ INSERT INTO InventoryObject(ITEM_ID,name,description,isEquipment,isRare,category
 
 
 
-INSERT INTO InventoryObjectEffect(effect_ID,INVENTORYOBJECTID,HEALTHSTATUS,HEALING,STAT,ISTEMPORARY,DURATION,ISONESHOT,MODIFIER) VALUES(1,1,'NONE',3,'COSTITUZIONE',0,99999,0,4 );
+INSERT INTO InventoryObjectEffect(effect_ID,INVENTORYOBJECTID,HEALTHSTATUS,HEALING,STAT,ISTEMPORARY,DURATION,ISONESHOT,MODIFIER)
+VALUES(1,1,'NONE',3,'COSTITUZIONE',0,99999,0,4 );
 
 
 INSERT INTO CharacterInventoryObject(idInventoryObject,characterId,quantity,inUse,duration,acquiringDate,acquiredBy) VALUES (1,1,1,0,88,'2021-03-18',1);

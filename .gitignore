@@ -1,8 +1,9 @@
-/target
-/logs
+target/
+logs/
 /sonar-report
-.idea
-.project
-.classpath
+*.idea
+*.project
+*.classpath
 /bin/
 
+/vrbe.iml

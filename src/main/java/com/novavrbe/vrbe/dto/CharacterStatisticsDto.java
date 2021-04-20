@@ -18,21 +18,11 @@ public class CharacterStatisticsDto {
     @Column
     private Integer forza;
     @Column
-    private BigDecimal forzaModifier;
-    @Column
     private Integer destrezza;
-    @Column
-    private BigDecimal destrezzaModifier;
     @Column
     private Integer costituzione;
     @Column
-    private BigDecimal costituzioneModifier;
-    @Column
     private Integer intelligenza;
     @Column
-    private BigDecimal intelligenzaModifier;
-    @Column
     private Integer saggezza;
-    @Column
-    private BigDecimal saggezzaModifier;
 }

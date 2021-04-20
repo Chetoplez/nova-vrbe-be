@@ -24,7 +24,7 @@ public class GuildRepositoryService {
     private GuildMemberListRepository guildMemberListRepository;
 
     @Autowired
-    private  GuildMemeberRepository guildMemeberRepository;
+    private GuildMemeberRepository guildMemeberRepository;
 
     @Autowired
     private GuildRoleRepository guildRoleRepository;
@@ -37,6 +37,7 @@ public class GuildRepositoryService {
 
     /**
      * Torna le informazioni della gilda dato il suo id
+     *
      * @param guildId id della gilda
      * @return GuildDTO contenente le info della gilda
      */
@@ -52,12 +53,13 @@ public class GuildRepositoryService {
 
     /**
      * Torna i membri appartenenenti alla gilda
+     *
      * @param guildId L'id della gilda di cui vuoi i conoscere i membri
      * @return Lista dei membri V_GuildMembers
      */
-    public List<V_GuildMembers> getGuildMembers(Integer guildId){
+    public List<V_GuildMembers> getGuildMembers(Integer guildId) {
         List<V_GuildMembers> members = new ArrayList<>();
-        if(guildId != null){
+        if (guildId != null) {
             members = guildMemberListRepository.findAllByGuildId(guildId);
         }
         return members;
@@ -65,18 +67,20 @@ public class GuildRepositoryService {
 
     /**
      * Torna il ruolo ricoperto dalla gilda di quel pg
+     *
      * @param characterId l'id del pg
      * @return le info sul ruolo o null
      */
-    public V_GuildMembers getGuildMember(Integer characterId){
+    public V_GuildMembers getGuildMember(Integer characterId) {
         V_GuildMembers tmp;
-        Optional<V_GuildMembers> dto =guildMemberListRepository.findByCharacterId(characterId);
-        tmp = dto.isEmpty()? null : dto.get();
+        Optional<V_GuildMembers> dto = guildMemberListRepository.findByCharacterId(characterId);
+        tmp = !dto.isPresent() ? null : dto.get();
         return tmp;
     }
 
     /**
      * Verifica che un character appartenga ad una qualunque gilda
+     *
      * @param charachaterId id del character
      * @return vero se non sei disoccupato, false altrimenti
      */
@@ -89,90 +93,91 @@ public class GuildRepositoryService {
 
     /**
      * Torna le permission che hai per la gilda che stai vedendo.
+     *
      * @param charachaterId il characterId del pg
-     * @param guildId la gilda che stai cercando di visualizzare
+     * @param guildId       la gilda che stai cercando di visualizzare
      * @return le permissiona associate al tuo pg.
      */
     public GuildPermission checkGuildPermission(Integer charachaterId, Integer guildId) {
         GuildPermission permission = new GuildPermission();
         Optional<V_GuildMembers> dto = guildMemberListRepository.findByCharacterId(charachaterId);
-        if(dto.isPresent() && dto.get().getGuildId().equals(guildId)) {
-         //Sei arruolato e sei nella gilda che stai visualizzando, capiamo se sei il capo :)
+        if (dto.isPresent() && dto.get().getGuildId().equals(guildId)) {
+            //Sei arruolato e sei nella gilda che stai visualizzando, capiamo se sei il capo :)
             permission.setPresente(true);
             List<GuildRoleDTO> listOfRoles = getRoleByGuildId(guildId);
-            for (GuildRoleDTO role: listOfRoles) {
-              if(role.getRoleId().equals(dto.get().getRoleId()))
-                 permission.setManager(role.getIsManager());
+            for (GuildRoleDTO role : listOfRoles) {
+                if (role.getRoleId().equals(dto.get().getRoleId()))
+                    permission.setManager(role.getIsManager());
             }
-        }else {
-           permission.setManager(false);
-           permission.setPresente(false);
+        } else {
+            permission.setManager(false);
+            permission.setPresente(false);
         }
-    return permission;
+        return permission;
     }
 
     public boolean addMember(Integer roleid, Integer characterId) {
         GuildMemberDTO newMember = new GuildMemberDTO();
         boolean saved = false;
-        if(roleid != null && characterId != null){
+        if (roleid != null && characterId != null) {
             newMember.setCHARACTER_ID(characterId);
             newMember.setROLE_ID(roleid);
             GuildMemberDTO savedMember = guildMemeberRepository.save(newMember);
-            updateCharacterCV(savedMember.getCHARACTER_ID(),savedMember.getROLE_ID(), new Date(new java.util.Date().getTime()));
+            updateCharacterCV(savedMember.getCHARACTER_ID(), savedMember.getROLE_ID(), new Date(new java.util.Date().getTime()));
             saved = true;
         }
 
         return saved;
     }
 
-    public void deleteMember (Integer roleId, Integer characterId){
+    public void deleteMember(Integer roleId, Integer characterId) {
         GuildMemberDTO toDelete = new GuildMemberDTO();
         toDelete.setCHARACTER_ID(characterId);
         toDelete.setROLE_ID(roleId);
         guildMemeberRepository.delete(toDelete);
     }
 
-    public boolean promoteMember(Integer characterId){
+    public boolean promoteMember(Integer characterId) {
         boolean promoted = false;
         //intanto mi becco il ruolo ricoperto dal pg
         Optional<GuildMemberDTO> member = guildMemeberRepository.findById(characterId);
         Integer role_id;
         role_id = member.map(GuildMemberDTO::getROLE_ID).orElse(null);
         Optional<GuildRoleDTO> dto = (role_id != null) ? guildRoleRepository.findById(role_id) : Optional.empty();
-        if(dto.isPresent()){
-        List<GuildRoleDTO> listofpossibile = guildRoleRepository.findByGuildIdAndGuildLevelGreaterThan(dto.get().getGuildId(),dto.get().getGuildLevel());
-        if(listofpossibile.size() > 0){
-        Integer roleLevel = 2000;
-        Integer newRoleid = 0;
-        for (GuildRoleDTO temp: listofpossibile) {
-            if(temp.getGuildLevel() < roleLevel){
-                roleLevel = temp.getGuildLevel();
-                newRoleid = temp.getRoleId();
-                promoted = true;
+        if (dto.isPresent()) {
+            List<GuildRoleDTO> listofpossibile = guildRoleRepository.findByGuildIdAndGuildLevelGreaterThan(dto.get().getGuildId(), dto.get().getGuildLevel());
+            if (listofpossibile.size() > 0) {
+                Integer roleLevel = 2000;
+                Integer newRoleid = 0;
+                for (GuildRoleDTO temp : listofpossibile) {
+                    if (temp.getGuildLevel() < roleLevel) {
+                        roleLevel = temp.getGuildLevel();
+                        newRoleid = temp.getRoleId();
+                        promoted = true;
+                    }
+                }
+                GuildMemberDTO newRole = new GuildMemberDTO();
+                newRole.setROLE_ID(newRoleid);
+                newRole.setCHARACTER_ID(characterId);
+                GuildMemberDTO save = guildMemeberRepository.save(newRole);
             }
-        }
-        GuildMemberDTO newRole = new GuildMemberDTO();
-        newRole.setROLE_ID(newRoleid);
-        newRole.setCHARACTER_ID(characterId);
-        GuildMemberDTO save = guildMemeberRepository.save(newRole);
-        }
         }
         return promoted;
     }
 
-    public boolean degradeMember(Integer characterId){
+    public boolean degradeMember(Integer characterId) {
         boolean degradated = false;
         Optional<GuildMemberDTO> member = guildMemeberRepository.findById(characterId);
         Integer role_id;
         role_id = member.map(GuildMemberDTO::getROLE_ID).orElse(null);
         Optional<GuildRoleDTO> dto = (role_id != null) ? guildRoleRepository.findById(role_id) : Optional.empty();
-        if(dto.isPresent()){
-            List<GuildRoleDTO> listofpossibile = guildRoleRepository.findByGuildIdAndGuildLevelLessThan(dto.get().getGuildId(),dto.get().getGuildLevel());
-            if(listofpossibile.size() > 0){
+        if (dto.isPresent()) {
+            List<GuildRoleDTO> listofpossibile = guildRoleRepository.findByGuildIdAndGuildLevelLessThan(dto.get().getGuildId(), dto.get().getGuildLevel());
+            if (listofpossibile.size() > 0) {
                 Integer roleLevel = 1;
                 Integer newRoleid = 9999;
-                for (GuildRoleDTO temp: listofpossibile) {
-                    if(temp.getGuildLevel() > roleLevel){
+                for (GuildRoleDTO temp : listofpossibile) {
+                    if (temp.getGuildLevel() > roleLevel) {
                         roleLevel = temp.getGuildLevel();
                         newRoleid = temp.getRoleId();
                         degradated = true;
@@ -191,12 +196,13 @@ public class GuildRepositoryService {
 
     /**
      * Torna il saldo del conto della gilda
+     *
      * @param guildId id della gilda
      * @return l'ammontare della gilda
      */
-    public GuildBankDTO getGuildBank(Integer guildId){
+    public GuildBankDTO getGuildBank(Integer guildId) {
         GuildBankDTO bankDTO = null;
-        if(guildId != null){
+        if (guildId != null) {
             Optional<GuildBankDTO> dto = guildBankRepository.findById(guildId);
             bankDTO = dto.orElse(null);
 
@@ -206,48 +212,50 @@ public class GuildRepositoryService {
 
     /**
      * Metodo per prelevare dalla banca di gilda
+     *
      * @param guildId id della gilda
-     * @param amount somma da ritirare
+     * @param amount  somma da ritirare
      * @return true se l'operazione è andata bene , false altrimenti
      */
-    public boolean withdraw(Integer guildId, Integer amount){
-        boolean save ;
-        if (guildId != null){
+    public boolean withdraw(Integer guildId, Integer amount) {
+
+        if (guildId != null) {
             Optional<GuildBankDTO> dto = guildBankRepository.findById(guildId);
-            if(dto.isPresent() && dto.get().getAmount() >= amount) {
-                //devo avere i soldi nella banca di gilda
+            if (dto.isPresent() && dto.get().getAmount() >= amount) {
                 dto.get().setAmount(dto.get().getAmount() - amount);
-                save = true;
-            }else {save = false;}
-        }else  {save = false;}
-        return save;
+                guildBankRepository.save(dto.get());
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * Metodo per depositare nella banca di gilda
+     *
      * @param guildId id della gilda
-     * @param amount somma da depositare
+     * @param amount  somma da depositare
      * @return true se l'operazione è andata bene , false altrimenti
      */
-    public boolean deposit(Integer guildId, Integer amount){
-        boolean save ;
-        if (guildId != null){
+    public boolean deposit(Integer guildId, Integer amount) {
+        if (guildId != null) {
             Optional<GuildBankDTO> dto = guildBankRepository.findById(guildId);
-            if(dto.isPresent() ) {
+            if (dto.isPresent()) {
                 //Posso sempre aggiungere soldi nella banca di gilda
                 dto.get().setAmount(dto.get().getAmount() + amount);
-                save = true;
-            }else {save = false;}
-        }else  {save = false;}
-        return save;
+                guildBankRepository.save(dto.get());
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<GuildRoleDTO> getRoleByGuildId(Integer guildId) {
         List<GuildRoleDTO> tmp = new ArrayList<>();
-        if(guildId != null){
+        if (guildId != null) {
             tmp = guildRoleRepository.findByGuildId(guildId);
         }
-        return tmp  ;
+        return tmp;
     }
 
     public List<CharacterCvDTO> getCharacterCv(Integer cId) {
@@ -264,13 +272,13 @@ public class GuildRepositoryService {
 
     public void updateCharacterCV(Integer character_id, Integer roleId, java.sql.Date date) {
         CharacterCvDTO nuovoRecord = new CharacterCvDTO();
-        CharacterCvDTO actualCVRole = characterCvRepository.findAllByCharacterIdAndEnrollmentDateEquals(character_id,date);
-        if(actualCVRole != null ){
+        CharacterCvDTO actualCVRole = characterCvRepository.findAllByCharacterIdAndEnrollmentDateEquals(character_id, date);
+        if (actualCVRole != null) {
             //vuol dire che oggi ho già un record nel cv, devo aggiornare
             actualCVRole.setRoleId(roleId);
             characterCvRepository.save(actualCVRole);
 
-        }else{
+        } else {
             nuovoRecord.setCharacterId(character_id);
             nuovoRecord.setEnrollmentDate(date);
             nuovoRecord.setRoleId(roleId);
@@ -278,4 +286,5 @@ public class GuildRepositoryService {
         }
 
     }
+
 }

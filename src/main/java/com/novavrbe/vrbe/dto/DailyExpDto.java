@@ -5,16 +5,19 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import java.math.BigDecimal;
+import java.sql.Date;
 
-@Entity
-@Table(name = "Inventory")
 @Data
-public class InventoryDto {
+@Entity
+
+public class DailyExpDto
+{
     @Id
-    @Column(name = "CHARACTER_ID")
+    @Column
     private Integer characterId;
     @Column
-    private Integer gold;
+    private Integer dailyExp;
+    @Column
+    private Date expDate;
+
 }

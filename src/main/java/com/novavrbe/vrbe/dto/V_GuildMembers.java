@@ -10,31 +10,29 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-
 @Immutable
 @Data
-public class V_GuildMembers  {
+public class V_GuildMembers {
 
-
-    @Column(name = "GUILD_ID")
+    @Column(name = "GUILDID")
     private Integer guildId;
 
-    @Column(name = "ROLE_ID")
+    @Column(name = "ROLEID")
     private Integer roleId;
     @Id
-    @Column(name = "CHARACTER_ID")
+    @Column(name = "CHARACTERID")
     private Integer characterId;
 
-    @Column(name = "CHARACTER_NAME")
+    @Column(name = "CHARACTERNAME")
     private String characterName;
 
-    @Column(name = "GUILD_LEVEL")
+    @Column(name = "GUILDLEVEL")
     private Integer guildLevel;
 
-    @Column(name = "ROLE_NAME")
+    @Column(name = "ROLENAME")
     private String roleName;
 
-    @Column(name = "ROLE_IMG")
+    @Column(name = "ROLEIMG")
     private String roleImg;
 
 }

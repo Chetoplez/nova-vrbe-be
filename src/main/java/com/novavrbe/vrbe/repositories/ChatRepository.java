@@ -24,4 +24,7 @@ public interface ChatRepository extends CrudRepository<ChatMessageDto, Integer>,
     }
 
     List<ChatMessageDto> findByChatIdAndTimestampGreaterThan(Integer chatId, Long lastUpdate);
+
+
+
 }
