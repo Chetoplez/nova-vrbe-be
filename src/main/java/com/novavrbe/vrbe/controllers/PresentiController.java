@@ -2,10 +2,7 @@ package com.novavrbe.vrbe.controllers;
 
 
 import com.novavrbe.vrbe.business.PresentiBusiness;
-import com.novavrbe.vrbe.models.presenticontroller.MoveToLuogoRequest;
-import com.novavrbe.vrbe.models.presenticontroller.MoveToLuogoResponse;
-import com.novavrbe.vrbe.models.presenticontroller.PresentiChatResponse;
-import com.novavrbe.vrbe.models.presenticontroller.PresentiResponse;
+import com.novavrbe.vrbe.models.presenticontroller.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +27,15 @@ public class PresentiController {
     @PatchMapping("/moveto")
     public ResponseEntity<MoveToLuogoResponse> moveToLuogo(@RequestBody MoveToLuogoRequest request){
         return presentiBusiness.moveToLuogo(request);
+    }
+
+    @PatchMapping("/updatemessage")
+    public ResponseEntity<UpdateMessageResponse> updateMessage(@RequestBody UpdateMessageRequest request){
+        return presentiBusiness.updateOnlineMessage(request);
+    }
+
+    @PatchMapping("updateavailable")
+    public ResponseEntity<UpdateMessageResponse> updateAvailability(@RequestBody UpdateAvailabilityRequest request){
+        return presentiBusiness.updateAvailability(request);
     }
 }
