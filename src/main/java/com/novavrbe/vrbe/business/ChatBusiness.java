@@ -4,7 +4,6 @@ import com.novavrbe.vrbe.dto.ChatMessageDto;
 import com.novavrbe.vrbe.models.charactermodels.CharacterStatistic;
 import com.novavrbe.vrbe.models.chatcontroller.*;
 import com.novavrbe.vrbe.models.enumerations.ChatAction;
-import com.novavrbe.vrbe.models.enumerations.ChatAction;
 import com.novavrbe.vrbe.models.enumerations.Stat;
 import com.novavrbe.vrbe.repositories.impl.ChatRepositoryService;
 import com.novavrbe.vrbe.utils.ChatUtils;
@@ -186,5 +185,77 @@ public class ChatBusiness {
         res.setChatRetrieved(true);
         response = new ResponseEntity<>(res, HttpStatus.OK);
         return response;
+    }
+
+    /**
+     * Questa funzione effettua un confronto tra le caratteristiche di Destrezza di attaccante e difensore.
+     * @param request la richiesta di attaacco da un pg nei cronfronti di un altro
+     *
+     * @return se La Destrezza dell'attaccante è Maggiore del Difensore: true, altrimenti false.
+     */
+    public ResponseEntity<AttackResponse> attack(AttackRequest request) {
+        ResponseEntity<AttackResponse> response;
+        if(!StringUtils.hasText(request.getAttackerId()) || !StringUtils.hasText(request.getDefenderId()) || !StringUtils.hasText(request.getChatId())){
+            response = new ResponseEntity<>(new AttackResponse(),HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        Integer attackerId = Integer.parseInt(request.getAttackerId());
+        Integer defenderId = Integer.parseInt(request.getDefenderId()); //TODO aggiungere una funzione per verificare che il difensore sia dentro la chat di gioco
+        Integer chatId = Integer.parseInt(request.getChatId());
+
+        AttackResult result = attackCharacter(attackerId,defenderId);
+        //Ora inserisco un messaggio in chat e poi torno il risultato dell'azione effettuata:
+        ChatMessageDto attackMessage = new ChatMessageDto();
+        attackMessage.setChatId(chatId);
+        attackMessage.setAction(ChatAction.ATTACCA.name());
+        attackMessage.setCarica(request.getCarica());
+        attackMessage.setSender(request.getSender());
+        attackMessage.setImg(request.getImg());
+        attackMessage.setTag(request.getTag());
+        attackMessage.setTimestamp(new Date().getTime());
+        attackMessage.setTooltip_carica(request.getCarica());
+        String esito = result.isColpito() ? "COLPITO" : "MANCATO";
+        String testo = "Tenta di attaccare " +request.getDefernderName()+": "+esito+" : ("+request.getSender()+" Ha totalizzato: "
+                +result.getAttackResult()+" e "+request.getDefernderName()+" ha totalizzato: "+result.getDefenseResult();
+        attackMessage.setTesto(testo);
+        chatRepositoryService.addNewChatMessage(attackMessage);
+        AttackResponse attackResponse = new AttackResponse();
+        attackResponse.setAttacked(result.isColpito());
+        response = new ResponseEntity<>(attackResponse, HttpStatus.OK);
+
+        return response;
+    }
+
+
+    /**
+     * Metodo accessorio per generare i valori di destrezza dei due contendenti, torna il risultato dello scontro
+     * @param attacker characterId dell'attaccante
+     * @param defender characterId del difensore
+     * @return Oggetto contenente i risultati ottenuti e se è stato colpito o meno.
+     */
+    private AttackResult attackCharacter(Integer attacker, Integer defender){
+        AttackResult res = new AttackResult();
+        CharacterStatistic attackerStat = chatRepositoryService.getStatValue(attacker, Stat.valueOf("DESTREZZA"));
+        CharacterStatistic defenderStat = chatRepositoryService.getStatValue(defender, Stat.valueOf("DESTREZZA"));
+        //bene, ho le statistiche di destrezza di chi attacca e difende. Genero casualmente due valori
+        int attackerValue = ThreadLocalRandom.current().nextInt(1, (attackerStat.getBaseStat()+attackerStat.getModified().intValue()) + 1);
+        int defenderValue = ThreadLocalRandom.current().nextInt(1, (defenderStat.getBaseStat()+defenderStat.getModified().intValue()) + 1);
+        boolean hit = (attackerValue > defenderValue);
+        res.setColpito(hit);
+        res.setAttackResult(attackerValue);
+        res.setDefenseResult(defenderValue);
+        return res;
+
+    }
+
+    /**
+     * Questa funziona calcola solo il danno che un giocatore fa a seguito di un attacco.
+     * @param request la richiesta contenente tutti i parametri necessari per poter attaccare
+     * @return torna true se l'azione è andata a buon fine, false altrimenti e scrive un messaggio in chat
+     */
+    public ResponseEntity<AttackResponse> hitCharacter(AttackRequest request){
+
+        return null;
     }
 }

@@ -17,14 +17,11 @@ public class ChatController {
 
     @PostMapping("/addmessage")
     public ResponseEntity<AddMessageResponse> addMessage(@RequestBody AddMessageRequest request){
-        System.out.println("passo da qui, infame: "+request.getChatId());
-        System.out.println("Vediamo il timpestamp di merda:" +request.getChatMessage().getTimestamp());
         return chatBusiness.addMessage(request);
     }
 
     @GetMapping("/id={id}&timeWindow={window}")
     public ResponseEntity<GetChatResponse> getChatById(@PathVariable String id, @PathVariable String window){
-        System.out.println("Cazzo di merda");
         return chatBusiness.getChatById(id,window);
     }
 
@@ -41,6 +38,16 @@ public class ChatController {
     @PostMapping("/dice")
     public ResponseEntity<AddMessageResponse> rollDice(@RequestBody RollDiceRequest request){
         return chatBusiness.rollDice(request);
+    }
+
+    @PostMapping("/attack")
+    public ResponseEntity<AttackResponse> attack(@RequestBody AttackRequest request){
+        return chatBusiness.attack(request);
+    }
+
+    @PostMapping("/hitcharacter")
+    public ResponseEntity<AttackResponse> hitCharacter(@RequestBody AttackRequest request){
+        return chatBusiness.hitCharacter(request);
     }
 
 }
