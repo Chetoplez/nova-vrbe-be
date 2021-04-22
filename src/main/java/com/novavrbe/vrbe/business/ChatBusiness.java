@@ -210,6 +210,7 @@ public class ChatBusiness {
         attackMessage.setChatId(chatId);
         attackMessage.setAction(ChatAction.ATTACCA.name());
         attackMessage.setCarica(request.getCarica());
+        attackMessage.setCharacterId(attackerId.toString());
         attackMessage.setSender(request.getSender());
         attackMessage.setImg(request.getImg());
         attackMessage.setTag(request.getTag());
@@ -217,7 +218,7 @@ public class ChatBusiness {
         attackMessage.setTooltip_carica(request.getCarica());
         String esito = result.isColpito() ? "COLPITO" : "MANCATO";
         String testo = "Tenta di attaccare " +request.getDefernderName()+": "+esito+" : ("+request.getSender()+" Ha totalizzato: "
-                +result.getAttackResult()+" e "+request.getDefernderName()+" ha totalizzato: "+result.getDefenseResult();
+                +result.getAttackResult()+" e "+request.getDefernderName()+" ha totalizzato: "+result.getDefenseResult()+")";
         attackMessage.setTesto(testo);
         chatRepositoryService.addNewChatMessage(attackMessage);
         AttackResponse attackResponse = new AttackResponse();

@@ -1,69 +1,37 @@
 
-INSERT INTO GenericUser VALUES (
- 1,
- 'Nome Utente',
- 'Cognome Utente',
- '22/12/1989',
- 'email@email.it',
- 'M',
- 'password:puppa',
- 'ciaoiosonoilsaledellavita',
- '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f',
- '21/02/2021'
-),
-(
- 2,
- 'Ciccio ',
- 'Putin',
- '22/12/1989',
- 'email@email.it',
- 'M',
- 'password:puppa',
- 'ciaoiosonoilsaledellavita',
- '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f',
- '21/02/2021'
-),
-(
- 3,
- 'Ajeje ',
- 'Brazorf',
- '22/12/1989',
- 'email@email.it',
- 'M',
- 'password:puppa',
- 'ciaoiosonoilsaledellavita',
- '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f',
- '21/02/2021'
-);
+INSERT INTO GenericUser(UserId,name,lastname,birthday,email,gender,nickname,salt,composedSecret,lastLogin) VALUES (
+ 1, 'Nome Utente', 'Cognome Utente', '22/12/1989', 'email@email.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f', '21/02/2021'),
+( 2, 'Ciccio ', 'Putin', '22/12/1989', 'email@bau.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f', '21/02/2021'),
+( 3, 'Ajeje ', 'Brazorf', '22/12/1989', 'email@miao.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f', '21/02/2021');
 
 
-INSERT INTO Characters VALUES (
+INSERT INTO Characters(CHARACTER_ID,CHARACTER_NAME,CHARACTER_ICON,gender,status,clevel,experience,total_experience,health,health_status,role) VALUES (
  1, 'Marzio Paparzio', 'https://www.icon.com', 'MASCHIO', 'PLEBEO', 1, 100, 100, 100, 'SAZIO', 'USER'),
  (2,'Sergio Claudio','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER'),
  (3,'Gaio Cesare','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER');
 
 
-INSERT INTO CharactersHistory VALUES
+INSERT INTO CharactersHistory(chistory_id,history) VALUES
 (1,'Questa e la storia di come la mia vita e cambiata, capovolta, sottosopra e finita'),
 (2,'Questa e la storia di uno di noi, anche lui nato per caso in via Gluk'),
 (3,'Nel mezzo del cammin di nostra vita mi trovai per una selrva oscura e dissi: minchia mi pessi');
 
 
-INSERT INTO CharactersDescription VALUES
+INSERT INTO CharactersDescription(description_id,description) VALUES
 (1,'Uno strafigo che riesce a sbucciare le mele utilizzando il mento'),
 (2,'alto bello un fotomodello'),
 (3,'basso , tarchiato ma con un cuore cosi');
 
 
 
-INSERT INTO CharactersStatistics VALUES
+INSERT INTO CharactersStatistics(character_id,forza,destrezza,costituzione,intelligenza,saggezza) VALUES
 (1,5,5,5,5,5),
 (2,5,5,5,5,5),
 (3,5,5,5,5,5);
 
 
 
-INSERT INTO GUILD VALUES (
+INSERT INTO GUILD(guild_id,name,description,guild_img,attivo,statute,announcement) VALUES (
  1,
  'Legio XIII Gemina',
  'I Conquistatori della repubblica',
@@ -84,7 +52,7 @@ INSERT INTO GUILD VALUES (
 
 
 
-insert into GUILDBANK values (
+insert into GUILDBANK(guild_id,amount) values (
    1,
    5000
 ),(2,5000);
