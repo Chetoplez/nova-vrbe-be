@@ -12,6 +12,7 @@ public class GenericUserDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "UserId")
     private BigDecimal id;
     @Column
     private String name;
