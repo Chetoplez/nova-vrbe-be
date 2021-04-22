@@ -273,7 +273,7 @@ public class GuildRepositoryService {
     public void updateCharacterCV(Integer character_id, Integer roleId, java.sql.Date date) {
         CharacterCvDTO nuovoRecord = new CharacterCvDTO();
         CharacterCvDTO actualCVRole = characterCvRepository.findAllByCharacterIdAndEnrollmentDateEquals(character_id, date);
-        if (actualCVRole != null) {
+        if (actualCVRole != null && !actualCVRole.getEnrollmentDate().equals(date)) {
             //vuol dire che oggi ho già un record nel cv, devo aggiornare
             actualCVRole.setRoleId(roleId);
             characterCvRepository.save(actualCVRole);

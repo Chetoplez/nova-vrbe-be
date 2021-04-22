@@ -9,7 +9,7 @@ import java.util.Date;
 public class CharacterCv {
     private String img;
     private String roleName;
-    @JsonFormat(pattern="yyyy-MM-dd")
+
     private Date enrolmentDate;
 
 }

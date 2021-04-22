@@ -2,14 +2,12 @@ package com.novavrbe.vrbe.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.sql.Date;
 
 @Data
 @Entity
-
+@IdClass(IdCharacterCv.class)
 @Table (name = "Character_CV")
 public class CharacterCvDTO {
     @Id
@@ -18,7 +16,7 @@ public class CharacterCvDTO {
 
     @Column(name = "role_id")
     private Integer roleId;
-
+    @Id
     @Column(name = "ENROLLMENT_DATE")
-    private java.sql.Date enrollmentDate;
+    private Date enrollmentDate;
 }
