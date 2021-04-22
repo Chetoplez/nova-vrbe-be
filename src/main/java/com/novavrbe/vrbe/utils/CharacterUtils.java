@@ -326,6 +326,9 @@ public class CharacterUtils {
         object.setBodyPart(BodyPart.valueOf(inventoryObjectDto.getBodyPart()));
         object.setAcquiringDate(characterInventoryObjectDto.getAcquiringDate());
         object.setDuration(characterInventoryObjectDto.getDuration());
+        object.setUrl(inventoryObjectDto.getUrl());
+
+
 
 
         return object;
