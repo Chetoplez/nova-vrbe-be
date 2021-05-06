@@ -6,6 +6,7 @@ import com.novavrbe.vrbe.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,8 @@ public class GuildRepositoryService {
 
     @Autowired
     private CharacterCvRepository characterCvRepository;
+    @Autowired
+    private InventoryRepository inventoryRepository;
 
     /**
      * Torna le informazioni della gilda dato il suo id
@@ -270,6 +273,12 @@ public class GuildRepositoryService {
         return dto.get();
     }
 
+    /**
+     * Inserisce un nuovo record nella tabella del characterCV, ma se il cambio di CV avviene lo stesso giorno, lo aggiorna per non avere troppo dentro.
+     * @param character_id l'id del character che viene promosso, degratato
+     * @param roleId il nuovo ruolo
+     * @param date la data in cui viene inserito nel ruolo
+     */
     public void updateCharacterCV(Integer character_id, Integer roleId, java.sql.Date date) {
         CharacterCvDTO nuovoRecord = new CharacterCvDTO();
         CharacterCvDTO actualCVRole = characterCvRepository.findAllByCharacterIdAndEnrollmentDateEquals(character_id, date);
@@ -287,4 +296,34 @@ public class GuildRepositoryService {
 
     }
 
+
+    public boolean getSaraly(Integer chId) {
+        Integer roleId;
+        boolean retrieved = false;
+
+        //TODO fare una funzione che controlli se lo stipendio è stato già ritirato per quella giornata
+
+        Optional<GuildMemberDTO> dto = guildMemeberRepository.findById(chId);
+        if(dto.isPresent()){
+            roleId = dto.get().getROLE_ID();
+            Optional<GuildRoleDTO> roleDTO = guildRoleRepository.findById(roleId);
+            Optional<InventoryDto> inventoryDto = inventoryRepository.findById(chId);
+            if(roleDTO.isPresent()){
+                Optional<GuildBankDTO> bankDTO = guildBankRepository.findById(roleDTO.get().getGuildId());
+                GuildBankDTO bank = bankDTO.isPresent() ?  bankDTO.get() : null;
+                if(bank != null && (bank.getAmount() >= roleDTO.get().getSalary())){
+                    InventoryDto saccoccia = inventoryDto.isPresent() ?  inventoryDto.get() : null;
+                    if(saccoccia != null){
+                        saccoccia.setGold(saccoccia.getGold() + roleDTO.get().getSalary());
+                        inventoryRepository.save(saccoccia);
+                        bank.setAmount(bank.getAmount() - roleDTO.get().getSalary());
+                        guildBankRepository.save(bank);
+                        retrieved = true;
+                    }
+                }
+            }
+        }
+
+    return retrieved;
+    }
 }

@@ -20,6 +20,8 @@ public class CharacterDto {
     @Column(name = "CHARACTER_ICON")
     private String characterIcon;
     @Column
+    private String characterImg;
+    @Column
     private String gender;
     @Column
     private String status;

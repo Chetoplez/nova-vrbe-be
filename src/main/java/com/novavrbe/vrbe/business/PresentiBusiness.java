@@ -1,6 +1,8 @@
 package com.novavrbe.vrbe.business;
 
 
+import com.novavrbe.vrbe.dto.LuoghiDto;
+import com.novavrbe.vrbe.dto.V_Presenti;
 import com.novavrbe.vrbe.models.presenticontroller.*;
 import com.novavrbe.vrbe.repositories.impl.PresentiRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import javax.xml.ws.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PresentiBusiness {
@@ -39,13 +45,59 @@ public class PresentiBusiness {
 
 
     public ResponseEntity<PresentiChatResponse> getPresentiChat(String chatId) {
-        //TODO
-        return null;
+        ResponseEntity<PresentiChatResponse> response;
+        if(!StringUtils.hasText(chatId)){
+            response = new ResponseEntity<>(new PresentiChatResponse(),HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer idLuogo = Integer.parseInt(chatId);
+        List<V_Presenti> temp = presentiService.getPresentiChat(idLuogo);
+        List<Presente> presenteList = new ArrayList<>();
+        for (V_Presenti presente: temp ) {
+            Presente tmp = new Presente();
+            tmp.setMessaggio(presente.getMessaggio());
+            tmp.setAvailable(presente.isAvailable());
+            tmp.setCharacterId(presente.getCharacterId());
+            tmp.setCharacterName(presente.getCharacterName());
+            tmp.setCharacterImg(presente.getCharacterImg());
+            presenteList.add(tmp);
+        }
+        PresentiChatResponse res = new PresentiChatResponse();
+        res.setPresentiChat(presenteList);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+
+        return response;
     }
 
+    /**
+     * Torna la lista dei presenti della land, divisi per chat!
+     * @return una lista di oggetti divisi per chat
+     */
     public ResponseEntity<PresentiResponse> getPresenti() {
-        //TODO
-        return null;
+        List<ElencoPresenti> elencoPresentiList = new ArrayList<>();
+        List<LuoghiDto> luoghiDtos = presentiService.getLuoghi();
+
+        for (LuoghiDto luogo: luoghiDtos) {
+            ElencoPresenti tmp = new ElencoPresenti();
+            tmp.setIdLuogo(luogo.getIdLuogo());
+            tmp.setNomeLuogo(luogo.getNomeLuogo());
+            List<V_Presenti> presentiLuogo = presentiService.getPresentiChat(luogo.getIdLuogo());
+            if(presentiLuogo.size() == 0) continue;
+            for (V_Presenti pres: presentiLuogo) {
+                Presente tempPresente = new Presente();
+                tempPresente.setAvailable(pres.isAvailable());
+                tempPresente.setCharacterId(pres.getCharacterId());
+                tempPresente.setCharacterName(pres.getCharacterName());
+                tempPresente.setMessaggio(pres.getMessaggio());
+                tmp.getPresenteList().add(tempPresente);
+            }
+            elencoPresentiList.add(tmp);
+        }
+
+        PresentiResponse res= new PresentiResponse();
+        res.setPresenti(elencoPresentiList);
+        return new ResponseEntity<>(res,HttpStatus.OK);
+
     }
 
     /**
@@ -68,6 +120,11 @@ public class PresentiBusiness {
         return response;
     }
 
+    /**
+     * Aggiorna lo stato Online di un character
+     * @param request richiesta con lo stato online e il characterdID
+     * @return true se è andato bene, false altrimenti
+     */
     public ResponseEntity<UpdateMessageResponse> updateAvailability(UpdateAvailabilityRequest request) {
         ResponseEntity<UpdateMessageResponse> response;
         if(!StringUtils.hasText(request.getCharacterId()) || !StringUtils.hasText(request.getAvailable()) ){
@@ -75,10 +132,35 @@ public class PresentiBusiness {
             return response;
         }
         Integer chId = Integer.parseInt(request.getCharacterId());
-        boolean available = (request.getAvailable() == "true") ? true : false;
+        boolean available = request.getAvailable() == "true";
         boolean updated = presentiService.changeAvailability(chId, available);
         UpdateMessageResponse res = new UpdateMessageResponse();
         res.setUpdated(updated);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+    }
+
+    public ResponseEntity<GetLuogoResponse> getInfoLuogo(String idLuogo) {
+        ResponseEntity<GetLuogoResponse> response ;
+        if(!StringUtils.hasText(idLuogo)){
+            response = new ResponseEntity<>(new GetLuogoResponse(),HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer idLoc = Integer.parseInt(idLuogo);
+        LuoghiDto dto= presentiService.getInfoLuogo(idLoc);
+        if(dto == null){
+            response = new ResponseEntity<>(new GetLuogoResponse(),HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        InfoLuogo infoLuogo = new InfoLuogo();
+        infoLuogo.setIdLuogo(dto.getIdLuogo());
+        infoLuogo.setNomeLuogo(dto.getNomeLuogo());
+        infoLuogo.setStatoLuogo(dto.getStatoLuogo());
+        infoLuogo.setDescr(dto.getDescr());
+        infoLuogo.setImmagine(dto.getImmagine());
+
+        GetLuogoResponse res = new GetLuogoResponse();
+        res.setLuogo(infoLuogo);
         response = new ResponseEntity<>(res,HttpStatus.OK);
         return response;
     }

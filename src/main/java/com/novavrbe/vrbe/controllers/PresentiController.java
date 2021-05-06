@@ -13,6 +13,11 @@ public class PresentiController {
     @Autowired
     PresentiBusiness presentiBusiness;
 
+    @GetMapping("/luogo/{idLuogo}")
+    ResponseEntity<GetLuogoResponse> getLuogo(@PathVariable String idLuogo){
+        return presentiBusiness.getInfoLuogo(idLuogo);
+    }
+
     @GetMapping("/presenti")
     ResponseEntity<PresentiResponse> getPresenti(){
         return presentiBusiness.getPresenti();
@@ -34,7 +39,7 @@ public class PresentiController {
         return presentiBusiness.updateOnlineMessage(request);
     }
 
-    @PatchMapping("updateavailable")
+    @PatchMapping("/updateavailable")
     public ResponseEntity<UpdateMessageResponse> updateAvailability(@RequestBody UpdateAvailabilityRequest request){
         return presentiBusiness.updateAvailability(request);
     }

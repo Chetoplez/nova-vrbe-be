@@ -45,6 +45,12 @@ public class CharacterUtils {
             characterLevel.setTotalExperience(dto.getTotalExperience());
             character.setLevel(characterLevel);
 
+            try {
+                character.setCharacterImg(new URL(dto.getCharacterImg()));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
             character.setHealth(dto.getHealth());
             character.setHealthStatus(HealthStatus.valueOf(dto.getHealthStatus()));
 

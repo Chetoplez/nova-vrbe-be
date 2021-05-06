@@ -3,10 +3,6 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.guildcontroller.*;
-import com.novavrbe.vrbe.repositories.CharacterRepository;
-import com.novavrbe.vrbe.repositories.GuildMemeberRepository;
-import com.novavrbe.vrbe.repositories.GuildRepository;
-import com.novavrbe.vrbe.repositories.InventoryRepository;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
 import com.novavrbe.vrbe.utils.GuildUtils;
@@ -318,5 +314,21 @@ public class GuildBusiness {
         res.setCurruculumPg(curriculumPg);
         response = new ResponseEntity<>(res,HttpStatus.OK);
         return response;
+    }
+
+    /**
+     * Carica lo stipendio base associato al proprio ruolo ricoperto in gilda
+     * @param request contiene il characterId del richiedente
+     * @return true se tutto apposto, false altrimenti
+     */
+    public ResponseEntity<GetSalaryResponse> getSalary(GetSalaryRequest request) {
+        ResponseEntity<GetSalaryResponse> response;
+        if(!StringUtils.hasText(request.getCharacterId())){
+            response = new ResponseEntity<>(new GetSalaryResponse(),HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer chId = Integer.parseInt(request.getCharacterId());
+        boolean retrieved = guildRepositoryService.getSaraly(chId);
+        return null;
     }
 }

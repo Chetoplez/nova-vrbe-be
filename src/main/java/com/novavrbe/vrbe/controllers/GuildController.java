@@ -69,4 +69,9 @@ public class GuildController {
         return guildBusiness.deposit(request);
     }
 
+    @PostMapping("/members/getsalary")
+    public ResponseEntity<GetSalaryResponse> getSalary(@RequestBody GetSalaryRequest request){
+        return guildBusiness.getSalary(request);
+    }
+
 }

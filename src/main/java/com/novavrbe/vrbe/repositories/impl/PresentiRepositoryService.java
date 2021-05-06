@@ -1,11 +1,16 @@
 package com.novavrbe.vrbe.repositories.impl;
 
+import com.novavrbe.vrbe.dto.LuoghiDto;
 import com.novavrbe.vrbe.dto.PresentiLuogoDto;
+import com.novavrbe.vrbe.dto.V_Presenti;
+import com.novavrbe.vrbe.repositories.LuoghiRepository;
 import com.novavrbe.vrbe.repositories.PresentiLuogoRepository;
+import com.novavrbe.vrbe.repositories.V_PresentiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,7 +18,19 @@ public class PresentiRepositoryService {
 
     @Autowired
     private PresentiLuogoRepository presentiLuogoRepository;
+    @Autowired
+    private LuoghiRepository luoghiRepository;
+    @Autowired
+    private V_PresentiRepository presentiRepository;
 
+    public List<LuoghiDto> getLuoghi(){
+        List<LuoghiDto> elencoLuoghi = new ArrayList<>();
+        Iterable<LuoghiDto>  luoghiDtos = luoghiRepository.findAll();
+        for (LuoghiDto dto: luoghiDtos) {
+            elencoLuoghi.add(dto);
+        }
+        return elencoLuoghi;
+    }
 
     /**
      * Aggiorna l'id luogo in cui si trova il characater che si sta spostando
@@ -68,5 +85,15 @@ public class PresentiRepositoryService {
             changed = true;
         }
         return changed;
+    }
+
+    public List<V_Presenti> getPresentiChat(Integer idLuogo) {
+        return presentiRepository.findByIdLuogo(idLuogo);
+    }
+
+    public LuoghiDto getInfoLuogo(Integer idLoc) {
+        Optional<LuoghiDto> opt = luoghiRepository.findById(idLoc);
+
+        return opt.isPresent() ? opt.get() : null;
     }
 }
