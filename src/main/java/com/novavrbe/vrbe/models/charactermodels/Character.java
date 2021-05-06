@@ -15,7 +15,7 @@ public class Character {
     private String characterName;
     private URL characterIcon;
     private CharacterJob characterJob;
-    private URL charachterImg;
+    private URL characterImg;
     private CharacterHistory history;
     private CharacterDescription description;
     private Gender gender;
