@@ -28,5 +28,7 @@ public class V_Presenti {
     private String messaggio;
     @Column
     private boolean available;
+    @Column
+    private boolean online;
 
 }

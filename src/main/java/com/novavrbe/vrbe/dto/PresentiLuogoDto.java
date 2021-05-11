@@ -21,4 +21,6 @@ public class PresentiLuogoDto implements Serializable {
     private boolean available;
     @Column
     private String messaggio;
+    @Column
+    private boolean online;
 }

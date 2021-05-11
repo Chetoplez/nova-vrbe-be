@@ -34,6 +34,11 @@ public class PresentiController {
         return presentiBusiness.moveToLuogo(request);
     }
 
+    @PatchMapping("/getonline")
+    public ResponseEntity<GetOnlineResponse> getOnline(@RequestBody GetOnlineRequest request){
+        return presentiBusiness.getOnline(request);
+    }
+
     @PatchMapping("/updatemessage")
     public ResponseEntity<UpdateMessageResponse> updateMessage(@RequestBody UpdateMessageRequest request){
         return presentiBusiness.updateOnlineMessage(request);

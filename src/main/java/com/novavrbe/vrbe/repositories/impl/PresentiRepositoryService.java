@@ -88,12 +88,25 @@ public class PresentiRepositoryService {
     }
 
     public List<V_Presenti> getPresentiChat(Integer idLuogo) {
-        return presentiRepository.findByIdLuogo(idLuogo);
+        return presentiRepository.findByIdLuogoAndOnlineTrue(idLuogo);
     }
 
     public LuoghiDto getInfoLuogo(Integer idLoc) {
         Optional<LuoghiDto> opt = luoghiRepository.findById(idLoc);
 
         return opt.isPresent() ? opt.get() : null;
+    }
+
+    public boolean changeOnline(Integer chId, boolean online) {
+        boolean changed = false;
+        Optional<PresentiLuogoDto> dto = presentiLuogoRepository.findById(chId);
+        if(dto.isPresent()){
+            PresentiLuogoDto temp= dto.get();
+            temp.setOnline(online);
+            presentiLuogoRepository.save(temp);
+            changed = true;
+
+        }
+        return changed;
     }
 }

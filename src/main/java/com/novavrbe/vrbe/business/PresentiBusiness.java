@@ -164,4 +164,24 @@ public class PresentiBusiness {
         response = new ResponseEntity<>(res,HttpStatus.OK);
         return response;
     }
+
+    /**
+     * Metodo che , al login viene chiamato per passare allo stato online.
+     * @param request in questo payload ci va l'id del pg e il suo stato che sarò true, al login e false al logout
+     * @return true, se l'operazione è andata a buon fine, false altrimenti
+     */
+    public ResponseEntity<GetOnlineResponse> getOnline(GetOnlineRequest request) {
+        ResponseEntity<GetOnlineResponse> response ;
+        if(!StringUtils.hasText(request.getCharacterId())){
+            response = new ResponseEntity<>(new GetOnlineResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer chId = Integer.parseInt(request.getCharacterId());
+
+        boolean changed = presentiService.changeOnline(chId,request.isOnline());
+        GetOnlineResponse res = new GetOnlineResponse();
+        res.setChanged(changed);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return  response;
+    }
 }
