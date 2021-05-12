@@ -170,6 +170,8 @@ public class CharacterUtils {
             historyDto.setHistoryId(id);
             if(character.getHistory() != null){
                 historyDto.setHistory(character.getHistory().getHistory());
+            }else{
+                historyDto.setHistory("Inserisci la tua storia qui..");
             }
         }
 
@@ -184,6 +186,8 @@ public class CharacterUtils {
             historyDto.setDescriptionId(id);
             if(character.getDescription() != null){
                 historyDto.setDescription(character.getDescription().getDescription());
+            }else{
+                historyDto.setDescription("Inserisci la tua descrizione qui..");
             }
         }
 
@@ -359,9 +363,9 @@ public class CharacterUtils {
      * @param retriveCharacterJob il job da lui svolto, puoi essere null.
      */
     public static void fillCharacterJobFromDto(Character character, V_GuildMembers retriveCharacterJob) {
-        CharacterJob characterJob = null;
+        CharacterJob characterJob = new CharacterJob();
         if(retriveCharacterJob != null) {
-            characterJob = new CharacterJob();
+
             //Sono gildato da qualche parte
             characterJob.setGuildId(retriveCharacterJob.getGuildId());
             characterJob.setRoleId(retriveCharacterJob.getRoleId());
