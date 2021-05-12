@@ -12,10 +12,13 @@ CREATE TABLE GenericUser (
   PRIMARY KEY (UserId)
 );
 
+
+
 CREATE TABLE Characters ( --manca il riferimento al'id del genericUser
   CHARACTER_ID NUMBER PRIMARY KEY,
   CHARACTER_NAME VARCHAR(50) NOT NULL,
   CHARACTER_ICON VARCHAR(250) NOT NULL,
+  CHARACTER_IMG VARCHAR(500) ,
   gender VARCHAR(10) NOT NULL,
   status VARCHAR(15) NOT NULL,
   clevel NUMBER NOT NULL,
@@ -131,6 +134,7 @@ CREATE TABLE PresentiLuogo(
     characterId NUMBER NOT NULL,
     available BIT NOT NULL,
     messaggio TEXT,
+    online BIT NOT NULL DEFAULT(0),
     PRIMARY KEY(idLuogo, characterId)
 );
 
@@ -145,7 +149,7 @@ CREATE TABLE Luoghi(
 
 CREATE VIEW `V_PRESENTI` AS
 SELECT
-pres.idLuogo,loc.nomeLuogo,ch.CHARACTER_NAME as characterName,ch.CHARACTER_ID as characterId,ch.CHARACTER_ICON,pres.messaggio,pres.available
+pres.idLuogo,loc.nomeLuogo,ch.CHARACTER_NAME as characterName,ch.CHARACTER_ID as characterId,ch.CHARACTER_IMG AS CHARACTERIMG,pres.messaggio,pres.available, pres.Online
 FROM
 presentiluogo AS PRES
 JOIN characters AS CH

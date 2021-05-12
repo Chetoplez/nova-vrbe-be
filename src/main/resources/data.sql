@@ -1,8 +1,8 @@
 
 INSERT INTO GenericUser(UserId,name,lastname,birthday,email,gender,nickname,salt,composedSecret,lastLogin) VALUES (
- 1, 'Nome Utente', 'Cognome Utente', '22/12/1989', 'email@email.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f', '21/02/2021'),
-( 2, 'Ciccio ', 'Putin', '22/12/1989', 'email@bau.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f', '21/02/2021'),
-( 3, 'Ajeje ', 'Brazorf', '22/12/1989', 'email@miao.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', '7b21dc01d5b412552c31f5dc0d2bce96c6d39ecfa993ab6d430dfe87ab50dc4f', '21/02/2021');
+ 1, 'Nome Utente', 'Cognome Utente', '22/12/1989', 'email@email.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', 'c5a9ebe34ae2a07f3ce3bed3f01c784205327421ff7353f10206964b6263d218', '21/02/2021'),
+( 2, 'Ciccio ', 'Putin', '22/12/1989', 'email@bau.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', 'c5a9ebe34ae2a07f3ce3bed3f01c784205327421ff7353f10206964b6263d218', '21/02/2021'),
+( 3, 'Ajeje ', 'Brazorf', '22/12/1989', 'email@miao.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', 'c5a9ebe34ae2a07f3ce3bed3f01c784205327421ff7353f10206964b6263d218', '21/02/2021');
 
 
 INSERT INTO Characters(CHARACTER_ID,CHARACTER_NAME,CHARACTER_ICON,gender,status,clevel,experience,total_experience,health,health_status,role) VALUES (
