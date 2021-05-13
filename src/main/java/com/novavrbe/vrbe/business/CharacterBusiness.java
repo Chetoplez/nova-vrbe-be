@@ -281,4 +281,21 @@ public class CharacterBusiness {
         response = new ResponseEntity<>(res,HttpStatus.OK);
         return response;
     }
+
+
+    public ResponseEntity<UpdateDescriptionResponse> updateHystory(UpdateDescriptionRequest incomingRequest) {
+        ResponseEntity<UpdateDescriptionResponse> response;
+        if(!StringUtils.hasText(incomingRequest.getCharacterId()) || !StringUtils.hasText(incomingRequest.getNewtext())){
+            //Bad!!
+            response = new ResponseEntity<>(new UpdateDescriptionResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        Integer chId = Integer.parseInt(incomingRequest.getCharacterId());
+        boolean changed = characterRepositoryService.UpdateCharacterHystory(chId, incomingRequest.getNewtext());
+        UpdateDescriptionResponse res = new UpdateDescriptionResponse();
+        res.setChanged(changed);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+    }
 }

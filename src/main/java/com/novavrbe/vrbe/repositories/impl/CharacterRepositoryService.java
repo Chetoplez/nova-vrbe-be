@@ -333,4 +333,16 @@ public class CharacterRepositoryService {
         }
         return false;
     }
+
+    public boolean UpdateCharacterHystory(Integer chId, String newtext) {
+        Optional<CharacterHistoryDto> opt;
+        opt = characterHistoryRepository.findById(chId);
+        if(opt.isPresent()){
+            CharacterHistoryDto temp = opt.get();
+            temp.setHistory(newtext);
+            characterHistoryRepository.save(temp);
+            return true;
+        }
+        return false;
+    }
 }
