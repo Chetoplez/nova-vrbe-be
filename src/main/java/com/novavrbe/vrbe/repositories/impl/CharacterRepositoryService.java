@@ -321,4 +321,16 @@ public class CharacterRepositoryService {
         }
         return false;
     }
+
+    public boolean UpdateCharacterDescription(Integer chId, String newtext) {
+        Optional<CharacterDescriptionDto> opt;
+        opt = characterDescriptionRepository.findById(chId);
+        if(opt.isPresent()){
+            CharacterDescriptionDto temp = opt.get();
+            temp.setDescription(newtext);
+            characterDescriptionRepository.save(temp);
+            return true;
+        }
+        return false;
+    }
 }

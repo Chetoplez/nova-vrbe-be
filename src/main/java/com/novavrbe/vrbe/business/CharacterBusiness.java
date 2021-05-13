@@ -260,4 +260,25 @@ public class CharacterBusiness {
                     });
         }
     }
+
+    /**
+     * Questo metodo permette al giocatore di aggiornare la proria descrizione.
+     * @param incomingRequest contiene l'id del pg da aggiornare e il nuovo campo
+     * @return true se è andato a buon fine, false altrimenti
+     */
+    public ResponseEntity<UpdateDescriptionResponse> updateDescription(UpdateDescriptionRequest incomingRequest) {
+        ResponseEntity<UpdateDescriptionResponse> response;
+        if(!StringUtils.hasText(incomingRequest.getCharacterId()) || !StringUtils.hasText(incomingRequest.getNewtext())){
+            //Bad!!
+            response = new ResponseEntity<>(new UpdateDescriptionResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        Integer chId = Integer.parseInt(incomingRequest.getCharacterId());
+        boolean changed = characterRepositoryService.UpdateCharacterDescription(chId, incomingRequest.getNewtext());
+        UpdateDescriptionResponse res = new UpdateDescriptionResponse();
+        res.setChanged(changed);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+    }
 }
