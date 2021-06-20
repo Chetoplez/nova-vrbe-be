@@ -219,5 +219,16 @@ CHARACTERID INT,
 DAILYEXP INT ,
 EXPDATE DATE,
 PRIMARY KEY (CHARACTERID,EXPDATE)
-)
+);
 
+CREATE TABLE MarketItem (
+marketItemId INT,
+inventoryObjectId INT,
+name VARCHAR(30),
+description VARCHAR(60),
+price INT,
+quantity INT,
+expiresOn NUMBER,
+illimited BIT,
+PRIMARY KEY (marketItemId,inventoryObjectId)
+);
