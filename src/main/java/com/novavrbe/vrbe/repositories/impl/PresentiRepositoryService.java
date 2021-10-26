@@ -39,11 +39,20 @@ public class PresentiRepositoryService {
      * @return true se mi sono spostato correttamente, false altrimenti
      */
     public boolean moveToluogo(Integer idLuogo, Integer characterId){
-        boolean moved = false;
+        boolean moved ;
         Optional<PresentiLuogoDto> dto = presentiLuogoRepository.findById(characterId);
         if(dto.isPresent()){
             PresentiLuogoDto temp = dto.get();
             temp.setIdLuogo(idLuogo);
+            presentiLuogoRepository.save(temp);
+            moved = true;
+        }else{
+            //Se sono qui, è perché non ero tra gli online
+            PresentiLuogoDto temp = new PresentiLuogoDto();
+            temp.setIdLuogo(idLuogo);
+            temp.setCharacterId(characterId);
+            temp.setOnline(true);
+            temp.setAvailable(true);
             presentiLuogoRepository.save(temp);
             moved = true;
         }
@@ -105,7 +114,12 @@ public class PresentiRepositoryService {
             temp.setOnline(online);
             presentiLuogoRepository.save(temp);
             changed = true;
-
+        }else{
+            PresentiLuogoDto temp = new PresentiLuogoDto();
+            temp.setOnline(online);
+            temp.setIdLuogo(0);
+            temp.setCharacterId(chId);
+            presentiLuogoRepository.save(temp);
         }
         return changed;
     }
