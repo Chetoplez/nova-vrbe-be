@@ -88,9 +88,65 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+
+					<profiles>
+						<profile>prod</profile>
+					</profiles>
 				</configuration>
 			</plugin>
 		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
 	</build>
+
+	<profiles>
+
+		<profile>
+			<id>dev</id>
+			<properties>
+				<profile>dev</profile>
+				<label>dev</label>
+				<APP_NAME></APP_NAME>
+				<ACTIVE_PROFILE>dev</ACTIVE_PROFILE>
+				<spring.profiles.active>dev</spring.profiles.active>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
+
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>environment</name>
+					<value>dev</value>
+				</property>
+			</activation>
+		</profile>
+
+		<profile>
+			<id>prod</id>
+			<properties>
+				<profile>prod</profile>
+				<label>prod</label>
+				<APP_NAME></APP_NAME>
+				<ACTIVE_PROFILE>prod</ACTIVE_PROFILE>
+				<spring.profiles.active>prod</spring.profiles.active>
+				<activatedProperties>prod</activatedProperties>
+			</properties>
+
+			<activation>
+				<property>
+					<name>environment</name>
+					<value>prod</value>
+				</property>
+			</activation>
+		</profile>
+
+	</profiles>
+
 
 </project>
