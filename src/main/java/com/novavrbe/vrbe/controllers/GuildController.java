@@ -29,6 +29,11 @@ public class GuildController {
         return guildBusiness.getGuildMembers(guildId);
     }
 
+    @GetMapping("/members/getinfo={chId}")
+    public ResponseEntity<GetinfoRoleResponse> getInfoRole (@PathVariable String chId){
+        return guildBusiness.getInfoRole(chId);
+    }
+
     @PostMapping("/members/addmember")
     public ResponseEntity<AddMemberResponse> addMember(@RequestBody AddMemberRequest addMemberRequest){
     return guildBusiness.addMember(addMemberRequest);

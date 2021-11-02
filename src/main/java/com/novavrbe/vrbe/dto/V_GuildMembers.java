@@ -6,8 +6,6 @@ import org.hibernate.annotations.Immutable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Immutable
@@ -34,5 +32,8 @@ public class V_GuildMembers {
 
     @Column(name = "ROLEIMG")
     private String roleImg;
+
+    @Column(name = "ROLESALARY")
+    private Integer roleSalary;
 
 }

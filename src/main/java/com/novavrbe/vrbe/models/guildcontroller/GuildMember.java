@@ -19,4 +19,6 @@ public class GuildMember {
     private String ROLE_NAME;
 
     private String ROLE_IMG;
+
+    private Integer ROLESALARY;
 }

@@ -1,13 +1,15 @@
 package com.novavrbe.vrbe.repositories.impl;
 
 import com.novavrbe.vrbe.dto.*;
+import com.novavrbe.vrbe.models.guildcontroller.GetSalaryResponse;
 import com.novavrbe.vrbe.models.guildcontroller.GuildPermission;
 import com.novavrbe.vrbe.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,8 @@ public class GuildRepositoryService {
     private CharacterCvRepository characterCvRepository;
     @Autowired
     private InventoryRepository inventoryRepository;
+    @Autowired
+    private DailySalaryRepository dailySalaryRepository;
 
     /**
      * Torna le informazioni della gilda dato il suo id
@@ -297,33 +301,73 @@ public class GuildRepositoryService {
     }
 
 
-    public boolean getSaraly(Integer chId) {
+    public GetSalaryResponse getSalary(Integer chId) {
         Integer roleId;
-        boolean retrieved = false;
+        GetSalaryResponse retrieved = new GetSalaryResponse();
+        retrieved.setRetrieved(false);
+        retrieved.setMessage("stipendio già ritirato! Torna domani!");
 
-        //TODO fare una funzione che controlli se lo stipendio è stato già ritirato per quella giornata
 
-        Optional<GuildMemberDTO> dto = guildMemeberRepository.findById(chId);
-        if(dto.isPresent()){
-            roleId = dto.get().getROLE_ID();
-            Optional<GuildRoleDTO> roleDTO = guildRoleRepository.findById(roleId);
-            Optional<InventoryDto> inventoryDto = inventoryRepository.findById(chId);
-            if(roleDTO.isPresent()){
-                Optional<GuildBankDTO> bankDTO = guildBankRepository.findById(roleDTO.get().getGuildId());
-                GuildBankDTO bank = bankDTO.isPresent() ?  bankDTO.get() : null;
-                if(bank != null && (bank.getAmount() >= roleDTO.get().getSalary())){
-                    InventoryDto saccoccia = inventoryDto.isPresent() ?  inventoryDto.get() : null;
-                    if(saccoccia != null){
-                        saccoccia.setGold(saccoccia.getGold() + roleDTO.get().getSalary());
-                        inventoryRepository.save(saccoccia);
-                        bank.setAmount(bank.getAmount() - roleDTO.get().getSalary());
-                        guildBankRepository.save(bank);
-                        retrieved = true;
+        if (canGetSalary(chId)) {
+            Optional<GuildMemberDTO> dto = guildMemeberRepository.findById(chId);
+            if (dto.isPresent()) {
+                roleId = dto.get().getROLE_ID();
+                Optional<GuildRoleDTO> roleDTO = guildRoleRepository.findById(roleId);
+                Optional<InventoryDto> inventoryDto = inventoryRepository.findById(chId);
+                if (roleDTO.isPresent()) {
+                    Optional<GuildBankDTO> bankDTO = guildBankRepository.findById(roleDTO.get().getGuildId());
+                    GuildBankDTO bank = bankDTO.isPresent() ? bankDTO.get() : null;
+                    if (bank != null && (bank.getAmount() >= roleDTO.get().getSalary())) {
+                        InventoryDto saccoccia = inventoryDto.isPresent() ? inventoryDto.get() : null;
+                        if (saccoccia != null) {
+                            saccoccia.setGold(saccoccia.getGold() + roleDTO.get().getSalary());
+                            inventoryRepository.save(saccoccia);
+                            Optional<DailySalaryDto> salary = dailySalaryRepository.findByCharacterId(chId);
+                            if (salary.isPresent()) {
+                                DailySalaryDto tempSalary = salary.get();
+                                tempSalary.setLastSalary(new Date(new java.util.Date().getTime()));
+                                tempSalary.setBlockedUntil(new Date(new java.util.Date().getTime()));
+                                dailySalaryRepository.save(tempSalary);
+                            } else {
+                                DailySalaryDto tempSalary = new DailySalaryDto();
+                                tempSalary.setCharacterId(chId);
+                                tempSalary.setLastSalary(new Date(new java.util.Date().getTime()));
+                                tempSalary.setBlockedUntil(new Date(new java.util.Date().getTime()));
+                                dailySalaryRepository.save(tempSalary);
+                            }
+                            bank.setAmount(bank.getAmount() - roleDTO.get().getSalary());
+                            guildBankRepository.save(bank);
+                            retrieved.setRetrieved(true);
+                            retrieved.setMessage("Stipendio ritirato! Torna domani");
+                        }
+                    }else {
+                        retrieved.setRetrieved(false);
+                        retrieved.setMessage("La banca di Gilda non ha abbastanza denaro!");
                     }
                 }
             }
         }
-
     return retrieved;
+    }
+
+    private boolean canGetSalary(Integer chId){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date(new java.util.Date().getTime());
+        String testDate = sdf.format(today);
+
+        java.util.Date oggi = null;
+        try {
+            oggi =  sdf.parse(testDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Optional<DailySalaryDto> salary = dailySalaryRepository.findByCharacterId(chId);
+        if(!salary.isPresent())
+            return true; //perché deve essere il primo stipendio
+        else{
+        Date lastSalary = salary.get().getLastSalary();
+        return lastSalary.before(oggi);
+        }
     }
 }

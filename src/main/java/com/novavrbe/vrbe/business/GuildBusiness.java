@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class GuildBusiness {
 
     @Autowired
     private CharacterRepositoryService characterRepositoryService;
+
 
     /**
      * Torna le informazioni della gilda
@@ -101,6 +103,25 @@ public class GuildBusiness {
     }
 
     /**
+     * Torna le informazioni riguardo al ruolo ricoperto in una gilda dal proprio pg
+     * @param chId il mio ID
+     * @return torna un oggetto GuildMember
+     */
+    public ResponseEntity<GetinfoRoleResponse> getInfoRole(String chId){
+        ResponseEntity<GetinfoRoleResponse> response;
+        if(!StringUtils.hasText(chId)){
+            response = new ResponseEntity<>(new GetinfoRoleResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        V_GuildMembers member = guildRepositoryService.getGuildMember(Integer.parseInt(chId));
+        GuildMember newMember = GuildUtils.getMemberfromDTO(member);
+        GetinfoRoleResponse res = new GetinfoRoleResponse();
+        res.setMember(newMember);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+    }
+
+    /**
      * Inserisce un personaggio in una gilda, solo se è DISOCCUPATO
      * @param addMemberRequest oggetto contentente i parametri per pruomuovere un character. il suo iD e l'ìd della gilda
      * @return TRUE se viene inserito, false in tutti gli altri casi
@@ -110,21 +131,27 @@ public class GuildBusiness {
         String characterId,roleId;
         characterId = addMemberRequest.getCharacter_id();
         roleId = addMemberRequest.getRole_id();
-        if(!StringUtils.hasText(roleId) || !StringUtils.hasText(characterId)){
+        if(!StringUtils.hasText(roleId) || !StringUtils.hasText(characterId) ){
             response = new ResponseEntity<>(new AddMemberResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
-        //vedo se il pg è già dentro una gilda, come? lo cerco tra i guildMembers!
-        if(!guildRepositoryService.checkEnrollment(Integer.parseInt(characterId))){
-            //Se sono qui dentro, il pg non è arruolato da nessuna parte.
-            AddMemberResponse res = new AddMemberResponse();
-            res.setAdded(guildRepositoryService.addMember(Integer.parseInt(roleId), Integer.parseInt(characterId)));
-            response = new ResponseEntity<>(res,HttpStatus.OK);
-        }else {
-            AddMemberResponse res = new AddMemberResponse();
-            res.setAdded(false);
-            response = new ResponseEntity<>(res,HttpStatus.OK);
+        //Controllo se ci sono tutti i permessi di fare questa operazione
+        if(hasManagerRight(Integer.parseInt(addMemberRequest.getExecutorId())) ||  checkAdminRight(Integer.parseInt(addMemberRequest.getExecutorId()) ) ){
+            //vedo se il pg è già dentro una gilda, come? lo cerco tra i guildMembers!
+            if(!guildRepositoryService.checkEnrollment(Integer.parseInt(characterId)) ){
+                //Se sono qui dentro, il pg non è arruolato da nessuna parte.
+                AddMemberResponse res = new AddMemberResponse();
+                res.setAdded(guildRepositoryService.addMember(Integer.parseInt(roleId), Integer.parseInt(characterId)));
+                response = new ResponseEntity<>(res,HttpStatus.OK);
+            }else {
+                AddMemberResponse res = new AddMemberResponse();
+                res.setAdded(false);
+                response = new ResponseEntity<>(res,HttpStatus.OK);
+            }
+        }else{
+            response = new ResponseEntity<>(new AddMemberResponse(), HttpStatus.UNAUTHORIZED);
         }
+
         return response;
     }
 
@@ -134,12 +161,20 @@ public class GuildBusiness {
             response = new ResponseEntity<>(new DeleteMemberResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
-        Integer roleId = Integer.parseInt(deleteMemberRequest.getRole_id());
-        Integer cId = Integer.parseInt(deleteMemberRequest.getCharacter_id());
-        guildRepositoryService.deleteMember(roleId,cId);
-        DeleteMemberResponse res = new DeleteMemberResponse();
-        res.setDeleted(!guildRepositoryService.checkEnrollment(cId));
-        response = new ResponseEntity<>(res,HttpStatus.OK);
+
+
+        if(hasManagerRight(Integer.parseInt(deleteMemberRequest.getExecutorId())) ||  checkAdminRight(Integer.parseInt(deleteMemberRequest.getExecutorId()) ) ){
+            Integer roleId = Integer.parseInt(deleteMemberRequest.getRole_id());
+            Integer cId = Integer.parseInt(deleteMemberRequest.getCharacter_id());
+            guildRepositoryService.deleteMember(roleId,cId);
+            DeleteMemberResponse res = new DeleteMemberResponse();
+            res.setDeleted(!guildRepositoryService.checkEnrollment(cId));
+            response = new ResponseEntity<>(res,HttpStatus.OK);
+        }else {
+            response = new ResponseEntity<>(new DeleteMemberResponse(), HttpStatus.UNAUTHORIZED);
+
+        }
+
         return response;
     }
 
@@ -154,18 +189,25 @@ public class GuildBusiness {
             response = new ResponseEntity<>(new PromoteMemberResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
-        Integer character_id = Integer.parseInt(promoteMember.getCharacter_id());
 
-        if(guildRepositoryService.promoteMember(character_id)){
-            updateCharacterCV(character_id);
-            PromoteMemberResponse res = new PromoteMemberResponse();
-            res.setPromoted(true);
-            response = new ResponseEntity<>(res, HttpStatus.OK);
+        if(hasManagerRight(Integer.parseInt(promoteMember.getExecutorId())) ||  checkAdminRight(Integer.parseInt(promoteMember.getExecutorId()) ) ){
+            Integer character_id = Integer.parseInt(promoteMember.getCharacter_id());
+            if(guildRepositoryService.promoteMember(character_id)){
+                updateCharacterCV(character_id);
+                PromoteMemberResponse res = new PromoteMemberResponse();
+                res.setPromoted(true);
+                response = new ResponseEntity<>(res, HttpStatus.OK);
+            }else {
+                PromoteMemberResponse res = new PromoteMemberResponse();
+                res.setPromoted(false);
+                response = new ResponseEntity<>(res, HttpStatus.OK);
+            }
         }else {
-            PromoteMemberResponse res = new PromoteMemberResponse();
-            res.setPromoted(false);
-            response = new ResponseEntity<>(res, HttpStatus.OK);
+            response = new ResponseEntity<>(new PromoteMemberResponse(), HttpStatus.UNAUTHORIZED);
+            return response;
         }
+
+
         return response;
     }
 
@@ -181,18 +223,25 @@ public class GuildBusiness {
             response = new ResponseEntity<>(new DegradeMemberResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
-        Integer character_id = Integer.parseInt(degradeMemberRequest.getCharacter_id());
 
-        if(guildRepositoryService.degradeMember(character_id)){
-            updateCharacterCV(character_id);
-            DegradeMemberResponse res = new DegradeMemberResponse();
-            res.setDegradated(true);
-            response = new ResponseEntity<>(res, HttpStatus.OK);
+
+        if(hasManagerRight(Integer.parseInt(degradeMemberRequest.getExecutorId())) ||  checkAdminRight(Integer.parseInt(degradeMemberRequest.getExecutorId()) ) ){
+            Integer character_id = Integer.parseInt(degradeMemberRequest.getCharacter_id());
+            if(guildRepositoryService.degradeMember(character_id)){
+                updateCharacterCV(character_id);
+                DegradeMemberResponse res = new DegradeMemberResponse();
+                res.setDegradated(true);
+                response = new ResponseEntity<>(res, HttpStatus.OK);
+            }else {
+                DegradeMemberResponse res = new DegradeMemberResponse();
+                res.setDegradated(false);
+                response = new ResponseEntity<>(res, HttpStatus.OK);
+            }
         }else {
-            DegradeMemberResponse res = new DegradeMemberResponse();
-            res.setDegradated(false);
-            response = new ResponseEntity<>(res, HttpStatus.OK);
+            response = new ResponseEntity<>(new DegradeMemberResponse(), HttpStatus.UNAUTHORIZED);
+            return response;
         }
+
         return response;
     }
 
@@ -230,6 +279,11 @@ public class GuildBusiness {
     }
 
 
+    /**
+     * Metodo che permette di ritirare dalla banca di Gilda. Ovviamente devi essere autorizzato per poterlo farel
+     * @param request
+     * @return
+     */
     public ResponseEntity<OperationBankResponse> withdraw(OperationBankRequest request) {
 
         ResponseEntity<OperationBankResponse> response;
@@ -243,7 +297,7 @@ public class GuildBusiness {
          }
         else {
             res.setOperationOk(false);
-            return new ResponseEntity<>(res, HttpStatus.OK);
+            return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
         }
         } else {
             return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
@@ -319,8 +373,8 @@ public class GuildBusiness {
     /**
      * Carica lo stipendio base associato al proprio ruolo ricoperto in gilda
      * @param request contiene il characterId del richiedente
-     * @return true se tutto apposto, false altrimenti
-     */
+     * @return true se tutto apposto, false altrimenti e un messaggio
+     **/
     public ResponseEntity<GetSalaryResponse> getSalary(GetSalaryRequest request) {
         ResponseEntity<GetSalaryResponse> response;
         if(!StringUtils.hasText(request.getCharacterId())){
@@ -328,7 +382,23 @@ public class GuildBusiness {
             return response;
         }
         Integer chId = Integer.parseInt(request.getCharacterId());
-        boolean retrieved = guildRepositoryService.getSaraly(chId);
-        return null;
+        GetSalaryResponse res = guildRepositoryService.getSalary(chId);
+        response = new ResponseEntity<>(res, HttpStatus.OK);
+        return response;
+    }
+
+    /**
+     * Questo metodo deve verificare che chi sta richiedendo questa operazione, abbia i diritti di farlo come ADMIN o come
+     * manager della gilda.
+     * @param idExecutor il characterID di chi sta facendo l'operazione
+     * @return true se può compierla , false altrimenti
+     */
+    private boolean checkAdminRight(int idExecutor){
+
+        CharacterDto user = characterRepositoryService.retrieveCharacterFromId(idExecutor);
+        List<String> privilegi = Arrays.asList(user.getRole().split("\\s*,\\s*"));
+        return privilegi.contains("ADMIN");
+
+
     }
 }

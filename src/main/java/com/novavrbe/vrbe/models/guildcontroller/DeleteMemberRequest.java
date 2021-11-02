@@ -6,4 +6,5 @@ import lombok.Data;
 public class DeleteMemberRequest {
     private String character_id;
     private String role_id;
+    private String executorId;
 }

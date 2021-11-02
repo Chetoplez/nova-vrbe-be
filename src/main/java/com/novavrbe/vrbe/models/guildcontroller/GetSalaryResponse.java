@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class GetSalaryResponse {
     private boolean retrieved;
+    private String message;
 }

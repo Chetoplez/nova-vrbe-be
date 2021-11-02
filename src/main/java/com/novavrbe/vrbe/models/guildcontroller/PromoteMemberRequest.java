@@ -6,4 +6,5 @@ import lombok.Data;
 public class PromoteMemberRequest {
     private String character_id;
     private String guild_id;
+    private String executorId;
 }
