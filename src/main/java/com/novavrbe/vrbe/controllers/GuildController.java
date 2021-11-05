@@ -29,6 +29,7 @@ public class GuildController {
         return guildBusiness.getGuildMembers(guildId);
     }
 
+
     @GetMapping("/members/getinfo={chId}")
     public ResponseEntity<GetinfoRoleResponse> getInfoRole (@PathVariable String chId){
         return guildBusiness.getInfoRole(chId);

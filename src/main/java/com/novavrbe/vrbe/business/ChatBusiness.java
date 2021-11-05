@@ -180,6 +180,7 @@ public class ChatBusiness {
         diceMessage.setTimestamp(new Date().getTime());
         diceMessage.setTooltip_carica(diceMessage.getCarica());
         diceMessage.setTesto(testo);
+        diceMessage.setCharacterId(request.getCharachterId());
         chatRepositoryService.addNewChatMessage(diceMessage);
         AddMessageResponse res = new AddMessageResponse();
         res.setChatRetrieved(true);
