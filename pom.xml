@@ -8,11 +8,11 @@
 		<version>2.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.novavrbe</groupId>
-	<artifactId>vrbe</artifactId>
+	<groupId>com.fervmgdr</groupId>
+	<artifactId>fervm</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>vrbe</name>
+	<version>0.1-BETA</version>
+	<name>Fervm</name>
 	<description>API REST Wrapper</description>
 	<properties>
 		<java.version>8</java.version>
@@ -20,7 +20,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -56,6 +57,7 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -77,6 +79,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}API</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
