@@ -39,14 +39,15 @@ public class PresentiRepositoryService {
      * @return true se mi sono spostato correttamente, false altrimenti
      */
     public boolean moveToluogo(Integer idLuogo, Integer characterId){
-        boolean moved ;
+        boolean moved =false;
         Optional<PresentiLuogoDto> dto = presentiLuogoRepository.findById(characterId);
         if(dto.isPresent()){
             PresentiLuogoDto temp = dto.get();
             temp.setIdLuogo(idLuogo);
             presentiLuogoRepository.save(temp);
             moved = true;
-        }else{
+        }
+        else{
             //Se sono qui, è perché non ero tra gli online
             PresentiLuogoDto temp = new PresentiLuogoDto();
             temp.setIdLuogo(idLuogo);

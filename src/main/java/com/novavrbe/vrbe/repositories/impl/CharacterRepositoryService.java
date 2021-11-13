@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +50,10 @@ public class CharacterRepositoryService {
         }
 
         return characterDto;
+    }
+
+    public ArrayList<CharacterDto> getUnEmployedCharacters(){
+        return  characterRepository.getUnemolyedCharacters();
     }
 
     public CharacterHistoryDto retrieveCharacterHistory(Integer historyId){

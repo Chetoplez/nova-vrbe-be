@@ -61,4 +61,23 @@ public class GuildUtils {
 
         return newMember;
     }
+
+    public static List<Guild> prepareGuildList(Iterable<GuildDTO> allGuilds) {
+        ArrayList<Guild> guildList = new ArrayList<>();
+        for (GuildDTO guildItem: allGuilds) {
+            if(guildItem.getIsVisible()) {
+                Guild temp = new Guild();
+                temp.setId(guildItem.getId());
+                temp.setName(guildItem.getName());
+                temp.setGuild_img(guildItem.getGuild_img());
+                temp.setDescription(guildItem.getDescription());
+                temp.setStatute(guildItem.getStatute());
+                temp.setIsVisible(guildItem.getIsVisible());
+                temp.setAnnouncement(guildItem.getAnnouncement());
+                temp.setBankAmount(0);
+                guildList.add(temp);
+            }
+        }
+        return guildList;
+    }
 }

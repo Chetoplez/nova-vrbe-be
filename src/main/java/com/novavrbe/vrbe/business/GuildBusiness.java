@@ -30,6 +30,21 @@ public class GuildBusiness {
 
 
     /**
+     * Torna l'elenco di tutte le gilde presenti per poterle poi visitare.
+     *
+     * @return lista di Guild item
+     */
+    public ResponseEntity<GetAllGuildResponse> getAllGuilds() {
+        ResponseEntity<GetAllGuildResponse> response;
+        Iterable<GuildDTO> allGuilds =  guildRepositoryService.getAllGuild();
+        List<Guild> guildList = GuildUtils.prepareGuildList(allGuilds);
+        GetAllGuildResponse res = new GetAllGuildResponse();
+        res.setGuilds(guildList);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return  response;
+    }
+
+    /**
      * Torna le informazioni della gilda
      * @param guildId L'id della gilda
      * @return GuildResponse contenente tutto quello che concerne la gilda
@@ -401,4 +416,6 @@ public class GuildBusiness {
 
 
     }
+
+
 }

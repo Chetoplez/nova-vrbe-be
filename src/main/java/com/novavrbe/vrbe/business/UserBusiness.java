@@ -54,6 +54,8 @@ public class UserBusiness {
             if(!CollectionUtils.isEmpty(users)){
                 GenericUserDto user = users.get(0);
                 loginResponse.setSuccess(LoginUtils.canLogin(loginRequest.getPsw(), user));
+                //aggiunta di Claudio Malvagio
+                loginResponse.setUserId(user.getId());
             }
         }
 

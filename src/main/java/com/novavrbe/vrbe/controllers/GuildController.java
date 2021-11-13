@@ -14,6 +14,11 @@ public class GuildController {
     @Autowired
     private GuildBusiness guildBusiness;
 
+    @GetMapping("/getall")
+    public  ResponseEntity<GetAllGuildResponse> getGuilds(){
+        return guildBusiness.getAllGuilds();
+    }
+
     @GetMapping("/guildid={guildId}")
     public  ResponseEntity<GetGuildResponse> getGuild(@PathVariable String guildId){
         return guildBusiness.getGuild(guildId);

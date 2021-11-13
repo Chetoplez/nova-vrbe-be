@@ -23,6 +23,11 @@ public class CharacterController {
         return characterBusiness.getCharacter(characterId);
     }
 
+    @GetMapping("/getcharacter/unemployed")
+    public ResponseEntity<GetListUnemployedResponse> getUnemployed(){
+        return  characterBusiness.getUnEmployedCharacters();
+    }
+
     @GetMapping("/getinventory/{characterId}")
     public ResponseEntity<GetInventoryResponse> getInventory(@PathVariable String characterId){
         return characterBusiness.getInventory(characterId);
@@ -40,7 +45,7 @@ public class CharacterController {
 
     @PatchMapping("/updatedehistory")
     public ResponseEntity<UpdateDescriptionResponse> updateHistory(@RequestBody UpdateDescriptionRequest incomingRequest){
-        return characterBusiness.updateHystory(incomingRequest);
+        return characterBusiness.updateHistory(incomingRequest);
     }
 
     @PostMapping("/additem")

@@ -370,4 +370,8 @@ public class GuildRepositoryService {
         return lastSalary.before(oggi);
         }
     }
+
+    public Iterable<GuildDTO> getAllGuild() {
+        return guildRepository.findAll();
+    }
 }

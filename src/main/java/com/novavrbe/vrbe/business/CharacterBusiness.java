@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,6 +127,22 @@ public class CharacterBusiness {
         return response;
     }
 
+    public ResponseEntity<GetListUnemployedResponse> getUnEmployedCharacters(){
+        ResponseEntity<GetListUnemployedResponse> response;
+        ArrayList<CharacterDto> dtos = characterRepositoryService.getUnEmployedCharacters();
+        ArrayList<SmallCharacter> unEmployed = new ArrayList<>();
+        for (CharacterDto dto: dtos) {
+            SmallCharacter temp = new SmallCharacter();
+            temp.setCharacterId(dto.getCharacterId());
+            temp.setCharacterName(dto.getCharacterName());
+            temp.setCharacterImg(dto.getCharacterImg());
+            unEmployed.add(temp);
+        }
+        GetListUnemployedResponse res = new GetListUnemployedResponse();
+        res.setUnemployed(unEmployed);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+    }
 
     public ResponseEntity<EquipItemResponse> equipItem(EquipItemRequest request) {
         ResponseEntity<EquipItemResponse> response = null;
@@ -283,7 +300,7 @@ public class CharacterBusiness {
     }
 
 
-    public ResponseEntity<UpdateDescriptionResponse> updateHystory(UpdateDescriptionRequest incomingRequest) {
+    public ResponseEntity<UpdateDescriptionResponse> updateHistory(UpdateDescriptionRequest incomingRequest) {
         ResponseEntity<UpdateDescriptionResponse> response;
         if(!StringUtils.hasText(incomingRequest.getCharacterId()) || !StringUtils.hasText(incomingRequest.getNewtext())){
             //Bad!!
@@ -298,4 +315,5 @@ public class CharacterBusiness {
         response = new ResponseEntity<>(res,HttpStatus.OK);
         return response;
     }
+
 }
