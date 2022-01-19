@@ -77,7 +77,7 @@ public class ChatBusiness {
 
     /**
      * Metodo che permette di cancellare un messaggio della chat.
-     * @param request DeleteMessageRequest che ha dentro i parametri per canchellare
+     * @param request DeleteMessageRequest che ha dentro i parametri per cancellare
      * @return TRUE se l'operazione è andata a buon fine; FALSE altrimenti
      */
     public ResponseEntity<DeleteMessageResponse> deleteMessage(DeleteMessageRequest request){
