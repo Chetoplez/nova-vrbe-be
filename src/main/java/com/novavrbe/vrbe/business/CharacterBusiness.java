@@ -6,9 +6,11 @@ import com.novavrbe.vrbe.dto.InventoryObjectDto;
 import com.novavrbe.vrbe.dto.InventoryObjectEffectDto;
 import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
+import com.novavrbe.vrbe.models.charactermodels.CharacterMaritalStatus;
 import com.novavrbe.vrbe.models.charactermodels.Inventory;
 import com.novavrbe.vrbe.models.charactermodels.InventoryObjectAssociation;
 import com.novavrbe.vrbe.models.enumerations.BodyPart;
+import com.novavrbe.vrbe.models.enumerations.MaritalStatus;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.utils.CharacterUtils;
 import com.novavrbe.vrbe.utils.ValidateUtils;
@@ -60,6 +62,13 @@ public class CharacterBusiness {
             GetCharacterResponse getCharacterResponse = new GetCharacterResponse();
 
             Character character = new Character();
+            //TODO modificare questa parte per lo stato matrimoniale
+            CharacterMaritalStatus dummy = new CharacterMaritalStatus();
+            dummy.setCharacterId("0");
+            dummy.setCharacterName("none");
+            dummy.setMaritalStatus(MaritalStatus.CELIBE);
+            character.setMaritalStatus(dummy);
+            //fin qui
             CharacterUtils.fillCharacterFieldsFromDto(character, characterDto);
             CharacterUtils.fillCharacterHistoryFromDto(character, characterRepositoryService.retrieveCharacterHistory(cID));
             CharacterUtils.fillCharacterDescriptionFromDto(character, characterRepositoryService.retrieveCharacterDescription(cID));
@@ -316,4 +325,20 @@ public class CharacterBusiness {
         return response;
     }
 
+    public ResponseEntity<UpdateDescriptionResponse> updateImage(UpdateImageRequest incomingRequest) {
+        //Sto volutamente riutilizzando questa response perché tanto è un update su un attributo del charachter
+        ResponseEntity<UpdateDescriptionResponse> response;
+        if(!StringUtils.hasText(incomingRequest.getCharachterId()) || !StringUtils.hasText(incomingRequest.getUrlImg())){
+            //Bad!!
+            response = new ResponseEntity<>(new UpdateDescriptionResponse(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Integer chId = Integer.parseInt(incomingRequest.getCharachterId());
+        boolean changed = characterRepositoryService.updatePersonalImage(chId, incomingRequest.getUrlImg());
+        UpdateDescriptionResponse res = new UpdateDescriptionResponse();
+        res.setChanged(changed);
+        response = new ResponseEntity<>(res,HttpStatus.OK);
+        return response;
+
+    }
 }

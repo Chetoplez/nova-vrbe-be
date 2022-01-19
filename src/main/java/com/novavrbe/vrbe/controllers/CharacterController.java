@@ -43,6 +43,11 @@ public class CharacterController {
         return characterBusiness.updateDescription(incomingRequest);
     }
 
+    @PatchMapping("/updateimage")
+    public ResponseEntity<UpdateDescriptionResponse> updateImage(@RequestBody UpdateImageRequest incomingRequest){
+        return characterBusiness.updateImage(incomingRequest);
+    }
+
     @PatchMapping("/updatedehistory")
     public ResponseEntity<UpdateDescriptionResponse> updateHistory(@RequestBody UpdateDescriptionRequest incomingRequest){
         return characterBusiness.updateHistory(incomingRequest);

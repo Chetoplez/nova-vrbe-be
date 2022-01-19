@@ -348,4 +348,16 @@ public class CharacterRepositoryService {
         }
         return false;
     }
+
+    public boolean updatePersonalImage(Integer chId, String urlImg) {
+        Optional<CharacterDto> opt;
+        opt = characterRepository.findById(chId);
+        if(opt.isPresent()){
+            CharacterDto temp = opt.get();
+            temp.setCharacterImg(urlImg);
+            characterRepository.save((temp));
+            return true;
+        }
+        return false;
+    }
 }

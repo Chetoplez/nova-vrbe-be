@@ -46,7 +46,8 @@ public class CharacterUtils {
             character.setLevel(characterLevel);
 
             try {
-                character.setCharacterImg(new URL(dto.getCharacterImg()));
+                String temp = dto.getCharacterImg()== null ? "" : dto.getCharacterImg();
+                character.setCharacterImg(new URL(temp));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -138,6 +139,7 @@ public class CharacterUtils {
             characterDto.setCharacterName(character.getCharacterName());
             characterDto.setCharacterIcon(character.getCharacterIcon() != null ? character.getCharacterIcon().toString() : "");
             characterDto.setGender(character.getGender().name());
+
             characterDto.setStatus(character.getStatus() != null ? character.getStatus().name() : Status.PLEBEO.name());
             characterDto.setHealth(character.getHealth() != null ? character.getHealth() : DEFAULT_HEALTH);
             characterDto.setHealthStatus(character.getHealthStatus() != null ? character.getHealthStatus().name() : HealthStatus.SAZIO.name());

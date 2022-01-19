@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface CharacterRepository extends JpaRepository<CharacterDto, Integer> {
 
-    @Query(value = "call fervmdata.getUnemployedCharacters();", nativeQuery = true)
+    @Query(value = "call getUnemployedCharacters();", nativeQuery = true)
     ArrayList<CharacterDto> getUnemolyedCharacters();
 
 }
