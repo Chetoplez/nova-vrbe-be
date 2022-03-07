@@ -1,0 +1,31 @@
+package com.novavrbe.vrbe.dto;
+
+
+import lombok.Data;
+
+import javax.persistence.*;
+
+@Data
+@Entity
+@Table(name = "FORUMS")
+public class ForumDTO {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Integer forumId;
+
+    @Column
+    private String name;
+
+    @Column
+    private boolean adminOnly;
+
+    @Column
+    private boolean adminViewOnly;
+
+    @Column
+    private Integer ownedBy;
+
+    @Column
+    private String forumType;
+}
