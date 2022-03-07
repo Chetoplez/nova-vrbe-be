@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/chat/**").permitAll()
                 .antMatchers("/guild/**").permitAll()
                 .antMatchers("/presenti/**").permitAll()
+                .antMatchers("/forum/**").permitAll()
                 .antMatchers("/vrbe/**").permitAll()
 
                 // Our private endpoints
