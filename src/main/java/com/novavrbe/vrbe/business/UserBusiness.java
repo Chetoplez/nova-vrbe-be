@@ -56,6 +56,7 @@ public class UserBusiness {
                 loginResponse.setSuccess(LoginUtils.canLogin(loginRequest.getPsw(), user));
                 //aggiunta di Claudio Malvagio
                 loginResponse.setUserId(user.getId());
+                loginResponse.setRole(user.getRole());
             }
         }
 

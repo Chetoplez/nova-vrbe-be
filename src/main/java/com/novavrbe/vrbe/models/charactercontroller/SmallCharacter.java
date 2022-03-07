@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class SmallCharacter {
     private Integer characterId;
-    private String characterName;
-    private String characterImg;
+    private String  characterName;
+    private String  characterImg;
 }
