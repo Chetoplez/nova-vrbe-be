@@ -4,11 +4,13 @@ import lombok.Data;
 
 @Data
 public class Forum {
-    private String name;
+    private String  name;
 
     private boolean adminOnly;
 
     private boolean adminViewOnly;
+
+    private String forumType;
 
     private Integer ownedBy;
 }

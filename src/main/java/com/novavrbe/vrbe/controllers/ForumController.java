@@ -42,22 +42,22 @@ public class ForumController {
         return forumBusiness.deleteForum(request);
     }
 
-    @PutMapping("/createsubforum")
+    @PutMapping("/subforum/create")
     public ResponseEntity<CreateSubForumResponse> createNewSubforum(@RequestBody CreateSubForumRequest request){
         return subForumBusiness.createSubForum(request);
     }
 
-    @PatchMapping("/editsubforum")
+    @PatchMapping("/subforum/edit")
     public ResponseEntity<CreateSubForumResponse> editSubforum(@RequestBody EditSubForumRequest request){
         return subForumBusiness.editSubForum(request);
     }
 
-    @GetMapping("/getsubforum")
+    @GetMapping("/subforum/getall")
     public ResponseEntity<GetSubForumResponse> getSubforum(@RequestBody GetSubforumRequest request){
         return subForumBusiness.getSubforum(request);
     }
 
-    @DeleteMapping("/deletesubforum")
+    @DeleteMapping("/subforum/delete")
     public ResponseEntity<DeleteSubforumResponse> deleteSubforum(@RequestBody DeleteSubforumRequest request){
         return subForumBusiness.deleteSubforum(request);
     }

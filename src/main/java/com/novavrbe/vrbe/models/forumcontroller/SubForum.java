@@ -10,5 +10,7 @@ public class SubForum {
 
     private Integer forumId;
 
+    private String subforumType;
+
     private Integer rankVisibility;
 }

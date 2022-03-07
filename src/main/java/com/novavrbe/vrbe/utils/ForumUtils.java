@@ -27,6 +27,7 @@ public class ForumUtils {
         newForumDto.setAdminOnly(forum.isAdminOnly());
         newForumDto.setAdminViewOnly(forum.isAdminViewOnly());
         newForumDto.setOwnedBy(forum.getOwnedBy());
+        newForumDto.setForumType(forum.getForumType());
         return newForumDto;
     }
 
@@ -36,6 +37,7 @@ public class ForumUtils {
         dto.setName(subForum.getName());
         dto.setForumId(subForum.getForumId());
         dto.setRankVisibility(subForum.getRankVisibility());
+        dto.setSubforumType(subForum.getSubforumType());
         return dto;
     }
 
