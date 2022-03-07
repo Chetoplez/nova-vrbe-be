@@ -32,4 +32,6 @@ public class GenericUserDto {
     private String composedsecret;
     @Column
     private String lastlogin;
+    @Column
+    private String role;
 }

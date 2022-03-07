@@ -8,5 +8,5 @@ import java.math.BigDecimal;
 public class LoginResponse {
     private boolean success;
     private BigDecimal userId;
-
+    private String role;
 }
