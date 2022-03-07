@@ -1,12 +1,12 @@
 
-INSERT INTO GenericUser(UserId,name,lastname,birthday,email,gender,nickname,salt,composedSecret,lastLogin) VALUES (
- 1, 'Nome Utente', 'Cognome Utente', '22/12/1989', 'email@email.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', 'c5a9ebe34ae2a07f3ce3bed3f01c784205327421ff7353f10206964b6263d218', '21/02/2021'),
-( 2, 'Ciccio ', 'Putin', '22/12/1989', 'email@bau.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', 'c5a9ebe34ae2a07f3ce3bed3f01c784205327421ff7353f10206964b6263d218', '21/02/2021'),
-( 3, 'Ajeje ', 'Brazorf', '22/12/1989', 'email@miao.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', 'c5a9ebe34ae2a07f3ce3bed3f01c784205327421ff7353f10206964b6263d218', '21/02/2021');
+INSERT INTO GenericUser(UserId,name,lastname,birthday,email,gender,nickname,salt,composedSecret,lastLogin,role) VALUES (
+ 1, 'Nome Utente', 'Cognome Utente', '22/12/1989', 'email@email.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', 'c5a9ebe34ae2a07f3ce3bed3f01c784205327421ff7353f10206964b6263d218', '21/02/2021','ADMIN'),
+( 2, 'Ciccio ', 'Putin', '22/12/1989', 'email@bau.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', 'c5a9ebe34ae2a07f3ce3bed3f01c784205327421ff7353f10206964b6263d218', '21/02/2021','USER'),
+( 3, 'Ajeje ', 'Brazorf', '22/12/1989', 'email@miao.it', 'M', 'password:puppa', 'ciaoiosonoilsaledellavita', 'c5a9ebe34ae2a07f3ce3bed3f01c784205327421ff7353f10206964b6263d218', '21/02/2021','NARRATOR');
 
 
 INSERT INTO Characters(CHARACTER_ID,CHARACTER_NAME,CHARACTER_ICON,gender,status,clevel,experience,total_experience,health,health_status,role) VALUES (
- 1, 'Marzio Paparzio', 'https://www.icon.com', 'MASCHIO', 'PLEBEO', 1, 100, 100, 100, 'SAZIO', 'USER'),
+ 1, 'Marzio Paparzio', 'https://www.icon.com', 'MASCHIO', 'PLEBEO', 1, 100, 100, 100, 'SAZIO', 'ADMIN'),
  (2,'Sergio Claudio','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER'),
  (3,'Gaio Cesare','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER');
 
@@ -99,6 +99,10 @@ INSERT INTO InventoryObjectEffect(effect_ID,INVENTORYOBJECTID,HEALTHSTATUS,HEALI
 VALUES(1,1,'NONE',3,'COSTITUZIONE',0,99999,0,4 );
 
 
-INSERT INTO CharacterInventoryObject(idInventoryObject,characterId,quantity,inUse,duration,acquiringDate,acquiredBy) VALUES (1,1,1,0,88,'2021-03-18',1);
+INSERT INTO CharacterInventoryObject(idInventoryObject,characterId,quantity,inUse,duration,acquiringDate,acquiredBy)
+VALUES (1,1,1,0,88,'2021-03-18',1);
+
+INSERT INTO FORUMS(FORUMID,name,adminOnly,adminViewOnly,ownedby)
+VALUES (1,'Regolamento',0,0,0), (2,'Gestione Interna',1,0,0), (3,'Legio Gemina',0,0,1);
 
 COMMIT;
