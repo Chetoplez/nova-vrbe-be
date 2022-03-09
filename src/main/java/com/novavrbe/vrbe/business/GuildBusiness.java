@@ -2,20 +2,19 @@ package com.novavrbe.vrbe.business;
 
 
 import com.novavrbe.vrbe.dto.*;
+import com.novavrbe.vrbe.models.enumerations.Status;
 import com.novavrbe.vrbe.models.guildcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
 import com.novavrbe.vrbe.utils.GuildUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GuildBusiness {
@@ -27,6 +26,9 @@ public class GuildBusiness {
 
     @Autowired
     private CharacterRepositoryService characterRepositoryService;
+
+    @Autowired
+    private Environment env;
 
 
     /**
@@ -137,18 +139,34 @@ public class GuildBusiness {
     }
 
     /**
-     * Inserisce un personaggio in una gilda, solo se è DISOCCUPATO
+     * Inserisce un personaggio in una gilda, solo se è DISOCCUPATO. Se il pg è uno SCHIAVO, può entrare solo nei medici o nel foro.
      * @param addMemberRequest oggetto contentente i parametri per pruomuovere un character. il suo iD e l'ìd della gilda
      * @return TRUE se viene inserito, false in tutti gli altri casi
      */
     public ResponseEntity<AddMemberResponse> addMember(AddMemberRequest addMemberRequest){
         ResponseEntity<AddMemberResponse> response;
+        AddMemberResponse addMemberResponse =  new AddMemberResponse();
         String characterId,roleId;
+        boolean isSlave = false;
         characterId = addMemberRequest.getCharacter_id();
         roleId = addMemberRequest.getRole_id();
         if(!StringUtils.hasText(roleId) || !StringUtils.hasText(characterId) ){
-            response = new ResponseEntity<>(new AddMemberResponse(), HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<>(addMemberResponse, HttpStatus.BAD_REQUEST);
             return response;
+        }
+        //verifico che non si stia provando ad arruolare uno schiavo in una delle corporazioni a loro vietate
+        isSlave = isSlaveCharacter(Integer.parseInt(characterId));
+        if(isSlave){
+          GuildRoleDTO dto =  guildRepositoryService.getRoleById(Integer.parseInt(roleId));
+          String idguilds = env.getProperty("guild.forbidden.slave");
+          String[] test = idguilds.split("\\s*,\\s*");
+          boolean match = Arrays.asList(test).contains(dto.getGuildId().toString());
+          if(match){
+              addMemberResponse.setMessage("Non puoi arruolare uno schiavo in questa corporazione");
+              addMemberResponse.setAdded(false);
+              response = new ResponseEntity<>(addMemberResponse, HttpStatus.OK);
+              return response;
+          }
         }
         //Controllo se ci sono tutti i permessi di fare questa operazione
         if(hasManagerRight(Integer.parseInt(addMemberRequest.getExecutorId())) ||  checkAdminRight(Integer.parseInt(addMemberRequest.getExecutorId()) ) ){
@@ -194,7 +212,7 @@ public class GuildBusiness {
     }
 
     /**
-     * Promuove un pg nella scala gerarchica della sua Gilda.
+     * Promuove un pg nella scala gerarchica della sua Gilda. Se il pg ha lo status di Schiavo, può ragiungere al massimo il livello 30
      * @param promoteMember richiesta contenente l'id del character e il l'id della gilda.
      * @return ritorna true se è stato promosso con successo, false altrimenti
      */
@@ -415,6 +433,16 @@ public class GuildBusiness {
         return privilegi.contains("ADMIN");
 
 
+    }
+
+    /**
+     * Verifica che un pg sia o meno nella condizione di schiavo
+     * @param chId l'id del pg in questione
+     * @return true se è schiavo , false altrimenti
+     */
+    private boolean isSlaveCharacter(int chId){
+        CharacterDto dto = characterRepositoryService.retrieveCharacterFromId(chId);
+        return dto.getStatus().equals(Status.SCHIAVO.name());
     }
 
 

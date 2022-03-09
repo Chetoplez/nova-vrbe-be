@@ -1,5 +1,5 @@
 package com.novavrbe.vrbe.models.enumerations;
 
 public enum Status {
-    PLEBEO, DECURIONE, PATRIZIO;
+    SCHIAVO, LIBERTO, PLEBEO, DECURIONE, PATRIZIO;
 }
