@@ -144,7 +144,36 @@ public class GuildRepositoryService {
         guildMemeberRepository.delete(toDelete);
     }
 
-    public boolean promoteMember(Integer characterId) {
+    /**
+     * Mi dice quale sarà il prossimo guildlevel di un charachter in caso di promozione
+     * @param chId characterId
+     * @return il prossimo livello di gilda , guildLevel Integer
+     */
+    public Integer getPossibleNextLevel(Integer chId){
+        Integer nextLevel = 0;
+        Optional<GuildMemberDTO> member = guildMemeberRepository.findById(chId);
+        Integer role_id;
+        role_id = member.map(GuildMemberDTO::getROLE_ID).orElse(null);
+        Optional<GuildRoleDTO> dto = (role_id != null) ? guildRoleRepository.findById(role_id) : Optional.empty();
+        if (dto.isPresent()) {
+            List<GuildRoleDTO> listofpossibile = guildRoleRepository.findByGuildIdAndGuildLevelGreaterThan(dto.get().getGuildId(), dto.get().getGuildLevel());
+            if (listofpossibile.size() > 0) {
+                Integer roleLevel = 2000;
+                Integer newRoleid = 0;
+                for (GuildRoleDTO temp : listofpossibile) {
+                    if (temp.getGuildLevel() < roleLevel) {
+                        roleLevel =
+                        nextLevel = temp.getGuildLevel();
+
+                    }
+
+                }
+            }
+        }
+        return nextLevel;
+    }
+
+    public boolean promoteMember(Integer characterId ) {
         boolean promoted = false;
         //intanto mi becco il ruolo ricoperto dal pg
         Optional<GuildMemberDTO> member = guildMemeberRepository.findById(characterId);

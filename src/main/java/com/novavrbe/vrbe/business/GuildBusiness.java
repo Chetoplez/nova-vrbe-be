@@ -218,9 +218,26 @@ public class GuildBusiness {
      */
     public ResponseEntity<PromoteMemberResponse> promoteGuildMember(PromoteMemberRequest promoteMember){
         ResponseEntity<PromoteMemberResponse> response;
+        PromoteMemberResponse promoteResponse = new PromoteMemberResponse();
+        boolean isSlave = false;
         if(!StringUtils.hasText(promoteMember.getGuild_id()) || !StringUtils.hasText(promoteMember.getCharacter_id())){
             response = new ResponseEntity<>(new PromoteMemberResponse(), HttpStatus.BAD_REQUEST);
             return response;
+        }
+
+        isSlave = isSlaveCharacter(Integer.parseInt(promoteMember.getCharacter_id()));
+        //se è uno schiavo devo verificare che non abbia raggiunto già il massimo della sua possibilità
+        if(isSlave){
+            Integer nextLevel = guildRepositoryService.getPossibleNextLevel(Integer.parseInt(promoteMember.getCharacter_id()));
+            V_GuildMembers member = guildRepositoryService.getGuildMember(Integer.parseInt(promoteMember.getCharacter_id()));
+
+            if(nextLevel >= Integer.parseInt(env.getProperty("slave.guildLevel.max"))){
+                promoteResponse.setPromoted(false);
+                promoteResponse.setMessage("Uno schiavo non può andare oltre il grado di "+member.getRoleName());
+                response = new ResponseEntity<>(promoteResponse, HttpStatus.OK);
+                return response;
+
+            }
         }
 
         if(hasManagerRight(Integer.parseInt(promoteMember.getExecutorId())) ||  checkAdminRight(Integer.parseInt(promoteMember.getExecutorId()) ) ){
