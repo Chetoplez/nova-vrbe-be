@@ -9,4 +9,5 @@ public class LoginResponse {
     private boolean success;
     private BigDecimal userId;
     private String role;
+    private  String jwt;
 }

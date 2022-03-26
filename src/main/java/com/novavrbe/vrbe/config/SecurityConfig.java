@@ -1,13 +1,18 @@
 package com.novavrbe.vrbe.config;
 
+import com.novavrbe.vrbe.filters.JwtRequestFilter;
 import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -20,13 +25,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserRepositoryService userRepositoryService;
 
+    @Autowired
+    private JwtRequestFilter jwtTokenFilter;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService( characterId -> {
-                    return userRepositoryService
-                                .retrieveUser(characterId);
-                }
-        );
+        auth.userDetailsService(userRepositoryService);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -56,23 +71,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public endpoints
-                .antMatchers("/character/**").permitAll()
+                //.antMatchers("/character/**").permitAll()
                 .antMatchers("/user/**").permitAll()
-                .antMatchers("/chat/**").permitAll()
-                .antMatchers("/guild/**").permitAll()
-                .antMatchers("/presenti/**").permitAll()
-                .antMatchers("/forum/**").permitAll()
-                .antMatchers("/vrbe/**").permitAll()
+                //.antMatchers("/chat/**").permitAll()
+                //.antMatchers("/guild/**").permitAll()
+                //.antMatchers("/presenti/**").permitAll()
+                //.antMatchers("/forum/**").permitAll()
+                //.antMatchers("/vrbe/**").permitAll()
 
                 // Our private endpoints
                 .anyRequest().authenticated();
 
-        // Add JWT token filter. Todo when JWT RESOURCE SERVER IS UP
-        /*
+
+        // Add JWT token filter.
+
         http.addFilterBefore(
                 jwtTokenFilter,
                 UsernamePasswordAuthenticationFilter.class
-        );*/
+        );
     }
 
     @Bean
@@ -87,4 +103,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+
+
+
+
 }

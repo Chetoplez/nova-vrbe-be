@@ -14,13 +14,14 @@ public class UserController {
     @Autowired
     private UserBusiness userBusiness;
 
+
     @PutMapping("/create")
     public ResponseEntity<GenericUserDto> createUser(@RequestBody AddUserRequest addUserRequest){
         return userBusiness.createUser(addUserRequest);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest login){
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest login) throws Exception {
         return userBusiness.login(login);
     }
 
@@ -32,6 +33,11 @@ public class UserController {
     @GetMapping("getuser/{userId}")
     public ResponseEntity<GetUserResponse> getUser(@PathVariable String userId){
         return userBusiness.getUser(userId);
+    }
+
+    @PostMapping("/checkmail")
+    public ResponseEntity<CheckEmailResponse> checkEmail(@RequestBody CheckEmailRequest request){
+        return userBusiness.checkEmailAddress(request);
     }
 
 }

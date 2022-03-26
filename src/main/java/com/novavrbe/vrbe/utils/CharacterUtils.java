@@ -23,7 +23,7 @@ public class CharacterUtils {
 
     static Logger logger = LoggerFactory.getLogger(CharacterUtils.class);
     static final Integer MIN_LEVEL = 1;
-    static final Integer DEFAULT_HEALTH = 500;
+    static final Integer DEFAULT_HEALTH = 100;
     static final Integer DEFAULT_STAT = 5;
 
     public static void fillCharacterFieldsFromDto(Character character, CharacterDto dto){

@@ -4,6 +4,8 @@ import com.novavrbe.vrbe.dto.GenericUserDto;
 import com.novavrbe.vrbe.models.usercontroller.GameUserDetails;
 import com.novavrbe.vrbe.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -11,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserRepositoryService {
+public class UserRepositoryService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -27,7 +29,7 @@ public class UserRepositoryService {
     public GenericUserDto findUsersById(BigDecimal id){
         GenericUserDto user = null;
         Optional<GenericUserDto> dto = userRepository.findById(id);
-        user = dto != null && dto.get() != null ? dto.get() : null;
+        user = dto.isPresent() ? dto.get() : null;
 
         return user;
     }
@@ -41,6 +43,13 @@ public class UserRepositoryService {
         }
 
         return user;
+    }
+
+
+    @Override
+    public GenericUserDto loadUserByUsername(String userName) throws UsernameNotFoundException {
+        List<GenericUserDto> dtoList = findUsersByEmail(userName);
+        return dtoList.get(0);
     }
 
 

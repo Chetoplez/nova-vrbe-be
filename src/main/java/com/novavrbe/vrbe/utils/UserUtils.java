@@ -1,23 +1,21 @@
 package com.novavrbe.vrbe.utils;
 
 import com.novavrbe.vrbe.dto.GenericUserDto;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.SecureRandom;
 import java.util.Base64;
 
 public class UserUtils {
 
-    public static GenericUserDto createGenericUser(String name, String lastname, String birthday, String gender, String email, String password, String nickname){
+    public static GenericUserDto createGenericUser(PasswordEncoder passwordEncoder, String email, String password, String nickname){
         GenericUserDto user = new GenericUserDto();
 
-        user.setName(name);
-        user.setLastname(lastname);
+
         user.setEmail(email);
-        user.setGender(gender);
-        user.setBirthday(birthday);
         user.setNickname(nickname);
-        user.setSalt(createSalt());
-        user.setComposedsecret(LoginUtils.composePassword(user, password));
+        user.setRole("USER");
+        user.setComposedsecret(passwordEncoder.encode(password));
 
         return user;
     }
