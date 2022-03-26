@@ -32,8 +32,28 @@ public class PostRepositoryService {
        return dto.isPresent() ? dto.get() : null;
     }
 
+    /**
+     * Modifica il body e il titolo di un post
+     * @param oldPost
+     * @return
+     */
     public Integer editPost(PostDTO oldPost) {
         PostDTO dto = postRepository.save(oldPost);
         return dto.getPostId();
+    }
+
+    /**
+     * Cancella un post
+     * @param postId
+     * @return
+     */
+    public boolean deletePost(Integer postId) {
+        boolean deleted = false;
+        Optional<PostDTO> dto =  postRepository.findById(postId);
+        if(dto.isPresent()){
+            postRepository.delete(dto.get());
+            deleted = true ;
+        }
+        return deleted;
     }
 }

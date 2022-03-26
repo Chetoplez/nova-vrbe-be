@@ -114,9 +114,11 @@ public class SubForumBusiness {
                 return response;
             }
         }
+        ForumDTO forum = forumRepositoryService.getForumById(fId);
         dtos = subforumRepositoryService.getSubforum(fId);
         subForumList = ForumUtils.prepareSubforumList(dtos);
         subForumResponse.setSubForums(subForumList);
+        subForumResponse.setForumName(forum.getName());
         response = new ResponseEntity<>(subForumResponse,HttpStatus.OK);
         return response;
     }
@@ -169,6 +171,20 @@ public class SubForumBusiness {
         subforumResponse.setDeleted(true);
         response = new ResponseEntity<>(subforumResponse, HttpStatus.OK);
 
+        return response;
+    }
+
+    public ResponseEntity<GetSubforumDetailResponse> getSubforumDetail(String subforumId) {
+        ResponseEntity<GetSubforumDetailResponse> response;
+        GetSubforumDetailResponse detailResponse = new GetSubforumDetailResponse();
+        if(!StringUtils.hasText(subforumId)){
+            response = new ResponseEntity<>(detailResponse,HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        SubForumDTO dto = subforumRepositoryService.findSubforum(Integer.parseInt(subforumId));
+        SubForum sub  = ForumUtils.prepareSubforumFromDto(dto);
+        detailResponse.setSubForum(sub);
+        response = new ResponseEntity<>(detailResponse,HttpStatus.OK);
         return response;
     }
 }

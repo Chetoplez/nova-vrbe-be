@@ -22,9 +22,9 @@ public class ForumController {
     @Autowired
     CommentBusiness commentBusiness;
 
-    @GetMapping("/getallforums")
-    public ResponseEntity<GetForumResponse> getAllForums(@RequestBody GetForumRequest request){
-        return forumBusiness.getAllForums(request);
+    @GetMapping("/getallforums/chId={chId}")
+    public ResponseEntity<GetForumResponse> getAllForums(@PathVariable Integer chId){
+        return forumBusiness.getAllForums(chId);
     }
 
     @PutMapping("/create")
@@ -52,9 +52,14 @@ public class ForumController {
         return subForumBusiness.editSubForum(request);
     }
 
-    @GetMapping("/subforum/getall")
+    @PostMapping("/subforum/getall")
     public ResponseEntity<GetSubForumResponse> getSubforum(@RequestBody GetSubforumRequest request){
         return subForumBusiness.getSubforum(request);
+    }
+
+    @GetMapping("/subforum/getDetail/{subforumId}")
+    public ResponseEntity<GetSubforumDetailResponse> getSubforumDetail(@PathVariable String subforumId){
+        return subForumBusiness.getSubforumDetail(subforumId);
     }
 
     @DeleteMapping("/subforum/delete")
@@ -83,6 +88,11 @@ public class ForumController {
         return postBusiness.editPost(request);
     }
 
+    @DeleteMapping("/post/delete")
+    public ResponseEntity<DeletePostResponse> deletePost (@RequestBody DeletePostRequest request){
+        return postBusiness.deletePost(request);
+    }
+
 
     @PutMapping("/comment/create")
     public ResponseEntity<CreateCommentResponse> commentPost(@RequestBody CreateCommentRequest request){
@@ -94,7 +104,9 @@ public class ForumController {
         return commentBusiness.getPostComments(postId);
     }
 
-
-
+    @GetMapping("/comment/getrelated/{commentId}")
+    public ResponseEntity<GetPostCommentResponse> getRelatedComments(@PathVariable String commentId){
+        return commentBusiness.getRelatedComments(commentId);
+    }
 
 }

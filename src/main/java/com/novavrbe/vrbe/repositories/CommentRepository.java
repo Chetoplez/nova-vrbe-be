@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CommentRepository extends CrudRepository<CommentDTO, Integer> {
     Iterable<CommentDTO> findByPostId(int parseInt);
+
+    Iterable<CommentDTO> findByRelatedComment(int parseInt);
 }

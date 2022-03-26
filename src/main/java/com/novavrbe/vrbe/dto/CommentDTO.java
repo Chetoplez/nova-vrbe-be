@@ -22,7 +22,7 @@ public class CommentDTO {
 
     @Column
     @Nullable
-    private Integer realatedComment; //referenzia un commento per rispondere
+    private Integer relatedComment; //referenzia un commento per rispondere
 
     @Column
     private Integer postId;

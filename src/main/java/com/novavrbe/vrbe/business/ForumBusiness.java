@@ -25,16 +25,16 @@ public class ForumBusiness {
 
     /**
      * Ritorna tutti i forum che l'utente è abilitato a vedere.
-     * @param request Contiene l'id del richiedente
+     * @param chId Contiene l'id del richiedente
      * @return tutti i forum che può vedere il richiedente
      */
-    public ResponseEntity<GetForumResponse> getAllForums(GetForumRequest request) {
+    public ResponseEntity<GetForumResponse> getAllForums(Integer chId) {
         ResponseEntity<GetForumResponse> response;
-        if(request.getChId() == null){
+        if(chId == null){
             response = new ResponseEntity<>(new GetForumResponse(), HttpStatus.BAD_REQUEST);
             return  response;
         }
-        Iterable<ForumDTO> DTOs = forumRepositoryService.getAllForums(isAdmin(request.getChId()));
+        Iterable<ForumDTO> DTOs = forumRepositoryService.getAllForums(isAdmin(chId));
         ArrayList<ForumDTO> allForum = ForumUtils.prepareForumList(DTOs);
         GetForumResponse res = new GetForumResponse();
         res.setForumsList(allForum);

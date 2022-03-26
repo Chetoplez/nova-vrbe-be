@@ -76,10 +76,29 @@ public class CommentBusiness {
         Iterable<CommentDTO> commentDTOs = commentService.getPostComments(Integer.parseInt(postId));
         for (CommentDTO commento: commentDTOs ) {
             CharacterDto charDto = characterRepositoryService.retrieveCharacterFromId(commento.getAuthor());
-            commentList.add(ForumUtils.prepareCommentList(commento,charDto));
+            if(commento.getRelatedComment() == null)
+                commentList.add(ForumUtils.prepareCommentList(commento,charDto));
         }
         postCommentResponse.setCommentList(commentList);
         response = new ResponseEntity<>(postCommentResponse, HttpStatus.OK);
+        return response;
+    }
+
+    public ResponseEntity<GetPostCommentResponse> getRelatedComments(String commentId) {
+        ResponseEntity<GetPostCommentResponse> response;
+        GetPostCommentResponse commentResponse = new GetPostCommentResponse();
+        ArrayList<Comment> commentList = new ArrayList<>();
+        if(!StringUtils.hasText(commentId)){
+            response = new ResponseEntity<>(commentResponse, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Iterable<CommentDTO> dtos = commentService.getRelatedComments(Integer.parseInt(commentId));
+        for (CommentDTO commento: dtos ) {
+            CharacterDto charDto = characterRepositoryService.retrieveCharacterFromId(commento.getAuthor());
+            commentList.add(ForumUtils.prepareCommentList(commento,charDto));
+        }
+        commentResponse.setCommentList(commentList);
+        response = new ResponseEntity<>(commentResponse,HttpStatus.OK);
         return response;
     }
 }

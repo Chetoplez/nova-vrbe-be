@@ -7,7 +7,7 @@ INSERT INTO GenericUser(UserId,name,lastname,birthday,email,gender,nickname,salt
 
 INSERT INTO Characters(CHARACTER_ID,CHARACTER_NAME,CHARACTER_ICON,gender,status,clevel,experience,total_experience,health,health_status,role) VALUES (
  1, 'Marzio Paparzio', 'https://www.icon.com', 'MASCHIO', 'PLEBEO', 1, 100, 100, 100, 'SAZIO', 'ADMIN'),
- (2,'Sergio Claudio','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER'),
+ (2,'Sergio Claudio','https://www.icon.com','MASCHIO','SCHIAVO',1,100,100,100,'SAZIO','USER'),
  (3,'Gaio Cesare','https://www.icon.com','MASCHIO','PLEBEO',1,100,100,100,'SAZIO','USER');
 
 

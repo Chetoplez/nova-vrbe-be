@@ -77,7 +77,7 @@ public class ForumUtils {
         dto.setBody(comment.getBody());
         dto.setPostId(comment.getPostId());
         dto.setCreatedAt(comment.getCreatedAt());
-        dto.setRealatedComment(comment.getRelatedComment() == null ? null : comment.getRelatedComment());
+        dto.setRelatedComment(comment.getRelatedComment() == null ? null : comment.getRelatedComment());
         return dto;
     }
 
@@ -112,9 +112,17 @@ public class ForumUtils {
         comment.setAuthor(smallCharacter);
         comment.setBody(commento.getBody());
         comment.setPostId(commento.getPostId());
-        comment.setRelatedComment(commento.getRealatedComment() == null ? -1 : commento.getRealatedComment());
+        comment.setRelatedComment(commento.getRelatedComment() == null ? -1 : commento.getRelatedComment());
         comment.setCreatedAt(commento.getCreatedAt());
 
         return comment;
+    }
+
+    public static SubForum prepareSubforumFromDto(SubForumDTO dto) {
+        SubForum forum = new SubForum();
+        forum.setName(dto.getName());
+        forum.setAdminOnly(dto.isAdminOnly());
+        forum.setSubforumType(dto.getSubforumType());
+        return forum;
     }
 }

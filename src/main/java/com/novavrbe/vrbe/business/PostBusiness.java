@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Service
 public class PostBusiness {
@@ -143,9 +144,9 @@ public class PostBusiness {
     }
 
     /**
-     * Torna il dettaglio di un post
-     * @param postId
-     * @return
+     * Torna il dettaglio di un post per poterlo visualizzare scritto
+     * @param postId id del post da visualizzare
+     * @return oggetto POST con tutte le infot
      */
     public ResponseEntity<GetPostDetailResponse> getPostDetail(String postId) {
         ResponseEntity<GetPostDetailResponse> response;
@@ -160,5 +161,32 @@ public class PostBusiness {
         postResponse.setDetail(detail);
         response = new ResponseEntity<>(postResponse,HttpStatus.OK);
         return response;
+    }
+
+    /**
+     * Cancella un post dal databse, solo se ne sei il propietario o sei un admin
+     * @param request ci sono il chId e il postId per i controlli del caso
+     * @return true se il post è stato cancellato, false altrimenti
+     */
+    public ResponseEntity<DeletePostResponse> deletePost(DeletePostRequest request) {
+        ResponseEntity<DeletePostResponse> response;
+        DeletePostResponse deleteResponse = new DeletePostResponse();
+        if(request.getPostId() == null || request.getChId() == null){
+            response = new ResponseEntity<>(deleteResponse, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        //Puoi eliminare un post solo se sei il proprietario o un admin
+        PostDTO dto = postRepositoryService.getPost(request.getPostId());
+        if(dto != null && (Objects.equals(dto.getAuthor(), request.getChId()) || isAdmin(request.getChId()))){
+          deleteResponse.setDeleted(postRepositoryService.deletePost(request.getPostId()));
+          String message = deleteResponse.isDeleted() ? "Post Eliminato" : "Post non eliminato";
+          deleteResponse.setMessage(message);
+        }else{
+            deleteResponse.setDeleted(false);
+            deleteResponse.setMessage("Non sei l'autore del post. Vietato cancellare");
+        }
+        response = new ResponseEntity<>(deleteResponse,HttpStatus.OK);
+
+        return  response;
     }
 }

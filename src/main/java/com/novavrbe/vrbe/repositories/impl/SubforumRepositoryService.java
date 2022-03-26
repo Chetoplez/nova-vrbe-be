@@ -5,6 +5,8 @@ import com.novavrbe.vrbe.repositories.SubForumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SubforumRepositoryService {
 
@@ -27,5 +29,10 @@ public class SubforumRepositoryService {
 
     public void deleteSubforum(Integer subForumId) {
         subForumRepository.deleteById(subForumId);
+    }
+
+    public SubForumDTO findSubforum(int parseInt) {
+        Optional<SubForumDTO> dto = subForumRepository.findById(parseInt);
+        return dto.isPresent() ? dto.get() : null;
     }
 }

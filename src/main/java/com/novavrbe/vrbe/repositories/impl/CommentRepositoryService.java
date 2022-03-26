@@ -20,4 +20,9 @@ public class CommentRepositoryService {
         Iterable<CommentDTO> dtos = commentRepository.findByPostId(parseInt);
         return dtos;
     }
+
+    public Iterable<CommentDTO> getRelatedComments(int parseInt) {
+        Iterable<CommentDTO> dtos = commentRepository.findByRelatedComment(parseInt);
+        return dtos;
+    }
 }

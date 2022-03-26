@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class SubForum {
+
     private String name;
 
     private boolean adminOnly;
