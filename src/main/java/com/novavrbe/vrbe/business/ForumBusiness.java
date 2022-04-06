@@ -2,6 +2,7 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.ForumDTO;
+import com.novavrbe.vrbe.models.enumerations.Roles;
 import com.novavrbe.vrbe.models.forumcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.ForumRepositoryService;
@@ -81,7 +82,7 @@ public class ForumBusiness {
      */
     private Boolean isAdmin(Integer chId) {
        CharacterDto characterDto =  characterRepositoryService.retrieveCharacterFromId(chId);
-       return characterDto.getRole().equals("ADMIN");
+       return characterDto.getRole().equals(Roles.ROLE_ADMIN.name());
     }
 
     /**

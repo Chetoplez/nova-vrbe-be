@@ -76,7 +76,7 @@ public class CommentBusiness {
         Iterable<CommentDTO> commentDTOs = commentService.getPostComments(Integer.parseInt(postId));
         for (CommentDTO commento: commentDTOs ) {
             CharacterDto charDto = characterRepositoryService.retrieveCharacterFromId(commento.getAuthor());
-            if(commento.getRelatedComment() == null)
+            if(commento.getRelatedComment() == null && charDto != null )
                 commentList.add(ForumUtils.prepareCommentList(commento,charDto));
         }
         postCommentResponse.setCommentList(commentList);

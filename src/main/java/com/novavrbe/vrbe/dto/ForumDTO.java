@@ -18,10 +18,10 @@ public class ForumDTO {
     private String name;
 
     @Column
-    private boolean adminOnly;
+    private String description;
 
     @Column
-    private boolean adminViewOnly;
+    private boolean adminOnly;
 
     @Column
     private Integer ownedBy;

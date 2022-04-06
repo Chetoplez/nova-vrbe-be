@@ -19,6 +19,9 @@ public class SubForumDTO {
     @Column
     private boolean adminOnly;
 
+    @Column(columnDefinition = "Integer default '-1'")
+    private Integer ownedBy;
+
     @Column
     private Integer forumId;
 

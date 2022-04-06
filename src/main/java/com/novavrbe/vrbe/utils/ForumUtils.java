@@ -24,8 +24,9 @@ public class ForumUtils {
         ForumDTO newForumDto = new ForumDTO();
 
         newForumDto.setName(forum.getName());
+        newForumDto.setDescription(forum.getDescription());
         newForumDto.setAdminOnly(forum.isAdminOnly());
-        newForumDto.setAdminViewOnly(forum.isAdminViewOnly());
+
         newForumDto.setOwnedBy(forum.getOwnedBy());
         newForumDto.setForumType(forum.getForumType());
         return newForumDto;
@@ -36,15 +37,17 @@ public class ForumUtils {
         dto.setAdminOnly(subForum.isAdminOnly());
         dto.setName(subForum.getName());
         dto.setForumId(subForum.getForumId());
+        dto.setOwnedBy( subForum.getOwnedBy());
         dto.setRankVisibility(subForum.getRankVisibility());
         dto.setSubforumType(subForum.getSubforumType());
         return dto;
     }
 
-    public static ArrayList<SubForumDTO> prepareSubforumList(Iterable<SubForumDTO> dtos) {
+    public static ArrayList<SubForumDTO> prepareSubforumList(Iterable<SubForumDTO> dtos, Integer guildId, boolean admin) {
         ArrayList<SubForumDTO> lista = new ArrayList<>();
         for (SubForumDTO dto: dtos) {
-            lista.add(dto);
+            if( dto.getOwnedBy() == -1 || dto.getOwnedBy() == guildId || admin)
+                lista.add(dto);
         }
         return lista;
     }
@@ -114,7 +117,6 @@ public class ForumUtils {
         comment.setPostId(commento.getPostId());
         comment.setRelatedComment(commento.getRelatedComment() == null ? -1 : commento.getRelatedComment());
         comment.setCreatedAt(commento.getCreatedAt());
-
         return comment;
     }
 
@@ -122,6 +124,7 @@ public class ForumUtils {
         SubForum forum = new SubForum();
         forum.setName(dto.getName());
         forum.setAdminOnly(dto.isAdminOnly());
+        forum.setForumId(dto.getForumId());
         forum.setSubforumType(dto.getSubforumType());
         return forum;
     }

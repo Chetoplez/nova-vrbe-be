@@ -6,9 +6,9 @@ import lombok.Data;
 public class Forum {
     private String  name;
 
-    private boolean adminOnly;
+    private String description;
 
-    private boolean adminViewOnly;
+    private boolean adminOnly;
 
     private String forumType;
 

@@ -3,9 +3,11 @@ package com.novavrbe.vrbe.business;
 import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.ForumDTO;
 import com.novavrbe.vrbe.dto.SubForumDTO;
+import com.novavrbe.vrbe.dto.V_GuildMembers;
 import com.novavrbe.vrbe.models.forumcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.ForumRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.SubforumRepositoryService;
 import com.novavrbe.vrbe.utils.ForumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class SubForumBusiness {
     private ForumRepositoryService forumRepositoryService;
     @Autowired
     private CharacterRepositoryService characterRepositoryService;
+    @Autowired
+    private GuildRepositoryService guildService;
 
     /**
      * Crea una sotto sezione del forum. Se si tratta di un forum che è ADMIN ONLY, si dovrà essere admin per poter creare la sottosezione.
@@ -100,6 +104,9 @@ public class SubForumBusiness {
     public ResponseEntity<GetSubForumResponse> getSubforum(GetSubforumRequest request) {
         ResponseEntity<GetSubForumResponse> response;
         GetSubForumResponse subForumResponse = new GetSubForumResponse();
+        boolean admin = isAdmin(Integer.parseInt(request.getChId()));
+        V_GuildMembers guildMember = guildService.getGuildMember(Integer.parseInt(request.getChId()));
+        Integer guildId = guildMember == null ? -1 : guildMember.getGuildId(); //mi serve per filtrare i subforum
         if(!StringUtils.hasText(request.getForumId())){
             response = new ResponseEntity<>(subForumResponse, HttpStatus.BAD_REQUEST);
             return response;
@@ -109,14 +116,14 @@ public class SubForumBusiness {
         Iterable<SubForumDTO> dtos = null;
         Integer fId = Integer.parseInt(request.getForumId());
         if(isProtectedForum(fId)){
-            if(!isAdmin(Integer.parseInt(request.getChId()))){
+            if(!admin){
                 response = new ResponseEntity<>(subForumResponse, HttpStatus.UNAUTHORIZED);
                 return response;
             }
         }
         ForumDTO forum = forumRepositoryService.getForumById(fId);
-        dtos = subforumRepositoryService.getSubforum(fId);
-        subForumList = ForumUtils.prepareSubforumList(dtos);
+        dtos = subforumRepositoryService.getSubforum(fId, admin);
+        subForumList = ForumUtils.prepareSubforumList(dtos, guildId , admin);
         subForumResponse.setSubForums(subForumList);
         subForumResponse.setForumName(forum.getName());
         response = new ResponseEntity<>(subForumResponse,HttpStatus.OK);

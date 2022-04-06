@@ -18,8 +18,13 @@ public class SubforumRepositoryService {
         return dto.getSubforumId();
     }
 
-    public Iterable<SubForumDTO> getSubforum(Integer forumId) {
-        return subForumRepository.findByForumId(forumId);
+    public Iterable<SubForumDTO> getSubforum(Integer forumId, boolean admin) {
+        if(admin){
+            return subForumRepository.findByForumId(forumId);
+        }else {
+            return subForumRepository.findByForumIdAndAdminOnlyFalse(forumId);
+        }
+
     }
 
     public Integer editSubForum(SubForumDTO newSub) {
