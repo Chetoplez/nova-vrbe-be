@@ -143,7 +143,7 @@ public class CharacterUtils {
             characterDto.setStatus(character.getStatus() != null ? character.getStatus().name() : Status.PLEBEO.name());
             characterDto.setHealth(character.getHealth() != null ? character.getHealth() : DEFAULT_HEALTH);
             characterDto.setHealthStatus(character.getHealthStatus() != null ? character.getHealthStatus().name() : HealthStatus.SAZIO.name());
-            characterDto.setRole(!CollectionUtils.isEmpty(character.getRoles()) ? character.getRoles().get(0).name() : Roles.USER.name());
+            characterDto.setRole(!CollectionUtils.isEmpty(character.getRoles()) ? character.getRoles().get(0).name() : Roles.ROLE_USER.name());
 
             buildCharacterLevelForDto(character, characterDto);
         }

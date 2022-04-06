@@ -84,9 +84,13 @@ public class CharacterBusiness {
 
 
             getCharacterResponse.setCharacter(character);
+            getCharacterResponse.setNewpg(false);
             response = new ResponseEntity<GetCharacterResponse>(getCharacterResponse, HttpStatus.OK);
         }else{
-            response = new ResponseEntity<GetCharacterResponse>(new GetCharacterResponse(), HttpStatus.BAD_REQUEST);
+            //Un utente è registrato ma non ha completato il processo di creazione del pg, quindi ha un UserId ma non un Character
+            GetCharacterResponse characterResp = new GetCharacterResponse();
+            characterResp.setNewpg(true);
+            response = new ResponseEntity<GetCharacterResponse>(characterResp, HttpStatus.OK);
         }
 
         return response;
