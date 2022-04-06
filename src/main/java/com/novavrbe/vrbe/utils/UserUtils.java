@@ -22,7 +22,7 @@ public class UserUtils {
     }
 
     public static void cleanUserSensitiveData(GenericUserDto user){
-        user.setSalt("");
+
         user.setComposedsecret("");
     }
 

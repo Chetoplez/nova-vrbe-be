@@ -9,7 +9,7 @@ public class LoginUtils {
 
     public static String composePassword(GenericUserDto user, String password){
         String psw = "";
-        psw = password.concat(user != null ? user.getSalt() : "");
+        psw = password.concat(user != null ? "" : "");
 
         psw = Hashing.sha256().hashString(psw, StandardCharsets.UTF_8).toString();
 
