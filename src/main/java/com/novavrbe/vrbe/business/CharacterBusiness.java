@@ -112,7 +112,7 @@ public class CharacterBusiness {
             return response;
         }
 
-        Inventory inventory = new Inventory();
+        Inventory inventory = new Inventory(); //correzione: aggiunto costruttore che inizializza la ista items, altrimenti arriva null se il pg non ha oggetti
         CharacterUtils.mapInventoryDtoToInventory(inventory, inventoryDto);
         CharacterUtils.fillInventoryWithObjects(inventory, characterRepositoryService.retrieveCharacterObjects(charactedId));
         CharacterUtils.fillInventoryObjectsWithEffects(inventory, characterRepositoryService.retrieveInventoryObjectEffects(inventory));
