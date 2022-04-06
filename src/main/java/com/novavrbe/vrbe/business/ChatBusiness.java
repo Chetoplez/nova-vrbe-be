@@ -1,11 +1,15 @@
 package com.novavrbe.vrbe.business;
 
+import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.ChatMessageDto;
+import com.novavrbe.vrbe.dto.V_GuildMembers;
 import com.novavrbe.vrbe.models.charactermodels.CharacterStatistic;
 import com.novavrbe.vrbe.models.chatcontroller.*;
 import com.novavrbe.vrbe.models.enumerations.ChatAction;
 import com.novavrbe.vrbe.models.enumerations.Stat;
+import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.ChatRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
 import com.novavrbe.vrbe.utils.ChatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -25,6 +29,11 @@ public class ChatBusiness {
     private ChatRepositoryService chatRepositoryService;
 
     @Autowired
+    CharacterRepositoryService characterService;
+    @Autowired
+    GuildRepositoryService guildService;
+
+    @Autowired
     private Environment env;
 
     /**
@@ -42,7 +51,10 @@ public class ChatBusiness {
             return response;
         }
         //Devo trasformarare la request nell'oggetto da infilare nel database
-        ChatMessageDto messageDto = ChatUtils.fillMessageDto(newMessage,chatId);
+        Integer chId = Integer.parseInt(request.getChatMessage().getCharacterId());
+        CharacterDto sender = characterService.retrieveCharacterFromId(chId);
+        V_GuildMembers lavoro = guildService.getGuildMember(chId);
+        ChatMessageDto messageDto = ChatUtils.fillMessageDto(newMessage,chatId, sender , lavoro);
 
         if(newMessage.getAction().equalsIgnoreCase(ChatAction.PARLA.name()) && couldUpdateDailyExp(Integer.parseInt(newMessage.getCharacterId()))){
             //Se siamo qui aggiungiamo gli xp

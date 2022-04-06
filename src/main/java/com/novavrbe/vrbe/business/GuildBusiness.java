@@ -2,11 +2,13 @@ package com.novavrbe.vrbe.business;
 
 
 import com.novavrbe.vrbe.dto.*;
+import com.novavrbe.vrbe.models.enumerations.Roles;
 import com.novavrbe.vrbe.models.enumerations.Status;
 import com.novavrbe.vrbe.models.guildcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
 import com.novavrbe.vrbe.utils.GuildUtils;
+import com.novavrbe.vrbe.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class GuildBusiness {
@@ -26,6 +31,9 @@ public class GuildBusiness {
 
     @Autowired
     private CharacterRepositoryService characterRepositoryService;
+
+    @Autowired
+    JwtUtils jwtUtils;
 
     @Autowired
     private Environment env;
@@ -307,8 +315,12 @@ public class GuildBusiness {
     }
 
 
+    /**
+     * Verifica che tipo di autorizzazioni ha il tuo personaggio rispetto alla gilda. Se vi appartiene e se ne è il capo
+     * @param request
+     * @return
+     */
     public ResponseEntity<CheckGuildPermissionResponse> checkGuildPermission(CheckGuildPermissionRequest request) {
-
         ResponseEntity<CheckGuildPermissionResponse> response;
         if(!StringUtils.hasText(request.getCharacterId()) || !StringUtils.hasText(request.getGuildId())){
             response = new ResponseEntity<>(new CheckGuildPermissionResponse(),HttpStatus.BAD_REQUEST);
@@ -438,18 +450,14 @@ public class GuildBusiness {
     }
 
     /**
-     * Questo metodo deve verificare che chi sta richiedendo questa operazione, abbia i diritti di farlo come ADMIN o come
-     * manager della gilda.
+     * Questo metodo deve verificare che chi sta richiedendo questa operazione, abbia i diritti di farlo come ADMIN
      * @param idExecutor il characterID di chi sta facendo l'operazione
      * @return true se può compierla , false altrimenti
      */
     private boolean checkAdminRight(int idExecutor){
-
         CharacterDto user = characterRepositoryService.retrieveCharacterFromId(idExecutor);
         List<String> privilegi = Arrays.asList(user.getRole().split("\\s*,\\s*"));
-        return privilegi.contains("ADMIN");
-
-
+        return privilegi.contains(Roles.ROLE_ADMIN.name());
     }
 
     /**

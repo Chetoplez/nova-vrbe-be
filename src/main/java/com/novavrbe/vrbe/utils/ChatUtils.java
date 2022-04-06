@@ -1,7 +1,8 @@
 package com.novavrbe.vrbe.utils;
 
-import com.novavrbe.vrbe.dto.ChatDto;
+import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.ChatMessageDto;
+import com.novavrbe.vrbe.dto.V_GuildMembers;
 import com.novavrbe.vrbe.models.chatcontroller.ChatMessage;
 import com.sun.istack.NotNull;
 
@@ -10,18 +11,18 @@ import java.util.List;
 
 public class ChatUtils {
 
-    public static ChatMessageDto fillMessageDto(@NotNull ChatMessage message, String chatId){
+    public static ChatMessageDto fillMessageDto(@NotNull ChatMessage message, String chatId, CharacterDto sender, V_GuildMembers lavoro){
         ChatMessageDto dto = new ChatMessageDto();
 
         dto.setAction(message.getAction());
-        dto.setCarica(message.getCarica());
-        dto.setTooltip_carica(message.getTooltip_carica());
-        dto.setSender(message.getSender());
-        dto.setCharacterId(message.getCharacterId());
+        dto.setCarica(lavoro.getRoleImg());
+        dto.setTooltip_carica(lavoro.getRoleName());
+        dto.setSender(sender.getCharacterName());
+        dto.setCharacterId(sender.getCharacterId().toString());
         dto.setReceiver(message.getReceiver());
 
         dto.setChatId(Integer.parseInt(chatId));
-        dto.setImg(message.getImg());
+        dto.setImg(sender.getCharacterImg());
         dto.setTimestamp(message.getTimestamp());
         dto.setTag(message.getTag());
         dto.setTesto(message.getTesto());
