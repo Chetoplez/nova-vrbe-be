@@ -1,5 +1,5 @@
 package com.novavrbe.vrbe.models.enumerations;
 
 public enum Roles {
-    USER, NARRATOR, ADMIN;
+    ROLE_USER, ROLE_NARRATOR, ROLE_ADMIN;
 }

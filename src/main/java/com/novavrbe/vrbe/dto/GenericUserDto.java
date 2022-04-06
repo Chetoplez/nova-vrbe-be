@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Table(name = "GenericUser")
@@ -35,8 +36,12 @@ public class GenericUserDto  implements UserDetails {
     @Override
     public List<GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
-        list.add(new SimpleGrantedAuthority(this.role));
+        List<String> roles = Arrays.asList(this.role.split(","));
+        for (String role : roles ) {
+            list.add(new SimpleGrantedAuthority(role));
+        }
         return list;
+
     }
 
     @Override

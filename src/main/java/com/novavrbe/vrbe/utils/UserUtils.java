@@ -1,6 +1,7 @@
 package com.novavrbe.vrbe.utils;
 
 import com.novavrbe.vrbe.dto.GenericUserDto;
+import com.novavrbe.vrbe.models.enumerations.Roles;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.SecureRandom;
@@ -14,7 +15,7 @@ public class UserUtils {
 
         user.setEmail(email);
         user.setNickname(nickname);
-        user.setRole("USER");
+        user.setRole(Roles.ROLE_USER.name());
         user.setComposedsecret(passwordEncoder.encode(password));
 
         return user;

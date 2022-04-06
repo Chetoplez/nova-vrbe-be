@@ -5,5 +5,6 @@ import lombok.Data;
 
 @Data
 public class GetCharacterResponse {
+    private boolean newpg;
     private Character character;
 }

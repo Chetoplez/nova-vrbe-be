@@ -45,7 +45,6 @@ public class UserRepositoryService implements UserDetailsService {
         return user;
     }
 
-
     @Override
     public GenericUserDto loadUserByUsername(String userName) throws UsernameNotFoundException {
         List<GenericUserDto> dtoList = findUsersByEmail(userName);
