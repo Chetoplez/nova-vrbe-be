@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/guild/**").permitAll()
                 //.antMatchers("/presenti/**").permitAll()
                 .antMatchers("/forum/create", "/forum/subforum/create","/forum/edit","/forum/delete",
-                                "/forum/subforum/edit", "/forum/subforum/delete").hasRole("ADMIN")
+                                "/forum/subforum/edit", "/forum/subforum/delete" , "/forum/post/close").hasRole("ADMIN")
                 //.antMatchers("/vrbe/**").hasRole("ADMIN")
 
                 // Our private endpoints

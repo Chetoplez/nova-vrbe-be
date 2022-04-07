@@ -106,7 +106,6 @@ public class SubForumBusiness {
         GetSubForumResponse subForumResponse = new GetSubForumResponse();
         boolean admin = isAdmin(Integer.parseInt(request.getChId()));
         V_GuildMembers guildMember = guildService.getGuildMember(Integer.parseInt(request.getChId()));
-        Integer guildId = guildMember == null ? -1 : guildMember.getGuildId(); //mi serve per filtrare i subforum
         if(!StringUtils.hasText(request.getForumId())){
             response = new ResponseEntity<>(subForumResponse, HttpStatus.BAD_REQUEST);
             return response;

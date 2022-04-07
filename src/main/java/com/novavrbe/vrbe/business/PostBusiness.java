@@ -91,13 +91,18 @@ public class PostBusiness {
     public ResponseEntity<GetPostListResponse> getPostList(String subforumId) {
         ResponseEntity<GetPostListResponse> response;
         GetPostListResponse postResponse = new GetPostListResponse();
-        ArrayList<PostDTO> postList = new ArrayList<>();
+        ArrayList<Post> postList = new ArrayList<>();
         if(!StringUtils.hasText(subforumId)){
             response = new ResponseEntity<>(postResponse,HttpStatus.BAD_REQUEST);
             return response;
         }
         Iterable<PostDTO> dtos = postRepositoryService.getPostList(Integer.parseInt(subforumId));
-        postList = ForumUtils.preparePostList(dtos);
+        for (PostDTO dto : dtos ) {
+            CharacterDto charDto = characterRepositoryService.retrieveCharacterFromId(dto.getAuthor());
+            Post detail = ForumUtils.preparePostDetails(dto,charDto);
+            postList.add(detail);
+        }
+
         postResponse.setPostList(postList);
         response = new ResponseEntity<>(postResponse,HttpStatus.OK);
         return response;
@@ -188,5 +193,26 @@ public class PostBusiness {
         response = new ResponseEntity<>(deleteResponse,HttpStatus.OK);
 
         return  response;
+    }
+
+    /**
+     * Chiude un post per disabilitare le risposte
+     * @param request il postID
+     * @return
+     */
+    public ResponseEntity<CreatePostResponse> closePost(ClosePostReques request) {
+        ResponseEntity<CreatePostResponse> response;
+        CreatePostResponse postResponse = new CreatePostResponse();
+        if(request.getPostId() == null){
+            response = new ResponseEntity<>(postResponse, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        PostDTO dto = postRepositoryService.getPost(request.getPostId());
+        dto.setClosed(true);
+        postRepositoryService.closePost(dto);
+        postResponse.setPostId(request.getPostId());
+        postResponse.setMessage("il post "+dto.getTitle()+"è stato chiuso");
+        response = new ResponseEntity<>(postResponse, HttpStatus.OK);
+        return response;
     }
 }

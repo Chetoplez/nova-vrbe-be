@@ -88,6 +88,11 @@ public class ForumController {
         return postBusiness.editPost(request);
     }
 
+    @PatchMapping("/post/close")
+    public ResponseEntity<CreatePostResponse> closePost(@RequestBody ClosePostReques request){
+        return postBusiness.closePost(request);
+    }
+
     @DeleteMapping("/post/delete")
     public ResponseEntity<DeletePostResponse> deletePost (@RequestBody DeletePostRequest request){
         return postBusiness.deletePost(request);

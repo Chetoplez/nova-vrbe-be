@@ -56,4 +56,8 @@ public class PostRepositoryService {
         }
         return deleted;
     }
+
+    public void closePost(PostDTO dto) {
+        postRepository.save(dto);
+    }
 }

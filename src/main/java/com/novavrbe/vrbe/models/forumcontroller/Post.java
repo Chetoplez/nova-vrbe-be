@@ -14,14 +14,11 @@ public class Post {
 
     private Integer forumId;
 
-
     private Integer subforumId;
 
     private SmallCharacter author;
 
-
     private boolean isClosed;
-
 
     private boolean isPinned;
 
