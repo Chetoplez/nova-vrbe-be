@@ -123,7 +123,7 @@ public class SubForumBusiness {
         }
         ForumDTO forum = forumRepositoryService.getForumById(fId);
         dtos = subforumRepositoryService.getSubforum(fId, admin);
-        subForumList = ForumUtils.prepareSubforumList(dtos, guildId , admin);
+        subForumList = ForumUtils.prepareSubforumList(dtos, guildMember , admin);
         subForumResponse.setSubForums(subForumList);
         subForumResponse.setForumName(forum.getName());
         response = new ResponseEntity<>(subForumResponse,HttpStatus.OK);

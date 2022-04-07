@@ -8,6 +8,7 @@ import com.novavrbe.vrbe.models.forumcontroller.Post;
 import com.novavrbe.vrbe.models.forumcontroller.SubForum;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ForumUtils {
     public static ArrayList<ForumDTO> prepareForumList(Iterable<ForumDTO> dtOs) {
@@ -37,16 +38,20 @@ public class ForumUtils {
         dto.setAdminOnly(subForum.isAdminOnly());
         dto.setName(subForum.getName());
         dto.setForumId(subForum.getForumId());
-        dto.setOwnedBy( subForum.getOwnedBy());
+        dto.setOwnedBy( subForum.getOwnedBy() == null ? -1 : subForum.getOwnedBy());
         dto.setRankVisibility(subForum.getRankVisibility());
         dto.setSubforumType(subForum.getSubforumType());
         return dto;
     }
 
-    public static ArrayList<SubForumDTO> prepareSubforumList(Iterable<SubForumDTO> dtos, Integer guildId, boolean admin) {
+    public static ArrayList<SubForumDTO> prepareSubforumList(Iterable<SubForumDTO> dtos, V_GuildMembers guildMember, boolean admin) {
         ArrayList<SubForumDTO> lista = new ArrayList<>();
+        Integer guildId = guildMember == null ? -1 : guildMember.getGuildId(); //mi serve per filtrare i subforum
+        Integer rankPg = guildMember == null ? 10 : guildMember.getGuildLevel(); // mi serve per filtrare in base al livello del pg
         for (SubForumDTO dto: dtos) {
-            if( dto.getOwnedBy() == -1 || dto.getOwnedBy() == guildId || admin)
+            if( (dto.getOwnedBy() == -1  && rankPg >= dto.getRankVisibility())
+                    || (Objects.equals(dto.getOwnedBy(), guildId) && rankPg >= dto.getRankVisibility() )
+                    || admin)
                 lista.add(dto);
         }
         return lista;
