@@ -2,7 +2,11 @@
   "name": "fervm",
   "version": "0.2.0",
   "private": true,
-  
+  "author": {
+    "email": "gestione@fervm.it",
+    "name": "@Branci",
+    "url": "http://www.linkedin.com/in/claudiobranciforte"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",

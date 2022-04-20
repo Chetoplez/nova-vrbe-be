@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @EnableScheduling
-public class VrbeApplication extends SpringBootServletInitializer {
+public class FervmApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(VrbeApplication.class, args);
+		SpringApplication.run(FervmApplication.class, args);
 	}
 
 
