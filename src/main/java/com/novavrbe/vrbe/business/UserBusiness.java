@@ -18,6 +18,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -61,29 +63,30 @@ public class UserBusiness {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setSuccess(false);
 
-        //if(loginRequest != null && StringUtils.hasText(loginRequest.getEmail()) && StringUtils.hasText(loginRequest.getPsw())){
-        //    List<GenericUserDto> users = userRepositoryService.findUsersByEmail(loginRequest.getEmail());
-        //    if(!CollectionUtils.isEmpty(users)){
-        //        GenericUserDto user = users.get(0);
-        //        loginResponse.setSuccess(LoginUtils.canLogin(loginRequest.getPsw(), user));
-        //        //aggiunta di Claudio Malvagio
-        //        loginResponse.setUserId(user.getId());
-        //        loginResponse.setRole(user.getRole());
-        //    }
-        //}
+
         try {
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPsw())
         );
         }catch (BadCredentialsException e){
-            throw  new Exception("Nome Utente o password non corrette" , e);
+            response = new ResponseEntity<>(loginResponse,HttpStatus.OK);
+            return response;
         }
         GenericUserDto dto = userRepositoryService.loadUserByUsername(loginRequest.getEmail());
-        final String jwt = jwtUtils.generateToken(dto);
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        Date lastLogin = sdfDate.parse(strDate);
+
+        dto.setLastlogin(lastLogin.getTime());
+        userRepositoryService.saveUser(dto);
         loginResponse.setSuccess(true);
         loginResponse.setRole(dto.getRole());
-        loginResponse.setJwt(jwt);
         loginResponse.setUserId(dto.getId());
+
+        final String jwt = jwtUtils.generateToken(dto);
+        loginResponse.setJwt(jwt);
+
 
         response = new ResponseEntity<>(loginResponse, HttpStatus.OK);
 

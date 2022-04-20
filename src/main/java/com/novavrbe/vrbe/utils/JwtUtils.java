@@ -23,6 +23,10 @@ public class JwtUtils {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public Date  extractIssuedAt(String token) {
+        return extractClaim(token, Claims::getIssuedAt);
+    }
+
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
@@ -33,7 +37,6 @@ public class JwtUtils {
     }
 
     private Claims extractAllClaims(String token) {
-
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
@@ -48,13 +51,17 @@ public class JwtUtils {
 
     private String createToken(Map<String, Object> claims, GenericUserDto subject) {
 
-        return Jwts.builder().setClaims(claims).setSubject(subject.getEmail()).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) //TODO file di configurazione
+        return Jwts.builder().setClaims(claims).setSubject(subject.getEmail()).setIssuedAt(new Date(subject.getLastlogin()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 3)) //TODO file di configurazione
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
     public Boolean validateToken(String token, GenericUserDto userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getEmail()) && !isTokenExpired(token));
+        Date tokenIssuedAt = extractIssuedAt(token);
+        long issuedAt = tokenIssuedAt.getTime();
+        long lLog = userDetails.getLastlogin();
+        Date lastLogin = new Date(lLog);
+        return (username.equals(userDetails.getEmail()) && !isTokenExpired(token) && lastLogin.equals(tokenIssuedAt) );
     }
 }

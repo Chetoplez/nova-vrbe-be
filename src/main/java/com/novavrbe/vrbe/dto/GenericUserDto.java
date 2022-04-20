@@ -27,7 +27,7 @@ public class GenericUserDto  implements UserDetails {
     @Column
     private String composedsecret;
     @Column
-    private String lastlogin;
+    private long lastlogin;
     @Column
     private String role;
 
