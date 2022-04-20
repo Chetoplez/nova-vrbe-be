@@ -47,7 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Enable CORS and disable CSRF
-        http = http.cors().and().csrf().disable();
+        http = http
+                .cors()
+                .and()
+                .csrf()
+                .disable();
 
         // Set session management to stateless
         http = http
@@ -61,8 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(
                         (request, response, ex) -> {
                             response.sendError(
-                                    HttpServletResponse.SC_UNAUTHORIZED,
-                                    ex.getMessage()
+                                    HttpServletResponse.SC_EXPECTATION_FAILED,
+                                    "JWTInvalid"
                             );
                         }
                 )
@@ -71,21 +75,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public endpoints
-                //.antMatchers("/character/**").permitAll()
                 .antMatchers("/user/**").permitAll()
-                //.antMatchers("/chat/**").permitAll()
-                //.antMatchers("/guild/**").permitAll()
-                //.antMatchers("/presenti/**").permitAll()
-                .antMatchers("/forum/create", "/forum/subforum/create","/forum/edit","/forum/delete",
-                                "/forum/subforum/edit", "/forum/subforum/delete" , "/forum/post/close").hasRole("ADMIN")
-                //.antMatchers("/vrbe/**").hasRole("ADMIN")
 
                 // Our private endpoints
+                .antMatchers("/forum/create", "/forum/subforum/create","/forum/edit","/forum/delete",
+                        "/forum/subforum/edit", "/forum/subforum/delete" , "/forum/post/close").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
-
         // Add JWT token filter.
-
         http.addFilterBefore(
                 jwtTokenFilter,
                 UsernamePasswordAuthenticationFilter.class

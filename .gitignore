@@ -1,5 +1,10 @@
 target/
 logs/
+fervm/node_modules
+fervm/.vscode
+fervm/build
+fervm/node
+fervm/public/web.config
 /sonar-report
 *.idea
 *.project
