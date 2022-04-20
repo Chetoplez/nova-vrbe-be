@@ -1,6 +1,6 @@
 import React from 'react';
 import useMessage from '../utils/useMessage'
-import { Modal,Box,Typography,Button } from "@material-ui/core";
+import { Modal, Box, Typography } from "@material-ui/core";
 
 function UserMessageNotifcation() {
   const { message, removeMessage } = useMessage();

@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { TextField, FormControl, Select, MenuItem, InputLabel, Input } from "@material-ui/core";
+import React, { useEffect, useContext } from 'react'
+import { TextField } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import { API_URL, getJwt,sanitazeHTML } from '../../utils/api';
 import { userContext } from '../../utils/userContext';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './CreatePost.css'
 
 function CreatePost(){   
-    const { register, watch, handleSubmit,  formState: { errors } } = useForm({mode: 'all'});
+    const { register, handleSubmit,  formState: { errors } } = useForm({mode: 'all'});
     const mainContext = useContext(userContext);
     const navigate = useNavigate();
     const param = useParams()

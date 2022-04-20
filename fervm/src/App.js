@@ -1,5 +1,5 @@
 import './App.css';
-import React,{useEffect}  from 'react';
+import React from 'react';
 import { BrowserRouter,  Route, Routes} from 'react-router-dom';
 import MainContextProvider from './utils/userContext'
 import UserMessageNotifcation from './utils/UserMessageNotification';

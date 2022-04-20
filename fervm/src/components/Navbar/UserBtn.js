@@ -2,11 +2,11 @@ import  React, { useContext, useState } from "react";
 import '../Navbar/UserBtn.css'
 import {userContext} from '../../utils/userContext';
 import {Link} from 'react-router-dom'
-import { Avatar, useSyle, makeStyles } from "@material-ui/core";
+import { Avatar, makeStyles } from "@material-ui/core";
 
 import axios from 'axios';
 import {API_URL, getJwt} from '../../utils/api' 
-import { Height } from "@material-ui/icons";
+
 
 
 const useStyles = makeStyles({

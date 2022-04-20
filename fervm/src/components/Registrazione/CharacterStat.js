@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 function CharacterStat({ stats, setStats, bucket, setBucket }) {
    

@@ -6,7 +6,7 @@ function DominusFrame() {
     return(
         <div>
             <div className="w3-center">
-                <img style={{width:'80%', textAlign:'center'}} src={dominus} />
+                <img alt="Domina" style={{width:'80%', textAlign:'center'}} src={dominus} />
             </div>
             <div className="frame-desc">
                 <p>La società nell’antica Repubblica Romana è <strong>patriarcale</strong>.

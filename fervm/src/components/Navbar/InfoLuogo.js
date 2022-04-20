@@ -55,7 +55,7 @@ function InfoLuogo(props) {
                     {/* <span>{luogo.data}</span>
                     <span> {luogo.temp} - {luogo.meteo}</span> */}
                     <span>{Moment(new Date()).format('DD/MM/YYYY')}</span><br></br>
-                    <span> 5° - Sereno , Vento Debole</span>
+                    <span> 15° - Sereno , Vento Debole</span>
                 </div>
                 <div className="w3-card badge-luogo w3-container" style={{display: isShow ? 'block': 'none' , position:'fixed'}}>
                     <img style={{maxWidth:'100%'}} src='http://www.cassiciaco.it/navigazione/africa/siti_archeologici/douggha/images/foro_map.jpg' />

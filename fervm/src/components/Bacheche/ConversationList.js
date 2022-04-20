@@ -2,7 +2,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import Author from "./Author";
-import store from "store";
 import { API_URL, getJwt, sanitazeHTML } from "../../utils/api";
 import CommentList from "./CommentList";
 import parse from 'html-react-parser';

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 import { TextField } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom'
 import axios from "axios";
@@ -56,7 +56,7 @@ function Subscribe() {
             <TextField placeholder="Email" type="email" name="email"
               {...register("email", { required: {value:true, message: 'Questo campo è obbligatorio'} , 
                 pattern:{
-                  value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                  value: /^\w+([-]?\w+)*@\w+([-]?\w+)*(\w{2,3})+$/,
                   message: "Indirizzo email non valido"
                } })}
             />

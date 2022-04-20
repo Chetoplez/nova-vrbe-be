@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import React,{useContext} from 'react';
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { API_URL, getJwt } from './api';
 import { userContext } from './userContext'
 import useMessage from './useMessage';

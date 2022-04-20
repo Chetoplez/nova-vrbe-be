@@ -92,7 +92,7 @@ function PgPresente(props) {
 
     return ()=>{clearInterval(interval)}
 
-    },[fresh])
+    },[props.chatId,fresh])
 
 
     /**

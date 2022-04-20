@@ -1,9 +1,9 @@
-import { TextField, IconButton } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import React from "react";
-import CasinoOutlinedIcon from '@material-ui/icons/CasinoOutlined';
+//import CasinoOutlinedIcon from '@material-ui/icons/CasinoOutlined';
 import './CharacterInfo.css';
 
-function CharacterInfo({ register, setGender, errors }) {
+function CharacterInfo({ register, errors }) {
 
     return (
         <><h4>Scegli il genere del tuo personaggio</h4>

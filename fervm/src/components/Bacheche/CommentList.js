@@ -1,6 +1,5 @@
 
 import axios from "axios";
-import store from "store";
 import React, {useEffect, useState,useContext} from "react";
 import Author from "./Author";
 import { API_URL, getJwt, sanitazeHTML } from "../../utils/api";
@@ -26,7 +25,7 @@ function CommentList({ comment }) {
             //console.log("ListaCommentiRelated", resp.data.commentList);
             setCommentList(resp.data.commentList)
         })
-    },[fresh])
+    },[fresh, comment.commentId])
 
 
     const handleSubmit = (evt)=>{

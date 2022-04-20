@@ -53,6 +53,9 @@ function Login() {
               }).catch(err => {
                 console.log(err)
               })
+              break;
+          default:
+            setStep(0)
         }
 
         

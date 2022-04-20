@@ -8,7 +8,7 @@ import DominaFrame from "./DominaFrame";
 import CharacterInfo from "./CharacterInfo";
 import CharacterStat from "./CharacterStat";
 import HomeNav from "../Navbar/HomeNav";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API_URL, getJwt } from "../../utils/api";
 import useMessage from "../../utils/useMessage";
 
@@ -17,7 +17,7 @@ const MAX_STEP = 2;
 
 function CharacterCreation(){
    const [stepForm, setStepForm] = useState(0);
-   const [gender, setGender] = useState("MASCHIO")
+   //const [gender, setGender] = useState("MASCHIO")
    const param = useParams()
    const [bucket, setBucket] = useState(10);
    const navigate = useNavigate();
@@ -88,11 +88,7 @@ function CharacterCreation(){
      }
    }
 
-   const changeGender = ()=>{
-     setGender(!gender);
-   }
-
-   
+     
    const submitForm = (values) =>{
      var payload = {
        userId: param.newId,
@@ -132,7 +128,7 @@ function CharacterCreation(){
               </h2>
             </header>
             <h4> Passo {stepForm +1 } di {MAX_STEP}</h4>
-            {stepForm === 0  && (<CharacterInfo errors={errors} register={register} setGender={setGender} />)}
+            {stepForm === 0  && (<CharacterInfo errors={errors} register={register} />)}
             {stepForm === 1 && (<CharacterStat bucket={bucket} setBucket={setBucket} stats={stats} setStats={setStats} />)}
             <br />
             {renderButton()}
