@@ -1,0 +1,43 @@
+.text{
+    width: 100%;
+    height: 150px;
+    font-family: inherit;
+    margin-top: 10px;
+}
+
+.MuiToggleButtonGroup-root{
+    display: flex !important;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.ctrl-btn-S.MuiToggleButton-root.Mui-selected{
+    color: #FFF !important;
+    background-image: url("../../img/buttons/Button-Secondary-Active-S.svg");
+}
+
+.ctrl-btn-M.MuiToggleButton-root.Mui-selected{
+    color: #FFF !important;
+    background-image: url("../../img/buttons/Button-Secondary-Active-M.svg");
+}
+
+
+.tasti-group{
+    margin-bottom: 15px;
+}
+
+
+
+.tagLuogo{
+    min-width: 80px;
+    width: 110px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.send {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+

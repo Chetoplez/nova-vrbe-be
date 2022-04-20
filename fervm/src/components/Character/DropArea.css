@@ -1,0 +1,86 @@
+.drop-area {
+    width: 56px;
+    height: 56px;
+    border: 1px solid;
+    border-radius: 20%;
+    background-color: transparent;
+
+}
+
+.HEAD {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.overHEAD {
+    position: relative;
+    top: -45px;
+    left: 0px;
+    height: 55px;
+    width: 55px;
+    background-color: burlywood;
+    border-radius: 10px;
+    opacity: 0.4;
+    z-index: 1;
+}
+
+.CHEST {
+    position: relative;
+    top: 75px;
+    left: 65px;
+}
+
+.LEFT_HAND, .RIGHT_HAND {
+    position: relative;
+    top: 165px;
+    left: -44px;
+}
+
+.FEET {
+    position: relative;
+    top: 350px;
+    left: 65px;
+}
+
+.zaino {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 300px;
+    min-height: 60px;
+}
+
+.zaino>div {
+    margin: 10px;
+}
+
+.overEquip {
+    position: 'relative';
+    top: -55;
+    left: 0;
+    border-radius: 20%;
+    height: 55px;
+    width: 55px;
+    z-index: 1;
+    opacity: 0.5;
+    background-color: 'yellow'
+}
+
+.overBag {
+    position: 'relative';
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    height: 200px;
+    width: 400px;
+    z-index: 1;
+    opacity: 0.5;
+    background-color: 'yellow'
+}
+
+.drag-item {
+    height: 55px;
+    width: 55px;
+    border-radius: 10px;
+    background-color: transparent;
+}

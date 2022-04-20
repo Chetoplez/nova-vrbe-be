@@ -1,0 +1,38 @@
+.detailContainer {
+	border: 2px solid goldenrod;
+	border-radius: 5px;
+	padding: 10px;
+	background-color: rgba(255, 255, 255, .6);
+}
+
+.detailImg{
+    /* width: 200px; */
+	width: 100%;	
+}
+
+.detailImgContainer {
+	padding: 20px;
+	width: 320px;
+	margin: auto;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	border-radius: 10px;
+	height: 300px;
+}
+
+.passa-oggetto{
+	display: flex;
+	justify-content: space-between;
+	margin-top: 30px;
+
+}
+
+.modifiers{
+	margin-top: 10px;
+}
+
+.descr-oggetto{
+	margin-top: 15px;
+	
+}

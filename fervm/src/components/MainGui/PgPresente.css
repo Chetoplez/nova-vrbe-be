@@ -1,0 +1,49 @@
+.vrbe-badge-presente {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    margin-top: 5px
+}
+
+.divisore {
+    border-top:2px solid #656179;
+}
+
+.nomepg-lista{
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.vrbe-badge-chat{
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.myColorPrimary{
+    background-color: #39bd35;
+    color: #fff;
+}
+
+.vrbe-nome-presenti {
+    margin: 0px;
+}
+
+
+.messaggio-utente{
+    font-size: 13px;
+    font-style: italic;
+    width: 95%;
+    text-align: justify;
+}
+.presenti-chat {
+	display: flex;
+	flex-wrap: wrap;
+	max-height: 25vh;
+	overflow: auto;
+}
+
+.presenti-map {
+    display: block;
+    line-height: 15px;
+}

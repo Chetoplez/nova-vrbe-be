@@ -1,0 +1,14 @@
+.guildCard {
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #43b5f7d0;
+    margin-top: 10px
+}
+
+.guildListTable {
+    width:80%;
+    margin:auto;
+}

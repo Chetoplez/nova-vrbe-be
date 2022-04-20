@@ -1,0 +1,25 @@
+.container-home {
+	display: flex;
+	align-items: baseline;
+	background-color: transparent;
+	padding-top: 15px;
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 667px) {
+	.container {
+	  display: block;
+	  text-align: center;
+	}
+	
+  }
+
+.homenav {
+    justify-content: space-between;
+    text-transform: capitalize;
+}
+
+.rightSide{
+    display: flex;
+    justify-content: space-around;
+}

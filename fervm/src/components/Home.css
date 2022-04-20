@@ -1,0 +1,61 @@
+.game-container{
+  margin: auto;
+}
+
+.game-container > h1 {
+  text-align: center;
+}
+
+.SpallaSx {
+	width: 300px;
+	text-align: center;
+}
+
+.home-board{
+	background-image: url("../img/buttons/Board-XXL.svg");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	padding: 35px;
+}
+.home-board>h4 {
+	color: gold;
+}
+
+.MuiInputBase-input {
+	border: 2px solid gold !important;
+	border-radius: 5px !important;
+	padding: 10px 5px 7px !important;
+}
+
+.MuiInput-underline::after, .MuiInput-underline::before{
+	border:none !important
+}
+
+.home {
+	display: flex;
+	justify-content: space-between;
+}
+
+.home-content{
+	width: 90%;
+	margin: auto;
+	height: 471px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+}
+.content{
+   
+    max-width: 80%;
+    
+}
+
+.game-content{
+  width: 400px;
+  padding: 25px;
+  border-radius: 10px;
+  background-color: #f5eada75;
+  
+}
+

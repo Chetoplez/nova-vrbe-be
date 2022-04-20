@@ -1,0 +1,10 @@
+.margin-form {
+    margin-bottom: 10px;
+    
+}
+
+.errorMessage {
+    font-size: 18px;
+    color: red;
+    font-weight: 500;
+}

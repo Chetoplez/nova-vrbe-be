@@ -1,0 +1,65 @@
+
+
+.chat-row{
+    margin-top: 10px;
+    pad: 10px 20px 10px 20px;
+ }
+ 
+ .img-chat {
+     border-radius: 50%;
+     width: 25px;
+     height: 25px;
+ }
+ 
+ .info-azione {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin: 0px 20px 0px 20px
+ }
+ .row-infopg {
+     display: flex;
+     align-items: center;
+ }
+ 
+ .row-infopg > span {
+     margin-left: 5px;
+ }
+ 
+.icon-carica{
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+ .chat-tag{
+     font-style: italic;
+     margin-left: 10px;
+ }
+ .testo {
+     text-align: justify;
+     padding: 5px 25px 5px 25px;
+ }
+
+ .fervm-evidenziato {
+	color: rgba(68, 3, 3, 0.85);
+	font-weight: 600;
+}
+.fervmnome-evidenziato {
+    text-decoration: underline;
+    text-transform: capitalize;
+    font-style: italic;
+    color: rgb(255, 123, 0);
+}
+
+.riga-narra {
+    background-color: rgba(0, 0, 255, 0.50);
+    color: white;
+    text-align: center;
+}
+
+.sussurro {
+    color: rgba(42, 0, 0, 0.85);
+    font-style: italic;
+    font-size: 13px;
+}

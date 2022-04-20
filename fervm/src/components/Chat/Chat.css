@@ -1,0 +1,10 @@
+.chat-container {
+    display: flex;
+	flex-wrap: wrap;
+}
+
+
+.divisoreChat{
+	border-top: 15px solid #fff;
+margin: 20px -40px 0px -40px
+}

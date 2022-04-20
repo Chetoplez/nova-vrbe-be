@@ -1,0 +1,55 @@
+{
+  "name": "fervm",
+  "version": "0.2.0",
+  "private": true,
+  
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@svg-maps/italy": "^1.0.1",
+    "@svg-maps/taiwan": "^1.1.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.0",
+    "axios": "^0.21.1",
+    "html-react-parser": "^1.2.4",
+    "moment": "^2.29.1",
+    "react": "^17.0.1",
+    "react-circular-progressbar": "^2.0.3",
+    "react-dnd": "^14.0.1",
+    "react-dnd-html5-backend": "^14.0.0",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^7.28.1",
+    "react-router-dom": "^6.0.2",
+    "react-scripts": "^5.0.0",
+    "react-stomp": "^5.1.0",
+    "react-svg-map": "^2.2.0",
+    "sockjs": "^0.3.24",
+    "store": "^2.0.12",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

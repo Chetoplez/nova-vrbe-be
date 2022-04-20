@@ -1,0 +1,31 @@
+.user-profile-mini {
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    margin-left: 10px;
+    
+}
+
+.pg-name {
+    
+    position: relative;
+    top: 10px;
+    right: 5px;
+}
+
+.pg-name:hover {
+    cursor: pointer;
+}
+
+#menupg{
+    position: absolute;
+    max-height: 0%;
+    transition: 0.4s;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#menupg.openEffect{
+    max-height:100%;
+    
+}

@@ -1,0 +1,28 @@
+.dropArea {
+	background-image: url('../../img/manichino.svg');
+	height: 500px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	margin-left: 50px
+}
+
+.dragArea {
+	display: block;
+}
+
+
+
+.banca {
+	display: flex;
+	align-items: center;
+}
+
+.box-sesterzio {
+	height: 55px;
+	width: 55px;
+	border-radius: 10px;
+	background-color: white;
+	background-image: url('../../img/sesterzio.png');
+	background-size: cover;
+	margin: 10px;
+}

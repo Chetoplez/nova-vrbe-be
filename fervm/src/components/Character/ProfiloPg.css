@@ -1,0 +1,123 @@
+.caratteristiche-totale {
+	padding: 5px 15px;
+	background-color: rgb(145, 145, 145);
+	margin: 10px 5px 10px 10px;
+	width: 40px;
+	height: 40px;
+	color: rgb(255, 255, 255);
+	font-weight: 600;
+	font-size: 20px;
+}
+
+.caratteristiche {
+
+	background-color: rgb(248, 248, 248);
+	width: 200px;
+	padding: 8px;
+	margin: 5px auto;
+	display: flex;
+	justify-content: space-evenly;
+
+}
+
+.salute {
+	justify-content: space-evenly;
+	margin: auto;
+	width: 200px;
+	background-color: rgb(248, 248, 248);
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+.inventory-profile-toggle-btn {
+	display: block;
+}
+
+.car {
+	margin-left: 0px;
+	line-height: 1.2em;
+}
+
+.car>h6 {
+	margin: 0;
+}
+
+.progressSalute {
+	width: 200px;
+	text-align: center;
+	margin: auto;
+	background: linear-gradient(180deg, transparent 50%, #F8F8F8 50%);
+}
+
+.info-pg {
+	display: block;
+	font-size: 16px;
+	line-height: 2.3em;
+	margin-bottom: 20px;
+}
+
+.mod-descr {
+	width: 100%;
+	height: 250px;
+	font-family: inherit;
+	margin-top: 10px;
+	background-color: #f3f3f3;
+}
+
+.cont-cv {
+	display: flex;
+	align-items: center;
+}
+
+.cont-cv>h2 {
+	margin-left: 30px;
+	margin-right: 20px;
+}
+
+.cv-pg {
+	background-color: white;
+	border-radius: 12px;
+	width: 480px;
+	position: fixed;
+	z-index: 1
+}
+
+.riga-cv {
+	margin-right: 10px;
+	margin-left: 10px;
+	font-weight: 600;
+}
+
+.descrizione-fisica {
+	margin-top: 20px;
+	padding: 3px;
+}
+
+.pg-progress {
+	display: flex;
+	justify-content: space-between;
+}
+
+.storia {
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.text-storia {
+	width: 100%;
+
+	height: 300px;
+	overflow-y: auto;
+	background-color: #f3f3f3;
+}
+
+.character-status {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+}
+
+.margin-none {
+	margin: 0;
+}

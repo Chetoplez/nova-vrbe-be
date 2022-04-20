@@ -1,0 +1,225 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap');
+ 
+
+.App {
+    color: #7d7d7d;
+	font-family: 'Alegreya',serif;
+	font-weight: 400;
+	font-size: 16px;
+	width: 90%;
+	margin: auto;
+		
+}
+
+body {
+	background-image: url("img/backgrounds/BackgroundChat-XXL-Extralight.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+h1,h2,h3,h4,h5 {
+	font-family: 'Alegreya',serif;
+}
+
+
+.d-flex{
+	display: flex;
+}
+
+.flex-wrap{
+	flex-wrap: wrap;
+}
+
+.flex-basis-1{
+	flex-basis: 1;
+}
+
+a:hover {
+	color: #FFBB00;
+}
+
+
+
+.MuiAvatar-root{
+	margin-right: 15px;
+}
+
+strong {
+	font-family: 'Alegreya',serif;
+    font-weight: 600;
+}
+
+.contenitori  {
+    padding: 30px;
+	min-height: calc(50vh - 220px);
+	border-radius:10px;
+	background: rgba(255, 255, 255, .6);
+	margin-top: 10px;
+}
+
+
+
+.colonna-dx{
+	width: calc(40% - 5px);
+}
+
+.colonna-dx .contenitori{
+	margin-left: 5px;
+	background-color: rgba(255, 255, 255, .4);
+}
+
+
+.colonna-sx{
+	min-width: 60%;
+    max-width: 60%;
+}
+
+.colonna-sx .contenitori{
+    margin-right: 5px;
+	background-color: rgba(255, 255, 255, .6);
+	overflow: auto;
+	height: 80vh;
+    list-style-type: none;
+}
+
+
+
+.under-nav {
+   
+}
+
+
+.loading {
+	position: absolute;
+	width: 400px;
+	height: 150px;
+	margin: 150px;
+	left: 25%;
+	top: 0%;
+	border-radius: 10px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.MuiButtonBase-root {
+	font-family: 'Alegreya',serif !important;
+
+}
+
+.MuiInputBase-root {
+	font-family: 'Alegreya',serif !important;
+	border-radius: 5px;
+	background-color: white;
+	border-radius: 5px !important;
+}
+
+.chat-bkg {
+	background-image: url("img/backgrounds/BackgroundChat-XXL-Extralight.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+button {
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.MuiButton-containedPrimary{
+	
+	background-color: transparent !important;
+	background-image: url("img/buttons/MainButton-L.svg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	padding: 10px;
+}
+
+.main-btn {
+	background-color: transparent !important;
+	background-image: url("img/buttons/MainButton-L.svg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 10px;
+	width: 250px;
+	height: 65px;
+	border: none;
+	color: #fff7cb;
+}
+
+.main-btn:active  {
+	background-image: url("img/buttons/MainButton-L-Active.svg");
+}
+
+.main-btn-M{
+	background-color: transparent !important;
+	background-image: url("img/buttons/MainButton-M.svg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	padding: 10px;
+	width: 150px;
+	height: 65px;
+	border: none;
+	color: #fff7cb;
+}
+
+.main-btn-S{
+	background-color: transparent !important;
+	background-image: url("img/buttons/MainButton-M.svg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	padding: 10px;
+	width: 100px;
+	height: 65px;
+	border: none;
+	color: #fff7cb;
+}
+
+.ctrl-btn-S, .ctrl-btn-M {
+	/* background-color: #660303f0 !important; */
+	background-color: transparent !important;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	padding: 7px 12px !important;
+    margin: 3px !important;
+	border: none !important;
+	color: #fff7cb !important;
+
+	
+}
+
+.ctrl-btn-M span,.ctrl-btn-S span {
+	font-weight: bold;
+	font-size: 1.15rem;
+}
+
+.ctrl-btn-S {
+	background-image: url("img/buttons/Button-Secondary-Default-S.svg");
+	width: 80px;
+}
+
+.ctrl-btn-M {
+	background-image: url("img/buttons/Button-Secondary-Default-M.svg");
+	width:120px;
+}
+
+.main-btn-M:active  {
+	background-image: url("img/buttons/MainButton-L-Active.svg");
+}
+
+.main-btn-S:active  {
+	background-image: url("img/buttons/MainButton-L-Active.svg");
+}
+
+.main-btn-M:disabled{
+	cursor: not-allowed;
+}
+
+.MuiButton-containedPrimary:hover{
+	/* background-color: #660303f0 !important; */
+	background-color: transparent !important;
+}

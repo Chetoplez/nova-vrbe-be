@@ -1,0 +1,78 @@
+.container {
+	display: flex;
+    padding: 5px 0px;
+    max-height: 110px;
+    align-items: center;
+    
+}
+
+.usr-btn {
+	background-image: url("../../img/ImgProf.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+    height: 90px;
+    width: 100%;
+}
+
+.test{
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        width: 50%;
+    
+}
+#demo{
+    width: 100% !important;
+}
+
+.game-name{
+        font-family: 'Cinzel', sans-serif;
+        color: #FFBB00;
+        font-size: 3rem;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 1px #000;
+        margin: auto 0;
+
+}
+
+.test > div{
+    margin-right: 25px;
+}
+.chat-side {
+    display: flex;
+    width: 60%;
+    justify-content: space-evenly;
+
+}
+
+
+.cmd-side {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: end;
+}
+
+a{
+    font-family: 'Cinzel', sans-serif;
+    color: #554641;
+    text-decoration: none;
+    font-weight: 600;
+}
+.cmd-side > div {
+    margin-left: 35px;
+}
+@media screen and (max-width: 1330px) {
+    .cmd-side > div {
+      margin-left: 5px;
+    }
+  }
+
+.cmd-side > div:nth-child(4){
+    padding: 0;
+}
+
+.icon-class{
+    height: 60px;
+    width:60px;
+}
