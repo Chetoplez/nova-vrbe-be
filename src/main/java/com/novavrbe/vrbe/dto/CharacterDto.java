@@ -17,6 +17,10 @@ public class CharacterDto {
     private Integer characterId;
     @Column(name = "CHARACTER_NAME")
     private String characterName;
+    @Column(name = "CHARACTER_SURNAME")
+    private String characterSurname;
+    @Column(name = "CHARACTER_GENS")
+    private String characterGens;
     @Column(name = "CHARACTER_ICON")
     private String characterIcon;
     @Column

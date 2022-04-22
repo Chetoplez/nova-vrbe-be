@@ -30,6 +30,8 @@ public class CharacterUtils {
         if(character != null && dto != null){
             character.setCharacterId(dto.getCharacterId().toString());
             character.setCharacterName(dto.getCharacterName());
+            character.setCharacterSurname(dto.getCharacterSurname());
+            character.setCharacterGens(dto.getCharacterGens());
             try {
                 URL characterIcon = new URL(dto.getCharacterIcon());
                 character.setCharacterIcon(characterIcon);
@@ -137,6 +139,8 @@ public class CharacterUtils {
             characterDto = new CharacterDto();
             characterDto.setCharacterId(characterId);
             characterDto.setCharacterName(character.getCharacterName());
+            characterDto.setCharacterSurname(character.getCharacterSurname());
+            characterDto.setCharacterGens( character.getCharacterGens() != null ? characterDto.getCharacterGens() : "NESSUNA");
             characterDto.setCharacterIcon(character.getCharacterIcon() != null ? character.getCharacterIcon().toString() : "");
             characterDto.setGender(character.getGender().name());
 

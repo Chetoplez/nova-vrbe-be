@@ -140,7 +140,7 @@ function PgPresente(props) {
             </StyledBadge>
             
           <div className={props.col === "2" ? "vrbe-small-nome-presenti":"vrbe-nome-presenti"}>
-              <div><Link to={"/game/profilo/"+user.characterId}><span className='nomepg-lista'>{user.characterName}</span></Link></div>
+              <div><Link to={"/game/profilo/"+user.characterId}><span className='nomepg-lista'>{user.characterName+' '+user.characterSurname}</span></Link></div>
               <div className={props.col === "2" ? "messaggio-utente" : "messaggio-utente"}>{user.messaggio}</div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class Presente {
     private String characterName;
+    private String characterSurname;
     private Integer characterId;
     private String characterImg;
     private boolean available;

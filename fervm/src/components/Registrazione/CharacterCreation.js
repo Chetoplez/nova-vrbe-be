@@ -93,7 +93,8 @@ function CharacterCreation(){
      var payload = {
        userId: param.newId,
        character: {
-         characterName: values.characterName+ ' ' +values.characterCognomen,
+         characterName: values.characterName,
+         characterSurname: values.characterCognomen,
          gender: values.gender ? values.gender : "FEMMINA",
          stats: stats
        }

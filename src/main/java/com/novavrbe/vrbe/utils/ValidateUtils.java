@@ -22,6 +22,7 @@ public class ValidateUtils {
         boolean valid = true;
         System.out.println(character.getGender().toString());
         valid = validateString(CHARACTER_NAME, character.getCharacterName())
+                && validateString(CHARACTER_NAME, character.getCharacterSurname())
                 && validateString(CHARACTER_ICON, character.getCharacterIcon() != null ? character.getCharacterIcon().toString() : "http://www.icon.com")
                 && validateString(GENDER, character.getGender().toString());
 

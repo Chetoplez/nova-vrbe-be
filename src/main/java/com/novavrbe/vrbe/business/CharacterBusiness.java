@@ -5,10 +5,8 @@ import com.novavrbe.vrbe.dto.InventoryDto;
 import com.novavrbe.vrbe.dto.InventoryObjectDto;
 import com.novavrbe.vrbe.dto.InventoryObjectEffectDto;
 import com.novavrbe.vrbe.models.charactercontroller.*;
+import com.novavrbe.vrbe.models.charactermodels.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
-import com.novavrbe.vrbe.models.charactermodels.CharacterMaritalStatus;
-import com.novavrbe.vrbe.models.charactermodels.Inventory;
-import com.novavrbe.vrbe.models.charactermodels.InventoryObjectAssociation;
 import com.novavrbe.vrbe.models.enumerations.BodyPart;
 import com.novavrbe.vrbe.models.enumerations.MaritalStatus;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
@@ -148,6 +146,7 @@ public class CharacterBusiness {
             SmallCharacter temp = new SmallCharacter();
             temp.setCharacterId(dto.getCharacterId());
             temp.setCharacterName(dto.getCharacterName());
+            temp.setCharacterSurname(dto.getCharacterSurname());
             temp.setCharacterImg(dto.getCharacterImg());
             unEmployed.add(temp);
         }

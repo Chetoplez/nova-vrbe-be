@@ -220,7 +220,7 @@ function ProfiloPg() {
                     {/* Personal information column , name, gender etc  */}
 
                     <div className="w3-container w3-third">
-                        <h1 className="w3-header ">{personaggio.characterName}</h1>
+                        <h1 className="w3-header ">{personaggio.characterName +' '+personaggio.characterSurname} </h1>
                         <div className="info-pg">
                             <div>
                                 <div className="w3-third"><strong>Sesso</strong></div>
@@ -232,7 +232,7 @@ function ProfiloPg() {
                             </div>
                             <div>
                                 <div className="w3-third"><strong>Gens</strong></div>
-                                <div>Nessuna</div>
+                                <div>{personaggio.characterGens}</div>
                             </div>
                             <div>
                                 <div className="w3-third"><strong>Stato Civile</strong></div>

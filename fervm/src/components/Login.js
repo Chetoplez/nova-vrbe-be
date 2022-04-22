@@ -74,6 +74,7 @@ function Login() {
             var user = {
               characterId: resp.data.character.characterId,
               characterName: resp.data.character.characterName,
+              characterSurname: resp.data.character.characterSurname,
               characterImg: resp.data.character.characterImg
             }
             store.set('user',user);

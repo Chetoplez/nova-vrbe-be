@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +58,8 @@ public class PresentiBusiness {
             tmp.setAvailable(presente.isAvailable());
             tmp.setCharacterId(presente.getCharacterId());
             tmp.setCharacterName(presente.getCharacterName());
+            tmp.setCharacterSurname(presente.getCharacterSurname());
+
             tmp.setCharacterImg(presente.getCharacterImg());
             presenteList.add(tmp);
         }

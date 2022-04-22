@@ -1,6 +1,6 @@
 package com.novavrbe.vrbe.models.forumcontroller;
 
-import com.novavrbe.vrbe.models.charactercontroller.SmallCharacter;
+import com.novavrbe.vrbe.models.charactermodels.SmallCharacter;
 import lombok.Data;
 
 @Data

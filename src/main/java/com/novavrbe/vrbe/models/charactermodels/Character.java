@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class Character {
     private String characterId;
     private String characterName;
+    private String characterSurname;
+    private String characterGens;
     private URL characterIcon;
     private CharacterJob characterJob;
     private URL characterImg;

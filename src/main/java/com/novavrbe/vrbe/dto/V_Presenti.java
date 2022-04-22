@@ -1,6 +1,5 @@
 package com.novavrbe.vrbe.dto;
 
-import lombok.CustomLog;
 import lombok.Data;
 import org.hibernate.annotations.Immutable;
 
@@ -20,6 +19,8 @@ public class V_Presenti {
     @Id
     @Column
     private String characterName;
+    @Column
+    private String characterSurname;
     @Column
     private Integer characterId;
     @Column

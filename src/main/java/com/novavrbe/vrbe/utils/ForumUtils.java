@@ -1,7 +1,7 @@
 package com.novavrbe.vrbe.utils;
 
 import com.novavrbe.vrbe.dto.*;
-import com.novavrbe.vrbe.models.charactercontroller.SmallCharacter;
+import com.novavrbe.vrbe.models.charactermodels.SmallCharacter;
 import com.novavrbe.vrbe.models.forumcontroller.Comment;
 import com.novavrbe.vrbe.models.forumcontroller.Forum;
 import com.novavrbe.vrbe.models.forumcontroller.Post;
@@ -94,6 +94,7 @@ public class ForumUtils {
         SmallCharacter autore = new SmallCharacter();
         autore.setCharacterImg(charDto.getCharacterImg());
         autore.setCharacterName(charDto.getCharacterName());
+        autore.setCharacterSurname(charDto.getCharacterSurname());
         autore.setCharacterId(charDto.getCharacterId());
         dettaglio.setAuthor(autore);
 
@@ -114,6 +115,7 @@ public class ForumUtils {
         SmallCharacter smallCharacter = new SmallCharacter();
         smallCharacter.setCharacterId(charDto.getCharacterId());
         smallCharacter.setCharacterName(charDto.getCharacterName());
+        smallCharacter.setCharacterSurname(charDto.getCharacterSurname());
         smallCharacter.setCharacterImg(charDto.getCharacterImg());
 
         comment.setCommentId(commento.getCommentID());
