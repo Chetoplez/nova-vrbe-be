@@ -104,7 +104,7 @@ function Member({ member , setFresh }) {
 
     return(
         <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-            <div><strong><Link to={"/game/profilo/"+member.character_ID}> {member.character_NAME}</Link></strong></div>
+            <div><strong><Link to={"/game/profilo/"+member.character_ID}> {member.character_NAME +' '+member.character_SURNAME}</Link></strong></div>
              <div>
                 {((isManager||mainContext.roles.includes("ROLE_ADMIN") ) && member.guild_LEVEL !== 50) ? <Tooltip title="Promuovi" placement="top-start">
                     <IconButton onClick={promoteMember} style ={{color: 'goldenrod'}}>

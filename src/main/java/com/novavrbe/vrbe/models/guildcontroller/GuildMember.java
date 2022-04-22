@@ -14,6 +14,8 @@ public class GuildMember {
 
     private String CHARACTER_NAME;
 
+    private String CHARACTER_SURNAME;
+
     private Integer GUILD_LEVEL;
 
     private String ROLE_NAME;

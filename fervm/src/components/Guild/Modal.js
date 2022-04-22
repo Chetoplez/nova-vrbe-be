@@ -69,7 +69,7 @@ function Modal(props){
                     
                     {props.lista.map((opt)=>{
                         return(
-                            <MenuItem value={opt.characterId} name={opt.characterName}>{opt.characterName}</MenuItem>
+                            <MenuItem value={opt.characterId} name={opt.characterName}>{opt.characterName+' '+opt.characterSurname}</MenuItem>
                         );}
                     )}
                 </Select>

@@ -55,6 +55,7 @@ public class GuildUtils {
         newMember.setGUILD_ID(tmp.getGuildId());
         newMember.setGUILD_LEVEL(tmp.getGuildLevel());
         newMember.setCHARACTER_NAME(tmp.getCharacterName());
+        newMember.setCHARACTER_SURNAME(tmp.getCharacterSurname());
         newMember.setROLE_IMG(tmp.getRoleImg());
         newMember.setROLE_NAME(tmp.getRoleName());
         newMember.setROLESALARY(tmp.getRoleSalary());

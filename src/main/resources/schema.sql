@@ -93,6 +93,7 @@ SELECT
  GR.ROLEID AS ROLEID,
  CH.CHARACTER_ID AS CHARACTERID,
  CH.CHARACTER_NAME AS CHARACTERNAME,
+ CH.CHARACTER_SURNAME AS CHARACTERSURNAME,
  GR.GUILDLEVEL AS GUILDLEVEL,
  GR.NAME AS ROLENAME,
  GR.ROLE_IMG AS ROLEIMG,
@@ -153,7 +154,7 @@ CREATE TABLE Luoghi(
 
 CREATE VIEW `V_PRESENTI` AS
 SELECT
-pres.idLuogo,loc.nomeLuogo,ch.CHARACTER_NAME as characterName,ch.CHARACTER_ID as characterId,ch.CHARACTER_IMG AS CHARACTERIMG,pres.messaggio,pres.available, pres.Online
+pres.idLuogo,loc.nomeLuogo,ch.CHARACTER_NAME as characterName,ch.CHARACTER_SURNAME as characterSurname ,ch.CHARACTER_ID as characterId,ch.CHARACTER_IMG AS CHARACTERIMG,pres.messaggio,pres.available, pres.Online
 FROM
 presentiluogo AS PRES
 JOIN characters AS CH

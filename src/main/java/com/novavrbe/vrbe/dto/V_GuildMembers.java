@@ -24,6 +24,9 @@ public class V_GuildMembers {
     @Column(name = "CHARACTERNAME")
     private String characterName;
 
+    @Column(name = "CHARACTERSURNAME")
+    private String characterSurname;
+
     @Column(name = "GUILDLEVEL")
     private Integer guildLevel;
 

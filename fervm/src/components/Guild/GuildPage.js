@@ -98,7 +98,8 @@ function GuildPage(props) {
 
     return(
         <div className="guildContainer ">
-            <div className="infoGuild w3-half contenitori">
+            <div className="infoGuild colonna-sx">
+                <div className='contenitori'>
                 <div className="w3-third">
                     <div><h2>{guild.name}</h2></div>
                     <div>{guild.description}</div>
@@ -110,6 +111,7 @@ function GuildPage(props) {
                         isManager={manager}
                         idGilda={idGilda}
                         setfresh={setIsFresh} isFresh={isFresh} />
+                </div>
                 </div>
             </div>
             {enrolled ?

@@ -114,7 +114,7 @@ function ActiveChat(props) {
             <div className="info-azione">
             
                 <div className="row-infopg">
-                {( mainContext.roles.includes("NARRATOR") || mainContext.roles.includes("ADMIN") ) ? <CancelOutlinedIcon onClick={()=>{console.log(azione.azione.id)}} style ={{color: '#aa3232', fontSize:'14px'}}/>: null}
+                {( mainContext.roles.includes("ROLE_NARRATOR") || mainContext.roles.includes("ROLE_ADMIN") ) ? <CancelOutlinedIcon onClick={()=>{console.log(azione.azione.id)}} style ={{color: '#aa3232', fontSize:'14px'}}/>: null}
                     <img className="img-chat" src={azione.azione.img} alt="test"/>
                      <div style={{marginLeft:'5px'}}><Link to={"/game/profilo/"+azione.azione.characterId}><strong>{azione.azione.sender}</strong></Link></div>
                         { azione.azione.tooltip_carica === 'nessuna' ? null: <Tooltip

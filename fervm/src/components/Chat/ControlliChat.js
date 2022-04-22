@@ -44,7 +44,7 @@ function ControlliChat(props) {
             chatId: props.chatId,
             chatMessage: {
                 "action": button,
-                "sender": mainContext.user.characterName,
+                "sender": mainContext.user.characterName+' '+mainContext.user.characterSurname,
                 "characterId": mainContext.user.characterId,
                 "receiver": "",
                 
@@ -69,7 +69,7 @@ function ControlliChat(props) {
                     "charachterId": mainContext.user.characterId,
                     "statName": value,
                     "img": mainContext.user.characterImg,
-                    "sender": mainContext.user.characterName,
+                    "sender": mainContext.user.characterName + ' '+mainContext.user.characterSurname,
                     "tag": tag,
                 }
                 rollTheDice(dadiPayload);
@@ -181,7 +181,7 @@ function ControlliChat(props) {
                         onChange={setSussurro}>
                         {presentiChat.map((opt) => {
                             return (
-                                <MenuItem key={opt.charachterId} value={opt.characterName} name={opt.characterName}>{opt.characterName}</MenuItem>
+                                <MenuItem key={opt.charachterId} value={opt.characterName+ ' '+mainContext.user.characterSurname} name={opt.characterName}>{opt.characterName+ ' '+mainContext.user.characterSurname}</MenuItem>
                             );
                         }
                         )}
@@ -228,7 +228,7 @@ function ControlliChat(props) {
                     <ToggleButton value="Dadi" className='ctrl-btn-S'>
                         Dadi
                     </ToggleButton>
-                    {(mainContext.roles.includes("ROLE_NARRATOR") || mainContext.roles.includes("ADMIN")) ? <ToggleButton value="Narra" className='ctrl-btn-S'>Narra </ToggleButton> : null}
+                    {(mainContext.roles.includes("ROLE_NARRATOR") || mainContext.roles.includes("ROLE_ADMIN")) ? <ToggleButton value="Narra" className='ctrl-btn-S'>Narra </ToggleButton> : null}
                     <ToggleButton value="Attacca" className='ctrl-btn-M' >
                         Attacca
                     </ToggleButton>

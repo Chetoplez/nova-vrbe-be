@@ -61,7 +61,7 @@ function GuildMemberSection(props) {
 
     return(
         <div>
-            <h3>{myRole.character_NAME}</h3>
+            <h3>{myRole.character_NAME + ' ' + myRole.character_SURNAME}</h3>
             <div className="w3-row">
                 <div className="w3-content w3-half" style={{display:"flex" , alignItems:"center"}}>
                     <Avatar src={myRole.role_IMG} className={classes.guildBadge}></Avatar>
@@ -70,7 +70,7 @@ function GuildMemberSection(props) {
                         <p>Salario : {myRole.rolesalary} sz / giorno</p>
                     </div>
                 </div>
-                <div className="w3-content w3-half">
+                <div className="w3-content d-flex" style={{justifyContent:'space-between'}}>
                     <p>{(mainContext.roles.includes("ROLE_ADMIN") || props.manager) && (<button className='main-btn-M'>Banca</button>)}</p>
                     <p>{props.enrolled && (<button onClick={getStipendio} className='main-btn-M'>Ritira Paga</button>)}</p>
                 </div>
