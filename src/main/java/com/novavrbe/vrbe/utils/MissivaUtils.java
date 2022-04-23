@@ -34,4 +34,20 @@ public class MissivaUtils {
 
         return temp;
     }
+
+    public static MissivaDto prepareMissivaDto(Missiva missiva) {
+        MissivaDto dto = new MissivaDto();
+
+        dto.setBody(missiva.getBody());
+        dto.setSubject(missiva.getSubject());
+        dto.setType(missiva.getType());
+        dto.setRead(false);
+        dto.setChFrom(missiva.getFrom().getCharacterId());
+        dto.setChTo(missiva.getTo().getCharacterId().toString());
+        dto.setSentAt(missiva.getSentAt());
+        dto.setReceivedAt(missiva.getReceivedAt());
+        dto.setDeleted(false);
+        return dto;
+
+    }
 }

@@ -21,4 +21,9 @@ public class MissiveRepositoryService {
         else
             return missivaDtos;
     }
+
+    public MissivaDto sendMissiva(MissivaDto dto) {
+        return  missiveRepository.save(dto);
+
+    }
 }
