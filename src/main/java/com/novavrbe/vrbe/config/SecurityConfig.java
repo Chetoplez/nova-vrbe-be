@@ -81,6 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manifest.json").permitAll()
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/assets/**").permitAll()
+                .antMatchers("/missive/**").permitAll()
 
                 // Our private endpoints
                 .antMatchers("/forum/create", "/forum/subforum/create","/forum/edit","/forum/delete",
