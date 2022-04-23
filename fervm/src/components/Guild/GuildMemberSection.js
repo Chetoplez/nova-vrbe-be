@@ -3,7 +3,7 @@ import axios from 'axios'
 import {userContext} from '../../utils/userContext';
 import {Avatar, makeStyles } from '@material-ui/core';
 import store  from 'store';
-import { API_URL } from '../../utils/api';
+import { API_URL, getJwt } from '../../utils/api';
 import useMessage from '../../utils/useMessage';
 
 const useStyles = makeStyles({
@@ -30,7 +30,7 @@ function GuildMemberSection(props) {
     useEffect(()=>{
         axios.get(API_URL.GUILD+"/members/getinfo="+mainContext.user.characterId, {
             headers: {
-              'Authorization': 'Fervm '+store.get('jwt')
+              'Authorization': 'Fervm '+getJwt()
             }})
         .then(resp=>{
             setMyRole(resp.data.member);

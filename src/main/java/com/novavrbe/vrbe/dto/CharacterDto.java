@@ -40,6 +40,6 @@ public class CharacterDto {
     @Column(name = "HEALTH_STATUS")
     private String healthStatus;
     @Column
-    private String role;
+    private String role; //ruolo del pg dentro la land. Possibili stati: COMMON,
 
 }

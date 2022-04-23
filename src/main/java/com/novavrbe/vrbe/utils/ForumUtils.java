@@ -33,12 +33,12 @@ public class ForumUtils {
         return newForumDto;
     }
 
-    public static SubForumDTO createSubforumDTO(SubForum subForum) {
+    public static SubForumDTO createSubforumDTO(SubForum subForum, Integer owner) {
         SubForumDTO dto = new SubForumDTO();
         dto.setAdminOnly(subForum.isAdminOnly());
         dto.setName(subForum.getName());
         dto.setForumId(subForum.getForumId());
-        dto.setOwnedBy( subForum.getOwnedBy() == null ? -1 : subForum.getOwnedBy());
+        dto.setOwnedBy(owner); //ogni sotto-sezione DEVE appartenere allo stesso owner del padre
         dto.setRankVisibility(subForum.getRankVisibility());
         dto.setSubforumType(subForum.getSubforumType());
         return dto;

@@ -53,12 +53,12 @@ function CreateSubforum(){
       } 
 
     const handleRank = event => {
-        console.log(event.target.value)
+        //console.log(event.target.value)
         setRanklevel(event.target.value);
        };
 
     const handleChange = event => {
-        console.log(event.target.value)
+        //console.log(event.target.value)
         setOwnedBy(event.target.value);
        };
 
@@ -93,12 +93,12 @@ function CreateSubforum(){
                     >
                     <MenuItem value='10' name="Pubblica">Tutti</MenuItem>
                     <MenuItem value='20' name="PrimoGrado">Secondo Livello gilda</MenuItem>
-                    <MenuItem value='30' name="Pubblica">Tero Livello Gilda</MenuItem>
+                    <MenuItem value='30' name="Pubblica">Terzo Livello Gilda</MenuItem>
                     <MenuItem value='40' name="Pubblica">Quarto Livello Gilda</MenuItem>
                     <MenuItem value='50' name="Pubblica">Capo gilda</MenuItem>                    
                 </Select>
             </FormControl>
-            <FormControl>
+            {/* <FormControl>
                 <InputLabel htmlFor="nome-gilda">Appartiene a: </InputLabel>
                 <Select
                     name='ownedBy'
@@ -114,7 +114,7 @@ function CreateSubforum(){
                         );}
                     )}
                 </Select>
-            </FormControl>
+            </FormControl> */}
             <p>
                 <button type='submit' className='main-btn-M'>Crea</button>
                 <button type='button' className='main-btn-M' onClick={()=>{navigate("/game/forum/subforums/"+param.idForum)}}>Indietro</button>

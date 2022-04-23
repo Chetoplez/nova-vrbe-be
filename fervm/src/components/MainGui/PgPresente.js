@@ -44,11 +44,13 @@ const useStyles = makeStyles({
   bigAvatar: {
     width: 45,
     height: 45,
+    border: "2px solid goldenrod"
   },
 
   smallAvatar:{
     width: 35,
     height: 35,
+    border: "1px solid goldenrod"
   }
 });
 

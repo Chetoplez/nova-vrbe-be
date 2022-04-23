@@ -38,6 +38,8 @@ public class SubForumBusiness {
     public ResponseEntity<CreateSubForumResponse> createSubForum(CreateSubForumRequest request) {
         ResponseEntity<CreateSubForumResponse> response;
         CreateSubForumResponse subForumResponse = new CreateSubForumResponse();
+        ForumDTO forum = forumRepositoryService.getForumById(request.getSubForum().getForumId());
+
         if(isProtectedForum(request.getSubForum().getForumId())){
             if(!StringUtils.hasText(request.getSubForum().getName()) || request.getSubForum().getName().length()>150){
                 //non andiamo bene
@@ -54,7 +56,7 @@ public class SubForumBusiness {
                 return response;
             }
             //creo un subforum di un forum ADMIN
-            SubForumDTO newSub = ForumUtils.createSubforumDTO(request.getSubForum());
+            SubForumDTO newSub = ForumUtils.createSubforumDTO(request.getSubForum(), forum.getForumId());
             Integer subId =  subforumRepositoryService.createSubForum(newSub);
             subForumResponse.setSubforumId(subId);
             subForumResponse.setMessage("Nuova sezione Creata con Successo");
@@ -62,7 +64,7 @@ public class SubForumBusiness {
             return response;
         }
         if(StringUtils.hasText(request.getSubForum().getName()) || request.getSubForum().getName().length()<150){
-        SubForumDTO newSub = ForumUtils.createSubforumDTO(request.getSubForum());
+        SubForumDTO newSub = ForumUtils.createSubforumDTO(request.getSubForum(),forum.getForumId());
         Integer subId =  subforumRepositoryService.createSubForum(newSub);
         subForumResponse.setSubforumId(subId);
         subForumResponse.setMessage("Nuova sezione Creata con Successo");
@@ -138,6 +140,7 @@ public class SubForumBusiness {
     public ResponseEntity<CreateSubForumResponse> editSubForum(EditSubForumRequest request) {
         ResponseEntity<CreateSubForumResponse> response;
         CreateSubForumResponse subForumResponse = new CreateSubForumResponse();
+
         if(!isAdmin(request.getChId())){
             subForumResponse.setMessage("non sei autorizzato a fare Edit");
             subForumResponse.setSubforumId(-1);
@@ -150,7 +153,7 @@ public class SubForumBusiness {
             response = new ResponseEntity<>(subForumResponse,HttpStatus.BAD_REQUEST);
             return response;
         }
-        SubForumDTO dto = ForumUtils.createSubforumDTO(request.getSubForum());
+        SubForumDTO dto = ForumUtils.createSubforumDTO(request.getSubForum(), request.getSubForum().getOwnedBy());
         dto.setSubforumId(request.getSubforumId());
         subForumResponse.setSubforumId(subforumRepositoryService.editSubForum(dto));
         subForumResponse.setMessage("Sezione Modificata");

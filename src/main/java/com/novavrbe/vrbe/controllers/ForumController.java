@@ -27,6 +27,8 @@ public class ForumController {
         return forumBusiness.getAllForums(chId);
     }
 
+
+
     @PutMapping("/create")
     public ResponseEntity<CreateForumResponse> createNewForum(@RequestBody CreateForumRequest request){
         return forumBusiness.createNewForum(request);
