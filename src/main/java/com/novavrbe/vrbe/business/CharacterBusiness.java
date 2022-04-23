@@ -345,4 +345,25 @@ public class CharacterBusiness {
 
     }
 
+    /**
+     * Torna la lista di tutti i pg della land.
+     * @return
+     */
+    public ResponseEntity<GetAllCharacterResponse> getAllCharacters() {
+        ResponseEntity<GetAllCharacterResponse> response;
+        GetAllCharacterResponse characterResponse = new GetAllCharacterResponse();
+        ArrayList<CharacterDto> dtos = characterRepositoryService.getAllCharacters();
+        ArrayList<SmallCharacter> characters = new ArrayList<>();
+        for (CharacterDto dto: dtos) {
+            SmallCharacter temp = new SmallCharacter();
+            temp.setCharacterId(dto.getCharacterId());
+            temp.setCharacterName(dto.getCharacterName());
+            temp.setCharacterSurname(dto.getCharacterSurname());
+            temp.setCharacterImg(dto.getCharacterImg());
+            characters.add(temp);
+        }
+        characterResponse.setCharacterList(characters);
+        response = new ResponseEntity<>(characterResponse, HttpStatus.OK);
+        return response;
+    }
 }

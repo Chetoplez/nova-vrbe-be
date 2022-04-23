@@ -360,4 +360,8 @@ public class CharacterRepositoryService {
         }
         return false;
     }
+
+    public ArrayList<CharacterDto> getAllCharacters() {
+        return (ArrayList<CharacterDto>) characterRepository.findAll();
+    }
 }

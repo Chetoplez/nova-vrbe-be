@@ -2,6 +2,7 @@ package com.novavrbe.vrbe.controllers;
 
 import com.novavrbe.vrbe.business.CharacterBusiness;
 import com.novavrbe.vrbe.models.charactercontroller.*;
+import com.novavrbe.vrbe.models.charactermodels.GetAllCharacterResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,11 @@ public class CharacterController {
     @GetMapping("/getcharacter/{characterId}")
     public ResponseEntity<GetCharacterResponse> getCharacter(@PathVariable String characterId){
         return characterBusiness.getCharacter(characterId);
+    }
+
+    @GetMapping("/getcharacterlist")
+    public ResponseEntity<GetAllCharacterResponse> getAllCharacters(){
+        return characterBusiness.getAllCharacters();
     }
 
     @GetMapping("/getcharacter/unemployed")
