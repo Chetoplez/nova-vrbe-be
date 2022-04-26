@@ -42,5 +42,6 @@ export const API_URL = {
     'FORUM': 'http://localhost:8080/forum',
     'SUBFORUM': 'http://localhost:8080/forum/subforum',
     'POST' : 'http://localhost:8080/forum/post',
-    'COMMENT': 'http://localhost:8080/forum/comment'
+    'COMMENT': 'http://localhost:8080/forum/comment',
+    'MISSIVE': 'http://localhost:8080/missive'
 }

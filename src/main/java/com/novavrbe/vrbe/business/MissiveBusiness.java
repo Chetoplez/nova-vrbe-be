@@ -2,10 +2,7 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.MissivaDto;
-import com.novavrbe.vrbe.models.missivecontroller.GetMissiveResponse;
-import com.novavrbe.vrbe.models.missivecontroller.Missiva;
-import com.novavrbe.vrbe.models.missivecontroller.SendMissivaRequest;
-import com.novavrbe.vrbe.models.missivecontroller.SendMissiveResponse;
+import com.novavrbe.vrbe.models.missivecontroller.*;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.MissiveRepositoryService;
 import com.novavrbe.vrbe.utils.MissivaUtils;
@@ -76,10 +73,51 @@ public class MissiveBusiness {
         return response;
     }
 
+    /**
+     * Controlla se nella inbox ci sono dei messaggi con isRead = 0
+     * @param chId
+     * @return
+     */
+    public ResponseEntity<CheckInboxResponse> checkInbox(Integer chId) {
+        ResponseEntity<CheckInboxResponse> response;
+        CheckInboxResponse inboxResponse = new CheckInboxResponse();
+        if(chId == null){
+            response = new ResponseEntity<>(inboxResponse,HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        ArrayList<MissivaDto> newMailDto =  missiveRepositoryService.checkNewMail(chId);
+        inboxResponse.setNewMail(!newMailDto.isEmpty());
+        inboxResponse.setNNewMail(newMailDto.size());
+
+        response = new ResponseEntity<>(inboxResponse,HttpStatus.OK);
+        return response;
+    }
+
+    /**
+     * Modifica la lettura delle missive
+     * @param request
+     * @return
+     */
+    public ResponseEntity<ReadMissivaResponse> readMissive(ReadMissivaRequest request) {
+        ResponseEntity<ReadMissivaResponse> response;
+        ReadMissivaResponse missivaResponse = new ReadMissivaResponse();
+        if(request.getIdMissive() == null || request.getIdMissive().size() == 0){
+            response = new ResponseEntity<>(missivaResponse, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        ArrayList<MissivaDto> toReadDto = missiveRepositoryService.getMissiveList(request.getIdMissive());
+        for (MissivaDto dto: toReadDto ) {
+            dto.setRead(true);
+        }
+        missiveRepositoryService.saveAll(toReadDto);
+        missivaResponse.setMessaggio("Missive lette");
+        missivaResponse.setSucces(true);
+        response = new ResponseEntity<>(missivaResponse,HttpStatus.OK);
+        return response;
+    }
+
 
     //public ResponseEntity<DeleteMissiveResponse> deleteMissive(DeleteMissiveRequest request) {
     //}
-//
-    //public ResponseEntity<CheckInboxResponse> checkInbox(String chId) {
-    //}
+
 }

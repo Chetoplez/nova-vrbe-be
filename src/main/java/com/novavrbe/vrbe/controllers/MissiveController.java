@@ -1,9 +1,7 @@
 package com.novavrbe.vrbe.controllers;
 
 import com.novavrbe.vrbe.business.MissiveBusiness;
-import com.novavrbe.vrbe.models.missivecontroller.GetMissiveResponse;
-import com.novavrbe.vrbe.models.missivecontroller.SendMissivaRequest;
-import com.novavrbe.vrbe.models.missivecontroller.SendMissiveResponse;
+import com.novavrbe.vrbe.models.missivecontroller.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,15 +22,20 @@ public class MissiveController {
     public ResponseEntity<SendMissiveResponse> sendMissiva(@RequestBody SendMissivaRequest request){
         return missiveBusiness.sendMissiva(request);
     }
+
+    @PatchMapping("/read")
+    public ResponseEntity<ReadMissivaResponse> readMissiva(@RequestBody ReadMissivaRequest request){
+        return missiveBusiness.readMissive(request);
+    }
 //
     //@DeleteMapping("/delete")
     //public ResponseEntity<DeleteMissiveResponse> deleteMissive (@RequestBody DeleteMissiveRequest request){
     //    return missiveBusiness.deleteMissive(request);
     //}
 //
-    //@GetMapping("/checkinbox/{chId}")
-    //public ResponseEntity<CheckInboxResponse> checkInbox (@PathVariable String chId) {
-    //    return missiveBusiness.checkInbox(chId);
-    //}
+    @GetMapping("/checkinbox/{chId}")
+    public ResponseEntity<CheckInboxResponse> checkInbox (@PathVariable Integer chId) {
+        return missiveBusiness.checkInbox(chId);
+    }
 
 }

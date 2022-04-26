@@ -26,4 +26,20 @@ public class MissiveRepositoryService {
         return  missiveRepository.save(dto);
 
     }
+
+    public ArrayList<MissivaDto> checkNewMail(Integer chId) {
+        ArrayList<MissivaDto> missivaDtos = missiveRepository.findByChToAndDeletedFalseAndIsReadFalse(chId.toString());
+        if(missivaDtos == null)
+            return new ArrayList<>();
+        else
+            return missivaDtos;
+    }
+
+    public ArrayList<MissivaDto> getMissiveList(ArrayList<Integer> array) {
+        return (ArrayList<MissivaDto>) missiveRepository.findAllById(array);
+    }
+
+    public void saveAll(ArrayList<MissivaDto> toReadDto) {
+        missiveRepository.saveAll(toReadDto);
+    }
 }
