@@ -10,13 +10,12 @@ import com.novavrbe.vrbe.repositories.CharacterStatisticRepository;
 import com.novavrbe.vrbe.repositories.CharacterTemporaryEffectsRepository;
 import com.novavrbe.vrbe.dto.DailyExpDto;
 import com.novavrbe.vrbe.repositories.CharacterRepository;
-import com.novavrbe.vrbe.repositories.ChatRepository;
+import com.novavrbe.vrbe.repositories.ChatMessageRepository;
 import com.novavrbe.vrbe.repositories.DailyExpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ import java.util.Optional;
 public class ChatRepositoryService {
 
     @Autowired
-    private ChatRepository chatRepository;
+    private ChatMessageRepository chatMessageRepository;
     @Autowired
     private CharacterStatisticRepository statisticRepository;
     @Autowired
@@ -53,7 +52,7 @@ public class ChatRepositoryService {
      * @return il messaggio appena inserito.
      */
     public ChatMessageDto addNewChatMessage(ChatMessageDto newMessage){
-        return chatRepository.save(newMessage) ;
+        return chatMessageRepository.save(newMessage) ;
     }
 
     /**
@@ -63,12 +62,12 @@ public class ChatRepositoryService {
      * @return la lista dei messaggi di quella chat partendo dal time.now - la windows
      */
     public List<ChatMessageDto> getChatMessages(Integer id, Long window) {
-        return chatRepository.findByChatIdAndTimestampGreaterThan(id, window);
+        return chatMessageRepository.findByChatIdAndTimestampGreaterThan(id, window);
     }
 
     public boolean isUpdated(Integer chatId, Long lastUpdate){
         List<ChatMessageDto> newMessages = new ArrayList<>();
-        newMessages = chatRepository.findByChatIdAndTimestampGreaterThan(chatId,lastUpdate);
+        newMessages = chatMessageRepository.findByChatIdAndTimestampGreaterThan(chatId,lastUpdate);
         return newMessages.size() > 0;
     }
 
