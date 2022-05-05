@@ -7,9 +7,10 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Tooltip } from '@material-ui/core';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import CreateIcon from '@mui/icons-material/Create';
 
 
-function MissiveInbox({ chId, setMissiva }){
+function MissiveInbox({ chId, setMissiva, setNewMissiva }){
 
     const [missiveList, setMissiveList] = useState([])
     const [isLoading , setLoading]=useState(true);
@@ -85,8 +86,11 @@ function MissiveInbox({ chId, setMissiva }){
 
     return(
         <div className="contenitori">
-            <header>
+            <header className="d-flex" >
                 <h3>Missive in Arrivo: {missiveList.length}</h3>
+                <IconButton type="button" onClick={()=>{setNewMissiva(true)}}>
+                    <CreateIcon />
+                </IconButton>
             </header>
            
             <div>
