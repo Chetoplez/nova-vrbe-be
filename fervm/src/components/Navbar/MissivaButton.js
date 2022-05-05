@@ -14,7 +14,7 @@ function MissivaButton ({ chId }) {
 
 
         const interval = setInterval(()=>{
-            console.log("MissivaButton")
+            //console.log("MissivaButton")
             axios.get(API_URL.MISSIVE + '/checkinbox/'+chId ).then(resp=>{
                 setNewMissive(resp.data.nnewMail)
             })

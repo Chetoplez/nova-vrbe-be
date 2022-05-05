@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import InfoLuogo from './InfoLuogo.js';
 import '../Navbar/Nav.css';
 import UserBtn from './UserBtn';
-import MissivaIcon from '../../img/buttons/Button-Circle-MessageOn.svg'
 import HambIcon from '../../img/hamburgerIcon.png'
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
@@ -40,7 +39,7 @@ function Nav(props) {
                 <div className="w3-bar-item w3-hide-small"><Link to="/game/forum">Bacheca</Link></div>
                 <div className="w3-bar-item w3-hide-small"><Link to="/game/corporazioni">Corporazioni</Link></div>
                 {/* <div className="w3-bar-item w3-hide-small"><Link to="#"><img className="icon-class" src={MissivaIcon} alt="missiva" ></img></Link></div> */}
-                <div className="w3-bar-item w3-hide-small"><Link to="#"><MissivaButton chId = {mainContext.user.characterId} /></Link></div>
+                <div className="w3-bar-item w3-hide-small"><Link to="/game/missive"><MissivaButton chId = {mainContext.user.characterId} /></Link></div>
                 
                 <div className="w3-bar-item w3-hide-small"><UserBtn /></div>
                 <div className="w3-hide-large w3-hide-medium">
