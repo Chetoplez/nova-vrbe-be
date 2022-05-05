@@ -27,12 +27,12 @@ public class MissiveController {
     public ResponseEntity<ReadMissivaResponse> readMissiva(@RequestBody ReadMissivaRequest request){
         return missiveBusiness.readMissive(request);
     }
-//
-    //@DeleteMapping("/delete")
-    //public ResponseEntity<DeleteMissiveResponse> deleteMissive (@RequestBody DeleteMissiveRequest request){
-    //    return missiveBusiness.deleteMissive(request);
-    //}
-//
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<DeleteMissiveResponse> deleteMissive (@RequestBody DeleteMissiveRequest request){
+        return missiveBusiness.deleteMissive(request);
+    }
+
     @GetMapping("/checkinbox/{chId}")
     public ResponseEntity<CheckInboxResponse> checkInbox (@PathVariable Integer chId) {
         return missiveBusiness.checkInbox(chId);

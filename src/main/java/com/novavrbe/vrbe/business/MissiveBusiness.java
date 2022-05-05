@@ -117,7 +117,22 @@ public class MissiveBusiness {
     }
 
 
-    //public ResponseEntity<DeleteMissiveResponse> deleteMissive(DeleteMissiveRequest request) {
-    //}
+    public ResponseEntity<DeleteMissiveResponse> deleteMissive(DeleteMissiveRequest request) {
+        ResponseEntity<DeleteMissiveResponse> response;
+        DeleteMissiveResponse missivaResponse = new DeleteMissiveResponse();
+        if(request.getIdMissive() == null || request.getIdMissive().size() == 0){
+            response = new ResponseEntity<>(missivaResponse, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        ArrayList<MissivaDto> toDeleteDto = missiveRepositoryService.getMissiveList(request.getIdMissive());
+        for (MissivaDto dto: toDeleteDto ) {
+            dto.setDeleted(true);
+        }
+        missiveRepositoryService.saveAll(toDeleteDto);
+        missivaResponse.setMessaggio("Missive eliminate");
+        missivaResponse.setSucces(true);
+        response = new ResponseEntity<>(missivaResponse,HttpStatus.OK);
+        return response;
+    }
 
 }
