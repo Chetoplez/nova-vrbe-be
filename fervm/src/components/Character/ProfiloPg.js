@@ -85,8 +85,9 @@ function ProfiloPg() {
                     var user = {
                         characterId: response.data.character.characterId,
                         characterName: response.data.character.characterName,
+                        characterSurname: response.data.character.characterSurname,
                         characterImg: response.data.character.characterImg
-                    }
+                      }
                     mainContext.setUser(user);
                     store.remove('user');
                     store.set('user', user);

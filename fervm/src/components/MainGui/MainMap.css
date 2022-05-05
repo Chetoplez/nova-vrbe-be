@@ -4,19 +4,8 @@
   min-height: calc(100vh - 220px);
 }
 
-area {
-  border: 5px solid blueviolet;
-  background-color: rgb(196, 146, 243);
-  cursor: zoom-in;
-}
-
-map {
-  width: 400px;
-  height: 500px;
-}
-
 .map {
-  background-image: url('../../img/testMappa.jpg'); 
+  background-image: url('../../img/main_map.png'); 
   background-repeat: no-repeat;
   width: 100%;
   background-size: cover;
@@ -27,39 +16,32 @@ map {
     width: 25px;
     background-color: transparent;
     border-radius: 50%;
-    border-color: wheat;
+    border-color: rgb(34, 9, 255);
     border-style: dotted;
     display: inline-block;
-    position: relative;
-    top: 307px;
-    left: 515px;
+    position: absolute;  
   }
+
+  .dot0{
+    top: 270px;
+    left: 490px;
+  }
+
   .dot1 {
-    height: 25px;
-    width: 25px;
-    background-color: transparent;
-    border-radius: 50%;
-    border-color: wheat;
-    border-style: dotted;
-    display: inline-block;
-    position: relative;
-    top: 190px;
-    left: 678px;
+    top: 170px;
+    left: 500px;
   }
 
   .dot2 {
-    height: 25px;
-    width: 25px;
-    background-color: transparent;
-    border-radius: 50%;
-    border-color: wheat;
-    border-style: dotted;
-    display: inline-block;
-    position: relative;
-    top: 275px;
-    left: 848px;
+    top: 175px;
+    left: 150px;
+  }
+
+  .dot3 {
+    top: 337px;
+    left: 480px;
   }
 
 .dot:hover,.dot1:hover,.dot2:hover{
-     background-color: rgba(245, 222, 179, 0.397);
+     background-color: rgba(181, 179, 245, 0.397);
   }

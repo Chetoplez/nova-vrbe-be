@@ -46,7 +46,7 @@ function ElencoPresenti(props) {
     })
   
    return(
-       <div className="lista-presenti contenitori contenitori-dx">
+       <div className="lista-presenti contenitori">
            <h3>{presentiTotali} Ora a FERVM</h3>
            <UserMsg id={mainContext.user.characterId} type="message" oldImg={mainContext.user.characterImg} />
            <hr className='divisore'></hr>

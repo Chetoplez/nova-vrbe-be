@@ -19,6 +19,7 @@ import CreateSubforum from '../Bacheche/CreateSubforum';
 import CreatePost from '../Bacheche/CreatePost';
 import GuildBank from '../Guild/GuildBank';
 import PrivateGuildRoute from '../../utils/PrivateGuildRoute';
+import MissivaPage from '../Missive/MissivePage';
 
 /**
  * 
@@ -86,6 +87,9 @@ function Game() {
                             </PrivateGuildRoute>}>
                     </Route>
                   
+                    <Route
+                        exact path="/missive"
+                        element={<MissivaPage />}></Route>
 
                     <Route
                         exact path="/forum"

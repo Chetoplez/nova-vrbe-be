@@ -59,7 +59,7 @@ function InfoLuogo(props) {
                 </div>
                 <div className="w3-card badge-luogo w3-container" style={{display: isShow ? 'block': 'none' , position:'fixed'}}>
                     <img style={{maxWidth:'100%'}} src='http://www.cassiciaco.it/navigazione/africa/siti_archeologici/douggha/images/foro_map.jpg' />
-                    {luogo.descr}
+                    <span style={{color:'black'}}>{luogo.descr}</span>
                 </div>
             </div>
         </div>

@@ -100,12 +100,12 @@ function GuildPage(props) {
         <div className="guildContainer ">
             <div className="infoGuild colonna-sx">
                 <div className='contenitori'>
-                <div className="w3-third">
+                <div className="w3-half">
                     <div><h2>{guild.name}</h2></div>
                     <div>{guild.description}</div>
                 </div>
 
-                <div className="w3-twothird memberContainer">
+                <div className="w3-half memberContainer">
                     <GuildMembers
                         roleList={roleList}
                         isManager={manager}
