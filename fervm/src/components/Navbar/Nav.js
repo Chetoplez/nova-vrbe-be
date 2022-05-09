@@ -31,7 +31,7 @@ function Nav(props) {
     return (
         <div className='container'>
             <div className='chat-side w3-half'>
-                <span className="w3-header game-name"><Link to="/game/mainmap">FERVM</Link></span>
+                <span className="w3-header game-name">FERVM</span>
                 <InfoLuogo idLuogo={props.idLuogo} />
             </div>
             <div className='cmd-side w3-half'>

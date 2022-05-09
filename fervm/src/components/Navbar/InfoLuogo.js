@@ -58,8 +58,8 @@ function InfoLuogo(props) {
                     <span> 15° - Sereno , Vento Debole</span>
                 </div>
                 <div className="w3-card badge-luogo w3-container" style={{display: isShow ? 'block': 'none' , position:'fixed'}}>
-                    <img style={{maxWidth:'100%'}} src='http://www.cassiciaco.it/navigazione/africa/siti_archeologici/douggha/images/foro_map.jpg' />
-                    <span style={{color:'black'}}>{luogo.descr}</span>
+                    {/* <img style={{maxWidth:'100%'}} src='http://www.cassiciaco.it/navigazione/africa/siti_archeologici/douggha/images/foro_map.jpg' /> */}
+                    <span style={{color:'black' , whiteSpace: 'pre-wrap'}}>{luogo.descr}</span>
                 </div>
             </div>
         </div>
