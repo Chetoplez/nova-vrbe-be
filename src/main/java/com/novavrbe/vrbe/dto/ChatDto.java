@@ -27,5 +27,9 @@ public class ChatDto {
     private String expirationDate;
     @Column
     private Boolean fixed;
+    @Column
+    private Integer pos_x;
+    @Column
+    private Integer pos_y;
 
 }

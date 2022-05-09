@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
-
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
 
     @Autowired
     private ChatBusiness chatBusiness;
+
+    @GetMapping("/chatlist")
+    public ResponseEntity<GetChatListResponse> getChatList(){
+        return chatBusiness.getChatList();
+    }
 
     @PostMapping("/addmessage")
     public ResponseEntity<AddMessageResponse> addMessage(@RequestBody AddMessageRequest request){

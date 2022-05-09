@@ -1,8 +1,6 @@
 package com.novavrbe.vrbe.business;
 
-import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.dto.ChatMessageDto;
-import com.novavrbe.vrbe.dto.V_GuildMembers;
+import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.charactermodels.CharacterStatistic;
 import com.novavrbe.vrbe.models.chatcontroller.*;
 import com.novavrbe.vrbe.models.enumerations.ChatAction;
@@ -10,6 +8,7 @@ import com.novavrbe.vrbe.models.enumerations.Stat;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.ChatRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.LuoghiRepositoryService;
 import com.novavrbe.vrbe.utils.ChatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -18,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,10 +29,11 @@ public class ChatBusiness {
     private ChatRepositoryService chatRepositoryService;
 
     @Autowired
-    CharacterRepositoryService characterService;
+    private CharacterRepositoryService characterService;
     @Autowired
-    GuildRepositoryService guildService;
-
+   private GuildRepositoryService guildService;
+   @Autowired
+    private LuoghiRepositoryService luoghiRepositoryService;
     @Autowired
     private Environment env;
 
@@ -271,5 +272,26 @@ public class ChatBusiness {
     public ResponseEntity<AttackResponse> hitCharacter(AttackRequest request){
 
         return null;
+    }
+
+    public ResponseEntity<GetChatListResponse> getChatList() {
+        ResponseEntity<GetChatListResponse> response ;
+        GetChatListResponse chatListResponse = new GetChatListResponse();
+        ArrayList<Chat> listaChat = new ArrayList<>();
+        ArrayList<ChatDto> chatDtos = chatRepositoryService.getChatList();
+        for (ChatDto dto: chatDtos ) {
+            Chat temp = new Chat();
+            LuoghiDto luogo = luoghiRepositoryService.getLuogoById(dto.getIdLuogo());
+            temp.setIdChat(dto.getChatId());
+            temp.setNomeChat(luogo.getNomeLuogo());
+            temp.setPos_x(dto.getPos_x());
+            temp.setPos_y(dto.getPos_y());
+            temp.setPrivateChat(dto.getPrivateChat());
+            listaChat.add(temp);
+        }
+        chatListResponse.setChatList(listaChat);
+        response = new ResponseEntity<>(chatListResponse, HttpStatus.OK);
+        return response;
+
     }
 }

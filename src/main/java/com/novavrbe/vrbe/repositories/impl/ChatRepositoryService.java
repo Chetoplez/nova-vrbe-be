@@ -1,17 +1,9 @@
 package com.novavrbe.vrbe.repositories.impl;
 
-import com.novavrbe.vrbe.dto.CharacterStatisticsDto;
-import com.novavrbe.vrbe.dto.CharacterTemporaryEffectDto;
-import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.dto.ChatMessageDto;
+import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.charactermodels.CharacterStatistic;
 import com.novavrbe.vrbe.models.enumerations.Stat;
-import com.novavrbe.vrbe.repositories.CharacterStatisticRepository;
-import com.novavrbe.vrbe.repositories.CharacterTemporaryEffectsRepository;
-import com.novavrbe.vrbe.dto.DailyExpDto;
-import com.novavrbe.vrbe.repositories.CharacterRepository;
-import com.novavrbe.vrbe.repositories.ChatMessageRepository;
-import com.novavrbe.vrbe.repositories.DailyExpRepository;
+import com.novavrbe.vrbe.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -40,6 +32,9 @@ public class ChatRepositoryService {
 
     @Autowired
     private CharacterRepository characterRepository;
+
+    @Autowired
+    private ChatRepository chatRepository;
 
     @Autowired
     private Environment env;
@@ -161,5 +156,10 @@ public class ChatRepositoryService {
             characterRepository.save(pg);
         }
 
+    }
+
+    public ArrayList<ChatDto> getChatList() {
+        ArrayList<ChatDto> temp = (ArrayList<ChatDto>) chatRepository.findAll();
+        return temp;
     }
 }
