@@ -10,7 +10,7 @@ import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import CreateIcon from '@mui/icons-material/Create';
 
 
-function MissiveInbox({ chId, setMissiva, setNewMissiva }){
+function MissiveInbox({ chId, setMissiva, setSection }){
 
     const [missiveList, setMissiveList] = useState([])
     const [isLoading , setLoading]=useState(true);
@@ -50,6 +50,7 @@ function MissiveInbox({ chId, setMissiva, setNewMissiva }){
             })
     }
         setMissiva(missiva)
+        setSection('leggi')
     }
 
     const manageMissive = (action)=>{
@@ -88,7 +89,7 @@ function MissiveInbox({ chId, setMissiva, setNewMissiva }){
         <div className="contenitori">
             <header className="d-flex" >
                 <h3>Missive in Arrivo: {missiveList.length}</h3>
-                <IconButton type="button" onClick={()=>{setNewMissiva(true)}}>
+                <IconButton type="button" onClick={()=>{setSection('scrivi')}}>
                     <CreateIcon />
                 </IconButton>
             </header>

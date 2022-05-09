@@ -12,16 +12,16 @@ import { API_URL, getJwt, sanitazeHTML } from '../../utils/api';
 import { TextField } from '@material-ui/core';
 
 
-function WriteMissiva({ setNewMissiva }) {
+function WriteMissiva({ setSection , missiva } ) {
     const mainContext = useContext(userContext);
     const animatedComponents = makeAnimated();
     const [characterOption, setCharacterOption] = useState([{ value: "", label: "" }])
-    const [subject, setSubject] = useState("");
-    const [body, setBody] = useState("");
-    const [type, setType] = useState("ON")
-    const [to, setTo] = useState({})
+    const [subject, setSubject] = useState(missiva === undefined ? "" : 'RE: '+missiva.subject);
+    const [body, setBody] = useState(missiva === undefined ? "" : "\n\n--------\n["+missiva.body+']');
+    const [type, setType] = useState(missiva === undefined ? {value: "", label: ""} : { label: missiva.type, value: missiva.type})
+    const [to, setTo] = useState(missiva === undefined ? { value: "", label: "" } : {value: missiva.from.characterId , label: missiva.from.characterName +' '+missiva.from.characterSurname})
     const { addMessage } = useMessage();
-
+    console.log(missiva)
     useEffect(() => {
         axios.get(API_URL.CHARACTER + '/getcharacterlist',
             {
@@ -67,17 +67,17 @@ function WriteMissiva({ setNewMissiva }) {
                 },
                 from: mainContext.user,
                 body : sanitazeHTML(body),
-                subject: subject,
+                subject: sanitazeHTML(subject),
                 sentAt: Date.now(),
                 receivedAt: Date.now(),
                 isRead: false,
-                type: type
+                type: sanitazeHTML(type.value)
             }
         }
         axios.post(API_URL.MISSIVE +'/send' , payload)
         .then(resp=>{
             addMessage(resp.data.message);
-            setNewMissiva(false)
+            setSection('')
         }).catch(err=>{
             console.log(err)
         })
@@ -94,7 +94,7 @@ function WriteMissiva({ setNewMissiva }) {
                             onChange={handleChange}
                             closeMenuOnSelect={true}
                             components={animatedComponents}
-                            
+                            value= {to}
                             options={characterOption}
                         />
                     </div>
@@ -102,20 +102,20 @@ function WriteMissiva({ setNewMissiva }) {
                     <div>
                         <div className='d-flex' style={{ alignItems: 'center', marginTop: '10px', justifyContent: 'space-evenly' }}>
                             <strong>Oggetto:</strong>
-                            <TextField style={{ marginLeft: '20px' }} type="text" name="subject" onChange={handleSubject}></TextField>
+                            <TextField style={{ marginLeft: '20px' }} type="text" name="subject" onChange={handleSubject} value={subject}></TextField>
                             <strong>Tipo:</strong>
                             <Select
                             onChange={handleTypeChange}
                             closeMenuOnSelect={true}
                             components={animatedComponents}
-                            
+                            value= {type}
                             options={[{label: "ON", value: "ON"}, {label: 'OFF', value: 'OFF'}]}
                         />
                         </div>
                     </div>
                 </div>
                 <div className="w3-half">
-                    <IconButton className='w3-right' onClick={() => { setNewMissiva(false) }}>
+                    <IconButton className='w3-right' onClick={() => { setSection('') }}>
                         <CloseIcon />
                     </IconButton>
 
@@ -129,6 +129,7 @@ function WriteMissiva({ setNewMissiva }) {
                     name='body' 
                     className='postTextArea'
                     onChange={handleTextChange}
+                    value={sanitazeHTML(body)}
                     >
                     
              </textarea>

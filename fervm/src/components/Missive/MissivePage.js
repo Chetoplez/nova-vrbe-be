@@ -9,7 +9,29 @@ import './MissivePage.css'
 function MissivaPage() {
     const mainContext = useContext(userContext);
     const [missiva, setMissiva] = useState(null);
-    const [newMissiva , setNewMissiva] = useState(false);
+    const [section , setSection] = useState('');
+
+    const returnSection = ()=>{
+        var sezione = null
+        switch(section){
+            case 'leggi':
+                sezione = <DettaglioMissiva setSection={setSection} setMissiva={setMissiva} missiva={missiva} />
+                break;
+            case 'scrivi':
+                sezione = <WriteMissiva setSection={setSection}/>
+                break;
+            case 'rispondi':
+                sezione = <WriteMissiva missiva={missiva} setSection={setSection}/>
+                break;
+            case '':
+                sezione = null;
+                break;
+            default:
+                sezione = null;
+        }
+
+        return sezione;
+    }
 
     return(
         <div className='w3-row'>
@@ -17,14 +39,12 @@ function MissivaPage() {
                 <h3>Epistolario di {mainContext.user.characterName + ' ' + mainContext.user.characterSurname}</h3>
             </header>
             <section style={{marginRight:'5px'}} className='w3-quarter colonna-dx'>
-                <MissiveInbox setNewMissiva={setNewMissiva} setMissiva={setMissiva} chId={mainContext.user.characterId} />
+                <MissiveInbox setSection={setSection} setMissiva={setMissiva} chId={mainContext.user.characterId} />
             </section>
             <section  className='w3-threequarter colonna-sx'>
-                {newMissiva ? 
-                    <WriteMissiva setNewMissiva={setNewMissiva}/> :
-                    (missiva && <DettaglioMissiva setMissiva={setMissiva} missiva={missiva} />) }
+                { returnSection() }
             </section>
         </div>
     )
-
+    
 } export default MissivaPage;
