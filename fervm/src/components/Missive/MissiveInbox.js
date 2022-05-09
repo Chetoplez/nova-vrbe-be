@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Missiva from "./Missiva";
 import './MissivaInbox.css';
-import { API_URL } from "../../utils/api";
+import { API_URL, getJwt } from "../../utils/api";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Tooltip } from '@material-ui/core';
@@ -19,7 +19,10 @@ function MissiveInbox({ chId, setMissiva, setSection }){
     var orderedMissive = [].concat(missiveList).sort((a, b) => a.receivedAt < b.receivedAt ? 1 : -1);
 
     useEffect(()=>{
-        axios.get(API_URL.MISSIVE + '/getinbox/'+chId)
+        axios.get(API_URL.MISSIVE + '/getinbox/'+chId, {
+            headers: {
+              'Authorization': 'Fervm '+getJwt()
+            }})
         .then(resp=>{
             console.log(resp.data)
             setMissiveList(resp.data.missiveList)
@@ -61,7 +64,10 @@ function MissiveInbox({ chId, setMissiva, setSection }){
         if(checked.length > 0 ) {
             switch(action) {
             case 'delete':
-                axios.delete(API_URL.MISSIVE + '/delete',  {data: payload})
+                axios.delete(API_URL.MISSIVE + '/delete', {
+                    headers: {
+                      'Authorization': 'Fervm '+getJwt()
+                    }} , {data: payload})
                 .then(resp=>{        
                     if (resp.data.succes){
                         setChecked([-1])
@@ -70,7 +76,10 @@ function MissiveInbox({ chId, setMissiva, setSection }){
                 })
                 break;
             case 'read' :
-               axios.patch(API_URL.MISSIVE + '/read', payload)
+               axios.patch(API_URL.MISSIVE + '/read', payload,  {
+                headers: {
+                  'Authorization': 'Fervm '+getJwt()
+                }})
                 .then(resp=>{        
                     if (resp.data.succes){
                         setChecked([-1])

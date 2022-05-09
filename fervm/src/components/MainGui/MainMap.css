@@ -1,5 +1,4 @@
-.vrbe-mainMap {
-
+.fervm-mainMap {
 	display: flex;
   min-height: calc(100vh - 220px);
 }
@@ -16,7 +15,7 @@
     width: 25px;
     background-color: transparent;
     border-radius: 50%;
-    border-color: rgb(34, 9, 255);
+    border-color: rgb(230 163 59);
     border-style: dotted;
     display: inline-block;
     position: absolute;  

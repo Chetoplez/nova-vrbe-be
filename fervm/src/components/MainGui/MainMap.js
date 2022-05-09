@@ -1,4 +1,4 @@
-import React, { useEffect,useContext,useState } from 'react'
+import React, { useEffect,useContext,useState, useRef } from 'react'
 import {useNavigate,Link} from 'react-router-dom'
 import '../MainGui/MainMap.css';
 
@@ -7,7 +7,8 @@ import ElencoPresenti from './ElencoPresenti';
 import axios from 'axios'
 import {API_URL, getJwt} from '../../utils/api'
 import { userContext } from '../../utils/userContext'
-import { Tooltip } from '@material-ui/core';
+
+import ChatDot from './ChatDot';
 import mappa from '../../img/main_map.png'
 
 
@@ -20,8 +21,19 @@ function MainMap(props) {
     const navigate = useNavigate();
     const mainContext = useContext(userContext);
     const [dimension, setDimension] = useState({height: 0, width: 0})
+    const [chatList, setChatList] = useState([{}])
+    const [isLoading , setLoading]=useState(true);
+    const divRef = useRef();
     
-  useEffect(()=>{
+    const getDimension = () =>{
+        
+        const newWidth = divRef.current.clientWidth;
+        const newHeight = divRef.current.clientHeight;
+        setDimension({height:newHeight, width:newWidth})
+    }
+    
+
+    useEffect(()=>{
         const checkAuth = async () => {
             let res = mainContext.tryLoginUser()
             if (res) {
@@ -33,6 +45,18 @@ function MainMap(props) {
             }
         }
         checkAuth();
+        window.addEventListener("resize", getDimension);
+        
+        axios.get(API_URL.CHAT+'/chatlist' ,  {
+            headers: {
+                'Authorization': 'Fervm ' + getJwt()
+            }
+        }).then(resp=>{
+            console.log(resp.data.chatList)
+            setChatList(resp.data.chatList)
+            setLoading(false)
+            getDimension()
+        })
     },[])
 
     useEffect(()=>{
@@ -55,40 +79,36 @@ function MainMap(props) {
     },[])
 
 
-    const getDimension = ({target : img}) =>{
-            //console.log("suca",img.offsetHeight)
-            setDimension({height:img.offsetHeight,
-                width:img.offsetWidth})
+    if (isLoading) {
+        return <div className="Loading w3-card w3-center">Loading...</div>;
     }
+
+    
 
 
     return(
-    <div className="vrbe-mainMap">
+    <div className="fervm-mainMap">
        
          {/* <div className="map contenitori"  onLoad={getDimension}>
         
-            <div>
-                <Link to="/game/chat/1"><Tooltip title="Forum"><span className="dot dot0"></span></Tooltip></Link>
-                <Link to="/game/chat/2"><Tooltip title="Porta Decumana"><span className="dot dot1"></span></Tooltip></Link>
-                <Link to="/game/chat/3"><Tooltip title="Templum"><span className="dot dot2"></span></Tooltip></Link>
-                <Link to="/game/chat/4"><Tooltip title="Taberna"><span className="dot dot3"></span></Tooltip></Link>
-            </div>
+            <Link to="/game/chat/1"><Tooltip title="Forum"><span className="dot" style={{top:(dimension.height/100)*41 , left:(dimension.width/100)*52 }}></span></Tooltip></Link>
+            <Link to="/game/chat/2"><Tooltip title="Porta Decumana"><span className="dot" style={{top:(dimension.height/100)*27 , left:(dimension.width/100)*65 }}></span></Tooltip></Link>
+            <Link to="/game/chat/3"><Tooltip title="Templum"><span className="dot" style={{top:(dimension.height/100)*27 , left:(dimension.width/100)*36 }}></span></Tooltip></Link>
+            <Link to="/game/chat/4"><Tooltip title="Taberna"><span className="dot" style={{top:(dimension.height/100)*47 , left:(dimension.width/100)*63 }}></span></Tooltip></Link>
 
             
         </div>   */}
          
-         <div className='contenitori' style={{position: 'relative', textAlign:'center'}}>
-            <div>
-            <img style={{maxWidth:'85%', maxHeight: '80%'}} src={mappa} onLoad={getDimension} onChange={getDimension} />
-            
-            <Link to="/game/chat/1"><Tooltip title="Forum"><span className="dot" style={{top:(dimension.height/100)*42 , left:(dimension.width/100)*52 }}></span></Tooltip></Link>
-            <Link to="/game/chat/2"><Tooltip title="Porta Decumana"><span className="dot" style={{top:(dimension.height/100)*27 , left:(dimension.width/100)*58 }}></span></Tooltip></Link>
-            <Link to="/game/chat/3"><Tooltip title="Templum"><span className="dot" style={{top:(dimension.height/100)*26 , left:(dimension.width/100)*28 }}></span></Tooltip></Link>
-            <Link to="/game/chat/4"><Tooltip title="Taberna"><span className="dot" style={{top:(dimension.height/100)*44 , left:(dimension.width/100)*55 }}></span></Tooltip></Link>
+         <div className='map contenitori' style={{position: 'relative', textAlign:'center'}} ref={divRef}>
+            <div >
+                {/* <img style={{maxWidth:'85%', maxHeight: '80%'}} src={mappa} onLoad={getDimension} onChange={getDimension} /> */}
+                {
+                    chatList.map((chat)=>{
+                        return (<ChatDot key={chat.chatId} chat={chat} heigt={dimension.height} width={dimension.width} />)
+                    })
+                }            
             </div>
-        </div> 
-        
-        
+        </div>         
         <div className='colonna-dx'><ElencoPresenti  /></div>
     </div>
     )
