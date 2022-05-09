@@ -3,6 +3,16 @@
     height: 150px;
     font-family: inherit;
     margin-top: 10px;
+    border: 1px solid gold;
+    border-radius: 5px;
+}
+
+textarea:focus-visible{
+    outline:none;
+}
+.text:focus-visible {
+    border: 2px solid gold;
+    border-radius: 5px;
 }
 
 .MuiToggleButtonGroup-root{

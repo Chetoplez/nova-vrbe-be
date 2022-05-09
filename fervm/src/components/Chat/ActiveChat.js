@@ -28,10 +28,7 @@ function ActiveChat(props) {
 
    
     useEffect(()=>{
-                
-        setFresh(false)
         setLoading(false)
-        
         axios.get(API_URL.CHAT+"/ischatupdate/chatId="+props.chatId+"&timestamp="+tms,{
             headers: {
               'Authorization': 'Fervm '+store.get('jwt')
@@ -49,6 +46,7 @@ function ActiveChat(props) {
                 }})
             .then(resp=>{
                 if(resp.data.updated){
+                    console.log("updated:",resp.data.updated)
                     refreshChat(tms)
                  }
             })
@@ -67,7 +65,7 @@ function ActiveChat(props) {
             var newMsg = [];
             newMsg = resp.data.chatMessageList;
             setTms(newMsg[newMsg.length-1].timestamp);
-            //console.log("Messaggi", newMsg)
+            console.log("Messaggi", newMsg)
             if(newMsg.length > 1){
                 setChat(oldArray=> [...oldArray,...newMsg]);
                 setLoading(false)
@@ -75,7 +73,7 @@ function ActiveChat(props) {
             else{
             setChat(oldArray=> [...oldArray,resp.data.chatMessageList[newMsg.length-1]]);
         }
-            setFresh(true)
+        setFresh(!fresh)
           
         })
     }
@@ -93,9 +91,13 @@ function ActiveChat(props) {
           //Highlight text
           temp = temp.replace(/\[[^)]*?\]/g, '<span class="fervm-evidenziato">$&</span>')
           //higlight my name
-          var replace = props.nomePg;
+          var replace = mainContext.user.characterName;
           var re = new RegExp(replace,'gi');
-          temp = temp.replace(re,'<span class="fervmnome-evidenziato">'+props.nomePg+'</span>')
+          temp = temp.replace(re,'<span class="fervmnome-evidenziato">'+mainContext.user.characterName+'</span>')
+          //higlight my name
+          var replace = mainContext.user.characterSurname;
+          var re = new RegExp(replace,'gi');
+          temp = temp.replace(re,'<span class="fervmnome-evidenziato">'+mainContext.user.characterSurname+'</span>')
         return temp;
 
     }
@@ -115,11 +117,15 @@ function ActiveChat(props) {
             
                 <div className="row-infopg">
                 {( mainContext.roles.includes("ROLE_NARRATOR") || mainContext.roles.includes("ROLE_ADMIN") ) ? <CancelOutlinedIcon onClick={()=>{console.log(azione.azione.id)}} style ={{color: '#aa3232', fontSize:'14px'}}/>: null}
-                    <img className="img-chat" src={azione.azione.img} alt="test"/>
-                     <div style={{marginLeft:'5px'}}><Link to={"/game/profilo/"+azione.azione.characterId}><strong>{azione.azione.sender}</strong></Link></div>
+                    {/* <img className="img-chat" src={azione.azione.img} alt="test"/> */}
+                     <div style={{marginLeft:'5px'}}>
+                        <Link to={"/game/profilo/"+azione.azione.characterId}>
+                            <strong>{azione.azione.sender}</strong>
+                        </Link>
+                     </div>
                         { azione.azione.tooltip_carica === 'nessuna' ? null: <Tooltip
                         title={azione.azione.tooltip_carica}
-                        placement="top">
+                        placement="top-end">
                         <span> <img src={azione.azione.carica} alt="Carica" className="icon-carica" /></span>
                     </Tooltip>}
                     {azione.azione.tag === '' ? null : <div className="chat-tag">[{azione.azione.tag}]</div>}

@@ -229,9 +229,9 @@ function ControlliChat(props) {
                         Dadi
                     </ToggleButton>
                     {(mainContext.roles.includes("ROLE_NARRATOR") || mainContext.roles.includes("ROLE_ADMIN")) ? <ToggleButton value="Narra" className='ctrl-btn-S'>Narra </ToggleButton> : null}
-                    <ToggleButton value="Attacca" className='ctrl-btn-M' >
+                    {/* <ToggleButton value="Attacca" className='ctrl-btn-M' >
                         Attacca
-                    </ToggleButton>
+                    </ToggleButton> */}
                     <ToggleButton value="Sussurra" className='ctrl-btn-M'>
                         Sussurra
                     </ToggleButton>
