@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom'
 import { userContext } from '../../utils/userContext'
 import axios from 'axios';
 import {API_URL} from '../../utils/api';
+import { Tooltip } from '@mui/material';
 
 
 const StyledBadge = withStyles({
@@ -42,14 +43,14 @@ const useStyles = makeStyles({
   },
 
   bigAvatar: {
-    width: 45,
-    height: 45,
+    width: 55,
+    height: 55,
     border: "2px solid goldenrod"
   },
 
   smallAvatar:{
-    width: 35,
-    height: 35,
+    width: 45,
+    height: 45,
     border: "1px solid goldenrod"
   }
 });
@@ -68,7 +69,7 @@ function PgPresente(props) {
     const classes = useStyles()
     const [fresh, setFresh] = useState(true)
 
-    const tipoElenco = props.col === "2" ? "vrbe-badge-chat":"vrbe-badge-presente"
+    const tipoElenco = props.col === "2" ? "fervm-badge-chat":"fervm-badge-presente"
 
 
     useEffect(()=>{
@@ -141,10 +142,17 @@ function PgPresente(props) {
             
             </StyledBadge>
             
-          <div className={props.col === "2" ? "vrbe-small-nome-presenti":"vrbe-nome-presenti"}>
-              <div><Link to={"/game/profilo/"+user.characterId}><span className='nomepg-lista'>{user.characterName+' '+user.characterSurname}</span></Link></div>
-              <div className={props.col === "2" ? "messaggio-utente" : "messaggio-utente"}>{user.messaggio}</div>
+        <div className={props.col === "2" ? "fervm-small-nome-presenti" : "fervm-nome-presenti"}>
+          <div className='infoRuolo' >
+            <Link to={"/game/profilo/" + user.characterId}>
+              <span className='nomepg-lista'>{user.characterName + ' ' + user.characterSurname}</span>
+            </Link>
+            { user.role && (<Tooltip title={user.role} placement="top-end">
+              <img src={user.roleImg} width="22px"  style={{marginLeft:'10px'}} />
+            </Tooltip>)}
           </div>
+          <div className={props.col === "2" ? "messaggio-utente" : "messaggio-utente"}>{user.messaggio}</div>
+        </div>
         </div>
     );
 

@@ -2,8 +2,10 @@ package com.novavrbe.vrbe.business;
 
 
 import com.novavrbe.vrbe.dto.LuoghiDto;
+import com.novavrbe.vrbe.dto.V_GuildMembers;
 import com.novavrbe.vrbe.dto.V_Presenti;
 import com.novavrbe.vrbe.models.presenticontroller.*;
+import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.PresentiRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,10 @@ import java.util.List;
 public class PresentiBusiness {
 
     @Autowired
-    PresentiRepositoryService presentiService;
+    private PresentiRepositoryService presentiService;
+
+    @Autowired
+    private GuildRepositoryService guildService;
 
     /**
      * Sposta il pg da un luogo all'altro nella lista dei presenti
@@ -53,12 +58,18 @@ public class PresentiBusiness {
         List<V_Presenti> temp = presentiService.getPresentiChat(idLuogo);
         List<Presente> presenteList = new ArrayList<>();
         for (V_Presenti presente: temp ) {
+            V_GuildMembers role = guildService.getGuildMember(presente.getCharacterId());
             Presente tmp = new Presente();
             tmp.setMessaggio(presente.getMessaggio());
             tmp.setAvailable(presente.isAvailable());
             tmp.setCharacterId(presente.getCharacterId());
             tmp.setCharacterName(presente.getCharacterName());
             tmp.setCharacterSurname(presente.getCharacterSurname());
+
+            if(role != null){
+                tmp.setRole(role.getRoleName());
+                tmp.setRoleImg(role.getRoleImg());
+            }
 
             tmp.setCharacterImg(presente.getCharacterImg());
             presenteList.add(tmp);

@@ -1,8 +1,13 @@
-.vrbe-badge-presente {
+.fervm-badge-presente {
     display: flex;
     align-items: center;
     max-width: 400px;
     margin-top: 5px
+}
+
+.infoRuolo {
+    display: flex;
+    align-content: center;
 }
 
 .divisore {
@@ -14,7 +19,7 @@
     font-weight: 600;
 }
 
-.vrbe-badge-chat{
+.fervm-badge-chat{
     display: flex;
     align-items: center;
     width: 50%;
@@ -25,7 +30,7 @@
     color: #fff;
 }
 
-.vrbe-nome-presenti {
+.fervm-nome-presenti {
     margin: 0px;
 }
 

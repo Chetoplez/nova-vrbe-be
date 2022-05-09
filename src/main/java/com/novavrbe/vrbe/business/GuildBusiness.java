@@ -128,7 +128,7 @@ public class GuildBusiness {
     }
 
     /**
-     * Torna le informazioni riguardo al ruolo ricoperto in una gilda dal proprio pg
+     * Torna le informazioni riguardo al ruolo ricoperto in una gilda dal pg
      * @param chId il mio ID
      * @return torna un oggetto GuildMember
      */
