@@ -14,7 +14,7 @@ import mappa from '../../img/main_map.png'
 
 /**
  * Temporary map of the game. 
- * This will be a mess... i arrange this with two dots only for testing the chats
+ * 
  */
 function MainMap(props) {
    
@@ -52,11 +52,13 @@ function MainMap(props) {
                 'Authorization': 'Fervm ' + getJwt()
             }
         }).then(resp=>{
-            console.log(resp.data.chatList)
+            // console.log(resp.data.chatList)
             setChatList(resp.data.chatList)
             setLoading(false)
             getDimension()
         })
+
+        return () => window.removeEventListener("resize");
     },[])
 
     useEffect(()=>{
@@ -83,25 +85,11 @@ function MainMap(props) {
         return <div className="Loading w3-card w3-center">Loading...</div>;
     }
 
-    
-
-
     return(
     <div className="fervm-mainMap">
        
-         {/* <div className="map contenitori"  onLoad={getDimension}>
-        
-            <Link to="/game/chat/1"><Tooltip title="Forum"><span className="dot" style={{top:(dimension.height/100)*41 , left:(dimension.width/100)*52 }}></span></Tooltip></Link>
-            <Link to="/game/chat/2"><Tooltip title="Porta Decumana"><span className="dot" style={{top:(dimension.height/100)*27 , left:(dimension.width/100)*65 }}></span></Tooltip></Link>
-            <Link to="/game/chat/3"><Tooltip title="Templum"><span className="dot" style={{top:(dimension.height/100)*27 , left:(dimension.width/100)*36 }}></span></Tooltip></Link>
-            <Link to="/game/chat/4"><Tooltip title="Taberna"><span className="dot" style={{top:(dimension.height/100)*47 , left:(dimension.width/100)*63 }}></span></Tooltip></Link>
-
-            
-        </div>   */}
-         
          <div className='map contenitori' style={{position: 'relative', textAlign:'center'}} ref={divRef}>
             <div >
-                {/* <img style={{maxWidth:'85%', maxHeight: '80%'}} src={mappa} onLoad={getDimension} onChange={getDimension} /> */}
                 {
                     chatList.map((chat)=>{
                         return (<ChatDot key={chat.chatId} chat={chat} heigt={dimension.height} width={dimension.width} />)

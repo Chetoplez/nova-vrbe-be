@@ -21,26 +21,7 @@
     position: absolute;  
   }
 
-  .dot0{
-    top: 270px;
-    left: 490px;
-  }
-
-  .dot1 {
-    top: 170px;
-    left: 500px;
-  }
-
-  .dot2 {
-    top: 175px;
-    left: 150px;
-  }
-
-  .dot3 {
-    top: 337px;
-    left: 480px;
-  }
-
-.dot:hover,.dot1:hover,.dot2:hover{
-     background-color: rgba(181, 179, 245, 0.397);
+.dot:hover{
+     background-color: rgb(255, 208, 0);
+     border-style: solid;
   }
