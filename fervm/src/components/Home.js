@@ -58,7 +58,6 @@ function Home() {
         </div>
         <div className="w3-container w3-half SpallaSx">
           <Login />
-          <p><button className='main-btn' onClick={registration}>Registrati!</button></p>
         </div>
       </div>
     </>
