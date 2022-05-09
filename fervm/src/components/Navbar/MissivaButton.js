@@ -8,14 +8,21 @@ function MissivaButton ({ chId }) {
     const [newMissive, setNewMissive] = useState(0)
 
     useEffect(()=>{
-        axios.get(API_URL.MISSIVE + '/checkinbox/'+chId ).then(resp=>{
+        axios.get(API_URL.MISSIVE + '/checkinbox/'+chId ,{
+            headers: {
+                'Authorization': 'Fervm ' + getJwt()
+            }
+        } ).then(resp=>{
             setNewMissive(resp.data.nnewMail)
         })
 
 
         const interval = setInterval(()=>{
             //console.log("MissivaButton")
-            axios.get(API_URL.MISSIVE + '/checkinbox/'+chId ).then(resp=>{
+            axios.get(API_URL.MISSIVE + '/checkinbox/'+chId ,  {
+                headers: {
+                  'Authorization': 'Fervm '+getJwt()
+                }} ).then(resp=>{
                 setNewMissive(resp.data.nnewMail)
             })
         },10000)

@@ -74,7 +74,10 @@ function WriteMissiva({ setSection , missiva } ) {
                 type: sanitazeHTML(type.value)
             }
         }
-        axios.post(API_URL.MISSIVE +'/send' , payload)
+        axios.post(API_URL.MISSIVE +'/send' , payload, {
+            headers: {
+              'Authorization': 'Fervm '+getJwt()
+            }})
         .then(resp=>{
             addMessage(resp.data.message);
             setSection('')
