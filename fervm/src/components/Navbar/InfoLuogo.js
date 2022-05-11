@@ -27,7 +27,7 @@ function InfoLuogo(props) {
               'Authorization': 'Fervm '+getJwt()
             }}) //check the information, description and so on
         .then(resp=>{
-           console.log(resp.data)
+           //console.log(resp.data)
             setLuogo(resp.data.luogo)
         }).catch(err=>{
             //console.log("errore in infoLuogo")

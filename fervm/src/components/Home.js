@@ -52,10 +52,10 @@ function Home() {
 
         <div className="w3-container">
           <section className="game-content w3-card">
-            <p>E' giunto il tempo di vestire la toga virile, scalare le tappe che il mos maiorum di ti impone!</p>
-            <p>Servire sotto le insegne della legione , o tra le fila del sacerdoti del Clero? Darsi agli studi della medicina
+            <p>E' giunto il tempo di vestire la toga virile, scalare le tappe che il mos maiorum ti impone!</p>
+            <p>Servire sotto le insegne della legione o tra le fila del sacerdoti del Clero? Darsi agli studi della medicina
               o ai commerci per la colonia? </p>
-            <p>Stringi alleanze, otteni consenti e il tuo nome sarà ricordato in tutta la Repubblica!</p>
+            <p>Stringi alleanze, otteni consensi e il tuo nome sarà ricordato in tutta la Repubblica!</p>
           </section>
         </div>
         <div className="w3-container w3-half SpallaSx">

@@ -13,8 +13,8 @@ function DominaFrame() {
             ma da dietro le quinte dato che la società romana è patriarcale.</p>
 
             <p>Non disperare, Fervm fa eccezione: qui le donne possono ricoprire la <strong>maggior
-             parte dei ruoli</strong>, ad eccezione della Legio.
-             <br />Se saprai utilizzare le abilità di cui gli dei ti hanno fatto dono, Fervum sarà per te il 
+             parte dei ruoli</strong>, ad eccezione della Legione.
+             <br />Se saprai utilizzare le abilità di cui gli dei ti hanno fatto dono, Fervm sarà per te il 
              luogo ideale dove raggiungere qualsiasi <strong>obiettivo</strong> tu ti sia prefissata…</p> 
             </div>
         </div>

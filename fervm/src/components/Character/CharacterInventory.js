@@ -1,11 +1,12 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { API_URL, getJwt } from '../../utils/api'
 import CharacterInventoryEquipped from './CharacterInventoryEquipped'
 import CharacterInventoryBag from './CharacterInventoryBag'
 import ItemDetails from './ItemDetails'
+import { userContext } from '../../utils/userContext'
 
 import './CharacterInventory.css'
 
@@ -15,6 +16,7 @@ const CharacterInventory = ({ character }) => {
     const [isloading, setLoading] = useState(true)
     const [sesterzi, setSesterzi] = useState(0)
     const [fresh, setFresh] = useState(false)
+    const mainContext = useContext(userContext)
 
     document.title = 'Fervm GdR - Zaino'
 
@@ -46,10 +48,10 @@ const CharacterInventory = ({ character }) => {
                 <div className="w3-container w3-third">
                     {/*i Drop Items to be downloaded from server */}
                     <h3 className="w3-header">Inventario</h3>
-                    <div className="banca">
+                    { (mainContext.user.characterId === character.characterId) && (<div className="banca">
                         <div className="box-sesterzio"></div>
                         <>Sesterzi In tuo possesso: <h4 style={{marginLeft:'10px'}}>{sesterzi}</h4></>
-                    </div>
+                    </div>)}
                     <h4>Oggetti Posseduti:</h4>
                     <CharacterInventoryBag character={character} inventoryItems={inventory} setFresh={setFresh} setDetail={setDetail} />
                 </div>

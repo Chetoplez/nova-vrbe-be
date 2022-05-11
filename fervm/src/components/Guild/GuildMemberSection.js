@@ -33,11 +33,11 @@ function GuildMemberSection(props) {
               'Authorization': 'Fervm '+getJwt()
             }})
         .then(resp=>{
+            console.log("getInfoRole", resp.data.member)
             setMyRole(resp.data.member);
-             //console.log(resp.data.member)
             setLoading(false);
         })
-    },[props.isFresh])
+    },[])
 
     if(loading){
         return (<div className="loading w3-card">Loading..</div>)

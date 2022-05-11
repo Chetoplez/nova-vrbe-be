@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { makeStyles, IconButton, Avatar, Tooltip } from '@material-ui/core'
+import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { API_URL, getJwt } from '../../utils/api';
 import Member from './Member'
@@ -18,23 +19,38 @@ const useStyles = makeStyles({
   });
 
 
-function GuildMembers(props) {
+function GuildMembers({ isManager , setFresh , isFresh }) {
     const classes = useStyles()
     const [members, setMembers] = useState([]);
+    const [roleList, setRoleList] = useState([{}])
     const [loading,setLoading] = useState(true);
     const [unemployed, setUnenmployed] = useState([])
     const mainContext = useContext(userContext);
     const [open, setOpen] = useState(false);
     const [roleId, setRoleId] = useState(0)
-   
-    
-    var roles =  [].concat(props.roleList)
-    .sort((a, b) => a.guild_level < b.guild_level ? 1 : -1);
-
+    let {idGilda } = useParams()
     
     useEffect(()=>{
+        //Lista dei ruoli della gilda
+        axios.get(API_URL.GUILD+"/role/guildid="+idGilda,{
+            headers: {
+              'Authorization': 'Fervm '+getJwt()
+            }})
+        .then(resp=>{
+            var roles =  [].concat(resp.data.guildRoleList)
+            .sort((a, b) => a.guild_level < b.guild_level ? 1 : -1);
+            setRoleList(roles);
+            
+        }).catch(err=>{
+            console.log("something went wrong downloading guild's role")
+        })
+
+    },[isFresh])
+
+
+    useEffect(()=>{
         document.title = 'Fervm GdR - Corporazioni'
-        axios.get(API_URL.GUILD+"/members/guildid="+props.idGilda,{
+        axios.get(API_URL.GUILD+"/members/guildid="+idGilda,{
             headers: {
               'Authorization': 'Fervm '+getJwt()
             }})
@@ -45,10 +61,7 @@ function GuildMembers(props) {
         }).catch(err=>{
             console.log("something went wront on members",err)
         })
-
-        
-
-    },[props.isFresh])
+    },[isFresh])
 
     if(loading){
         return(<div className="loading">Loading</div>)
@@ -58,7 +71,7 @@ function GuildMembers(props) {
        var _tmp = [];
         _tmp = members.filter((item)=> item.role_ID === roleId)
         .map((member,index)=>(
-            <Member key={index} member={member} setFresh={props.setfresh}/>
+            <Member key={index} member={member} setFresh={setFresh}/>
         ));
         return _tmp;
     }
@@ -81,20 +94,17 @@ function GuildMembers(props) {
 
     return(
         <div>
-       
-            {roles.map((role,index)=>{
+            {roleList.map((role,index)=>{
                     return( 
                     <div key = {index} className="roleBox">
                         <div style={{display:'flex', alignItems:'center'}}>
                             <Avatar src={role.role_img} alt={role.name} className={classes.guildBadge}></Avatar>
                             <Tooltip 
                                 title={<div style={{fontSize:'14px', padding:'15px', borderRadius: '5px'}}>{role.description}</div>}
-                                placement="top"
-                                
-                                >
+                                placement="top">
                                 <h4>{role.name}</h4>
                             </Tooltip>
-                            {(  role.guild_level === 10 && props.isManager) || 
+                            {(  role.guild_level === 10 && isManager) || 
                                 (role.guild_level === 10 && mainContext.roles.includes("ROLE_ADMIN") ) ? 
                                 <IconButton onClick={()=>addNewMember(role.role_id)} style ={{color: '#00b300'}}><AddCircleOutlineIcon /></IconButton> : null}
                         </div>
@@ -110,7 +120,7 @@ function GuildMembers(props) {
                 title = "Personaggi Disoccupati"
                 lista ={unemployed}
                 roleId={roleId}
-                setFresh={props.setfresh}
+                setFresh={setFresh}
             />
             
         </div>

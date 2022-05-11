@@ -123,7 +123,7 @@ function ActiveChat(props) {
                             <strong>{azione.azione.sender}</strong>
                         </Link>
                      </div>
-                        { azione.azione.tooltip_carica === 'nessuna' ? null: <Tooltip
+                        { azione.azione.tooltip_carica === null ? null: <Tooltip
                         title={azione.azione.tooltip_carica}
                         placement="top-end">
                         <span> <img src={azione.azione.carica} alt="Carica" className="icon-carica" /></span>

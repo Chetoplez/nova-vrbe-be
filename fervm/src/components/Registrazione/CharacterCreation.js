@@ -88,16 +88,17 @@ function CharacterCreation(){
         </button>
         </div>)
         case 2:
-          return(<div style={{display: 'flex', justifyContent: 'space-around'}}>
+          return(
+          <div style={{display: 'flex', justifyContent: 'space-around'}}>
+          <button className="primary-btn-M" 
+          type="button"
+          onClick={prevStep}>Indietro</button> 
           <button
             className='primary-btn-M'
             type="submit" 
             disabled={bucket > 0}>
             Crea!
           </button>
-          <button className="primary-btn-M" 
-          type="button"
-          onClick={prevStep}>Indietro</button> 
       </div>)
       default:
         return undefined;  

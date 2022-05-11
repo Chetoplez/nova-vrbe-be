@@ -258,11 +258,10 @@ function ProfiloPg() {
                             <section style={{ minWidth: '300px' }}>{
                                 modDescrizione ?
                                     <div>
-
                                         <textarea className="mod-descr" value={descrizione} onChange={handleDescr} type='textarea'></textarea>
                                     </div>
                                     :
-                                    <div>
+                                    <div style={{whiteSpace:'pre-wrap'}}>
                                         {parse(personaggio.description.description)}
                                     </div>
                             }

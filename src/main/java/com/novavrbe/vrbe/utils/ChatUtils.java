@@ -15,8 +15,11 @@ public class ChatUtils {
         ChatMessageDto dto = new ChatMessageDto();
 
         dto.setAction(message.getAction());
-        dto.setCarica(lavoro.getRoleImg());
-        dto.setTooltip_carica(lavoro.getRoleName());
+        if(lavoro != null){
+            dto.setCarica(lavoro != null ? lavoro.getRoleImg() : "");
+            dto.setTooltip_carica(lavoro!= null ? lavoro.getRoleName(): "");
+        }
+
         dto.setSender(sender.getCharacterName()+' '+sender.getCharacterSurname());
         dto.setCharacterId(sender.getCharacterId().toString());
         dto.setReceiver(message.getReceiver());

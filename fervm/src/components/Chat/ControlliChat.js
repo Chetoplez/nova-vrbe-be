@@ -181,7 +181,7 @@ function ControlliChat(props) {
                         onChange={setSussurro}>
                         {presentiChat.map((opt) => {
                             return (
-                                <MenuItem key={opt.charachterId} value={opt.characterName+ ' '+mainContext.user.characterSurname} name={opt.characterName}>{opt.characterName+ ' '+mainContext.user.characterSurname}</MenuItem>
+                                <MenuItem key={opt.charachterId} value={opt.characterName+ ' '+opt.characterSurname} name={opt.characterName}>{opt.characterName+ ' '+opt.characterSurname}</MenuItem>
                             );
                         }
                         )}

@@ -101,6 +101,7 @@
 .storia {
 	max-height: 400px;
 	overflow-y: auto;
+	white-space: pre-wrap;
 }
 
 .text-storia {

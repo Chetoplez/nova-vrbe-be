@@ -12,18 +12,18 @@ email: email@claudio.it
 psw: puppa
 */
 
-// export const API_URL = {
-//     'GUILD': 'https://www.fervm.it:8443/fervmAPI/guild',
-//     'CHARACTER': 'https://www.fervm.it:8443/fervmAPI/character',
-//     'CHAT' : 'https://www.fervm.it:8443/fervmAPI/chat',
-//     'PRESENTI': 'https://www.fervm.it:8443/fervmAPI/presenti',
-//     'USER': 'https://www.fervm.it:8443/fervmAPI/user',
-//     'FORUM': 'https://www.fervm.it:8443/fervmAPI/forum',
-//     'SUBFORUM': 'https://www.fervm.it:8443/fervmAPI/subforum',
-//     'POST' : 'https://www.fervm.it:8443/fervmAPI/post',
-//     'COMMENT': 'https://www.fervm.it:8443/fervmAPI/comment',
-//     'MISSIVE': 'https://www.fervm.it:8443/fervmAPI/missive'
-// }
+export const API_URL = {
+    'GUILD': 'https://www.fervm.it:8443/fervmAPI/guild',
+    'CHARACTER': 'https://www.fervm.it:8443/fervmAPI/character',
+    'CHAT' : 'https://www.fervm.it:8443/fervmAPI/chat',
+    'PRESENTI': 'https://www.fervm.it:8443/fervmAPI/presenti',
+    'USER': 'https://www.fervm.it:8443/fervmAPI/user',
+    'FORUM': 'https://www.fervm.it:8443/fervmAPI/forum',
+    'SUBFORUM': 'https://www.fervm.it:8443/fervmAPI/subforum',
+    'POST' : 'https://www.fervm.it:8443/fervmAPI/post',
+    'COMMENT': 'https://www.fervm.it:8443/fervmAPI/comment',
+    'MISSIVE': 'https://www.fervm.it:8443/fervmAPI/missive'
+}
 export const getJwt = ()=>{
     return store.get("jwt")
 }
@@ -34,15 +34,15 @@ export const sanitazeHTML = (testo)=>{
         return testo;
 }
 
-export const API_URL = {
-    'GUILD': 'http://localhost:8080/guild',
-    'CHARACTER': 'http://localhost:8080/character',
-    'CHAT' : 'http://localhost:8080/chat',
-    'PRESENTI': 'http://localhost:8080/presenti',
-    'USER': 'http://localhost:8080/user',
-    'FORUM': 'http://localhost:8080/forum',
-    'SUBFORUM': 'http://localhost:8080/forum/subforum',
-    'POST' : 'http://localhost:8080/forum/post',
-    'COMMENT': 'http://localhost:8080/forum/comment',
-    'MISSIVE': 'http://localhost:8080/missive'
-}
+// export const API_URL = {
+//     'GUILD': 'http://localhost:8080/guild',
+//     'CHARACTER': 'http://localhost:8080/character',
+//     'CHAT' : 'http://localhost:8080/chat',
+//     'PRESENTI': 'http://localhost:8080/presenti',
+//     'USER': 'http://localhost:8080/user',
+//     'FORUM': 'http://localhost:8080/forum',
+//     'SUBFORUM': 'http://localhost:8080/forum/subforum',
+//     'POST' : 'http://localhost:8080/forum/post',
+//     'COMMENT': 'http://localhost:8080/forum/comment',
+//     'MISSIVE': 'http://localhost:8080/missive'
+// }

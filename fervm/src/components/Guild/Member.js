@@ -10,7 +10,7 @@ import useMessage from '../../utils/useMessage';
 import {userContext} from '../../utils/userContext'
 import {API_URL, getJwt} from '../../utils/api';
 
-function Member({ member , setFresh }) {
+function Member({ member , setFresh  }) {
     
     //console.log(mem);
     const [isManager, setManager] = useState(false)
@@ -48,10 +48,10 @@ function Member({ member , setFresh }) {
             }})
         .then(resp=>{
             if(resp.data.promoted){
-            setFresh(false)
+            setFresh(prev=> setFresh(!prev))
         }else{
             addMessage(resp.data.message)
-            setFresh(false)
+            setFresh(prev=> setFresh(!prev))
         }
             
         })
@@ -73,7 +73,7 @@ function Member({ member , setFresh }) {
               'Authorization': 'Fervm '+getJwt()
             }})
         .then(resp=>{
-            setFresh(false)
+            setFresh(prev=> setFresh(!prev))
         })
         
     }
@@ -92,8 +92,7 @@ function Member({ member , setFresh }) {
        
         axios.delete(API_URL.GUILD+"/members/deletemember", payload )
         .then(resp=>{
-            
-            setFresh(false)
+            setFresh(prev=> setFresh(!prev))
         })
         .catch(err=>{
             console.log(err)
