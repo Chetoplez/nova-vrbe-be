@@ -34,7 +34,7 @@ function UserMessageNotifcation() {
           </Typography>
           }
             
-          <button className='main-btn-M' style={{float: 'right'}} onClick={handleSubmit}>
+          <button className='primary-btn-M' style={{float: 'right'}} onClick={handleSubmit}>
             OK
           </button>
         

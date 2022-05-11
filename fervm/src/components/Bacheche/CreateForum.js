@@ -106,8 +106,8 @@ function CreateForum(){
                 </Select>
             </FormControl>
             <p>
-                <button type='submit' className='main-btn-M'>Crea</button>
-                <button type='button' className='main-btn-M' onClick={()=>{navigate("/game/forum/", {replace: false})}}>Indietro</button>
+                <button type='submit' className='primary-btn-M'>Crea</button>
+                <button type='button' className='primary-btn-M' onClick={()=>{navigate("/game/forum/", {replace: false})}}>Indietro</button>
             </p>
             <pre>{JSON.stringify(watch(), null, 2)}</pre>
         </form>

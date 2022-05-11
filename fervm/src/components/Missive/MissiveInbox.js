@@ -24,7 +24,6 @@ function MissiveInbox({ chId, setMissiva, setSection }){
               'Authorization': 'Fervm '+getJwt()
             }})
         .then(resp=>{
-            console.log(resp.data)
             setMissiveList(resp.data.missiveList)
             setLoading(false)
         })
@@ -47,7 +46,10 @@ function MissiveInbox({ chId, setMissiva, setSection }){
 
     const openMissiva = (missiva) =>{
         if(!missiva.read){
-            axios.patch(API_URL.MISSIVE + '/read', {idMissive:[missiva.missivaId]})
+            axios.patch(API_URL.MISSIVE + '/read', {idMissive:[missiva.missivaId]} , {
+                headers: {
+                  'Authorization': 'Fervm '+getJwt()
+                }})
             .then(resp=>{
                 setRefresh(!refresh)
             })
@@ -104,7 +106,7 @@ function MissiveInbox({ chId, setMissiva, setSection }){
             </header>
            
             <div>
-            <Tooltip title="read">
+           {missiveList.length > 0 && (<><Tooltip title="read">
                 <IconButton  name="read" aria-label="read" type="button" onClick={()=>manageMissive("read")} >
                     <MarkEmailReadIcon />
                 </IconButton>
@@ -113,7 +115,7 @@ function MissiveInbox({ chId, setMissiva, setSection }){
                 <IconButton  name="delete" aria-label="delete" type="submit" onClick={()=>manageMissive("delete")}>
                     <DeleteIcon />
                 </IconButton>
-            </Tooltip>
+            </Tooltip></>)}
             {
                 orderedMissive.map((missiva, index)=>{
                    return( 

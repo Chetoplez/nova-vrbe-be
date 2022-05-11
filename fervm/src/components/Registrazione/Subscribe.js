@@ -56,7 +56,7 @@ function Subscribe() {
             <TextField placeholder="Email" type="email" name="email"
               {...register("email", { required: {value:true, message: 'Questo campo è obbligatorio'} , 
                 pattern:{
-                  value: /^\w+([-]?\w+)*@\w+([-]?\w+)*(\w{2,3})+$/,
+                  value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                   message: "Indirizzo email non valido"
                } })}
             />
@@ -86,8 +86,8 @@ function Subscribe() {
           <p className="errorMessage">{errors.repPassword?.type === 'minLength' ? errors.repPassword.message : ''}</p>
           </div>
           <p>
-            <button className='main-btn-M' type="submit"> Registrati</button>
-            <button type="button" className="main-btn-M" onClick={() => { navigate("/") }}>Indietro</button>
+            <button className='primary-btn-M' type="submit"> Registrati</button>
+            <button type="button" className="primary-btn-M" onClick={() => { navigate("/") }}>Indietro</button>
           </p>
         </form>
         

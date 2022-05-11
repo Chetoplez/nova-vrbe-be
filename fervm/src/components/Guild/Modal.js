@@ -76,8 +76,8 @@ function Modal(props){
                 </FormControl> : <p>Non ci sono personaggi disoccupati</p>}
                 </div>
                 <div className="modal-footer">
-                    {props.lista.length > 0 && <button className='main-btn-M' onClick={arruolaPg}>Arruola</button>}
-                    <button className='main-btn-M' onClick={props.chiudi} >Close</button>
+                    {props.lista.length > 0 && <button className='primary-btn-M' onClick={arruolaPg}>Arruola</button>}
+                    <button className='primary-btn-M' onClick={props.chiudi} >Close</button>
                 </div>
             </div>
 

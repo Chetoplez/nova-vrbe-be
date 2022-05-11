@@ -71,8 +71,8 @@ function GuildMemberSection(props) {
                     </div>
                 </div>
                 <div className="w3-content d-flex" style={{justifyContent:'space-between'}}>
-                    <p>{(mainContext.roles.includes("ROLE_ADMIN") || props.manager) && (<button className='main-btn-M'>Banca</button>)}</p>
-                    <p>{props.enrolled && (<button onClick={getStipendio} className='main-btn-M'>Ritira Paga</button>)}</p>
+                    <p>{(mainContext.roles.includes("ROLE_ADMIN") || props.manager) && (<button className='primary-btn-M'>Banca</button>)}</p>
+                    <p>{props.enrolled && (<button onClick={getStipendio} className='primary-btn-M'>Ritira Paga</button>)}</p>
                 </div>
             </div>
             

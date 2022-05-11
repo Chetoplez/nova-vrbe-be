@@ -45,7 +45,7 @@ function MainMap(props) {
             }
         }
         checkAuth();
-        window.addEventListener("resize", getDimension);
+        window.addEventListener("resize", getDimension, true);
         
         axios.get(API_URL.CHAT+'/chatlist' ,  {
             headers: {
@@ -58,7 +58,7 @@ function MainMap(props) {
             getDimension()
         })
 
-        return () => window.removeEventListener("resize");
+        return () => window.removeEventListener("resize" , getDimension , true);
     },[])
 
     useEffect(()=>{
@@ -91,8 +91,8 @@ function MainMap(props) {
          <div className='map contenitori' style={{position: 'relative', textAlign:'center'}} ref={divRef}>
             <div >
                 {
-                    chatList.map((chat)=>{
-                        return (<ChatDot key={chat.chatId} chat={chat} heigt={dimension.height} width={dimension.width} />)
+                    chatList.map((chat,index)=>{
+                        return (<ChatDot key={index} chat={chat} heigt={dimension.height} width={dimension.width} />)
                     })
                 }            
             </div>

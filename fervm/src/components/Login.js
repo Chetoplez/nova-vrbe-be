@@ -98,13 +98,13 @@ function Login() {
     function renderLoginButton(){
       if(step === 0){
         return(
-          <button type='submit' className='main-btn' value='checkmail' >
+          <button type='submit' className='primary-btn-L' value='checkmail' >
             Entra / Registrati
           </button>
         )
       }else if(step === 1) {
         return(
-          <button type='submit' className='main-btn' value='login' >
+          <button type='submit' className='primary-btn-L' value='login' >
             Entra!
           </button>
         )
@@ -118,7 +118,8 @@ function Login() {
               <h4>Entra a FERVM!</h4>
               {step === 0 && <div>
                 <TextField placeholder="Inserisci la tua email" type="text" name='username' id='checkmail'
-                {...register("username", { required: {value:true, message: 'Questo campo è obbligatorio'} , 
+                {...register("username",
+                { required: {value:true, message: 'Questo campo è obbligatorio'} , 
                 pattern:{
                   value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                   message: "Indirizzo email non valido"
@@ -139,7 +140,7 @@ function Login() {
             <p>
              {renderLoginButton()}
             </p>
-            <p>Oppure</p>
+            
           </form>
 
         </>

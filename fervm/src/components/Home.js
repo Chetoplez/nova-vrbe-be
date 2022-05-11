@@ -18,6 +18,8 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    var body = document.getElementById("body")
+    body.classList.add("home-img")
     const checkAuth = async () => {
       let res = mainContext.tryLoginUser()
       if (res) {
@@ -44,7 +46,7 @@ function Home() {
       <HomeNav />
       <header style={{ textAlign: 'center' }}>
         <h3>Il tuo destino ti aspetta alle porte di</h3>
-        <h1 style={{ fontSize: '60px' }}>FERVM</h1>
+        <h1 className='game-title' style={{ fontSize: '100px' }}>FERVM</h1>
       </header>
       <div className="home-content">
 

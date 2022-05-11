@@ -37,7 +37,7 @@ function ItemDetails(props) {
                 {item.description}
             </div>
             <div className="passa-oggetto">
-                { (props.owner.characterId ===mainContext.user.characterId) && <button className='main-btn-M'>Invia</button>}
+                { (props.owner.characterId ===mainContext.user.characterId) && <button className='primary-btn-M'>Invia</button>}
             </div>
         </div>
     )

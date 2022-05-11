@@ -9,7 +9,7 @@ import { Link} from 'react-router-dom';
 function HomeNav () {
     return(
         <div className="w3-row container-home homenav">
-        <h1 style={{width:'50%'}} className="w3-header"><Link to="/">FERVM</Link></h1>
+        <h1 style={{width:'50%'}} className="w3-header game-title"></h1>
         <div className="w3-half rightSide">
           <div className="w3-bar-item"><Link to="/">Home</Link></div>
           <div className="w3-bar-item"><Link to="/regolamento">Regolamento</Link></div>

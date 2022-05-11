@@ -74,8 +74,8 @@ function CreatePost(){
              </textarea>
              <p style={{ fontSize: '13px', color: "red" }}>{errors.body?.type === 'required' && "Questo campo è obbligatorio"}</p>
             <p>
-                <button type='submit' className='main-btn-M'>Crea</button>
-                <button type='button' className='main-btn-M' onClick={()=>{navigate("/game/forum/subforums/"+param.idForum+"/posts/"+param.subforumId)}}>Indietro</button>
+                <button type='submit' className='primary-btn-M'>Crea</button>
+                <button type='button' className='primary-btn-M' onClick={()=>{navigate("/game/forum/subforums/"+param.idForum+"/posts/"+param.subforumId)}}>Indietro</button>
             </p>
             
         </form>

@@ -16,19 +16,28 @@ function WriteMissiva({ setSection , missiva } ) {
     const mainContext = useContext(userContext);
     const animatedComponents = makeAnimated();
     const [characterOption, setCharacterOption] = useState([{ value: "", label: "" }])
-    const [subject, setSubject] = useState(missiva === undefined ? "" : 'RE: '+missiva.subject);
-    const [body, setBody] = useState(missiva === undefined ? "" : "\n\n--------\n["+missiva.body+']');
-    const [type, setType] = useState(missiva === undefined ? {value: "", label: ""} : { label: missiva.type, value: missiva.type})
-    const [to, setTo] = useState(missiva === undefined ? { value: "", label: "" } : {value: missiva.from.characterId , label: missiva.from.characterName +' '+missiva.from.characterSurname})
+    const [subject, setSubject] = useState("");
+    const [body, setBody] = useState('');
+    const [type, setType] = useState({value: "ON", label: "ON"})
+    const [to, setTo] = useState({value: "", label: ""})
     const { addMessage } = useMessage();
-    console.log(missiva)
+    
     useEffect(() => {
+        
+       if(missiva !== undefined ){
+           setType({ label: missiva.type, value: missiva.type})
+           setTo({value: missiva.from.characterId , label: missiva.from.characterName +' '+missiva.from.characterSurname})
+           setSubject('RE: '+missiva.subject)
+           setBody("\n\n--------\n["+missiva.body+']')
+       } 
+        
         axios.get(API_URL.CHARACTER + '/getcharacterlist',
             {
                 headers: {
                     'Authorization': 'Fervm ' + getJwt()
                 }
-            }).then(resp => {
+        }).
+        then(resp => {
                 var temp = []
                 resp.data.characterList.map(smallch => {
                     var chOpt = {
@@ -53,7 +62,8 @@ function WriteMissiva({ setSection , missiva } ) {
         console.log("Destinatario",to)
     }
     const handleTypeChange = (obj)=>{
-        setType(obj.value)
+        console.log(obj)
+        setType(obj)
     }
     const handleTextChange = (obj)=>{
         setBody(obj.target.value)
@@ -97,7 +107,7 @@ function WriteMissiva({ setSection , missiva } ) {
                             onChange={handleChange}
                             closeMenuOnSelect={true}
                             components={animatedComponents}
-                            value= {to}
+                            value={to}
                             options={characterOption}
                         />
                     </div>
@@ -111,7 +121,7 @@ function WriteMissiva({ setSection , missiva } ) {
                             onChange={handleTypeChange}
                             closeMenuOnSelect={true}
                             components={animatedComponents}
-                            value= {type}
+                            value={type}
                             options={[{label: "ON", value: "ON"}, {label: 'OFF', value: 'OFF'}]}
                         />
                         </div>
@@ -136,7 +146,7 @@ function WriteMissiva({ setSection , missiva } ) {
                     >
                     
              </textarea>
-             <button className='main-btn-M' type='button' onClick={send}>Invia</button>
+             <button className='primary-btn-M' type='button' onClick={send}>Invia</button>
             </section>
         </div>
 

@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Fervm GDR",
+  "name": "Fervm GDR",
+  "description" : "Gioco di ruolo Play By Chat ambientato in una colonia dell'antica Roma",
   "icons": [
     {
       "src": "favicon.ico",

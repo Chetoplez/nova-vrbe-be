@@ -32,6 +32,10 @@ function Game() {
     const [idLuogo, setIdLuogo] = useState('0') //il default è "in giro per la città"
     const mainContext = useContext(userContext);
     document.title = 'Fervm GdR - Game'
+
+    var body = document.getElementById("body")
+    body.classList.remove("home-img")
+
     useEffect(() => {
           const checkAuth = async () => {
             let res = mainContext.tryLoginUser()

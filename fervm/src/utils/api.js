@@ -21,7 +21,8 @@ psw: puppa
 //     'FORUM': 'https://www.fervm.it:8443/fervmAPI/forum',
 //     'SUBFORUM': 'https://www.fervm.it:8443/fervmAPI/subforum',
 //     'POST' : 'https://www.fervm.it:8443/fervmAPI/post',
-//     'COMMENT': 'https://www.fervm.it:8443/fervmAPI/comment'
+//     'COMMENT': 'https://www.fervm.it:8443/fervmAPI/comment',
+//     'MISSIVE': 'https://www.fervm.it:8443/fervmAPI/missive'
 // }
 export const getJwt = ()=>{
     return store.get("jwt")

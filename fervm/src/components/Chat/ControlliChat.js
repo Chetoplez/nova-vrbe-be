@@ -249,7 +249,7 @@ function ControlliChat(props) {
                 <div>
                     <label>premi 'Invio' per inviare</label>
                     <Checkbox color="primary" checked={sendOnEnter} onChange={() => { setSendOnEnter(!sendOnEnter) }} inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}></Checkbox>
-                    <button className='main-btn main-btn-M' type="submit" disabled={!text && !dice}>
+                    <button className='primary-btn primary-btn-M' type="submit" disabled={!text && !dice}>
                         Invia
                     </button>
                 </div>

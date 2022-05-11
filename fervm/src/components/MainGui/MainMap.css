@@ -3,6 +3,17 @@
   min-height: calc(100vh - 220px);
 }
 
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+
+    .fervm-mainMap {
+     
+      min-height: calc(100vh - 120px);
+    }
+}
+
 .map {
   background-image: url('../../img/main_map.png'); 
   background-repeat: no-repeat;

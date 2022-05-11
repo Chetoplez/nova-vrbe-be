@@ -116,8 +116,8 @@ function CreateSubforum(){
                 </Select>
             </FormControl> */}
             <p>
-                <button type='submit' className='main-btn-M'>Crea</button>
-                <button type='button' className='main-btn-M' onClick={()=>{navigate("/game/forum/subforums/"+param.idForum)}}>Indietro</button>
+                <button type='submit' className='primary-btn-M'>Crea</button>
+                <button type='button' className='primary-btn-M' onClick={()=>{navigate("/game/forum/subforums/"+param.idForum)}}>Indietro</button>
             </p>
             
         </form>

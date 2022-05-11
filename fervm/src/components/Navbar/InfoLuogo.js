@@ -7,7 +7,7 @@ import {API_URL, getJwt} from '../../utils/api'
 
 
 /*only for test */
-import templum from '../../img/templum_Sp2.jpg';
+
 
 /**
  * 
@@ -18,7 +18,6 @@ function InfoLuogo(props) {
 
     const [luogo, setLuogo] = useState({});
     
-    luogo.img_luogo = templum;
     const [isShow, setIsShow] = useState(false);
     var idLuogo = (props.idLuogo === undefined) ? 0 : props.idLuogo
     useEffect(() => {
@@ -28,7 +27,7 @@ function InfoLuogo(props) {
               'Authorization': 'Fervm '+getJwt()
             }}) //check the information, description and so on
         .then(resp=>{
-           // console.log(resp.data)
+           console.log(resp.data)
             setLuogo(resp.data.luogo)
         }).catch(err=>{
             //console.log("errore in infoLuogo")
@@ -48,7 +47,7 @@ function InfoLuogo(props) {
 
     return(
         <div className = 'descr-luogo w3-row w3-card'>
-            <img className ='mini-luogo' src = {luogo.img_luogo} alt='mini-luogo'></img>
+            <img className ='mini-luogo' src={luogo.immagine} alt='mini-luogo'></img>
             <div className='meteo-luogo'>
                 <div className="nome-luogo"><strong>{luogo.nomeLuogo}</strong><div onMouseEnter={showDescr} onMouseLeave={hideDescr}><InfoOutlinedIcon /></div></div>
                 <div>
@@ -58,7 +57,7 @@ function InfoLuogo(props) {
                     <span> 15° - Sereno , Vento Debole</span>
                 </div>
                 <div className="w3-card badge-luogo w3-container" style={{display: isShow ? 'block': 'none' , position:'fixed'}}>
-                    {/* <img style={{maxWidth:'100%'}} src='http://www.cassiciaco.it/navigazione/africa/siti_archeologici/douggha/images/foro_map.jpg' /> */}
+                    {luogo.immagine && (<img style={{maxWidth:'100%'}} src={luogo.immagine} />) }
                     <span style={{color:'black' , whiteSpace: 'pre-wrap'}}>{luogo.descr}</span>
                 </div>
             </div>

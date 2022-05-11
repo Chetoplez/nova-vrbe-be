@@ -7,13 +7,15 @@ import DominusFrame from "./DominusFrame";
 import DominaFrame from "./DominaFrame";
 import CharacterInfo from "./CharacterInfo";
 import CharacterStat from "./CharacterStat";
+import CharacterNomina from "./CharacterNomina";
 import HomeNav from "../Navbar/HomeNav";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL, getJwt } from "../../utils/api";
 import useMessage from "../../utils/useMessage";
 
 
-const MAX_STEP = 2;
+
+const MAX_STEP = 3;
 
 function CharacterCreation(){
    const [stepForm, setStepForm] = useState(0);
@@ -51,41 +53,55 @@ function CharacterCreation(){
       modified: 0
     }
    ])
-   const nextStep = ()=>{
+   const nextStep = () =>{
+     if(stepForm+1 <=2)
      setStepForm(cur => cur + 1);
    }
 
    const prevStep = ()=>{
-     setStepForm(cur => cur - 1);
+     if( stepForm - 1 >= 0)
+        setStepForm(cur => cur - 1);
    }
 
    function renderButton(){
-     if(stepForm > 1){
-       return undefined;
-     }else if(stepForm === 1){
-       return(
-          <div style={{display: 'flex', justifyContent: 'space-around'}}>
-            <button
-              className='main-btn-M'
-              type="submit" 
-              disabled={bucket > 0}>
-              Crea!
-            </button>
-            <button className="main-btn-M" 
-            type="button"
-            onClick={prevStep}>Indietro</button> 
-        </div>
-       )
-     } else {
-       return(
-        <button
-          className='main-btn-M'
+
+    switch(stepForm){
+      case 0:
+        return (
+          <button
+          className='primary-btn-M'
           type="button"
           onClick={nextStep}>
         Continua
       </button>
-       )
-     }
+        );
+      case 1:
+        return (<div>
+          <button className="primary-btn-M" 
+              type="button"
+              onClick={prevStep}>Indietro</button>
+          <button
+            className='primary-btn-M'
+            type="button"
+            onClick={nextStep}>
+          Continua
+        </button>
+        </div>)
+        case 2:
+          return(<div style={{display: 'flex', justifyContent: 'space-around'}}>
+          <button
+            className='primary-btn-M'
+            type="submit" 
+            disabled={bucket > 0}>
+            Crea!
+          </button>
+          <button className="primary-btn-M" 
+          type="button"
+          onClick={prevStep}>Indietro</button> 
+      </div>)
+      default:
+        return undefined;  
+    }
    }
 
      
@@ -96,6 +112,7 @@ function CharacterCreation(){
          characterName: values.characterName,
          characterSurname: values.characterCognomen,
          gender: values.gender ? values.gender : "FEMMINA",
+         status: values.status ? values.status : "PLEBEO",
          stats: stats
        }
      }
@@ -113,7 +130,18 @@ function CharacterCreation(){
 
    } 
   
+   function checkNomeCognome (){
+    var payload = {
+       nomen: watch().nomen,
+       cognomen: watch().cognomen
+    } 
+    axios.post(API_URL.CHARACTER +'/checknome' , payload , {
+      headers: {
+        'Authorization': 'Fervm '+getJwt()
+      }}).then(resp => {
 
+      })
+   }
    
    return(
       <>
@@ -130,7 +158,8 @@ function CharacterCreation(){
             </header>
             <h4> Passo {stepForm +1 } di {MAX_STEP}</h4>
             {stepForm === 0  && (<CharacterInfo errors={errors} register={register} />)}
-            {stepForm === 1 && (<CharacterStat bucket={bucket} setBucket={setBucket} stats={stats} setStats={setStats} />)}
+            {stepForm === 1  && (<CharacterNomina errors={errors} register={register} />)}
+            {stepForm === 2 && (<CharacterStat bucket={bucket} setBucket={setBucket} stats={stats} setStats={setStats} />)}
             <br />
             {renderButton()}
             </div>

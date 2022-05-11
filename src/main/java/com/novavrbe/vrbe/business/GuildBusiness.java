@@ -134,14 +134,22 @@ public class GuildBusiness {
      */
     public ResponseEntity<GetinfoRoleResponse> getInfoRole(String chId){
         ResponseEntity<GetinfoRoleResponse> response;
+        GetinfoRoleResponse res = new GetinfoRoleResponse();
+        res.setUnenmployed(true);
+
+        GuildMember newMember;
         if(!StringUtils.hasText(chId)){
             response = new ResponseEntity<>(new GetinfoRoleResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
         V_GuildMembers member = guildRepositoryService.getGuildMember(Integer.parseInt(chId));
-        GuildMember newMember = GuildUtils.getMemberfromDTO(member);
-        GetinfoRoleResponse res = new GetinfoRoleResponse();
-        res.setMember(newMember);
+        if(member != null ){
+            //magari è disoccupato
+            newMember = GuildUtils.getMemberfromDTO(member);
+            res.setMember(newMember);
+            res.setUnenmployed(false);
+        }
+
         response = new ResponseEntity<>(res,HttpStatus.OK);
         return response;
     }

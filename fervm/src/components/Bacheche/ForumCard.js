@@ -5,6 +5,7 @@ import parse from 'html-react-parser';
 import axios from "axios";
 import { API_URL, getJwt } from "../../utils/api";
 import { userContext } from "../../utils/userContext";
+import './ForumCard.css'
 
 
 function ForumCard({ forum , guild }) {
@@ -22,9 +23,10 @@ function ForumCard({ forum , guild }) {
             }
         })
         .then(resp=>{
-            
+            if(!resp.data.unenmployed){
             setCharactedGuild(resp.data.member)
-            //console.log(characterdGuild.guild_ID === forum.ownedBy)
+            }
+            setCharactedGuild({guild_ID: -2})
             setLoading(false)
         })
     },[])
@@ -37,8 +39,8 @@ function ForumCard({ forum , guild }) {
     function renderCard() {
         if(!guild || mainContext.roles.includes("ROLE_ADMIN")){
             return(
-                <div className="w3-card w3-padding w3-margin">
-                <div style={{display:'flex' , alignItems:'center', textTransform:'capitalize'}}>
+                <div className="w3-padding w3-margin forum-card">
+                <div className="forum-card-body" >
                     <Avatar variant="square"/>
                     <Link to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
                 </div>
@@ -47,8 +49,8 @@ function ForumCard({ forum , guild }) {
             )
         }else if(characterdGuild.guild_ID === forum.ownedBy){
             return (
-                <div className="w3-card w3-padding w3-margin">
-                    <div style={{ display: 'flex', alignItems: 'center', textTransform: 'capitalize' }}>
+                <div className=" w3-padding w3-margin forum-card">
+                    <div className="forum-card-body">
                         <Avatar variant="square" />
                         <Link to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
                     </div>
@@ -57,8 +59,8 @@ function ForumCard({ forum , guild }) {
             )
         } else {
             return (
-                <div className="w3-card w3-padding w3-margin" style={{backgroundColor: 'lightgrey'}}>
-                    <div style={{ display: 'flex', alignItems: 'center', textTransform: 'capitalize' }}>
+                <div className="w3-padding w3-margin forum-card">
+                    <div className="forum-card-body" style={{color:'#554641'}}>
                         <Avatar variant="square" />
                         <h3>{forum.name}</h3>
                     </div>

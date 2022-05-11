@@ -46,7 +46,7 @@ function GuildStructure ({ guild }) {
                         </div>)
                 })}
             </section>
-            <button className='main-btn-M'>
+            <button className='primary-btn-M'>
                 Arruolati!
             </button>
         </section>

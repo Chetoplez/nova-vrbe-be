@@ -7,7 +7,7 @@
 
 .infoRuolo {
     display: flex;
-    align-content: center;
+    align-items: center;
 }
 
 .divisore {

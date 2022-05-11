@@ -29,6 +29,11 @@ public class CharacterController {
         return characterBusiness.getAllCharacters();
     }
 
+    //@PostMapping("/checknome")
+    //public ResponseEntity<CheckNomeResponse> checkNomeAvailability(@RequestBody CheckNomeRequest request){
+    //    return characterBusiness.checkNomeAvailability(request);
+    //}
+
     @GetMapping("/getcharacter/unemployed")
     public ResponseEntity<GetListUnemployedResponse> getUnemployed(){
         return  characterBusiness.getUnEmployedCharacters();
