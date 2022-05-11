@@ -1,0 +1,13 @@
+.forum-card {
+    background-image: url('../../img/boards/squared/Board-Squared-L.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    color: #FFD782;
+}
+
+.forum-card-body {
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+}
