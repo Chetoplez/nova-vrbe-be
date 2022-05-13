@@ -8,6 +8,7 @@ import DominaFrame from "./DominaFrame";
 import CharacterInfo from "./CharacterInfo";
 import CharacterStat from "./CharacterStat";
 import CharacterNomina from "./CharacterNomina";
+import StatChart from "./StatChart";
 import HomeNav from "../Navbar/HomeNav";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL, getJwt } from "../../utils/api";
@@ -152,7 +153,7 @@ function CharacterCreation(){
           <div className="contenitori">
             <header className='w3-header'> 
               <h2>
-                Ave {(watch().characterName && watch().characterCognomen) ? watch().characterName+' '+watch().characterCognomen : 'Straniero' }! <br />
+                Ave {(watch().characterName || watch().characterCognomen) ? watch().characterName+' '+watch().characterCognomen : 'Straniero' }! <br />
                 Sei nuovo da queste parti...
                 <br /> Chi sei?
               </h2>
@@ -168,6 +169,10 @@ function CharacterCreation(){
           {stepForm === 0 && (
             <div className='colonna-dx'>
               <div className="contenitori">{watch().gender === "MASCHIO" ? <DominusFrame /> : <DominaFrame />}</div>
+            </div>)}
+            {stepForm === 2 && (
+            <div className='colonna-dx'>
+              <div className="contenitori"><StatChart stats={stats}/></div>
             </div>)}
             {/* <pre>{JSON.stringify(watch(), null, 4)}</pre> */}
         </form>
