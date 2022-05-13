@@ -36,12 +36,14 @@ public class UserBusiness {
     @Autowired
     JwtUtils jwtUtils;
 
-    public ResponseEntity<GenericUserDto> createUser(AddUserRequest addUserRequest){
-        ResponseEntity<GenericUserDto> response = null;
+
+    public ResponseEntity<NewUserResponse> createUser(AddUserRequest addUserRequest){
+        ResponseEntity<NewUserResponse> response = null;
+        NewUserResponse userResponse = new NewUserResponse();
         UserDtoPojo user = addUserRequest.getUserPojo();
 
         if(!CollectionUtils.isEmpty(userRepositoryService.findUsersByEmail(user.getEmail()))){
-            response = new ResponseEntity<GenericUserDto>(new GenericUserDto(), HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<NewUserResponse>(new NewUserResponse(), HttpStatus.BAD_REQUEST);
             return response;
         }
 
@@ -49,9 +51,12 @@ public class UserBusiness {
 
         if(userRepositoryService.saveUser(genericUserDto) != null){
             UserUtils.cleanUserSensitiveData(genericUserDto);
-            response = new ResponseEntity<GenericUserDto>(genericUserDto, HttpStatus.OK);
+            userResponse.setNewUser(genericUserDto);
+            final String jwt = jwtUtils.generateToken(genericUserDto);
+            userResponse.setJwt(jwt);
+            response = new ResponseEntity<NewUserResponse>(userResponse, HttpStatus.OK);
         }else{
-            response = new ResponseEntity<GenericUserDto>(new GenericUserDto(), HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity<NewUserResponse>(new NewUserResponse(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return response;
@@ -87,6 +92,11 @@ public class UserBusiness {
         final String jwt = jwtUtils.generateToken(dto);
         loginResponse.setJwt(jwt);
 
+        //EmailDetail email = new EmailDetail();
+        //email.setMsgBody("Ciao, Mondo\n questo è il tuo JWT: "+jwt);
+        //email.setSubject("Test Invio");
+        //email.setRecipient("cbranci89@gmail.com");
+        //System.out.println(emailService.sendSimpleMail(email));
 
         response = new ResponseEntity<>(loginResponse, HttpStatus.OK);
 

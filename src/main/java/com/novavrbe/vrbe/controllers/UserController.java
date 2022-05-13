@@ -1,7 +1,6 @@
 package com.novavrbe.vrbe.controllers;
 
 import com.novavrbe.vrbe.business.UserBusiness;
-import com.novavrbe.vrbe.dto.GenericUserDto;
 import com.novavrbe.vrbe.models.usercontroller.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,7 @@ public class UserController {
 
 
     @PutMapping("/create")
-    public ResponseEntity<GenericUserDto> createUser(@RequestBody AddUserRequest addUserRequest){
+    public ResponseEntity<NewUserResponse> createUser(@RequestBody AddUserRequest addUserRequest){
         return userBusiness.createUser(addUserRequest);
     }
 

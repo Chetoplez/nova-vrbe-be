@@ -19,9 +19,9 @@ export const API_URL = {
     'PRESENTI': 'https://www.fervm.it:8443/fervmAPI/presenti',
     'USER': 'https://www.fervm.it:8443/fervmAPI/user',
     'FORUM': 'https://www.fervm.it:8443/fervmAPI/forum',
-    'SUBFORUM': 'https://www.fervm.it:8443/fervmAPI/subforum',
-    'POST' : 'https://www.fervm.it:8443/fervmAPI/post',
-    'COMMENT': 'https://www.fervm.it:8443/fervmAPI/comment',
+    'SUBFORUM': 'https://www.fervm.it:8443/fervmAPI/forum/subforum',
+    'POST' : 'https://www.fervm.it:8443/fervmAPI/form/post',
+    'COMMENT': 'https://www.fervm.it:8443/fervmAPI/forum/comment',
     'MISSIVE': 'https://www.fervm.it:8443/fervmAPI/missive'
 }
 export const getJwt = ()=>{

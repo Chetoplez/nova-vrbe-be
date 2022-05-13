@@ -1,10 +1,12 @@
-import React  from "react";
+import React, { useContext }  from "react";
 import { TextField } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 import { API_URL } from "../../utils/api";
 import HomeNav from '../Navbar/HomeNav'
 import { useForm } from "react-hook-form";
+import store from "store";
+import { userContext } from "../../utils/userContext";
 
 import  './Subscribe.css'
 
@@ -17,6 +19,7 @@ import  './Subscribe.css'
  */
 function Subscribe() {
   const navigate = useNavigate();
+  const mainContext = useContext(userContext)
   const { register, watch, handleSubmit,  formState: { errors } } = useForm({mode: 'all'});
 
 
@@ -33,8 +36,13 @@ function Subscribe() {
     axios.put(API_URL.USER + "/create", payload)
       .then(resp => {
         //console.log("genericUser", resp)
-        if (resp.status === 200 && resp.data.id !== undefined) {
-          navigate("/subscribe/newcharacter/" + resp.data.id)
+        if (resp.status === 200 && resp.data.newUser.id !== undefined) {
+          
+          store.set('jwt', resp.data.jwt)
+          mainContext.setRoles([resp.data.newUser.role])
+          store.set('roles',[resp.data.newUser.role])
+          
+          navigate("/subscribe/newcharacter/" + resp.data.newUser.id)
         }
       }).catch(err => {
         console.log(err)
@@ -46,9 +54,11 @@ function Subscribe() {
   return (
     <>
       <HomeNav />
-      <div className="w3-center">
+      <div className="w3-center contenitori">
         <header>
           <h3>Iscriviti a Fervm! </h3>
+          <div>Devi creare un account prima di poter creare un personaggio e vivere la storia in prima persona!</div>
+          <div>Ci vorranno solo pochi momenti</div>
         </header>
         <form onSubmit={handleSubmit(submitForm)}>
           <div className="margin-form">
