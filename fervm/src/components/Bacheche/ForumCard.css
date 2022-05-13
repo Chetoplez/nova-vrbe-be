@@ -4,10 +4,17 @@
     background-repeat: no-repeat;
     border-radius: 20px;
     color: #FFD782;
+    line-height: 20px;
+    padding: 20px;
+    margin: 10px;
 }
 
 .forum-card-body {
     display: flex;
     align-items: center;
     text-transform: capitalize;
+}
+
+.link-bacheca {
+    color: #FFD782;
 }

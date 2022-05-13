@@ -39,32 +39,32 @@ function ForumCard({ forum , guild }) {
     function renderCard() {
         if(!guild || mainContext.roles.includes("ROLE_ADMIN")){
             return(
-                <div className="w3-padding w3-margin forum-card">
+                <div className="forum-card link-bacheca">
                 <div className="forum-card-body" >
                     <Avatar variant="square"/>
                     <Link to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
                 </div>
-                <p style={{whiteSpace: 'pre-wrap'}}>{parse(forum.description)}</p>
+                <div style={{whiteSpace: 'pre-wrap'}}>{parse(forum.description)}</div>
             </div>
             )
         }else if(characterdGuild.guild_ID === forum.ownedBy){
             return (
-                <div className=" w3-padding w3-margin forum-card">
+                <div className="forum-card link-bacheca">
                     <div className="forum-card-body">
                         <Avatar variant="square" />
                         <Link to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
                     </div>
-                    <p style={{ whiteSpace: 'pre-wrap' }}>{parse(forum.description)}</p>
+                    <div style={{ whiteSpace: 'pre-wrap' }}>{parse(forum.description)}</div>
                 </div>
             )
         } else {
             return (
-                <div className="w3-padding w3-margin forum-card">
+                <div className="forum-card">
                     <div className="forum-card-body" style={{color:'#554641'}}>
                         <Avatar variant="square" />
                         <h3>{forum.name}</h3>
                     </div>
-                    <p style={{ whiteSpace: 'pre-wrap' }}>{parse(forum.description)}</p>
+                    <div style={{ whiteSpace: 'pre-wrap' }}>{parse(forum.description)}</div>
                 </div>
             )
         }
