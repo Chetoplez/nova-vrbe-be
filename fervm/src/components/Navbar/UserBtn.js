@@ -32,14 +32,14 @@ function UserBtn() {
     }
 
     const logout = ()=>{
-        axios.patch(API_URL.PRESENTI+"/getonline",
-        {characterId: mainContext.user.characterId, online: false},
+        axios.post(API_URL.USER+"/logout",
+        {chId: mainContext.user.characterId},
         {
             headers: {
                 Authorization: "Fervm "+getJwt()
             }
         }).then(resp=>{
-            if(resp.data.changed)
+            if(resp.data.success)
                 mainContext.tryLogout()
         })
         

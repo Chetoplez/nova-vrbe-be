@@ -3,7 +3,9 @@ package com.novavrbe.vrbe.business;
 import com.novavrbe.vrbe.dto.GenericUserDto;
 import com.novavrbe.vrbe.models.charactermodels.UserDtoPojo;
 import com.novavrbe.vrbe.models.usercontroller.*;
+import com.novavrbe.vrbe.repositories.impl.PresentiRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
+import com.novavrbe.vrbe.utils.mail.EmailService;
 import com.novavrbe.vrbe.utils.JwtUtils;
 import com.novavrbe.vrbe.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,13 @@ public class UserBusiness {
     private AuthenticationManager authManager;
 
     @Autowired
-    JwtUtils jwtUtils;
+    private JwtUtils jwtUtils;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private PresentiRepositoryService presRepository;
 
 
     public ResponseEntity<NewUserResponse> createUser(AddUserRequest addUserRequest){
@@ -91,21 +99,22 @@ public class UserBusiness {
 
         final String jwt = jwtUtils.generateToken(dto);
         loginResponse.setJwt(jwt);
-
-        //EmailDetail email = new EmailDetail();
-        //email.setMsgBody("Ciao, Mondo\n questo è il tuo JWT: "+jwt);
-        //email.setSubject("Test Invio");
-        //email.setRecipient("cbranci89@gmail.com");
-        //System.out.println(emailService.sendSimpleMail(email));
-
         response = new ResponseEntity<>(loginResponse, HttpStatus.OK);
-
         return response;
     }
 
-    public ResponseEntity<LogoutResponse> logout(LogoutRequest logoutRequest){
-
-        return null;
+    public ResponseEntity<LogoutResponse> logout(LogoutRequest request){
+        ResponseEntity<LogoutResponse> response ;
+        LogoutResponse logoutResponse = new LogoutResponse();
+        if(request.getChId() == null ){
+            response = new ResponseEntity<>(logoutResponse, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        presRepository.changeOnline(request.getChId(),false);
+        presRepository.moveToluogo(0,request.getChId());
+        logoutResponse.setSuccess(true);
+        response = new ResponseEntity<>(logoutResponse,HttpStatus.OK);
+        return response;
     }
 
     public ResponseEntity<GetUserResponse> getUser(String characterId){
