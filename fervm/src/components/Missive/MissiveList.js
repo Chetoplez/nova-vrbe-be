@@ -69,10 +69,11 @@ function MissiveList({ chId, setMissiva, setSection }){
                     idMissive: checked,
                     inbox: inbox
                 }
-                axios.delete(API_URL.MISSIVE + '/delete', {
+                console.log(payload)
+                axios.patch(API_URL.MISSIVE + '/delete', payload ,{
                     headers: {
                       'Authorization': 'Fervm '+getJwt()
-                    }} , {data: payload})
+                    }})
                 .then(resp=>{        
                     if (resp.data.succes){
                         setChecked([-1])

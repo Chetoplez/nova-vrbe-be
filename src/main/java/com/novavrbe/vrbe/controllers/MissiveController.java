@@ -28,7 +28,7 @@ public class MissiveController {
         return missiveBusiness.readMissive(request);
     }
 
-    @DeleteMapping("/delete")
+    @PatchMapping("/delete")
     public ResponseEntity<DeleteMissiveResponse> deleteMissive (@RequestBody DeleteMissiveRequest request){
         return missiveBusiness.deleteMissive(request);
     }
