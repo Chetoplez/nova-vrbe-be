@@ -5,9 +5,10 @@ import com.novavrbe.vrbe.models.charactermodels.UserDtoPojo;
 import com.novavrbe.vrbe.models.usercontroller.*;
 import com.novavrbe.vrbe.repositories.impl.PresentiRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
-import com.novavrbe.vrbe.utils.mail.EmailService;
 import com.novavrbe.vrbe.utils.JwtUtils;
 import com.novavrbe.vrbe.utils.UserUtils;
+import com.novavrbe.vrbe.utils.mail.EmailService;
+import com.novavrbe.vrbe.utils.mail.MailDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,6 +66,19 @@ public class UserBusiness {
             response = new ResponseEntity<NewUserResponse>(userResponse, HttpStatus.OK);
         }else{
             response = new ResponseEntity<NewUserResponse>(new NewUserResponse(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        MailDetails welcomeMail = new MailDetails();
+        welcomeMail.setSubject("Benvenuto a Fervm");
+        String msgStyled = "Ave " + genericUserDto.getNickname()+"! <br /> confermiamo l'avvenuta registrazione su Fervm.it!<br />"
+                +"Non vediamo l'ora di vederti tra le vie della colonia!<br /><br /> Accedi ora su: <a href='www.fervm.it' >www.fervm.it</a><br /><br />" +
+                "Il Team di Fervm.it";
+        welcomeMail.setBody(msgStyled);
+        welcomeMail.setRecipient(genericUserDto.getEmail());
+        try {
+            emailService.sendMail(welcomeMail);
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
         }
 
         return response;
