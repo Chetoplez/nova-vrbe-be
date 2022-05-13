@@ -3,6 +3,9 @@ import HomeNav from './Navbar/HomeNav';
 function Regolamento() {
     
     document.title = 'Fervm GdR - Regolamento'
+    var body = document.getElementById("body")
+    body.classList.remove("home-img")
+    
     return(
         <>
         <HomeNav />

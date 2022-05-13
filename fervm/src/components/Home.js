@@ -20,16 +20,17 @@ function Home() {
   useEffect(() => {
     var body = document.getElementById("body")
     body.classList.add("home-img")
-    const checkAuth = async () => {
-      let res = mainContext.tryLoginUser()
-      if (res) {
-        setLoading(false);
-      } else {
-        // redirect to login page
-      }
-    }
+    setLoading(false);
+    // const checkAuth = async () => {
+    //   let res = mainContext.tryLoginUser()
+    //   if (res) {
+    //     setLoading(false);
+    //   } else {
+    //     // redirect to login page
+    //   }
+    // }
 
-    checkAuth();
+    // checkAuth();
   }, [])
 
  

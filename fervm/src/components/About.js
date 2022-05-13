@@ -2,6 +2,8 @@ import React from 'react'
 import HomeNav from './Navbar/HomeNav';
 
 function About() {
+    var body = document.getElementById("body")
+    body.classList.remove("home-img")
     document.title = 'Fervm GdR - About'
     return(
         <>
