@@ -7,4 +7,5 @@ import java.util.ArrayList;
 @Data
 public class DeleteMissiveRequest {
     private ArrayList<Integer> idMissive;
+    private boolean inbox;
 }

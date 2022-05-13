@@ -9,7 +9,9 @@ import java.util.List;
 
 @Service
 public interface MissiveRepository extends CrudRepository<MissivaDto, Integer> {
-    List<MissivaDto> findByChToAndDeletedFalse(String parseInt);
+    List<MissivaDto> findByChToAndDeletedToFalse(String parseInt);
 
-    ArrayList<MissivaDto> findByChToAndDeletedFalseAndIsReadFalse(String chId);
+    ArrayList<MissivaDto> findByChToAndDeletedToFalseAndIsReadFalse(String chId);
+
+    List<MissivaDto> findByChFromAndDeletedFromFalse(Integer from);
 }

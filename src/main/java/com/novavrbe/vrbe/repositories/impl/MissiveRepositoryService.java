@@ -15,7 +15,15 @@ public class MissiveRepositoryService {
     private MissiveRepository missiveRepository;
 
     public List<MissivaDto> getInbox(Integer chId) {
-        List<MissivaDto> missivaDtos = missiveRepository.findByChToAndDeletedFalse(chId.toString());
+        List<MissivaDto> missivaDtos = missiveRepository.findByChToAndDeletedToFalse(chId.toString());
+        if(missivaDtos == null)
+            return new ArrayList<>();
+        else
+            return missivaDtos;
+    }
+
+    public List<MissivaDto> getSentBox(Integer chId) {
+        List<MissivaDto> missivaDtos = missiveRepository.findByChFromAndDeletedFromFalse(chId);
         if(missivaDtos == null)
             return new ArrayList<>();
         else
@@ -28,7 +36,7 @@ public class MissiveRepositoryService {
     }
 
     public ArrayList<MissivaDto> checkNewMail(Integer chId) {
-        ArrayList<MissivaDto> missivaDtos = missiveRepository.findByChToAndDeletedFalseAndIsReadFalse(chId.toString());
+        ArrayList<MissivaDto> missivaDtos = missiveRepository.findByChToAndDeletedToFalseAndIsReadFalse(chId.toString());
         if(missivaDtos == null)
             return new ArrayList<>();
         else

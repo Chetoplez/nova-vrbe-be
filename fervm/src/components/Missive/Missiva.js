@@ -1,7 +1,7 @@
 import React from 'react'
 import Moment from 'moment'
 
-function Missiva({ openFn , missiva }){
+function Missiva({ openFn , missiva, inbox }){
 
     
     return(
@@ -12,7 +12,8 @@ function Missiva({ openFn , missiva }){
                 
                 <div style={{width:'90%', margin:'auto'}} onClick={()=>{openFn(missiva)}}>
                     <div style={{display:'flex', justifyContent:'space-between'}}>
-                        <div>Da: {missiva.from.characterName +' '+missiva.from.characterSurname}</div> 
+                        { inbox ? <div>Da: {missiva.from.characterName +' '+missiva.from.characterSurname}</div> :
+                        <div>A: {missiva.from.characterName +' '+missiva.from.characterSurname}</div> } 
                         <div>{Moment(missiva.receivedAt).format('DD/MM/YYYY HH:mm')}</div>
                     </div>
                     <div>Oggetto: {missiva.subject}</div>

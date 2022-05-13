@@ -28,7 +28,9 @@ public class MissivaDto {
     @Column
     private boolean isRead;
     @Column
-    private boolean deleted;
+    private boolean deletedTo;
+    @Column
+    private boolean deletedFrom;
     @Column
     private String type;
 

@@ -26,28 +26,34 @@ public class MissiveBusiness {
     /**
      * Torna la inbox di un personaggio
      * @param chId ul character Id del pg
+     * @param inbox
      * @return una lista di Missiva object >
      */
-    public ResponseEntity<GetMissiveResponse> getMissive(Integer chId) {
+    public ResponseEntity<GetMissiveResponse> getMissive(Integer chId, Boolean inbox) {
         ResponseEntity<GetMissiveResponse> response;
         GetMissiveResponse missiveResponse = new GetMissiveResponse();
-        ArrayList<Missiva> inbox = new ArrayList<>();
+        ArrayList<Missiva> inboxList = new ArrayList<>();
 
         if(chId == null){
             response = new ResponseEntity<>(missiveResponse, HttpStatus.BAD_REQUEST);
             return response;
         }
         //let's go to the database!
-        List<MissivaDto> missivaDtos = missiveRepositoryService.getInbox(chId);
+        List<MissivaDto> missivaDtos ;
+        if(inbox){
+            missivaDtos = missiveRepositoryService.getInbox(chId);
+        } else{
+            missivaDtos = missiveRepositoryService.getSentBox(chId);
+        }
         //now, for each object we create a Missiva Model
         for (MissivaDto dto :  missivaDtos ) {
             CharacterDto fromDto = characterRepositoryService.retrieveCharacterFromId(dto.getChFrom());
-            CharacterDto toDto = characterRepositoryService.retrieveCharacterFromId(chId);
+            CharacterDto toDto = characterRepositoryService.retrieveCharacterFromId(Integer.parseInt(dto.getChTo()));
 
-            Missiva missiva =  MissivaUtils.prepareMissivafromDto(dto, fromDto, toDto);
-            inbox.add(missiva);
+            Missiva missiva =  MissivaUtils.prepareMissivafromDto(dto, fromDto, toDto, inbox);
+            inboxList.add(missiva);
         }
-        missiveResponse.setMissiveList(inbox);
+        missiveResponse.setMissiveList(inboxList);
         response = new ResponseEntity<>(missiveResponse,HttpStatus.OK);
         return response;
     }
@@ -125,9 +131,17 @@ public class MissiveBusiness {
             return response;
         }
         ArrayList<MissivaDto> toDeleteDto = missiveRepositoryService.getMissiveList(request.getIdMissive());
-        for (MissivaDto dto: toDeleteDto ) {
-            dto.setDeleted(true);
+        if(request.isInbox()){
+            //sto cancellando missive in cui sono il destinatario
+            for (MissivaDto dto: toDeleteDto ) {
+                dto.setDeletedTo(true);
+            }
+        }else {
+            for (MissivaDto dto: toDeleteDto ) {
+                dto.setDeletedFrom(true);
+            }
         }
+
         missiveRepositoryService.saveAll(toDeleteDto);
         missivaResponse.setMessaggio("Missive eliminate");
         missivaResponse.setSucces(true);

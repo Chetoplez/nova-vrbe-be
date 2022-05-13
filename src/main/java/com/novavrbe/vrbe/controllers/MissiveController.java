@@ -13,9 +13,9 @@ public class MissiveController {
     @Autowired
     private MissiveBusiness missiveBusiness;
 
-    @GetMapping("/getinbox/{chId}")
-    public ResponseEntity<GetMissiveResponse> getInbox (@PathVariable Integer chId){
-        return missiveBusiness.getMissive(chId);
+    @GetMapping("/getinbox/chId={chId}&inbox={inbox}")
+    public ResponseEntity<GetMissiveResponse> getInbox (@PathVariable Integer chId , @PathVariable Boolean inbox){
+        return missiveBusiness.getMissive(chId, inbox);
     }
 
     @PostMapping("/send")

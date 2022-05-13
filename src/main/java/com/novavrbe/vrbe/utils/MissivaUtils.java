@@ -7,7 +7,7 @@ import com.novavrbe.vrbe.models.missivecontroller.Missiva;
 
 public class MissivaUtils {
 
-    public static Missiva prepareMissivafromDto(MissivaDto dto, CharacterDto fromDto, CharacterDto toDto) {
+    public static Missiva prepareMissivafromDto(MissivaDto dto, CharacterDto fromDto, CharacterDto toDto, Boolean inbox) {
         Missiva temp = new Missiva();
         SmallCharacter from = new SmallCharacter();
         SmallCharacter to = new SmallCharacter();
@@ -21,9 +21,16 @@ public class MissivaUtils {
         to.setCharacterName(toDto.getCharacterName());
         to.setCharacterSurname(toDto.getCharacterSurname());
         to.setCharacterImg(toDto.getCharacterImg());
-        temp.setTo(to);
 
-        temp.setFrom(from);
+        if(inbox) {
+            temp.setTo(to);
+            temp.setFrom(from);
+        }else {
+            temp.setTo(from);
+            temp.setFrom(to);
+        }
+
+
         temp.setMissivaId(dto.getMissivaId());
         temp.setBody(dto.getBody());
         temp.setRead(dto.isRead());
@@ -46,7 +53,8 @@ public class MissivaUtils {
         dto.setChTo(missiva.getTo().getCharacterId().toString());
         dto.setSentAt(missiva.getSentAt());
         dto.setReceivedAt(missiva.getReceivedAt());
-        dto.setDeleted(false);
+        dto.setDeletedTo(false);
+        dto.setDeletedFrom(false);
         return dto;
 
     }

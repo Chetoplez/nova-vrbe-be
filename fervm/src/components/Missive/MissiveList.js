@@ -10,24 +10,26 @@ import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import CreateIcon from '@mui/icons-material/Create';
 
 
-function MissiveInbox({ chId, setMissiva, setSection }){
+function MissiveList({ chId, setMissiva, setSection }){
 
     const [missiveList, setMissiveList] = useState([])
     const [isLoading , setLoading]=useState(true);
     const [refresh, setRefresh] = useState(false)
     const [checked, setChecked] = useState([-1]);
+    const [inbox, setInbox] = useState(true);
     var orderedMissive = [].concat(missiveList).sort((a, b) => a.receivedAt < b.receivedAt ? 1 : -1);
 
     useEffect(()=>{
-        axios.get(API_URL.MISSIVE + '/getinbox/'+chId, {
+        axios.get(API_URL.MISSIVE + '/getinbox/chId='+chId+"&inbox="+inbox, {
             headers: {
               'Authorization': 'Fervm '+getJwt()
             }})
         .then(resp=>{
             setMissiveList(resp.data.missiveList)
+            console.log("ListaMissive:", missiveList)
             setLoading(false)
         })
-    },[refresh])
+    },[inbox,refresh])
 
     if (isLoading) {
         return <div className="Loading w3-card w3-center">Loading...</div>;
@@ -59,13 +61,14 @@ function MissiveInbox({ chId, setMissiva, setSection }){
     }
 
     const manageMissive = (action)=>{
-        var payload = {
-            idMissive: checked
-        }
-        
+          
         if(checked.length > 0 ) {
             switch(action) {
             case 'delete':
+                var payload = {
+                    idMissive: checked,
+                    inbox: inbox
+                }
                 axios.delete(API_URL.MISSIVE + '/delete', {
                     headers: {
                       'Authorization': 'Fervm '+getJwt()
@@ -78,6 +81,9 @@ function MissiveInbox({ chId, setMissiva, setSection }){
                 })
                 break;
             case 'read' :
+                var payload = {
+                    idMissive: checked
+                }
                axios.patch(API_URL.MISSIVE + '/read', payload,  {
                 headers: {
                   'Authorization': 'Fervm '+getJwt()
@@ -98,11 +104,12 @@ function MissiveInbox({ chId, setMissiva, setSection }){
 
     return(
         <div className="contenitori">
-            <header className="d-flex" >
-                <h3>Missive in Arrivo: {missiveList.length}</h3>
+            <header className="d-flex" style={{justifyContent:'space-between', alignItems:'center'}}>
+                <span className="d-flex"><h3>Missive {inbox ? "In Arrivo": "Spedite" }: {missiveList.length}</h3>
                 <IconButton type="button" onClick={()=>{setSection('scrivi')}}>
                     <CreateIcon />
-                </IconButton>
+                </IconButton></span>
+                <button className="ctrl-btn-M" type="button" onClick={()=>{setInbox(!inbox);}}>{inbox ? "Spedite": "In Arrivo"}</button>
             </header>
            
             <div>
@@ -127,7 +134,7 @@ function MissiveInbox({ chId, setMissiva, setSection }){
                             onChange = {handleChecked}
                             checked = {checked.includes(missiva.missivaId)}
                             value={missiva.missivaId} />
-                        <Missiva openFn = {openMissiva} missiva={missiva} />
+                        <Missiva openFn = {openMissiva} missiva={missiva} inbox={inbox} />
                     </div> )
                 })
                 
@@ -136,4 +143,4 @@ function MissiveInbox({ chId, setMissiva, setSection }){
             </div>
         </div>
     )
-}export default MissiveInbox;
+}export default MissiveList;

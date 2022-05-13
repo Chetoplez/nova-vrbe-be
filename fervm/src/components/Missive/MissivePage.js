@@ -1,7 +1,7 @@
 import React , { useContext, useState } from 'react'
 import {userContext} from '../../utils/userContext'
 
-import MissiveInbox from './MissiveInbox';
+import MissiveList from './MissiveList';
 import WriteMissiva from './WriteMissiva';
 import DettaglioMissiva from './DettaglioMissiva';
 import './MissivePage.css'
@@ -39,7 +39,7 @@ function MissivaPage() {
                 <h3>Epistolario di {mainContext.user.characterName + ' ' + mainContext.user.characterSurname}</h3>
             </header>
             <section style={{marginRight:'5px'}} className='w3-quarter colonna-dx'>
-                <MissiveInbox setSection={setSection} setMissiva={setMissiva} chId={mainContext.user.characterId} />
+                <MissiveList setSection={setSection} setMissiva={setMissiva} chId={mainContext.user.characterId} />
             </section>
             <section  className='w3-threequarter colonna-sx'>
                 { returnSection() }

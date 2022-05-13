@@ -11,7 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { API_URL, getJwt } from "../../utils/api";
 import axios from "axios";
 
-function DettaglioMissiva({ missiva, setMissiva, setSection }) {
+function DettaglioMissiva({ missiva, setMissiva, setSection , inbox }) {
 
     const deleteMissiva = ()=>{
         var payload = {

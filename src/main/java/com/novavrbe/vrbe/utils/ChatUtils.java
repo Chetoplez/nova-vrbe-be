@@ -16,8 +16,8 @@ public class ChatUtils {
 
         dto.setAction(message.getAction());
         if(lavoro != null){
-            dto.setCarica(lavoro != null ? lavoro.getRoleImg() : "");
-            dto.setTooltip_carica(lavoro!= null ? lavoro.getRoleName(): "");
+            dto.setCarica(lavoro.getRoleImg() );
+            dto.setTooltip_carica(lavoro.getRoleName());
         }
 
         dto.setSender(sender.getCharacterName()+' '+sender.getCharacterSurname());
