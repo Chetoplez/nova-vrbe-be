@@ -88,25 +88,26 @@ public class CharacterUtils {
         if(character != null && characterStatisticsDto != null){
             ArrayList<CharacterStatistic> stats = new ArrayList<>();
 
-            CharacterStatistic strenght = buildCharacterStat(Stat.FORZA, characterStatisticsDto.getForza());
+            CharacterStatistic strenght = buildCharacterStat(Stat.FORZA, characterStatisticsDto.getForza(), characterStatisticsDto.getForzaModifier());
             stats.add(strenght);
-            CharacterStatistic intelligence = buildCharacterStat(Stat.INTELLIGENZA, characterStatisticsDto.getIntelligenza());
+            CharacterStatistic intelligence = buildCharacterStat(Stat.INTELLIGENZA, characterStatisticsDto.getIntelligenza(),characterStatisticsDto.getIntelligenzaModifier() );
             stats.add(intelligence);
-            CharacterStatistic wisdom = buildCharacterStat(Stat.SAGGEZZA, characterStatisticsDto.getSaggezza());
+            CharacterStatistic wisdom = buildCharacterStat(Stat.SAGGEZZA, characterStatisticsDto.getSaggezza(),characterStatisticsDto.getSaggezzaModifier());
             stats.add(wisdom);
-            CharacterStatistic dexterity = buildCharacterStat(Stat.DESTREZZA, characterStatisticsDto.getDestrezza());
+            CharacterStatistic dexterity = buildCharacterStat(Stat.DESTREZZA, characterStatisticsDto.getDestrezza(), characterStatisticsDto.getDestrezzaModifier());
             stats.add(dexterity);
-            CharacterStatistic constitution = buildCharacterStat(Stat.COSTITUZIONE, characterStatisticsDto.getCostituzione());
+            CharacterStatistic constitution = buildCharacterStat(Stat.COSTITUZIONE, characterStatisticsDto.getCostituzione(), characterStatisticsDto.getCostituzioneModifier());
             stats.add(constitution);
 
             character.setStats(stats);
         }
     }
 
-    public static CharacterStatistic buildCharacterStat(Stat stat, Integer base){
+    public static CharacterStatistic buildCharacterStat(Stat stat, Integer base, Integer modifier){
         CharacterStatistic statistic = new CharacterStatistic();
         statistic.setStatName(stat);
         statistic.setBaseStat(base);
+        statistic.setModified(modifier);
 
         return statistic;
     }
@@ -304,7 +305,7 @@ public class CharacterUtils {
 
                         character.getStats().stream().forEach( stat -> {
                             if(stat.equals(modifier.getStat())){
-                                stat.setModified( stat.getModified() != null ? stat.getModified().add(new BigDecimal(modifier.getModifier())) : new BigDecimal(modifier.getModifier()));
+                                stat.setModified( stat.getModified() != null ? stat.getModified()+modifier.getModifier()  : modifier.getModifier());
                             }
                         });
 

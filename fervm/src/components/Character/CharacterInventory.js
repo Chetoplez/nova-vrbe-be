@@ -10,12 +10,12 @@ import { userContext } from '../../utils/userContext'
 
 import './CharacterInventory.css'
 
-const CharacterInventory = ({ character }) => {
+const CharacterInventory = ({ character , setFresh , fresh }) => {
     const [detail, setDetail] = useState(null)
     const [inventory, setInventory] = useState([])
     const [isloading, setLoading] = useState(true)
     const [sesterzi, setSesterzi] = useState(0)
-    const [fresh, setFresh] = useState(false)
+    
     const mainContext = useContext(userContext)
 
     document.title = 'Fervm GdR - Zaino'
@@ -43,7 +43,7 @@ const CharacterInventory = ({ character }) => {
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <div style={{ display: 'flex', width: '100%' }}>
+            <div style={{ display: 'flex', width: '80%' }}>
                 <CharacterInventoryEquipped character={character} setFresh={setFresh} inventoryItems={inventory} setDetail={setDetail}/>
                 <div className="w3-container w3-third">
                     {/*i Drop Items to be downloaded from server */}
@@ -56,14 +56,14 @@ const CharacterInventory = ({ character }) => {
                     <CharacterInventoryBag character={character} inventoryItems={inventory} setFresh={setFresh} setDetail={setDetail} />
                 </div>
 
-                <div className="w3-container w3-third">
-                    {detail &&
+                {detail  && <div className="w3-container w3-third">
+                     
                         <>
                             <button className='ctrl-btn-M' onClick={() => { setDetail(null) }}>Chiudi</button>
                             <ItemDetails owner={character} item={detail} />
                         </>
-                    }
-                </div>
+                    
+                </div>}
             </div>
         </DndProvider>
     )

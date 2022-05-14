@@ -49,7 +49,7 @@ function ProfiloPg() {
     const [storia, setStoria] = useState("");
     const [modStoria, setmodStoria] = useState(false);
     const mainContext = useContext(userContext)
-
+    const [fresh, setFresh] = useState(false)
     const [showInventory, setShowInventory] = useState(false);
     let { idPg } = useParams()
 
@@ -103,7 +103,7 @@ function ProfiloPg() {
             })
 
         return () => { store.remove('idPg') }
-    }, [idPg, personaggio.characterImg])
+    }, [fresh,idPg, personaggio.characterImg])
 
     /**
      * Opens the Curriculum of a Character after downloaded it from server
@@ -216,7 +216,7 @@ function ProfiloPg() {
             />
 
             {showInventory ?
-                <CharacterInventory character={personaggio} /> :
+                <CharacterInventory setFresh={setFresh}  fresh={fresh} character={personaggio} /> :
                 <div style={{ display: 'flex', width: '80%' }}>
                     {/* Personal information column , name, gender etc  */}
 

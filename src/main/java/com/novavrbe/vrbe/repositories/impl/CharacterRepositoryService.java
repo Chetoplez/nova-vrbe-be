@@ -15,8 +15,11 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+
 
 @Service
 public class CharacterRepositoryService {
@@ -244,6 +247,59 @@ public class CharacterRepositoryService {
 
     public void equipItem(@NotNull CharacterInventoryObjectDto characterInventoryObjectDto){
         characterInventoryObjectRepository.save(characterInventoryObjectDto);
+        //Modifichiamo pure le stat associate a quell'oggetto se serve
+        ArrayList<InventoryObjectEffectDto> effects = (ArrayList<InventoryObjectEffectDto>) inventoryObjectEffectRepository.findEffectsForObject(characterInventoryObjectDto.getIdInventoryObject());
+        if(!characterInventoryObjectDto.getInUse()){
+            //se lo sto togliendo devo sottrarre i modificatori delle stat
+            for (InventoryObjectEffectDto effect: effects) {
+               Optional<CharacterStatisticsDto> statDto = characterStatisticRepository.findById(characterInventoryObjectDto.getCharacterId());
+               CharacterStatisticsDto dto = statDto.get();
+               switch (effect.getStat()){
+                   case "FORZA":
+                       dto.setForzaModifier(dto.getForzaModifier()-effect.getModifier());
+                       break;
+                   case "COSTITUZIONE":
+                       dto.setCostituzioneModifier(dto.getCostituzioneModifier()-effect.getModifier());
+                       break;
+                   case "DESTREZZA":
+                       dto.setDestrezzaModifier(dto.getDestrezzaModifier()-effect.getModifier());
+                       break;
+                   case "INTELLIGENZA":
+                       dto.setIntelligenzaModifier(dto.getIntelligenzaModifier()-effect.getModifier());
+                       break;
+                   case "SAGGEZZA":
+                       dto.setSaggezzaModifier(dto.getSaggezzaModifier()-effect.getModifier());
+                       break;
+               }
+               characterStatisticRepository.save(dto);
+            }
+        }else {
+            //se lo sto equipaggiando devo aggiungere i modificatori delle stat
+            for (InventoryObjectEffectDto effect: effects) {
+                Optional<CharacterStatisticsDto> statDto = characterStatisticRepository.findById(characterInventoryObjectDto.getCharacterId());
+                CharacterStatisticsDto dto = statDto.get();
+                switch (effect.getStat()){
+                    case "FORZA":
+                        dto.setForzaModifier(dto.getForzaModifier()+effect.getModifier());
+                        break;
+                    case "COSTITUZIONE":
+                        dto.setCostituzioneModifier(dto.getCostituzioneModifier()+effect.getModifier());
+                        break;
+                    case "DESTREZZA":
+                        dto.setDestrezzaModifier(dto.getDestrezzaModifier()+effect.getModifier());
+                        break;
+                    case "INTELLIGENZA":
+                        dto.setIntelligenzaModifier(dto.getIntelligenzaModifier()+effect.getModifier());
+                        break;
+                    case "SAGGEZZA":
+                        dto.setSaggezzaModifier(dto.getSaggezzaModifier()+effect.getModifier());
+                        break;
+                }
+                characterStatisticRepository.save(dto);
+            }
+        }
+
+
     }
 
     public void lendItemToAnotherCharacter(@NotNull Integer toCharacterId, @NotNull InventoryObjectAssociation association){
@@ -278,7 +334,7 @@ public class CharacterRepositoryService {
         if(!CollectionUtils.isEmpty(characterItems)){
             List<CharacterInventoryObjectDto> items = characterItems.stream()
                     .filter( citem -> {
-                        return citem.getIdInventoryObject() == item.getId();
+                        return Objects.equals(citem.getIdInventoryObject(), item.getId());
                     })
                     .collect(Collectors.toList());
             CharacterInventoryObjectDto citem = items.get(0);

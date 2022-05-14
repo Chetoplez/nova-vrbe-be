@@ -20,8 +20,8 @@ const CharacterInventoryEquipped = ({ character, inventoryItems, setDetail, setF
         </DropArea>
 
     return (
-        <div className="w3-container w3-third" style={{ flexGrow: '1' }}>
-            <h1 className="w3-header">{character.characterName}</h1>
+        <div className="w3-container w3-third" >
+            <h1 className="w3-header">{character.characterName +' '+character.characterSurname}</h1>
             <div className="info-pg">
                 <h3>Indossato</h3>
                 <div className="dropArea">

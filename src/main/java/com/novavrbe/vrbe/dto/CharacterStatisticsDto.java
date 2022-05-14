@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 
 @Data
 @Table(name = "CharactersStatistics")
@@ -18,11 +17,21 @@ public class CharacterStatisticsDto {
     @Column
     private Integer forza;
     @Column
+    private Integer forzaModifier;
+    @Column
     private Integer destrezza;
+    @Column
+    private Integer destrezzaModifier;
     @Column
     private Integer costituzione;
     @Column
+    private Integer costituzioneModifier;
+    @Column
     private Integer intelligenza;
     @Column
+    private Integer intelligenzaModifier;
+    @Column
     private Integer saggezza;
+    @Column
+    private Integer saggezzaModifier;
 }

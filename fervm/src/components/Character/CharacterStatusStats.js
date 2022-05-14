@@ -2,15 +2,15 @@ const CharacterStatusStats = ({ stats }) =>
     <div className="w3-container">
         {stats && stats.map((stat, index) =>
             <div key={index} className="caratteristiche">
-                <div className="w3-half caratteristiche-totale">
+                <div className="w3-quarter caratteristiche-totale">
                     <span>{(stat.baseStat) + (stat.modified)}</span>
                 </div>
-                <div className="w3-half car">
+                <div className="w3-threequarter car">
                     <h6 style={{ textTransform: "lowercase" }}><strong>{stat.statName}</strong></h6>
                     <p className="margin-none">Base: {stat.baseStat}</p>
                     <p className="margin-none">
                         Mod:
-                        <span style={{ color: stat.modified > 0 ? '#0BA400' : '#A40000' }}> {stat.modified}</span>
+                        <span> {stat.modified}</span>
                     </p>
                 </div>
             </div>

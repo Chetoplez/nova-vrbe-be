@@ -106,11 +106,11 @@ public class ChatRepositoryService {
         if(!tempEffectDto.isEmpty()){
             for (CharacterTemporaryEffectDto dto: tempEffectDto ) {
                 if(dto.getStat().equalsIgnoreCase(stat.name())){
-                    temp.setModified(BigDecimal.valueOf(dto.getModifier()));
+                    temp.setModified(dto.getModifier());
                     break;
                 }
             }
-        }else {temp.setModified(BigDecimal.ZERO);}
+        }else {temp.setModified(0);}
 
         temp.setStatName(stat);
         return temp;

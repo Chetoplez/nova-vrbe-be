@@ -178,7 +178,7 @@ public class ChatBusiness {
         //Mi prendo il valore della stat inclusa del modificatore (che può essere zero)
         CharacterStatistic statValue = chatRepositoryService.getStatValue(cId, Stat.valueOf(stat));
         //Da questo valore , genero un numero casuale da 1 al massimo valore della stat.
-        int maxStatValue = statValue.getBaseStat() + statValue.getModified().intValue();
+        int maxStatValue = statValue.getBaseStat() + statValue.getModified();
         int randomNum = ThreadLocalRandom.current().nextInt(1, maxStatValue + 1);
         //Bene, abbiamo generato il valore random del dado basato sulla statistica (eventualmente modificata), ora inseriamo un messaggio
         String testo = "Lancia un Dado su " + stat +": "+"Il risultato è "+randomNum+" su "+maxStatValue;
@@ -254,8 +254,8 @@ public class ChatBusiness {
         CharacterStatistic attackerStat = chatRepositoryService.getStatValue(attacker, Stat.valueOf("DESTREZZA"));
         CharacterStatistic defenderStat = chatRepositoryService.getStatValue(defender, Stat.valueOf("DESTREZZA"));
         //bene, ho le statistiche di destrezza di chi attacca e difende. Genero casualmente due valori
-        int attackerValue = ThreadLocalRandom.current().nextInt(1, (attackerStat.getBaseStat()+attackerStat.getModified().intValue()) + 1);
-        int defenderValue = ThreadLocalRandom.current().nextInt(1, (defenderStat.getBaseStat()+defenderStat.getModified().intValue()) + 1);
+        int attackerValue = ThreadLocalRandom.current().nextInt(1, (attackerStat.getBaseStat()+attackerStat.getModified()) + 1);
+        int defenderValue = ThreadLocalRandom.current().nextInt(1, (defenderStat.getBaseStat()+defenderStat.getModified()) + 1);
         boolean hit = (attackerValue > defenderValue);
         res.setColpito(hit);
         res.setAttackResult(attackerValue);
