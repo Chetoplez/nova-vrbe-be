@@ -53,6 +53,7 @@ function GuildPage() {
               'Authorization': 'Fervm '+store.get('jwt')
             }})
         .then(resp=>{
+            console.log(resp.data.guild)
             setGuild(resp.data.guild)
         }).catch(err=>{
             console.log("Guild: network error ", err)
@@ -116,7 +117,7 @@ function GuildPage() {
                         <section className="announcement">
                             {guild.announcement}
                         </section>
-                        <GuildRoleList idGilda={ guild.id }/>
+                        <GuildRoleList idGilda={idGilda} />
                         <button className='primary-btn-M'>
                             Arruolati!
                         </button>

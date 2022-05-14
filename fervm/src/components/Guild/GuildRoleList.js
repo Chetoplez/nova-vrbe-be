@@ -9,6 +9,7 @@ function GuildRoleList({ idGilda }){
 
     useEffect(()=>{
         //Lista dei ruoli della gilda
+        console.log("idGilda",idGilda)
         axios.get(API_URL.GUILD+"/role/guildid="+idGilda,{
             headers: {
               'Authorization': 'Fervm '+getJwt()
