@@ -4,8 +4,15 @@
     display: flex;
 }
 
-.infoguild{
-    
+.infoGuild{
+    background-image: url('./img/legio_hero_img.png');
+    background-repeat: no-repeat;
+    background-position: bottom left;
+}
+
+.guild-descr{
+    margin-top: 20px;
+    white-space: pre-wrap;
 }
 
 .salary{
@@ -14,4 +21,6 @@
 
 .memberContainer{
     padding-left: 45px;
+    overflow: auto;
+    
 }
