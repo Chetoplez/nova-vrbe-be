@@ -23,10 +23,12 @@ function ForumCard({ forum , guild }) {
             }
         })
         .then(resp=>{
+            console.log("Membro", resp.data.member)
+            console.log("Forum", forum)
             if(!resp.data.unenmployed){
             setCharactedGuild(resp.data.member)
             }
-            setCharactedGuild({guild_ID: -2})
+           
             setLoading(false)
         })
     },[])
