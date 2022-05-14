@@ -143,15 +143,18 @@ function PgPresente(props) {
             </StyledBadge>
             
         <div className={props.col === "2" ? "fervm-small-nome-presenti" : "fervm-nome-presenti"}>
-          <div className='infoRuolo' >
+          <div className='infoRuolo'>
+          <div>
             <Link to={"/game/profilo/" + user.characterId}>
               <span className='nomepg-lista'>{user.characterName + ' ' + user.characterSurname}</span>
             </Link>
-            { user.role && (<Tooltip title={user.role} placement="top-end">
-              <img src={user.roleImg} width="22px"  style={{marginLeft:'10px'}} />
-            </Tooltip>)}
+            <div className={props.col === "2" ? "messaggio-utente" : "messaggio-utente"}>{user.messaggio}</div>
           </div>
-          <div className={props.col === "2" ? "messaggio-utente" : "messaggio-utente"}>{user.messaggio}</div>
+          { user.role && (<Tooltip title={user.role} placement="top-end">
+              <img src={user.roleImg}   style={{marginLeft:'10px' , width: '40px'}} />
+            </Tooltip>)}
+            </div>
+          
         </div>
         </div>
     );
