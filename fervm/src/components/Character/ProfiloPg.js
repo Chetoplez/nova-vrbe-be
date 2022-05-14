@@ -27,6 +27,10 @@ const useStyles = makeStyles({
     },
     mybarColor: {
         backgroundColor: '#FFBB00'
+    },
+    cvAvatar: {
+        width: 82,
+        height: 82
     }
 })
 
@@ -276,7 +280,7 @@ function ProfiloPg() {
 
                         {personaggio.characterJob !== null ?
                             <div className="cont-cv w3-container ">
-                                <Avatar src={personaggio.characterJob.role_img} alt="Carica" sizes="small"></Avatar>
+                                <Avatar src={personaggio.characterJob.role_img} alt="Carica" className={ classes.cvAvatar } />
                                 <h2>{personaggio.characterJob.roleName !== null ? personaggio.characterJob.roleName : "Nessuna Carica"}</h2>
                                 {personaggio.characterJob.roleName !== null ? <IconButton onClick={openCV} component="span" classes={{ root: classes.root }}>
                                     {isOpen ? <ClearIcon /> : <ArrowDropDownOutlinedIcon />}

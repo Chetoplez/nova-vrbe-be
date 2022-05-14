@@ -4,16 +4,16 @@ const CharacterStatusHealth = ({ health, healthStatus, characterName, characterI
     const STYLE = {
         progressBarStyle: buildStyles({
             strokeLinecap: 'butt',
-            textSize: '16px',
+            textSize: '16px',            
             pathTransitionDuration: 0.5,
-            pathColor: `rgba(11, 164, 0)`,
+            pathColor: `#63C132`,
             textColor: '#f88',
-            trailColor: '#ffffff',
+            trailColor: 'transparent',
             backgroundColor: '#3e98c7'
         }),
         profileImage: {
-            width: '185px',
-            height: '185px',
+            width: '155px',
+            height: '155px',
             borderRadius: '50%'
         },
         health: {
@@ -24,19 +24,23 @@ const CharacterStatusHealth = ({ health, healthStatus, characterName, characterI
     }
 
     return (
-        <div className="progressSalute">
-            <CircularProgressbarWithChildren value={health}
-                strokeWidth="4"
-                styles={STYLE.progressBarStyle}>
-                <img alt={characterName} src={characterImage} style={STYLE.profileImage} />
-            </CircularProgressbarWithChildren>
+        <>
+        <div className="board-profilo">
+            <div className="progressSalute">
+                <CircularProgressbarWithChildren value={health}
+                    strokeWidth="4"
+                    styles={STYLE.progressBarStyle}>
+                    <img alt={characterName} src={characterImage} style={STYLE.profileImage} />
+                </CircularProgressbarWithChildren>
+                </div>
+        </div>
             <div className='salute'>
                 <div style={STYLE.health}>
                     <span>Salute: {health} %</span>
                     <span>{healthStatus}</span>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
