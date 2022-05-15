@@ -139,6 +139,7 @@ function ActiveChat(props) {
     } 
 
     function RigaNarra(azione) {
+        var azioneHigh = highlightTesto(azione.azione.testo)
         const actionRef = useRef()
         useEffect(()=>{
            if(actionRef.current !== undefined)
@@ -146,7 +147,7 @@ function ActiveChat(props) {
         })
         return(
             <div className="riga-narra">
-                <p>{azione.azione.testo}</p>
+                <p>{parse(azioneHigh)}</p>
                 <span ref={actionRef}></span>
             </div>
         )
@@ -167,9 +168,10 @@ function ActiveChat(props) {
                         rigaDavisualizzare=<RigaNarra azione={azione} />
                         break;
                     case "Sussurra":
-                        if(azione.receiver === props.nomePg | azione.sender === props.nomePg){
+                        if(azione.receiver === mainContext.user.characterName+' '+mainContext.user.characterSurname 
+                        || azione.sender === mainContext.user.characterName+' '+mainContext.user.characterSurname){
                             //whisper for me 
-                            rigaDavisualizzare = (azione.receiver === props.nomePg) ? 
+                            rigaDavisualizzare = (azione.receiver === mainContext.user.characterName+' '+mainContext.user.characterSurname) ? 
                                 <div className="sussurro testo"> <span>{azione.sender} Ti sussurra: {azione.testo}</span></div> 
                                 :<div className="sussurro testo"> <span>sussurri a {azione.receiver}: {azione.testo} </span></div>
                         }else {
