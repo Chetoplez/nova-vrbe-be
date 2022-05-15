@@ -96,8 +96,8 @@ function Subscribe() {
           <p className="errorMessage">{errors.repPassword?.type === 'minLength' ? errors.repPassword.message : ''}</p>
           </div>
           <p>
-            <button className='primary-btn-M' type="submit"> Registrati</button>
             <button type="button" className="primary-btn-M" onClick={() => { navigate("/") }}>Indietro</button>
+            <button className='primary-btn-M' type="submit"> Registrati</button>
           </p>
         </form>
         

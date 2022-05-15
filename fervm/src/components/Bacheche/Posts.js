@@ -78,7 +78,7 @@ function Posts() {
                                 <tr className='postCard w3-card' key={post.postId} >
                                     <td> <Link to={"/game/forum/post/detail/"+post.postId}><h3>{post.title}</h3></Link></td>
                                     <td>
-                                        <span> <strong style={{color:'#554641'}}> Autore: {post.author.characterName}</strong></span><br></br>
+                                        <span> <strong style={{color:'#554641'}}> Autore: {post.author.characterName +' '+post.author.characterSurname}</strong></span><br></br>
                                         <span> <strong style={{color:'#554641'}}> Creato: {Moment(post.createdAt).format('DD/MM/YYYY - HH:mm')}</strong></span><br></br>
                                         <span> <strong style={{color:'#554641'}}>Ultima Modifica: {Moment(post.lastModified).format('DD/MM/YYYY - HH:mm')}</strong></span><br></br>
                                         <span> <strong style={{color:'#554641'}}> Stato: {post.closed ? <span style={{color:'red'}}>Chiuso</span>: <span style={{color:'green'}}>Aperto</span>}</strong></span>
