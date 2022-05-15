@@ -7,6 +7,7 @@ import com.novavrbe.vrbe.models.enumerations.Status;
 import com.novavrbe.vrbe.models.guildcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
 import com.novavrbe.vrbe.utils.GuildUtils;
 import com.novavrbe.vrbe.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -33,7 +35,10 @@ public class GuildBusiness {
     private CharacterRepositoryService characterRepositoryService;
 
     @Autowired
-    JwtUtils jwtUtils;
+    private UserRepositoryService userRepositoryService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Autowired
     private Environment env;
@@ -463,8 +468,8 @@ public class GuildBusiness {
      * @return true se può compierla , false altrimenti
      */
     private boolean checkAdminRight(int idExecutor){
-        CharacterDto user = characterRepositoryService.retrieveCharacterFromId(idExecutor);
-        List<String> privilegi = Arrays.asList(user.getRole().split("\\s*,\\s*"));
+       GenericUserDto dto = userRepositoryService.findUsersById(new BigDecimal(idExecutor));
+        List<String> privilegi = Arrays.asList(dto.getRole().split("\\s*,\\s*"));
         return privilegi.contains(Roles.ROLE_ADMIN.name());
     }
 
