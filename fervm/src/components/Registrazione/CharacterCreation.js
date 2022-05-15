@@ -8,6 +8,7 @@ import DominaFrame from "./DominaFrame";
 import CharacterInfo from "./CharacterInfo";
 import CharacterStat from "./CharacterStat";
 import CharacterNomina from "./CharacterNomina";
+import NomiFrame from './NomiFrame';
 import StatChart from "./StatChart";
 import HomeNav from "../Navbar/HomeNav";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,9 +21,10 @@ const MAX_STEP = 3;
 
 function CharacterCreation(){
    const [stepForm, setStepForm] = useState(0);
-   //const [gender, setGender] = useState("MASCHIO")
+   
    const param = useParams()
    const [bucket, setBucket] = useState(10);
+   const [validName, setValidName] = useState(false)
    const navigate = useNavigate();
    const { addMessage } = useMessage(); 
 
@@ -84,7 +86,8 @@ function CharacterCreation(){
           <button
             className='primary-btn-M'
             type="button"
-            onClick={nextStep}>
+            onClick={nextStep}
+            disabled={!validName}>
           Continua
         </button>
         </div>)
@@ -131,20 +134,24 @@ function CharacterCreation(){
      })
 
    } 
-  
-   function checkNomeCognome (){
-    var payload = {
-       nomen: watch().nomen,
-       cognomen: watch().cognomen
-    } 
-    axios.post(API_URL.CHARACTER +'/checknome' , payload , {
-      headers: {
-        'Authorization': 'Fervm '+getJwt()
-      }}).then(resp => {
 
-      })
-   }
-   
+    function checkNome(){
+    var data = {
+        nome: watch().characterName,
+        cognome: watch().characterCognomen
+    }
+
+    axios.post(API_URL.CHARACTER + '/checknomevalidity', data , {
+        headers: {
+          'Authorization': 'Fervm '+getJwt()
+    }}).then(resp=>{
+        if(resp.data.valid) {
+           setValidName(true);
+        }
+    })
+}
+  
+      
    return(
       <>
       <HomeNav />
@@ -160,7 +167,7 @@ function CharacterCreation(){
             </header>
             <h4> Passo {stepForm +1 } di {MAX_STEP}</h4>
             {stepForm === 0  && (<CharacterInfo errors={errors} register={register} />)}
-            {stepForm === 1  && (<CharacterNomina errors={errors} register={register} />)}
+            {stepForm === 1  && (<CharacterNomina errors={errors} register={register} checkNome={checkNome} validName={validName} />)}
             {stepForm === 2 && (<CharacterStat bucket={bucket} setBucket={setBucket} stats={stats} setStats={setStats} />)}
             <br />
             {renderButton()}
@@ -169,6 +176,10 @@ function CharacterCreation(){
           {stepForm === 0 && (
             <div className='colonna-dx'>
               <div className="contenitori">{watch().gender === "MASCHIO" ? <DominusFrame /> : <DominaFrame />}</div>
+            </div>)}
+            {stepForm === 1 && (
+            <div className='colonna-dx'>
+              <div className="contenitori">{<NomiFrame />}</div>
             </div>)}
             {stepForm === 2 && (
             <div className='colonna-dx'>

@@ -420,4 +420,9 @@ public class CharacterRepositoryService {
     public ArrayList<CharacterDto> getAllCharacters() {
         return (ArrayList<CharacterDto>) characterRepository.findAll();
     }
+
+    public boolean checkCharacterNome(String nome, String cognome) {
+        CharacterDto dto = characterRepository.findByCharacterNameAndCharacterSurname(nome,cognome);
+        return  dto == null;
+    }
 }

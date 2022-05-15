@@ -11,4 +11,5 @@ public interface CharacterRepository extends JpaRepository<CharacterDto, Integer
     @Query(value = "call getUnemployedCharacters();", nativeQuery = true)
     ArrayList<CharacterDto> getUnemolyedCharacters();
 
+    CharacterDto findByCharacterNameAndCharacterSurname(String nome, String cognome);
 }
