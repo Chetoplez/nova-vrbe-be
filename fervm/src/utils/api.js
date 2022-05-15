@@ -20,7 +20,7 @@ export const API_URL = {
     'USER': 'https://www.fervm.it:8443/fervmAPI/user',
     'FORUM': 'https://www.fervm.it:8443/fervmAPI/forum',
     'SUBFORUM': 'https://www.fervm.it:8443/fervmAPI/forum/subforum',
-    'POST' : 'https://www.fervm.it:8443/fervmAPI/form/post',
+    'POST' : 'https://www.fervm.it:8443/fervmAPI/forum/post',
     'COMMENT': 'https://www.fervm.it:8443/fervmAPI/forum/comment',
     'MISSIVE': 'https://www.fervm.it:8443/fervmAPI/missive'
 }
@@ -35,14 +35,14 @@ export const sanitazeHTML = (testo)=>{
 }
 
 // export const API_URL = {
-//     'GUILD': 'http://localhost:8080/guild',
-//     'CHARACTER': 'http://localhost:8080/character',
-//     'CHAT' : 'http://localhost:8080/chat',
-//     'PRESENTI': 'http://localhost:8080/presenti',
-//     'USER': 'http://localhost:8080/user',
-//     'FORUM': 'http://localhost:8080/forum',
-//     'SUBFORUM': 'http://localhost:8080/forum/subforum',
-//     'POST' : 'http://localhost:8080/forum/post',
-//     'COMMENT': 'http://localhost:8080/forum/comment',
-//     'MISSIVE': 'http://localhost:8080/missive'
+//     'GUILD': 'http://192.168.1.178:8080/guild',
+//     'CHARACTER': 'http://192.168.1.178:8080/character',
+//     'CHAT' : 'http://192.168.1.178:8080/chat',
+//     'PRESENTI': 'http://192.168.1.178:8080/presenti',
+//     'USER': 'http://192.168.1.178:8080/user',
+//     'FORUM': 'http://192.168.1.178:8080/forum',
+//     'SUBFORUM': 'http://192.168.1.178:8080/forum/subforum',
+//     'POST' : 'http://192.168.1.178:8080/forum/post',
+//     'COMMENT': 'http://192.168.1.178:8080/forum/comment',
+//     'MISSIVE': 'http://192.168.1.178:8080/missive'
 // }
