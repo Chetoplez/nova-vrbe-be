@@ -26,6 +26,7 @@ public class EmailService {
             prop.put("mail.smtp.host", "ssl0.ovh.net");
             prop.put("mail.smtp.port", 587);
             prop.put("mail.smtp.ssl.trust", "ssl0.ovh.net");
+            prop.put("mail.smtp.timeout", 2000);
         }
 
     public void sendMail(MailDetails email) throws Exception {
