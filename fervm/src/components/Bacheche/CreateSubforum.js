@@ -64,10 +64,10 @@ function CreateSubforum(){
 
     return(
         <>
-        <header className='w3-center'>
+        <header className='w3-center '>
             <h1>Nuova Sezione</h1>
         </header>
-        <form onSubmit={handleSubmit(submitForm)} className="w3-card w3-padding w3-container" style={{width:'50%', margin:'25px auto'}}>
+        <form onSubmit={handleSubmit(submitForm)} className="w3-card w3-padding w3-container contenitori" style={{width:'50%', margin:'25px auto'}}>
             <h3>Nome Sezione</h3>
             <TextField style={{minWidth:"100px"}} placeholder="Nome Sezione"
                 name="name"
@@ -98,7 +98,7 @@ function CreateSubforum(){
                     <MenuItem value='50' name="Pubblica">Capo gilda</MenuItem>                    
                 </Select>
             </FormControl>
-            {/* <FormControl>
+            <FormControl>
                 <InputLabel htmlFor="nome-gilda">Appartiene a: </InputLabel>
                 <Select
                     name='ownedBy'
@@ -114,10 +114,10 @@ function CreateSubforum(){
                         );}
                     )}
                 </Select>
-            </FormControl> */}
+            </FormControl>
             <p>
-                <button type='submit' className='primary-btn-M'>Crea</button>
                 <button type='button' className='primary-btn-M' onClick={()=>{navigate("/game/forum/subforums/"+param.idForum)}}>Indietro</button>
+                <button type='submit' className='primary-btn-M'>Crea</button>
             </p>
             
         </form>

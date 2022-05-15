@@ -58,7 +58,7 @@ function CreatePost(){
         <header className='w3-center'>
             <h1>Nuovo Post</h1>
         </header>
-        <form onSubmit={handleSubmit(submitForm)} className="w3-card w3-padding w3-container" style={{width:'50%', margin:'25px auto'}}>
+        <form onSubmit={handleSubmit(submitForm)} className="w3-card w3-padding w3-container contenitori" style={{width:'50%', margin:'25px auto'}}>
             <h3>Titolo</h3>
             <TextField style={{minWidth:"300px"}} placeholder="Titolo"
                 name="title"
@@ -74,8 +74,8 @@ function CreatePost(){
              </textarea>
              <p style={{ fontSize: '13px', color: "red" }}>{errors.body?.type === 'required' && "Questo campo è obbligatorio"}</p>
             <p>
-                <button type='submit' className='primary-btn-M'>Crea</button>
                 <button type='button' className='primary-btn-M' onClick={()=>{navigate("/game/forum/subforums/"+param.idForum+"/posts/"+param.subforumId)}}>Indietro</button>
+                <button type='submit' className='primary-btn-M'>Crea</button>
             </p>
             
         </form>

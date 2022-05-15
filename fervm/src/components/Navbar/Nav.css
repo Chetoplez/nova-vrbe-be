@@ -42,7 +42,7 @@
 .chat-side {
     display: flex;
     width: 60%;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
 }
 
@@ -50,7 +50,7 @@
 .cmd-side {
     display: flex;
     justify-content: space-evenly;
-    align-items: flex-end;
+    align-items: center;
 }
 
 a{

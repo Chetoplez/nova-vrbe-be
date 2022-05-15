@@ -5,7 +5,7 @@ import Login from './Login';
 import '../components/Home.css';
 import { userContext } from '../utils/userContext';
 import { useNavigate } from 'react-router-dom'
-
+import logo from '../img/logo/fervm_logo.svg'
 
 
 /**
@@ -47,7 +47,10 @@ function Home() {
       <HomeNav />
       <header style={{ textAlign: 'center' }}>
         <h3>Il tuo destino ti aspetta alle porte di</h3>
-        <h1 className='game-title' style={{ fontSize: '100px' }}>FERVM</h1>
+         <h1 className='game-title' style={{ fontSize: '100px' }}>
+          <img alt='logo' src={logo} width='500px'/>
+         </h1> 
+        
       </header>
       <div className="home-content">
 

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import {userContext} from '../../utils/userContext'
 import MissivaButton from "./MissivaButton.js";
+import logo from '../../img/logo/fervm_logo.svg';
 
 /**
  * The game navigation bar. 
@@ -31,7 +32,9 @@ function Nav(props) {
     return (
         <div className='container'>
             <div className='chat-side w3-half'>
-                <span className="w3-header game-name">FERVM</span>
+                <span className="w3-header game-name">
+                  <a href="/game/mainmap"><img alt='logo' src={logo} width='200px'/></a>
+                </span>
                 <InfoLuogo idLuogo={props.idLuogo} />
             </div>
             <div className='cmd-side w3-half'>
