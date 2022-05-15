@@ -366,4 +366,18 @@ public class CharacterBusiness {
         response = new ResponseEntity<>(characterResponse, HttpStatus.OK);
         return response;
     }
+
+    public ResponseEntity<CheckCharacterNomeResponse> checkCharacterNomi (CheckCharacterNomeRequest request) {
+        ResponseEntity<CheckCharacterNomeResponse> response;
+        CheckCharacterNomeResponse nomeResponse = new CheckCharacterNomeResponse();
+        nomeResponse.setValid(false);
+        if(!StringUtils.hasText(request.getNome()) || !StringUtils.hasText(request.getCognome())){
+            response = new ResponseEntity<>(nomeResponse, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        boolean valid = characterRepositoryService.checkCharacterNome(request.getNome(), request.getCognome());
+        nomeResponse.setValid(valid);
+        response = new ResponseEntity<>(nomeResponse, HttpStatus.OK);
+        return response;
+    }
 }

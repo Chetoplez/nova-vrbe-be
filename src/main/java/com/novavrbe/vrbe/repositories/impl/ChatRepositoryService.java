@@ -87,18 +87,23 @@ public class ChatRepositoryService {
         switch(stat){
             case DESTREZZA:
                 temp.setBaseStat(statDto.getDestrezza());
+                temp.setModified(statDto.getDestrezzaModifier());
                 break;
             case COSTITUZIONE:
                 temp.setBaseStat(statDto.getCostituzione());
+                temp.setModified(statDto.getCostituzioneModifier());
                 break;
             case FORZA:
                 temp.setBaseStat(statDto.getForza());
+                temp.setModified(statDto.getForzaModifier());
                 break;
             case INTELLIGENZA:
                 temp.setBaseStat(statDto.getIntelligenza());
+                temp.setModified(statDto.getIntelligenzaModifier());
                 break;
             case SAGGEZZA:
                 temp.setBaseStat(statDto.getSaggezza());
+                temp.setModified(statDto.getSaggezzaModifier());
                 break;
             default:
                 break;
@@ -106,11 +111,11 @@ public class ChatRepositoryService {
         if(!tempEffectDto.isEmpty()){
             for (CharacterTemporaryEffectDto dto: tempEffectDto ) {
                 if(dto.getStat().equalsIgnoreCase(stat.name())){
-                    temp.setModified(dto.getModifier());
+                    temp.setModified(temp.getModified() + dto.getModifier());
                     break;
                 }
             }
-        }else {temp.setModified(0);}
+        }
 
         temp.setStatName(stat);
         return temp;

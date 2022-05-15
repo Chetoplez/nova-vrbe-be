@@ -1,7 +1,9 @@
 package com.novavrbe.vrbe.controllers;
 
 import com.novavrbe.vrbe.business.CharacterBusiness;
+import com.novavrbe.vrbe.models.charactercontroller.CheckCharacterNomeResponse;
 import com.novavrbe.vrbe.models.charactercontroller.*;
+import com.novavrbe.vrbe.models.charactermodels.CheckCharacterNomeRequest;
 import com.novavrbe.vrbe.models.charactermodels.GetAllCharacterResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -77,6 +79,11 @@ public class CharacterController {
     @PostMapping("/lenditem")
     public ResponseEntity<LendItemResponse> lendItem(@RequestBody LendItemRequest lendItemRequest){
         return characterBusiness.lendItem(lendItemRequest);
+    }
+
+    @PostMapping ("/checknomevalidity")
+    public ResponseEntity<CheckCharacterNomeResponse> checkNomePresence (@RequestBody CheckCharacterNomeRequest request){
+        return characterBusiness.checkCharacterNomi(request);
     }
 
 }

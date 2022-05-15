@@ -181,7 +181,7 @@ public class ChatBusiness {
         int maxStatValue = statValue.getBaseStat() + statValue.getModified();
         int randomNum = ThreadLocalRandom.current().nextInt(1, maxStatValue + 1);
         //Bene, abbiamo generato il valore random del dado basato sulla statistica (eventualmente modificata), ora inseriamo un messaggio
-        String testo = "Lancia un Dado su " + stat +": "+"Il risultato è "+randomNum+" su "+maxStatValue;
+        String testo = "( Lancia un Dado su " + stat +": "+"Il risultato è "+randomNum+" su "+maxStatValue +" - Base:"+statValue.getBaseStat()+" Mod:"+statValue.getModified()+ "- )";
 
         ChatMessageDto diceMessage = new ChatMessageDto();
         diceMessage.setChatId(chatId);
