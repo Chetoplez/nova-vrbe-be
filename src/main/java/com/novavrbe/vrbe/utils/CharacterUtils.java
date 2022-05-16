@@ -231,17 +231,22 @@ public class CharacterUtils {
             switch (stat.getStatName()){
                 case FORZA:
                     statisticsDto.setForza(stat.getBaseStat());
+                    statisticsDto.setForzaModifier(0);
                     break;
                 case SAGGEZZA:
                     statisticsDto.setSaggezza(stat.getBaseStat());
+                    statisticsDto.setSaggezzaModifier(0);
                     break;
                 case DESTREZZA:
                     statisticsDto.setDestrezza(stat.getBaseStat());
+                    statisticsDto.setDestrezzaModifier(0);
                     break;
                 case COSTITUZIONE:
                     statisticsDto.setCostituzione(stat.getBaseStat());
+                    statisticsDto.setCostituzioneModifier(0);
                 case INTELLIGENZA:
                     statisticsDto.setIntelligenza(stat.getBaseStat());
+                    statisticsDto.setIntelligenzaModifier(0);
                 default: break;
             }
         });
@@ -250,10 +255,15 @@ public class CharacterUtils {
     public static void buildDefaultStatisticDto(CharacterStatisticsDto statisticsDto){
         if(statisticsDto != null){
             statisticsDto.setCostituzione(DEFAULT_STAT);
+            statisticsDto.setCostituzioneModifier(0);
             statisticsDto.setDestrezza(DEFAULT_STAT);
+            statisticsDto.setDestrezzaModifier(0);
             statisticsDto.setForza(DEFAULT_STAT);
+            statisticsDto.setForzaModifier(0);
             statisticsDto.setSaggezza(DEFAULT_STAT);
+            statisticsDto.setSaggezzaModifier(0);
             statisticsDto.setIntelligenza(DEFAULT_STAT);
+            statisticsDto.setIntelligenzaModifier(0);
         }
     }
 
