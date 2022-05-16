@@ -56,7 +56,7 @@ public class SubForumBusiness {
                 return response;
             }
             //creo un subforum di un forum ADMIN
-            SubForumDTO newSub = ForumUtils.createSubforumDTO(request.getSubForum(), forum.getForumId());
+            SubForumDTO newSub = ForumUtils.createSubforumDTO(request.getSubForum(), forum.getOwnedBy());
             Integer subId =  subforumRepositoryService.createSubForum(newSub);
             subForumResponse.setSubforumId(subId);
             subForumResponse.setMessage("Nuova sezione Creata con Successo");
@@ -64,7 +64,7 @@ public class SubForumBusiness {
             return response;
         }
         if(StringUtils.hasText(request.getSubForum().getName()) || request.getSubForum().getName().length()<150){
-        SubForumDTO newSub = ForumUtils.createSubforumDTO(request.getSubForum(),forum.getForumId());
+        SubForumDTO newSub = ForumUtils.createSubforumDTO(request.getSubForum(),forum.getOwnedBy());
         Integer subId =  subforumRepositoryService.createSubForum(newSub);
         subForumResponse.setSubforumId(subId);
         subForumResponse.setMessage("Nuova sezione Creata con Successo");
