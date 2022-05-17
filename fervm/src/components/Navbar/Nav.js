@@ -41,7 +41,7 @@ function Nav(props) {
                 <div className="w3-bar-item w3-hide-small"><Link to='/game/mainmap'>Mappa</Link></div>
                 <div className="w3-bar-item w3-hide-small"><Link to="/game/forum">Bacheca</Link></div>
                 <div className="w3-bar-item w3-hide-small"><Link to="/game/corporazioni">Corporazioni</Link></div>
-                {/* <div className="w3-bar-item w3-hide-small"><Link to="#"><img className="icon-class" src={MissivaIcon} alt="missiva" ></img></Link></div> */}
+                
                 <div className="w3-bar-item w3-hide-small"><Link to="/game/missive"><MissivaButton chId = {mainContext.user.characterId} /></Link></div>
                 
                 <div className="w3-bar-item w3-hide-small"><UserBtn /></div>
@@ -52,8 +52,8 @@ function Nav(props) {
             </div>
             <div id="demo" className='w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium'>
                 <div><Link to='/game'>MAPPA</Link></div>
-                <div><Link to="#">BACHECA</Link></div>
-                <div><Link to="#">MISSIVE</Link></div>
+                <div><Link to="/game/forum">BACHECA</Link></div>
+                <div><Link to="/game/missive">MISSIVE</Link></div>
                 <div><Link to={"/game/profilo/"+mainContext.user.characterId}>{mainContext.user.characterName}</Link></div>
             </div>
          </div>
