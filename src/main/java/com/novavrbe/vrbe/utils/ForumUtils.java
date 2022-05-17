@@ -27,7 +27,7 @@ public class ForumUtils {
         newForumDto.setName(forum.getName());
         newForumDto.setDescription(forum.getDescription());
         newForumDto.setAdminOnly(forum.isAdminOnly());
-
+        newForumDto.setVisualOrder(999);
         newForumDto.setOwnedBy(forum.getOwnedBy());
         newForumDto.setForumType(forum.getForumType());
         return newForumDto;
@@ -41,6 +41,7 @@ public class ForumUtils {
         dto.setOwnedBy(owner); //ogni sotto-sezione DEVE appartenere allo stesso owner del padre
         dto.setRankVisibility(subForum.getRankVisibility());
         dto.setSubforumType(subForum.getSubforumType());
+        dto.setVisualOrder(999);
         return dto;
     }
 

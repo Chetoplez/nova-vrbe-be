@@ -1,14 +1,9 @@
 package com.novavrbe.vrbe.business;
 
-import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.dto.ForumDTO;
-import com.novavrbe.vrbe.dto.SubForumDTO;
-import com.novavrbe.vrbe.dto.V_GuildMembers;
+import com.novavrbe.vrbe.dto.*;
+import com.novavrbe.vrbe.models.enumerations.Roles;
 import com.novavrbe.vrbe.models.forumcontroller.*;
-import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
-import com.novavrbe.vrbe.repositories.impl.ForumRepositoryService;
-import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
-import com.novavrbe.vrbe.repositories.impl.SubforumRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.*;
 import com.novavrbe.vrbe.utils.ForumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Service
@@ -25,7 +21,7 @@ public class SubForumBusiness {
     @Autowired
     private ForumRepositoryService forumRepositoryService;
     @Autowired
-    private CharacterRepositoryService characterRepositoryService;
+    private UserRepositoryService userService;
     @Autowired
     private GuildRepositoryService guildService;
 
@@ -82,9 +78,9 @@ public class SubForumBusiness {
      * @param chId il characterId del pg
      * @return vero se il chId è admin , false altrimenti
      */
-    private boolean isAdmin(Integer chId) {
-        CharacterDto characterDto =  characterRepositoryService.retrieveCharacterFromId(chId);
-        return characterDto.getRole().equals("ADMIN");
+    private Boolean isAdmin(Integer chId) {
+        GenericUserDto userDto =  userService.findUsersById(new BigDecimal(chId));
+        return userDto.getRole().equals(Roles.ROLE_ADMIN.name());
     }
 
     /**

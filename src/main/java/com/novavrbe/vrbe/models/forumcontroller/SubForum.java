@@ -16,4 +16,6 @@ public class SubForum {
     private Integer ownedBy;
 
     private Integer rankVisibility;
+
+    private Integer visualOrder;
 }

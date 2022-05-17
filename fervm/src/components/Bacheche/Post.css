@@ -21,6 +21,7 @@
     color: black;
     max-height: 450px;
     overflow: auto;
+    text-align: justify;
     
 }
 

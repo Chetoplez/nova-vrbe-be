@@ -28,4 +28,7 @@ public class ForumDTO {
 
     @Column
     private String forumType;
+
+    @Column
+    private Integer visualOrder;
 }

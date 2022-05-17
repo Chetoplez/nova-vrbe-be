@@ -39,8 +39,9 @@ function Subforum() {
             'Authorization': 'Fervm '+getJwt()
           }})
         .then(resp =>{
-           
-            setList(resp.data.subForums)
+            var ordersubForumList = [].concat(resp.data.subForums)
+                .sort((a, b) => a.visualOrder > b.visualOrder ? 1 : -1);
+            setList(ordersubForumList)
             setForum(resp.data.forumName)
             setLoading(false)
         })
@@ -52,21 +53,23 @@ function Subforum() {
 
     function renderSubforumList(type){
         return (
-            <table>
-            <thead>Sezione {type}</thead>
-                <tbody>
-                    {
-                        list.map((section, index) => {
+            <>            
+            <div className='w3-header w3-center'>
+                                <h3>Sezione {type}</h3>
+                        </div>  
+                {
+                    list.map((section, index) => {
 
-                            if (section.subforumType === type) return (
-                                <tr style={{ marginLeft: '30px' }} key={section.subforumId} >
-                                    <td><Link to={"posts/" + section.subforumId}><h3>{section.name}</h3></Link></td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </table>
+                        if (section.subforumType === type) 
+                        return (
+                            <div className='' style={{ marginLeft: '30px' }} key={section.subforumId} >
+                                <Link to={"posts/" + section.subforumId}><h3>{section.name}</h3></Link>
+                            </div>
+                        )
+                    })
+                }
+                </>
+           
         )
     }
 
@@ -83,13 +86,23 @@ function Subforum() {
                 {mainContext.roles.includes("ROLE_ADMIN") && (<div><Link to="create" className='ctrl-btn-M'>Crea Nuovo</Link></div>)}
             </div>
             
-            {
-                renderSubforumList("ON")                
-            }
+            <section className='d-flex w3-row'>
             
-            {
-               renderSubforumList("OFF")
-            }
+                <div className='w3-half'>
+                    <div className='contenitori'>
+                    {
+                        renderSubforumList("ON")                
+                    }</div>
+                </div>
+                <div className='w3-half'>
+                    <div className='contenitori'>{
+                        renderSubforumList("OFF")
+                    }</div>
+                </div>
+                
+            </section> 
+            
+           
 
         </>
     )

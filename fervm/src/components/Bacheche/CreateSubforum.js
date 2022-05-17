@@ -11,6 +11,7 @@ function CreateSubforum(){
     const [guildList, setGuildList] = useState([])
     const [ownedBy, setOwnedBy] = useState(-1);
     const [rankLevel, setRanklevel] = useState(10)
+    const [sectionType , setSectionType] =useState('ON')
     const { register, watch, handleSubmit,  formState: { errors } } = useForm({mode: 'all'});
     const mainContext = useContext(userContext);
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ function CreateSubforum(){
             forumId: param.idForum
           }
         }
-        console.log("payload", payload)
+        //console.log("payload", payload)
         axios.put(API_URL.SUBFORUM+"/create", payload,{
          headers: {
            'Authorization': 'Fervm '+getJwt()
@@ -56,6 +57,10 @@ function CreateSubforum(){
         //console.log(event.target.value)
         setRanklevel(event.target.value);
        };
+
+    const handleSectionType = evt =>{
+        setSectionType(evt.target.value)
+    }
 
     const handleChange = event => {
         //console.log(event.target.value)
@@ -78,9 +83,19 @@ function CreateSubforum(){
             />Solo Admin
            
             <div>
-                <label>Tipo Sezione:</label><br></br>
-                <input className="w3-margin" type="checkbox" value="ON" name='forumType' {...register("forumType")}/>ON Game
-                <input className="w3-margin" type="checkbox" value="OFF" name='forumType' {...register("forumType")}/>OFF Game
+            <FormControl>
+                <InputLabel htmlFor="nome-gilda">Tipo Sezione</InputLabel>
+                <Select
+                    name='tipoSezione'
+                    style={{minWidth:'200px'}}
+                    value = {sectionType}
+                    input={<Input  name="yteref" id="nome-gilda" />}
+                    onChange = {handleSectionType}
+                    >
+                    <MenuItem value='ON' name="Pubblica">ON</MenuItem>
+                    <MenuItem value='OFF' name="Pubblica">OFF</MenuItem>                    
+                </Select>
+            </FormControl>
             </div>
             <FormControl>
                 <InputLabel htmlFor="nome-gilda">Livello di Visualizzazione </InputLabel>
@@ -92,13 +107,13 @@ function CreateSubforum(){
                     onChange = {handleRank}
                     >
                     <MenuItem value='10' name="Pubblica">Tutti</MenuItem>
-                    <MenuItem value='20' name="PrimoGrado">Secondo Livello gilda</MenuItem>
+                    <MenuItem value='20' name="PrimoGrado">Secondo Livello Gilda</MenuItem>
                     <MenuItem value='30' name="Pubblica">Terzo Livello Gilda</MenuItem>
                     <MenuItem value='40' name="Pubblica">Quarto Livello Gilda</MenuItem>
-                    <MenuItem value='50' name="Pubblica">Capo gilda</MenuItem>                    
+                    <MenuItem value='50' name="Pubblica">Capo Gilda</MenuItem>                    
                 </Select>
             </FormControl>
-            <FormControl>
+            <FormControl style={{marginLeft: '10px'}}>
                 <InputLabel htmlFor="nome-gilda">Appartiene a: </InputLabel>
                 <Select
                     name='ownedBy'

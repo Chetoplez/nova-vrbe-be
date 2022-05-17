@@ -69,7 +69,7 @@ function CreateForum(){
         <header className='w3-center'>
             <h1>Nuovo Forum</h1>
         </header>
-        <form onSubmit={handleSubmit(submitForm)} className="w3-card w3-padding w3-container" style={{width:'50%', margin:'25px auto'}}>
+        <form onSubmit={handleSubmit(submitForm)} className="w3-card w3-padding w3-container contenitori" style={{width:'50%', margin:'25px auto'}}>
             <h3>Nome Forum</h3>
             <TextField style={{minWidth:"100px"}} placeholder="Nome Forum"
                 name="name"
@@ -109,7 +109,7 @@ function CreateForum(){
                 <button type='submit' className='primary-btn-M'>Crea</button>
                 <button type='button' className='primary-btn-M' onClick={()=>{navigate("/game/forum/", {replace: false})}}>Indietro</button>
             </p>
-            <pre>{JSON.stringify(watch(), null, 2)}</pre>
+            {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
         </form>
         </>
     )

@@ -37,7 +37,9 @@ function Forum() {
             }
         })
             .then(resp => {
-                setForumList(resp.data.forumsList)
+                var orderForumList = [].concat(resp.data.forumsList)
+                .sort((a, b) => a.visualOrder > b.visualOrder ? 1 : -1);
+                setForumList(orderForumList)
                 setLoading(false)
             })
     }, [])
@@ -47,6 +49,7 @@ function Forum() {
     }
 
     function renderForumList(type) {
+        
         return (       
                 <>
                 {
@@ -83,36 +86,36 @@ function Forum() {
     return (
         <div className="chat-container">
             <section className='colonna-sx'>
-            <div className='contenitori'>
-             <header className='w3-center'>
-                 <h1>Bacheche</h1>
-             </header>
-                <div className='d-flex flex-wrap'>
-                <div className='flex-basis-1 w3-half'>
-                    <div className='w3-header w3-center'>
-                        <h2>Vita Pubblica</h2>
+                <div className='contenitori'>
+                    <header className='w3-center'>
+                        <h1>Bacheche</h1>
+                    </header>
+                    <div className='d-flex flex-wrap'>
+                        <div className='flex-basis-1 w3-half'>
+                            <div className='w3-header w3-center'>
+                                <h2>Vita Pubblica</h2>
+                            </div>
+                            {renderForumList("ON")}
+                        </div>
+                        <div className='flex-basis-1 w3-half'>
+                            <div className='w3-header w3-center'>
+                                <h2>Vita di Corporazione</h2>
+                            </div>
+                            {renderGuildForumList()}
+                        </div>
                     </div>
-                    {renderForumList("ON")}
-                </div>
-                <div className='flex-basis-1 w3-half'>
-                    <div className='w3-header w3-center'>
-                        <h2>Vita di Corporazione</h2>
-                    </div>
-                    {renderGuildForumList()}
-                </div>
-                </div>
                 </div>
                 <p>{mainContext.roles.includes("ROLE_ADMIN") && (<div><Link to="create" className='ctrl-btn-M'>Crea Nuovo</Link></div>)}</p>
             </section>
             <section className='colonna-dx'>
                 <div className='contenitori'>
-                <header className='w3-center'>
-                    <h1>OFF</h1>
-                </header>
-                {renderForumList("OFF")}
+                    <header className='w3-center'>
+                        <h1>OFF</h1>
+                    </header>
+                    {renderForumList("OFF")}
                 </div>
             </section>
-            
+
         </div>
     )
 } export default Forum;

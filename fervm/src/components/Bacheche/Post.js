@@ -73,7 +73,7 @@ function Post() {
         .then(resp=>{
             setNewComment(true)
             setComment("")
-            console.log(resp.data)
+            //console.log(resp.data)
         
         })
     }
@@ -92,7 +92,7 @@ function Post() {
                 postId : post.postId,
                 editedPost: newPost
             }
-            console.log("PayloadEdit:",payload)
+            //console.log("PayloadEdit:",payload)
             axios.patch(API_URL.POST+"/edit", payload, {
                 headers: {
                     Authorization: 'Fervm '+getJwt()

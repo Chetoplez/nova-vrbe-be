@@ -31,4 +31,7 @@ public class SubForumDTO {
     @Column
     private String subforumType;
 
+    @Column
+    private Integer visualOrder;
+
 }

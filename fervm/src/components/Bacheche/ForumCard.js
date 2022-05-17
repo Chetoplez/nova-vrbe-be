@@ -23,8 +23,8 @@ function ForumCard({ forum , guild }) {
             }
         })
         .then(resp=>{
-            console.log("Membro", resp.data.member)
-            console.log("Forum", forum)
+            // console.log("Membro", resp.data.member)
+            // console.log("Forum", forum)
             if(!resp.data.unenmployed){
             setCharactedGuild(resp.data.member)
             }
@@ -62,7 +62,7 @@ function ForumCard({ forum , guild }) {
         } else {
             return (
                 <div className="forum-card">
-                    <div className="forum-card-body" style={{color:'#554641'}}>
+                    <div className="forum-card-body" style={{color:'#554641', filter: 'grayscale(1)'}}>
                         <Avatar variant="square" />
                         <h3>{forum.name}</h3>
                     </div>

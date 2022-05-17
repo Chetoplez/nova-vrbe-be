@@ -13,4 +13,6 @@ public class Forum {
     private String forumType;
 
     private Integer ownedBy;
+
+    private Integer visualOrder;
 }

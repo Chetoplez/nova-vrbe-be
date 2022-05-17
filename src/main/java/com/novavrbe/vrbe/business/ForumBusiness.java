@@ -1,11 +1,12 @@
 package com.novavrbe.vrbe.business;
 
-import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.ForumDTO;
+import com.novavrbe.vrbe.dto.GenericUserDto;
 import com.novavrbe.vrbe.models.enumerations.Roles;
 import com.novavrbe.vrbe.models.forumcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.ForumRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
 import com.novavrbe.vrbe.utils.ForumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Service
@@ -23,6 +25,8 @@ public class ForumBusiness {
 
     @Autowired
     private CharacterRepositoryService characterRepositoryService;
+    @Autowired
+    private UserRepositoryService userService;
 
     /**
      * Ritorna tutti i forum che l'utente è abilitato a vedere.
@@ -81,8 +85,8 @@ public class ForumBusiness {
      * @return
      */
     private Boolean isAdmin(Integer chId) {
-       CharacterDto characterDto =  characterRepositoryService.retrieveCharacterFromId(chId);
-       return characterDto.getRole().equals(Roles.ROLE_ADMIN.name());
+       GenericUserDto userDto =  userService.findUsersById(new BigDecimal(chId));
+       return userDto.getRole().equals(Roles.ROLE_ADMIN.name());
     }
 
     /**
