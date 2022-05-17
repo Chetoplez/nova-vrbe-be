@@ -118,9 +118,7 @@ function GuildPage() {
                             {guild.announcement}
                         </section>
                         <GuildRoleList idGilda={idGilda} />
-                        <button className='primary-btn-M'>
-                            Arruolati!
-                        </button>
+                        <p><h4>Per arruolarti manda una missiva al capo corporazione</h4></p> 
                     </section>
                 </div>}
         </div>
