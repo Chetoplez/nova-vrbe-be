@@ -4,6 +4,7 @@ import store from 'store'
 import axios from 'axios';
 import { TextField } from '@material-ui/core';
 import { userContext } from '../utils/userContext';
+import useMessage from '../utils/useMessage';
 import { useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import '../components/Home.css';
@@ -16,7 +17,7 @@ function Login() {
     const mainContext = useContext(userContext);
     const navigate = useNavigate();
     const { register, handleSubmit,  formState: { errors } } = useForm({mode: 'all'});
-  
+    const { addMessage } = useMessage();
     
     const submitForm = (evt) => {
                
@@ -26,7 +27,7 @@ function Login() {
             .then(resp=>{
               if(resp.data.presente)
                 setStep(1);
-              else navigate('/subscribe')
+              else  addMessage("L'iscrizione alla fase Alpha è sospesa. Se sei interessato, invia un messaggio a gestione@fervm.it. Grazie")  //navigate('/subscribe')
             }).catch(err=>{
               console.log("CheckEmail", err);
             })
