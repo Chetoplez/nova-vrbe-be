@@ -8,19 +8,22 @@ import com.novavrbe.vrbe.models.missivecontroller.Missiva;
 public class MissivaUtils {
 
     public static Missiva prepareMissivafromDto(MissivaDto dto, CharacterDto fromDto, CharacterDto toDto, Boolean inbox) {
+
         Missiva temp = new Missiva();
         SmallCharacter from = new SmallCharacter();
         SmallCharacter to = new SmallCharacter();
 
-        from.setCharacterId(fromDto.getCharacterId());
-        from.setCharacterName(fromDto.getCharacterName());
-        from.setCharacterSurname(fromDto.getCharacterSurname());
-        from.setCharacterImg(fromDto.getCharacterImg());
+        from.setCharacterId(fromDto.getCharacterId()==null? -1 : fromDto.getCharacterId());
+        from.setCharacterName(fromDto.getCharacterName()==null? "test" : fromDto.getCharacterName());
+        from.setCharacterSurname(fromDto.getCharacterSurname()==null ? "test": fromDto.getCharacterSurname());
+        if(fromDto.getCharacterImg() != null)
+            from.setCharacterImg(from.getCharacterImg());
 
-        to.setCharacterId(toDto.getCharacterId());
-        to.setCharacterName(toDto.getCharacterName());
-        to.setCharacterSurname(toDto.getCharacterSurname());
-        to.setCharacterImg(toDto.getCharacterImg());
+        to.setCharacterId(toDto.getCharacterId()==null ? -1 : toDto.getCharacterId());
+        to.setCharacterName(toDto.getCharacterName()==null ? "test": toDto.getCharacterName());
+        to.setCharacterSurname(toDto.getCharacterSurname() == null ? "test": toDto.getCharacterSurname());
+        if(toDto.getCharacterImg()!= null)
+            to.setCharacterImg(toDto.getCharacterImg());
 
         if(inbox) {
             temp.setTo(to);

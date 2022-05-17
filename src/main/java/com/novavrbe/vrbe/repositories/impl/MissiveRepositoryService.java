@@ -43,7 +43,7 @@ public class MissiveRepositoryService {
             return missivaDtos;
     }
 
-    public ArrayList<MissivaDto> getMissiveList(ArrayList<Integer> array) {
+    public ArrayList<MissivaDto> getMissiveList(ArrayList<Integer> array, String chId ) {
         return (ArrayList<MissivaDto>) missiveRepository.findAllById(array);
     }
 

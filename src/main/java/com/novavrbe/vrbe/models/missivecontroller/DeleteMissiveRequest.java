@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 @Data
 public class DeleteMissiveRequest {
+    private String chId;
     private ArrayList<Integer> idMissive;
     private boolean inbox;
 }

@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -44,6 +41,8 @@ public class CharacterRepositoryService {
     private CharacterInventoryObjectRepository characterInventoryObjectRepository;
     @Autowired
     private GuildMemberListRepository characterGuildRepository;
+    @Autowired
+    private MissiveRepositoryService missiveRepository;
 
     public CharacterDto retrieveCharacterFromId(Integer characterId){
         CharacterDto characterDto = null;
@@ -199,6 +198,28 @@ public class CharacterRepositoryService {
                     inventoryRepository.save(inventoryDto);
                 }
 
+                MissivaDto welcomeMissiva = new MissivaDto();
+                welcomeMissiva.setChTo(characterDto.getCharacterId().toString());
+                welcomeMissiva.setChFrom(1);
+                welcomeMissiva.setRead(false);
+                welcomeMissiva.setDeletedFrom(false);
+                welcomeMissiva.setDeletedTo(false);
+                welcomeMissiva.setType("OFF");
+                welcomeMissiva.setSentAt(new Date().getTime());
+                welcomeMissiva.setReceivedAt(new Date().getTime());
+                welcomeMissiva.setSubject("Benvenut*");
+                welcomeMissiva.setBody("Benvenut* in Land! \n" +
+                        "\n" +
+                        "Sono molto contento che tu ti sia iscritt* nonostante la land sia ancora in forte fase Alpha Test. \n" +
+                        "E' con l'aiuto e i feedback di gente come te che sto provando a mettere su questo progetto. \n" +
+                        "\n" +
+                        "Ci sono ancora alcune cose che non funzionano, quindi ti chiedo di avere pazienza e segnalarmele così che io possa risolvere e stabilizzare le funzioni che ci sono attualmente.\n" +
+                        "Puoi scrivermi a gestione@fervm.it, usare la linguetta gialla a fianco della pagina o mandare una missiva privata.\n" +
+                        "Le bacheche sono in redazione, pensavo di avere altre 72 ore prima della pubblicazione ufficiale del gioco su GDR-Online ed invece hanno fatto in fretta. \n" +
+                        "Ti ringrazio in anticipo\n" +
+                        "Il Gestore");
+                missiveRepository.sendMissiva(welcomeMissiva);
+
             }
         }
 
@@ -208,7 +229,7 @@ public class CharacterRepositoryService {
     public boolean updateInventory(@NotNull Inventory inventory){
         boolean saved = true;
 
-        InventoryDto inventoryDto = CharacterUtils.buildInventoryForDto(inventory.getInventoryId(), new Integer(inventory.getGold()));
+        InventoryDto inventoryDto = CharacterUtils.buildInventoryForDto(inventory.getInventoryId(), inventory.getGold());
         inventoryRepository.save(inventoryDto);
 
         return saved;

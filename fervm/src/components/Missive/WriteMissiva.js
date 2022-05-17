@@ -36,8 +36,7 @@ function WriteMissiva({ setSection , missiva } ) {
                 headers: {
                     'Authorization': 'Fervm ' + getJwt()
                 }
-        }).
-        then(resp => {
+        }).then(resp => {
                 var temp = []
                 resp.data.characterList.map(smallch => {
                     var chOpt = {
@@ -45,6 +44,7 @@ function WriteMissiva({ setSection , missiva } ) {
                         label: smallch.characterName + ' ' + smallch.characterSurname
                     }
                     temp.push(chOpt)
+                    return true;
                 })
 
                 setCharacterOption(temp);
@@ -59,10 +59,10 @@ function WriteMissiva({ setSection , missiva } ) {
     const handleChange = (obj)=>{
         var temp = characterOption.find(elem=> elem.value == obj.value)
         setTo(temp);
-        console.log("Destinatario",to)
+        //console.log("Destinatario",to)
     }
     const handleTypeChange = (obj)=>{
-        console.log(obj)
+        //console.log(obj)
         setType(obj)
     }
     const handleTextChange = (obj)=>{

@@ -20,13 +20,13 @@ function MissiveList({ chId, setMissiva, setSection }){
     var orderedMissive = [].concat(missiveList).sort((a, b) => a.receivedAt < b.receivedAt ? 1 : -1);
 
     useEffect(()=>{
-        axios.get(API_URL.MISSIVE + '/getinbox/chId='+chId+"&inbox="+inbox, {
+        axios.get(API_URL.MISSIVE + '/getinbox/chId='+chId+'&inbox='+inbox, {
             headers: {
               'Authorization': 'Fervm '+getJwt()
             }})
         .then(resp=>{
             setMissiveList(resp.data.missiveList)
-            console.log("ListaMissive:", missiveList)
+            //console.log("ListaMissive:", missiveList)
             setLoading(false)
         })
     },[inbox,refresh])
@@ -43,12 +43,12 @@ function MissiveList({ chId, setMissiva, setSection }){
           updatedList.splice(checked.indexOf(event.target.value), 1);
         }
         setChecked(updatedList);
-        console.log(updatedList)
+        //console.log(updatedList)
       };
 
     const openMissiva = (missiva) =>{
         if(!missiva.read){
-            axios.patch(API_URL.MISSIVE + '/read', {idMissive:[missiva.missivaId]} , {
+            axios.patch(API_URL.MISSIVE + '/read', { chId: chId,idMissive:[missiva.missivaId]} , {
                 headers: {
                   'Authorization': 'Fervm '+getJwt()
                 }})
@@ -66,10 +66,11 @@ function MissiveList({ chId, setMissiva, setSection }){
             switch(action) {
             case 'delete':
                 var payload = {
+                    chId: chId,
                     idMissive: checked,
                     inbox: inbox
                 }
-                console.log(payload)
+                //console.log(payload)
                 axios.patch(API_URL.MISSIVE + '/delete', payload ,{
                     headers: {
                       'Authorization': 'Fervm '+getJwt()
@@ -83,6 +84,7 @@ function MissiveList({ chId, setMissiva, setSection }){
                 break;
             case 'read' :
                 var payload = {
+                    chId: chId,
                     idMissive: checked
                 }
                axios.patch(API_URL.MISSIVE + '/read', payload,  {
@@ -113,7 +115,7 @@ function MissiveList({ chId, setMissiva, setSection }){
                 <button className="ctrl-btn-M" type="button" onClick={()=>{setInbox(!inbox);}}>{inbox ? "Spedite": "In Arrivo"}</button>
             </header>
            
-            <div>
+            <div style={{maxHeight: '80vh', overflow:'auto'}}>
            {missiveList.length > 0 && (<><Tooltip title="read">
                 <IconButton  name="read" aria-label="read" type="button" onClick={()=>manageMissive("read")} >
                     <MarkEmailReadIcon />

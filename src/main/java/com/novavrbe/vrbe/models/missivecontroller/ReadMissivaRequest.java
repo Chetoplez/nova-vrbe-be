@@ -6,5 +6,6 @@ import java.util.ArrayList;
 
 @Data
 public class ReadMissivaRequest {
+    private String chId;
     private ArrayList<Integer> idMissive;
 }

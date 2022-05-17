@@ -111,9 +111,10 @@ public class MissiveBusiness {
             response = new ResponseEntity<>(missivaResponse, HttpStatus.BAD_REQUEST);
             return response;
         }
-        ArrayList<MissivaDto> toReadDto = missiveRepositoryService.getMissiveList(request.getIdMissive());
+        ArrayList<MissivaDto> toReadDto = missiveRepositoryService.getMissiveList(request.getIdMissive() , request.getChId());
         for (MissivaDto dto: toReadDto ) {
-            dto.setRead(true);
+            if(dto.getChTo().equalsIgnoreCase(request.getChId()))
+                dto.setRead(true);
         }
         missiveRepositoryService.saveAll(toReadDto);
         missivaResponse.setMessaggio("Missive lette");
@@ -130,7 +131,7 @@ public class MissiveBusiness {
             response = new ResponseEntity<>(missivaResponse, HttpStatus.BAD_REQUEST);
             return response;
         }
-        ArrayList<MissivaDto> toDeleteDto = missiveRepositoryService.getMissiveList(request.getIdMissive());
+        ArrayList<MissivaDto> toDeleteDto = missiveRepositoryService.getMissiveList(request.getIdMissive(), request.getChId());
         if(request.isInbox()){
             //sto cancellando missive in cui sono il destinatario
             for (MissivaDto dto: toDeleteDto ) {

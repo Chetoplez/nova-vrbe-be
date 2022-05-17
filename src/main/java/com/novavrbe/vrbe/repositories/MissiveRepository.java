@@ -14,4 +14,5 @@ public interface MissiveRepository extends CrudRepository<MissivaDto, Integer> {
     ArrayList<MissivaDto> findByChToAndDeletedToFalseAndIsReadFalse(String chId);
 
     List<MissivaDto> findByChFromAndDeletedFromFalse(Integer from);
+
 }
