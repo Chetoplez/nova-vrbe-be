@@ -9,8 +9,8 @@ function About() {
         <>
         <HomeNav />
         <div className="under-nav">
-        <div style={{textAlign:'justify'}}>
-            <p>Benvenuto! mi chiamo Claudio e sono un appassionato di storia dell'antica Roma , programmazione web, e giochi di Ruolo Play By Chat. 
+        <div className='contenitori' style={{textAlign:'justify'}}>
+            <p>Benvenuto! Sono un appassionato di storia dell'antica Roma , programmazione web, e giochi di Ruolo Play By Chat. 
                 Dall'unione di queste tre passioni è nato questo progetto che è ancora in fase di sviluppo e consiste in un gioco di ruolo con ambientazione antica Roma  
                 totalmente sviluppato da me, con l'aiuto di alcuni amici. </p>
                 <p>L'idea è nata per far fronte ad alcuni bisogni personali, avevo bisogno di uno stimolo per imparare una nuova tecnologia con cui arricchire il mio bagaglio di conoscenze , 
