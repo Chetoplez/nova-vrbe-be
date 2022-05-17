@@ -43,8 +43,8 @@ const useStyles = makeStyles({
   },
 
   bigAvatar: {
-    width: 55,
-    height: 55,
+    width: 45,
+    height: 45,
     border: "2px solid goldenrod"
   },
 
@@ -151,7 +151,7 @@ function PgPresente(props) {
             <div className={props.col === "2" ? "messaggio-utente" : "messaggio-utente"}>{user.messaggio}</div>
           </div>
           { user.role && (<Tooltip title={user.role} placement="top-end">
-              <img src={user.roleImg}   style={{marginLeft:'10px' , width: '40px'}} />
+              <img src={user.roleImg}   style={{marginLeft:'10px' , width: '32px'}} />
             </Tooltip>)}
             </div>
           
