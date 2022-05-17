@@ -7,6 +7,7 @@ import ProfiloPg from '../Character/ProfiloPg';
 import { Routes, useNavigate, Route } from 'react-router-dom';
 
 import { userContext } from '../../utils/userContext'
+import axios from 'axios';
 import GuildPage from '../Guild/GuildPage';
 import GuildList from '../Guild/GuildList';
 
@@ -20,6 +21,7 @@ import CreatePost from '../Bacheche/CreatePost';
 import GuildBank from '../Guild/GuildBank';
 import PrivateGuildRoute from '../../utils/PrivateGuildRoute';
 import MissivaPage from '../Missive/MissivePage';
+import {API_URL, getJwt} from '../../utils/api'
 
 /**
  * 
@@ -37,6 +39,7 @@ function Game() {
     body.classList.remove("home-img")
 
     useEffect(() => {
+
           const checkAuth = async () => {
             let res = mainContext.tryLoginUser()
             if (res) { 
@@ -47,7 +50,7 @@ function Game() {
             }
         }
         checkAuth();
-
+        
     }, [])
 
     if (loading) {
