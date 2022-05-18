@@ -7,7 +7,7 @@ import { withStyles,makeStyles} from '@material-ui/core'
 import {Link} from 'react-router-dom'
 import { userContext } from '../../utils/userContext'
 import axios from 'axios';
-import {API_URL} from '../../utils/api';
+import {API_URL, getJwt} from '../../utils/api';
 import { Tooltip } from '@mui/material';
 
 
@@ -75,7 +75,7 @@ function PgPresente(props) {
     useEffect(()=>{
       axios.get(API_URL.PRESENTI+"/presenti/chatId="+props.chatId,{
         headers: {
-          'Authorization': 'Fervm '+store.get('jwt')
+          'Authorization': 'Fervm '+getJwt('jwt')
         }})
         .then(resp=>{
            setPres(resp.data.presentiChat)
@@ -86,7 +86,7 @@ function PgPresente(props) {
       const interval = setInterval(()=>{
         axios.get(API_URL.PRESENTI+"/presenti/chatId="+props.chatId,{
           headers: {
-            'Authorization': 'Fervm '+store.get('jwt')
+            'Authorization': 'Fervm '+getJwt('jwt')
           }})
         .then(resp=>{
            setPres(resp.data.presentiChat)
@@ -114,7 +114,7 @@ function PgPresente(props) {
           }
           axios.patch(API_URL.PRESENTI+"/updateavailable", payload,{
             headers: {
-              'Authorization': 'Fervm '+store.get('jwt')
+              'Authorization': 'Fervm '+getJwt('jwt')
             }})
           .then(resp=>{
             //console.log(resp.data)

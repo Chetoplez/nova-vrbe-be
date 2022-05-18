@@ -82,7 +82,7 @@ function MainMap(props) {
 
 
     if (isLoading) {
-        return <div className="Loading w3-card w3-center">Loading...</div>;
+        return <div className="loading">Loading...</div>;
     }
 
     return(

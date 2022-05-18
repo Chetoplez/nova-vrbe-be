@@ -1,8 +1,7 @@
 
 
 .chat-row{
-    margin-top: 10px;
-    pad: 10px 20px 10px 20px;
+    margin-top: 5px;
  }
  
  .img-chat {
@@ -29,7 +28,7 @@
 .icon-carica{
     width: 24px;
     height: 24px;
-    margin-left: 10px;
+    /* margin-left: 5px; */
 }
 
  .chat-tag{
@@ -49,13 +48,14 @@
     text-decoration: underline;
     text-transform: capitalize;
     font-style: italic;
-    color: rgb(255, 123, 0);
+    color: #E5A800
 }
 
 .riga-narra {
     background-color: #A8DAFE;
     color: #554641;
     text-align: center;
+    border-radius: 5px;
 }
 
 .sussurro {

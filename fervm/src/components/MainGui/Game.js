@@ -20,6 +20,7 @@ import CreateSubforum from '../Bacheche/CreateSubforum';
 import CreatePost from '../Bacheche/CreatePost';
 import GuildBank from '../Guild/GuildBank';
 import PrivateGuildRoute from '../../utils/PrivateGuildRoute';
+import PrivateRoute from '../../utils/PrivateRoute';
 import MissivaPage from '../Missive/MissivePage';
 import {API_URL, getJwt} from '../../utils/api'
 
@@ -39,13 +40,12 @@ function Game() {
     body.classList.remove("home-img")
 
     useEffect(() => {
-
           const checkAuth = async () => {
             let res = mainContext.tryLoginUser()
             if (res) { 
                 setLoading(false);
             } else {
-                // redirect to login page non aha 
+                // redirect to login page 
                 history("/")
             }
         }
@@ -54,7 +54,7 @@ function Game() {
     }, [])
 
     if (loading) {
-        return <div className="loading w3-card">Loading</div>
+        return <div className="loading">Loading</div>
     }
 
     return (
@@ -70,8 +70,12 @@ function Game() {
                     </Route>
 
                     <Route
-                        path='/mainmap'
-                        element={<MainMap setIdLuogo={setIdLuogo} />}>
+                        exact path='/mainmap'
+                        element={
+                            <PrivateRoute>
+                                <MainMap setIdLuogo={setIdLuogo} />
+                            </PrivateRoute>
+                        }>
 
                     </Route>
 

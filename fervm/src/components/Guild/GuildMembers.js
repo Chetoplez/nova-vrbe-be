@@ -80,7 +80,7 @@ function GuildMembers({ isManager , setFresh , isFresh }) {
     const addNewMember = (idRuolo) => {
        axios.get(API_URL.CHARACTER+"/getcharacter/unemployed",{
         headers: {
-          'Authorization': 'Fervm '+store.get('jwt')
+          'Authorization': 'Fervm '+getJwt('jwt')
         }})
        .then(resp=>{
             //console.log("Unemployed: ", resp.data.unemployed)       

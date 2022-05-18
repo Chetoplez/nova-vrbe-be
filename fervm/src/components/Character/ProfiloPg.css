@@ -1,12 +1,15 @@
+.profilo h5, .profilo h1, .profilo h2, .profilo strong {
+	font-family: 'Cinzel', sans-serif;
+} 
+
 .caratteristiche-totale {
-	
 	color: #FFD782;
 	font-weight: 600;
 	font-size: 35px;
 }
 
 .caratteristiche {
-	width: 150px;
+	width: 200px;
 	padding: 10px 15px 15px 15px;
 	margin: 5px auto;
 	display: flex;

@@ -34,7 +34,7 @@ function CreateSubforum(){
           subForum: {
             name: values.name,
             adminOnly: values.adminOnly,
-            subforumType: values.forumType[0],
+            subforumType: sectionType,
             ownedBy: ownedBy,
             rankVisibility: rankLevel,
             forumId: param.idForum

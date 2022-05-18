@@ -48,7 +48,7 @@ function Subforum() {
     },[])
 
     if (loading) {
-        return <div className="App">Loading...</div>;
+        return <div className="loading">Loading...</div>;
     }
 
     function renderSubforumList(type){
@@ -89,13 +89,13 @@ function Subforum() {
             <section className='d-flex w3-row'>
             
                 <div className='w3-half'>
-                    <div className='contenitori'>
+                    <div className='contenitori' style={{marginRight:'5px'}}>
                     {
                         renderSubforumList("ON")                
                     }</div>
                 </div>
                 <div className='w3-half'>
-                    <div className='contenitori'>{
+                    <div className='contenitori' style={{marginLeft:'5px'}}>{
                         renderSubforumList("OFF")
                     }</div>
                 </div>

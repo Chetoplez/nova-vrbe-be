@@ -5,7 +5,7 @@ import Moment from 'moment'
 import parse from 'html-react-parser';
 import axios from 'axios';
 import { Link} from 'react-router-dom';
-import {API_URL} from '../../utils/api';
+import {API_URL, getJwt} from '../../utils/api';
 import ScrollBtn from './ScrollBtn';
 import IconButton from '@material-ui/core/IconButton';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
@@ -31,7 +31,7 @@ function ActiveChat(props) {
         setLoading(false)
         axios.get(API_URL.CHAT+"/ischatupdate/chatId="+props.chatId+"&timestamp="+tms,{
             headers: {
-              'Authorization': 'Fervm '+store.get('jwt')
+              'Authorization': 'Fervm '+getJwt()
             }})
         .then(resp=>{
             if(resp.data.updated){
@@ -42,11 +42,11 @@ function ActiveChat(props) {
         const interval = setInterval(()=>{
             axios.get(API_URL.CHAT+"/ischatupdate/chatId="+props.chatId+"&timestamp="+tms,{
                 headers: {
-                  'Authorization': 'Fervm '+store.get('jwt')
+                  'Authorization': 'Fervm '+getJwt('jwt')
                 }})
             .then(resp=>{
                 if(resp.data.updated){
-                    console.log("updated:",resp.data.updated)
+                    //console.log("updated:",resp.data.updated)
                     refreshChat(tms)
                  }
             })
@@ -58,7 +58,7 @@ function ActiveChat(props) {
     const refreshChat = (tms) => {
         axios.get(API_URL.CHAT+"/id="+props.chatId+"&timeWindow="+tms,{
             headers: {
-              'Authorization': 'Fervm '+store.get('jwt')
+              'Authorization': 'Fervm '+getJwt('jwt')
             }})
         .then(resp=>{
         //    console.log(resp.data.chatMessageList)
@@ -140,15 +140,15 @@ function ActiveChat(props) {
 
     function RigaNarra(azione) {
         var azioneHigh = highlightTesto(azione.azione.testo)
-        const actionRef = useRef()
-        useEffect(()=>{
-           if(actionRef.current !== undefined)
-               actionRef.current.scrollIntoView({ behavior: 'smooth' });
-        })
+       // const actionRef = useRef()
+        // useEffect(()=>{
+        //    if(actionRef.current !== undefined)
+        //        actionRef.current.scrollIntoView({ behavior: 'smooth' });
+        // })
         return(
             <div className="riga-narra">
                 <p>{parse(azioneHigh)}</p>
-                <span ref={actionRef}></span>
+                {/* <span ref={actionRef}></span> */}
             </div>
         )
     }
@@ -187,7 +187,7 @@ function ActiveChat(props) {
                         {rigaDavisualizzare}
                     </li>)
             })}
-            <ScrollBtn />
+            {/* <ScrollBtn /> */}
         </ul>
     )
 }

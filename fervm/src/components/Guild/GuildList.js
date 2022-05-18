@@ -1,5 +1,5 @@
 import React , {useEffect, useState, useContext} from 'react'
-import {API_URL} from '../../utils/api';
+import {API_URL, getJwt} from '../../utils/api';
 import store from 'store';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -32,7 +32,7 @@ function GuildList () {
         document.title = "Fervm GdR - Corporazioni"
         axios.get(API_URL.GUILD+"/getall",{
             headers: {
-              'Authorization': 'Fervm '+store.get('jwt')
+              'Authorization': 'Fervm '+getJwt('jwt')
             }})
         .then(resp =>{
             setGuilds(resp.data.guilds);

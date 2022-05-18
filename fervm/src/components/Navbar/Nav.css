@@ -53,12 +53,7 @@
     align-items: center;
 }
 
-a{
-    font-family: 'Cinzel', sans-serif;
-    color: #554641;
-    text-decoration: none;
-    font-weight: 600;
-}
+
 .cmd-side > div {
     margin-left: 35px;
 }

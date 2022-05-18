@@ -22,9 +22,7 @@ const PrivateGuildRoute = ({ children }) => {
         }
         axios.post(API_URL.GUILD+"/members/checkguildpermission", payload,{
             headers: {
-              'Authorization': 'Fervm '+getJwt(
-                  
-              )
+              'Authorization': 'Fervm '+getJwt()
             }})
         .then((resp)=>{ 
             master = resp.data.manager;

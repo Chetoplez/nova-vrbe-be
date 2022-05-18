@@ -33,7 +33,7 @@ function Nav(props) {
         <div className='container'>
             <div className='chat-side w3-half'>
                 <span className="w3-header game-name">
-                  <a href="/game/mainmap"><img alt='logo' src={logo} width='200px'/></a>
+                  <Link to="/game/mainmap"><img alt='logo' src={logo} width='200px'/></Link>
                 </span>
                 <InfoLuogo idLuogo={props.idLuogo} />
             </div>

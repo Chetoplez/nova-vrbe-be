@@ -5,7 +5,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { userContext } from '../../utils/userContext'
 import '../Chat/ControlliChat.css'
-import { API_URL } from '../../utils/api';
+import { API_URL, getJwt } from '../../utils/api';
 import store from 'store';
 function ControlliChat(props) {
     const mainContext = useContext(userContext);
@@ -102,7 +102,7 @@ function ControlliChat(props) {
     const sendMessage = (payload) => {
         axios.post(API_URL.CHAT + "/addmessage", payload,{
             headers: {
-              'Authorization': 'Fervm '+store.get('jwt')
+              'Authorization': 'Fervm '+getJwt('jwt')
             }})
             .then(onCompleteSumbit)
             .catch(err => {
@@ -113,7 +113,7 @@ function ControlliChat(props) {
     const rollTheDice = (payload) => {
         axios.post(API_URL.CHAT + "/dice", payload,{
             headers: {
-              'Authorization': 'Fervm '+store.get('jwt')
+              'Authorization': 'Fervm '+getJwt('jwt')
             }})
             .then(onCompleteSumbit)
             .catch(err => {
@@ -149,7 +149,7 @@ function ControlliChat(props) {
     const getPresenti = () => {
         axios.get(API_URL.PRESENTI + "/presenti/chatId=" + props.chatId,{
             headers: {
-              'Authorization': 'Fervm '+store.get('jwt')
+              'Authorization': 'Fervm '+getJwt('jwt')
             }})
             .then(resp => {
                 setPresentiChat(resp.data.presentiChat)

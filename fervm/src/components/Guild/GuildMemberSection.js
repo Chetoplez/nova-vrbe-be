@@ -49,7 +49,7 @@ function GuildMemberSection(props) {
         }
        axios.post(API_URL.GUILD+"/members/getsalary",payload,{
         headers: {
-          'Authorization': 'Fervm '+store.get('jwt')
+          'Authorization': 'Fervm '+getJwt('jwt')
         }})
        .then(resp=> {
           

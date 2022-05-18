@@ -4,7 +4,7 @@ this will be the forum of the application. We need to use it to exchange comunic
 import React, { useEffect, useContext, useState } from 'react'
 import axios from 'axios';
 import store from 'store';
-import { API_URL } from '../../utils/api';
+import { API_URL, getJwt } from '../../utils/api';
 import { userContext } from '../../utils/userContext';
 import { Link, useNavigate } from 'react-router-dom';
 import ForumCard from './ForumCard';
@@ -33,7 +33,7 @@ function Forum() {
 
         axios.get(API_URL.FORUM + "/getallforums/chId=" + mainContext.user.characterId, {
             headers: {
-                'Authorization': 'Fervm ' + store.get('jwt')
+                'Authorization': 'Fervm ' + getJwt()
             }
         })
             .then(resp => {
@@ -45,7 +45,7 @@ function Forum() {
     }, [])
 
     if (loading) {
-        return <div className="App">Loading...</div>;
+        return <div className="loading">Loading...</div>;
     }
 
     function renderForumList(type) {
@@ -56,7 +56,7 @@ function Forum() {
                     forumList.map((forum) => {
                         if (forum.forumType === type && forum.ownedBy == -1)
                             return (
-                                <ForumCard forum={forum} guild={false} />
+                                <ForumCard key={forum.forumId} forum={forum} guild={false} />
                             )
                     })
 

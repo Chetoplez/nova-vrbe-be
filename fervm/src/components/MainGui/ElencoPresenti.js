@@ -4,7 +4,7 @@ import axios from 'axios';
 import PgPresente from './PgPresente';
 import '../MainGui/ElencoPresenti.css'
 import {useEffect,useState} from 'react'
-import {API_URL} from '../../utils/api'
+import {API_URL, getJwt} from '../../utils/api'
 import { Link } from 'react-router-dom';
 import { userContext } from '../../utils/userContext' 
 import UserMsg from './UserMsg';
@@ -30,7 +30,7 @@ function ElencoPresenti(props) {
     const fetchPresenti = ()=>{
         axios.get(API_URL.PRESENTI+"/presenti", {
             headers: {
-              'Authorization': 'Fervm '+store.get('jwt')
+              'Authorization': 'Fervm '+getJwt('jwt')
             }})
             .then(resp=>{
                setPresenti(resp.data.presenti)                 

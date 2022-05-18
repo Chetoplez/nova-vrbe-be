@@ -56,7 +56,7 @@ function Home() {
 
         <div className="w3-container">
           <section className="game-content w3-card">
-            <p>E' giunto il tempo di vestire la toga virile, scalare le tappe che il mos maiorum ti impone!</p>
+            <p>È giunto il tempo di vestire la toga virile, scalare le tappe che il mos maiorum ti impone!</p>
             <p>Servire sotto le insegne della legione o tra le fila del sacerdoti del Clero? Darsi agli studi della medicina
               o ai commerci per la colonia? </p>
             <p>Stringi alleanze, otteni consensi e il tuo nome sarà ricordato in tutta la Repubblica!</p>
@@ -66,6 +66,9 @@ function Home() {
           <Login />
         </div>
       </div>
+      <footer className='w3-bottom w3-center' style={{backgroundColor: 'rgb(255 255 255 / 32%)', height:'25px', width:'90%'}}>
+        <a style={{fontSize: '12px'}}  href="https://www.freepik.com/vectors/wood-button">Wood button vector created by upklyak - www.freepik.com</a>
+      </footer>
     </>
   );
 } export default Home;

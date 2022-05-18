@@ -1,7 +1,7 @@
 import { TextField } from '@material-ui/core'
 import axios from 'axios'
 import React, { useState } from 'react'
-import { API_URL } from '../../utils/api';
+import { API_URL, getJwt } from '../../utils/api';
 import store from 'store';
 
 
@@ -28,7 +28,7 @@ function UserMsg (props){
                 
                 axios.patch(API_URL.CHARACTER + "/updateimage",payload ,{
                     headers: {
-                      'Authorization': 'Fervm '+store.get('jwt')
+                      'Authorization': 'Fervm '+getJwt('jwt')
                     }})
                 props.setPg(prevPg =>({
                     ...prevPg,
@@ -42,7 +42,7 @@ function UserMsg (props){
                 }
                 axios.patch(API_URL.PRESENTI + "/updatemessage",payload , {
                     headers: {
-                      'Authorization': 'Fervm '+store.get('jwt')
+                      'Authorization': 'Fervm '+getJwt('jwt')
                     }})
                 break;
             default:
