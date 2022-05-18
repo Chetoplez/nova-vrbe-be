@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // Our public endpoints
                 .antMatchers("/user/**").permitAll()
-                .antMatchers("/vrbe/**").permitAll()
+
                 .antMatchers("/").permitAll()
                 .antMatchers("/manifest.json").permitAll()
                 .antMatchers("/static/**").permitAll()

@@ -23,7 +23,7 @@ function ConversationList(props) {
 
     return(
         
-        <div >
+        <div style={{maxHeight: '500px', overflow:'auto'}}>
             <p>Ci sono {commentList.length} risposte</p>
             {commentList.map((risposta)=>{
                 return(

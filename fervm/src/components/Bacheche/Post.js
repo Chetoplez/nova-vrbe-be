@@ -34,7 +34,7 @@ function Post() {
             'Authorization': 'Fervm '+getJwt()
           }})
         .then(resp=>{
-            console.log(resp.data)
+            //console.log(resp.data)
             setPost(resp.data.detail);
             setBody(resp.data.detail.body)
             setLoading(false)
@@ -71,7 +71,7 @@ function Post() {
             'Authorization': 'Fervm '+getJwt()
           }})
         .then(resp=>{
-            setNewComment(true)
+            setNewComment(!newComment)
             setComment("")
             //console.log(resp.data)
         

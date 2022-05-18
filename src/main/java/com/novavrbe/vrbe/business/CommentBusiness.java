@@ -54,6 +54,9 @@ public class CommentBusiness {
         //a quanto pare va tutto bene. Inseriamo il commento
         CommentDTO newDto =  ForumUtils.createCommentDto(request.getComment());
         Integer idCommento = commentService.createComment(newDto);
+        PostDTO postDTO = postRepositoryService.getPost(newDto.getPostId());
+        postDTO.setLastModified(newDto.getCreatedAt());
+        postRepositoryService.editPost(postDTO);
         commentResponse.setCommentId(idCommento);
         commentResponse.setMessage("Commento creato");
         response = new ResponseEntity<>(commentResponse,HttpStatus.OK);

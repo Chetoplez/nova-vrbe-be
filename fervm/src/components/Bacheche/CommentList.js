@@ -51,7 +51,7 @@ function CommentList({ comment }) {
           }})
         .then(resp=>{
             //console.log(resp.data)
-            setFresh(false)
+            setFresh(!fresh)
             setTesto("");
         })
     }
@@ -65,7 +65,7 @@ function CommentList({ comment }) {
     }
 
     return(
-        <div style={{margin:'auto' , width: '70%'}}>
+        <div style={{margin:'auto' , width: '70%' , maxHeight:'400px' , overflow:'auto'}}>
             <div style={{display: 'flex', alignItems: 'center'}}><h4> Commenti : {commentList.length}</h4> <h4 style={{cursor: 'pointer', marginLeft: '20px'}} onClick={close}>{hide ? 'Apri': 'Nascondi'}</h4></div>
             <div style={{display: hide ? 'none': 'block'}}>
                 {commentList.map((risposta)=>{

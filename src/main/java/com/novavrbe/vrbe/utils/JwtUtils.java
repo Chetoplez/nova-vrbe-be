@@ -41,7 +41,8 @@ public class JwtUtils {
     }
 
     private Boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        Date exp = extractExpiration(token);
+        return exp.before(new Date());
     }
 
     public String generateToken(GenericUserDto userDetails) {
@@ -52,16 +53,18 @@ public class JwtUtils {
     private String createToken(Map<String, Object> claims, GenericUserDto subject) {
 
         return Jwts.builder().setClaims(claims).setSubject(subject.getEmail()).setIssuedAt(new Date(subject.getLastlogin()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) //TODO file di configurazione
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 12 )) //TODO file di configurazione
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
     public Boolean validateToken(String token, GenericUserDto userDetails) {
         final String username = extractUsername(token);
+
+        boolean expired = isTokenExpired(token);
         Date tokenIssuedAt = extractIssuedAt(token);
         long issuedAt = tokenIssuedAt.getTime();
         long lLog = userDetails.getLastlogin();
         Date lastLogin = new Date(lLog);
-        return (username.equals(userDetails.getEmail()) && !isTokenExpired(token) && lastLogin.equals(tokenIssuedAt) );
+        return (username.equals(userDetails.getEmail()) && !expired && lastLogin.equals(tokenIssuedAt) );
     }
 }

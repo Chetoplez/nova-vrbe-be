@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { BrowserRouter,  Route, Routes} from 'react-router-dom';
 import MainContextProvider from './utils/userContext'
 import UserMessageNotifcation from './utils/UserMessageNotification';
@@ -11,12 +11,37 @@ import Regolamento from './components/Regolamento'
 import PrivateRoute from './utils/PrivateRoute';
 import Subscribe from './components/Registrazione/Subscribe';
 import CharacterCreation from './components/Registrazione/CharacterCreation';
+import axios from 'axios';
+import {API_URL, getJwt} from './utils/api'
+import { userContext } from './utils/userContext'
 
 
 
 
 function App() {
-  document.title = 'Fervm GdR - Home'
+
+const mainContext = useContext(userContext);
+useEffect(() => {
+  const handleTabClose = event => {
+    event.preventDefault();
+
+    axios.post(API_URL.USER+"/logout",
+    {chId: mainContext.user.characterId}).then(resp=>{
+        if(resp.data.success)
+            mainContext.tryLogout()
+    })
+
+    return (true);
+  };
+
+  window.addEventListener('beforeunload', handleTabClose);
+
+  // return () => {
+  //   window.removeEventListener('beforeunload', handleTabClose);
+  // };
+}, []);
+  
+  
     
   return ( 
   <BrowserRouter>

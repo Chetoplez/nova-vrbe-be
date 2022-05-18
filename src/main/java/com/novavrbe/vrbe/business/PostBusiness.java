@@ -2,11 +2,13 @@ package com.novavrbe.vrbe.business;
 
 import com.novavrbe.vrbe.dto.CharacterDto;
 import com.novavrbe.vrbe.dto.ForumDTO;
+import com.novavrbe.vrbe.dto.GenericUserDto;
 import com.novavrbe.vrbe.dto.PostDTO;
 import com.novavrbe.vrbe.models.forumcontroller.*;
 import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.ForumRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.PostRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
 import com.novavrbe.vrbe.utils.ForumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -26,6 +29,8 @@ public class PostBusiness {
     private CharacterRepositoryService characterRepositoryService;
     @Autowired
     private ForumRepositoryService forumRepositoryService;
+    @Autowired
+    private UserRepositoryService userService;
 
     /**
      * controlla che l'utente abbia il ruolo di ADMIN per poter vedere alcune bacheche
@@ -33,8 +38,8 @@ public class PostBusiness {
      * @return
      */
     private Boolean isAdmin(Integer chId) {
-        CharacterDto characterDto =  characterRepositoryService.retrieveCharacterFromId(chId);
-        return characterDto.getRole().equals("ADMIN");
+       GenericUserDto dto =  userService.findUsersById(new BigDecimal(chId));
+        return dto.getRole().equals("ROLE_ADMIN");
     }
 
     /**
@@ -99,6 +104,7 @@ public class PostBusiness {
         Iterable<PostDTO> dtos = postRepositoryService.getPostList(Integer.parseInt(subforumId));
         for (PostDTO dto : dtos ) {
             CharacterDto charDto = characterRepositoryService.retrieveCharacterFromId(dto.getAuthor());
+            if(charDto == null) continue;
             Post detail = ForumUtils.preparePostDetails(dto,charDto);
             postList.add(detail);
         }
