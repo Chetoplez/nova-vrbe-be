@@ -22,10 +22,11 @@ export const API_URL = {
     'SUBFORUM': 'https://www.fervm.it:8443/fervmAPI/forum/subforum',
     'POST' : 'https://www.fervm.it:8443/fervmAPI/forum/post',
     'COMMENT': 'https://www.fervm.it:8443/fervmAPI/forum/comment',
-    'MISSIVE': 'https://www.fervm.it:8443/fervmAPI/missive'
+    'MISSIVE': 'https://www.fervm.it:8443/fervmAPI/missive',
+    'JWT': "https://www.fervm.it:8443/fervmAPI/vrbe/isalive"
 }
 export const getJwt = ()=>{
-    return store.get("jwt")
+    return store.get('jwt')
 }
 
 export const sanitazeHTML = (testo)=>{
@@ -44,5 +45,6 @@ export const sanitazeHTML = (testo)=>{
 //     'SUBFORUM': 'http://192.168.1.178:8080/forum/subforum',
 //     'POST' : 'http://192.168.1.178:8080/forum/post',
 //     'COMMENT': 'http://192.168.1.178:8080/forum/comment',
-//     'MISSIVE': 'http://192.168.1.178:8080/missive'
+//     'MISSIVE': 'http://192.168.1.178:8080/missive',
+//     'JWT': "http://192.168.1.178:8080/vrbe/isalive"
 // }

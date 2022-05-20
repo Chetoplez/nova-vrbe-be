@@ -42,21 +42,26 @@ function ForumCard({ forum , guild }) {
         if(!guild || mainContext.roles.includes("ROLE_ADMIN")){
             return(
                 <div className="forum-card link-bacheca">
-                <div className="forum-card-body" >
-                    <Avatar variant="square"/>
-                    <Link to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
-                </div>
-                <div style={{whiteSpace: 'pre-wrap'}}>{parse(forum.description)}</div>
+                    <div className="forum-card-body" >
+                        <Avatar variant="square"/>
+                        <div>
+                            <Link className="bachechaLink" to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
+                            <div style={{whiteSpace: 'pre-wrap'}}>{parse(forum.description)}</div>
+                        </div>
+                    </div>
             </div>
             )
         }else if(characterdGuild.guild_ID === forum.ownedBy){
             return (
                 <div className="forum-card link-bacheca">
-                    <div className="forum-card-body">
+                    <div className="forum-card-body d-flex">
                         <Avatar variant="square" />
-                        <Link to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
+                        <div>
+                            <Link className="bachechaLink" to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
+                            <div style={{ whiteSpace: 'pre-wrap' }}>{parse(forum.description)}</div>
+                        </div>
                     </div>
-                    <div style={{ whiteSpace: 'pre-wrap' }}>{parse(forum.description)}</div>
+                    
                 </div>
             )
         } else {

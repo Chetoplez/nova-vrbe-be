@@ -54,8 +54,9 @@ function UserBtn() {
         </div>
         
             <div id="menupg" className={menuOpen+' '}>
-                <ul>
+                <ul className="menu-interno">
                     <li><Link to={"/game/profilo/"+mainContext.user.characterId} onClick={openMenu}>Profilo</Link></li>
+                    <li><Link to="#">Prestavolto</Link></li>
                     {mainContext.isLoggedIn && (<li><Link to="#" onClick={logout}>Logout</Link></li>)}
                 </ul>
             </div>

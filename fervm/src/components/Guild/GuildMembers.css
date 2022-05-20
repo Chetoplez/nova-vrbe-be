@@ -1,6 +1,22 @@
+.role-name{
+	font-family: 'Cinzel', sans-serif;
+}
+
 .roleBox {
 	border: 1px solid goldenrod;
 	border-radius: 5px;
 	padding: 5px;
     margin-bottom: 5px;
+}
+
+.arruolati-tasti{
+	align-items: center;
+	justify-content: space-around;
+	width: 70%;
+}
+
+.member-box {
+	display:block;
+	margin-left: 25px;
+	
 }

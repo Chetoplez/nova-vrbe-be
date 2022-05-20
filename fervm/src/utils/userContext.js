@@ -65,8 +65,6 @@ const MainContextProvider = ({ children }) => {
       setLoggedIn(isLog);
     } else { isLog = true; }
 
-    
-
     return isLog;
   }, [isLoggedIn, setLoggedIn])
 

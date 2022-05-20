@@ -52,11 +52,18 @@ function Subforum() {
     }
 
     function renderSubforumList(type){
+        console.log(type)
+         var test = list.find(elem=> elem.subforumType === type)
+         console.log(test)
+         if (test !== undefined) {
         return (
             <>            
+           
+            <div className='w3-half'>
             <div className='w3-header w3-center'>
-                                <h3>Sezione {type}</h3>
-                        </div>  
+               <h3>Sezione {type}</h3>
+            </div>  
+                    <div className='contenitori' style={{marginRight:'5px'}}>
                 {
                     list.map((section, index) => {
 
@@ -67,10 +74,12 @@ function Subforum() {
                             </div>
                         )
                     })
-                }
+                }</div>
+            </div>
                 </>
            
-        )
+        )}
+        else return null;
     }
 
     return(
@@ -87,19 +96,12 @@ function Subforum() {
             </div>
             
             <section className='d-flex w3-row'>
-            
-                <div className='w3-half'>
-                    <div className='contenitori' style={{marginRight:'5px'}}>
-                    {
-                        renderSubforumList("ON")                
-                    }</div>
-                </div>
-                <div className='w3-half'>
-                    <div className='contenitori' style={{marginLeft:'5px'}}>{
-                        renderSubforumList("OFF")
-                    }</div>
-                </div>
-                
+                {
+                   renderSubforumList("ON")                
+                }
+                {
+                    renderSubforumList("OFF")
+                }
             </section> 
             
            

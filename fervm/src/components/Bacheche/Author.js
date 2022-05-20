@@ -10,7 +10,7 @@ function Author({ post }){
             <div className="author">
                 <Avatar src={post.author.characterImg}></Avatar> 
                 <div>
-                    <div>Autore: {post.author.characterName}</div>
+                    <div>Autore: {post.author.characterName +' '+post.author.characterSurname}</div>
                     <div>Creato: {Moment(post.createdAt).format('DD/MM/YYYY - HH:mm')}</div>
                     {post.lastModified !== null && <div>Ultima Modifica: {Moment(post.lastModified).format('DD/MM/YYYY - HH:mm')}</div>}
                 </div>

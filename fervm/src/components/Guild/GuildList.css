@@ -4,8 +4,9 @@
     align-items:center;
     border-radius: 5px;
     padding: 10px;
-    background-color: #43b5f7d0;
-    margin-top: 10px
+    background-color: #A8DAFE;
+    width: 50%;
+    margin: 10px auto;
 }
 
 .guildListTable {

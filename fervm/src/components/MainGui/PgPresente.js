@@ -71,7 +71,6 @@ function PgPresente(props) {
 
     const tipoElenco = props.col === "2" ? "fervm-badge-chat":"fervm-badge-presente"
 
-
     useEffect(()=>{
       axios.get(API_URL.PRESENTI+"/presenti/chatId="+props.chatId,{
         headers: {
@@ -91,7 +90,7 @@ function PgPresente(props) {
         .then(resp=>{
            setPres(resp.data.presentiChat)
         })
-    },10000) 
+    },3000) 
 
     return ()=>{clearInterval(interval)}
 
@@ -114,11 +113,12 @@ function PgPresente(props) {
           }
           axios.patch(API_URL.PRESENTI+"/updateavailable", payload,{
             headers: {
-              'Authorization': 'Fervm '+getJwt('jwt')
+              'Authorization': 'Fervm '+getJwt()
             }})
           .then(resp=>{
             //console.log(resp.data)
               setFresh(false);
+              props.setPresentiFresh(old=> !old)
           }).catch(err=>{
             console.log("network problem",err)
           })

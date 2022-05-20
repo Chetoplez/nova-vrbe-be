@@ -87,9 +87,6 @@ function Forum() {
         <div className="chat-container">
             <section className='colonna-sx'>
                 <div className='contenitori'>
-                    <header className='w3-center'>
-                        <h1>Bacheche</h1>
-                    </header>
                     <div className='d-flex flex-wrap'>
                         <div className='flex-basis-1 w3-half'>
                             <div className='w3-header w3-center'>
@@ -110,7 +107,7 @@ function Forum() {
             <section className='colonna-dx'>
                 <div className='contenitori'>
                     <header className='w3-center'>
-                        <h1>OFF</h1>
+                        <h2>OFF</h2>
                     </header>
                     {renderForumList("OFF")}
                 </div>

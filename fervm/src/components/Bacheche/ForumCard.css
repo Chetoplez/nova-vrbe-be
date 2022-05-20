@@ -5,7 +5,7 @@
     border-radius: 20px;
     color: #FFD782;
     line-height: 20px;
-    padding: 20px;
+    padding: 14px 14px 14px 30px;
     margin: 10px;
 }
 
@@ -13,6 +13,10 @@
     display: flex;
     align-items: center;
     text-transform: capitalize;
+}
+
+.bachechaLink {
+    color:#F4F6F5
 }
 
 .link-bacheca {

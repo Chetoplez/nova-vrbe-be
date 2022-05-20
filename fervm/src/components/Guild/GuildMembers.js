@@ -102,13 +102,13 @@ function GuildMembers({ isManager , setFresh , isFresh }) {
                             <Tooltip 
                                 title={<div style={{fontSize:'14px', padding:'15px', borderRadius: '5px'}}>{role.description}</div>}
                                 placement="top">
-                                <h4>{role.name}</h4>
+                                <h4 className='role-name'>{role.name}</h4>
                             </Tooltip>
                             {(  role.guild_level === 10 && isManager) || 
                                 (role.guild_level === 10 && mainContext.roles.includes("ROLE_ADMIN") ) ? 
                                 <IconButton onClick={()=>addNewMember(role.role_id)} style ={{color: '#00b300'}}><AddCircleOutlineIcon /></IconButton> : null}
                         </div>
-                        <div  style={{display:'block', marginLeft:'45px', lineHeight:'2'}}>
+                        <div className='member-box'>
                             {getRoleMember(role.role_id)}
                         </div>
                     </div> )

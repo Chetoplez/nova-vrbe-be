@@ -13,19 +13,20 @@ import UserMsg from './UserMsg';
  * 
  * renders the online charachater on the main map. 
  */
-function ElencoPresenti(props) {
+function ElencoPresenti() {
    
     const [presenti, setPresenti] = useState([]);
+    const [presentiFresh, setPresentiFresh] = useState(true);
     const mainContext = useContext(userContext) 
     
     useEffect(()=>{
         fetchPresenti()
-        const interval = setInterval(()=>{
-            fetchPresenti()
-         },2000)
+        // const interval = setInterval(()=>{
+        //     fetchPresenti()
+        //  },2000)
 
-         return () => clearInterval(interval);
-    }, [])
+         //return () => clearInterval(interval);
+    },[presentiFresh])
 
     const fetchPresenti = ()=>{
         axios.get(API_URL.PRESENTI+"/presenti", {
@@ -54,7 +55,7 @@ function ElencoPresenti(props) {
                return(
                <div key={luogo.idLuogo}>
                    <h4 >{luogo.presenteList.length}  {luogo.idLuogo === 0 ? luogo.nomeLuogo : <Link to={"/game/chat/"+luogo.idLuogo}>{luogo.nomeLuogo}</Link>}</h4>
-                   <PgPresente col="1" chatId={luogo.idLuogo} />
+                   <PgPresente col="1" chatId={luogo.idLuogo} setPresentiFresh={setPresentiFresh} />
                </div>
                )
            })}

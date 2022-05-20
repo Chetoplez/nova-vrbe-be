@@ -61,12 +61,12 @@ function GuildMemberSection(props) {
 
     return(
         <div>
-            <h3>{myRole.character_NAME + ' ' + myRole.character_SURNAME}</h3>
+            <h3 className='role-name'>{myRole.character_NAME + ' ' + myRole.character_SURNAME}</h3>
             <div className="w3-row">
                 <div className="w3-content w3-half" style={{display:"flex" , alignItems:"center"}}>
                     <Avatar src={myRole.role_IMG} className={classes.guildBadge}></Avatar>
                     <div>
-                        <h3>{myRole.role_NAME}</h3>
+                        <h3 className='role-name'>{myRole.role_NAME}</h3>
                         <p>Salario : {myRole.rolesalary} sz / giorno</p>
                     </div>
                 </div>

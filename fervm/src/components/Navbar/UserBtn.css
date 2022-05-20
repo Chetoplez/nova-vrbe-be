@@ -15,12 +15,21 @@
     cursor: pointer;
 }
 
+.menu-interno {
+    list-style-type: none;
+    padding: 15px;
+}
+
 #menupg{
+    
     position: absolute;
     max-height: 0%;
     transition: 0.4s;
     overflow: hidden;
     z-index: 1;
+    background-color: #F4F6F5;
+    margin: 0px;
+    
 }
 
 #menupg.openEffect{

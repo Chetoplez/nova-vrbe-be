@@ -47,7 +47,7 @@ function GuildList () {
       }
 
       return(
-          <>
+          <section className='contenitori'>
           <h1 className="w3-header w3-center">Elenco Corporazioni a Fervm</h1> 
           <table className="w3-table w3-center guildListTable">
            <tbody style={{marginTop:'100px'}}>
@@ -62,7 +62,7 @@ function GuildList () {
                 
             }</tbody>
             </table>
-          </>
+          </section>
       )
       
 } export default GuildList;

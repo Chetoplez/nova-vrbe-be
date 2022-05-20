@@ -29,8 +29,8 @@ const useStyles = makeStyles({
         backgroundColor: '#FFBB00'
     },
     cvAvatar: {
-        width: 82,
-        height: 82
+        width: 70,
+        height: 70
     }
 })
 
@@ -224,8 +224,8 @@ function ProfiloPg() {
                 <div style={{ display: 'flex', width: '80%' }}>
                     {/* Personal information column , name, gender etc  */}
 
-                    <div className="w3-container w3-third">
-                        <h1 className="w3-header ">{personaggio.characterName +' '+personaggio.characterSurname} </h1>
+                    <div className="w3-container w3-third profilo">
+                        <h3 className="w3-header ">{personaggio.characterName +' '+personaggio.characterSurname} </h3>
                         <div className="info-pg">
                             <div>
                                 <div className="w3-third"><strong>Sesso</strong></div>
@@ -245,13 +245,12 @@ function ProfiloPg() {
                             </div>
                             {(mainContext.user.characterId == personaggio.characterId) &&
                                 <div>
-                                    
-                                    <UserMsg id={mainContext.user.characterId} type="image" oldImg={personaggio.characterImg} setPg={setPersonaggio} />
+                                 <UserMsg id={mainContext.user.characterId} type="image" oldImg={personaggio.characterImg} setPg={setPersonaggio} />
                                 </div>}
                         </div>
-                        <div className="descrizione-fisica">
+                        <div className="descrizione-fisica profilo">
 
-                            <div className="w3-row" style={{ display: 'flex', alignItems: 'center' }}>
+                            <div className="w3-row d-flex" style={{ alignItems: 'center' }}>
                                 <h5 >DESCRIZIONE FISICA</h5>
                                 {(mainContext.user.characterId == personaggio.characterId) ? <span className="w3-margin-left">
                                     <IconButton onClick={updateDescrizionePg} component="span" classes={{ root: classes.root }}>
@@ -259,7 +258,7 @@ function ProfiloPg() {
                                     </IconButton>
                                 </span> : null}
                             </div>
-                            <section style={{ minWidth: '300px' }}>{
+                            <section>{
                                 modDescrizione ?
                                     <div>
                                         <textarea className="mod-descr" value={descrizione} onChange={handleDescr} type='textarea'></textarea>
@@ -276,12 +275,12 @@ function ProfiloPg() {
                     </div>
 
                     {/*curriculum and personal background column*/}
-                    <div className="w3-container w3-twothird" >
+                    <div className="w3-container w3-twothird profilo" >
 
                         {personaggio.characterJob !== null ?
                             <div className="cont-cv w3-container ">
                                 <Avatar src={personaggio.characterJob.role_img} alt="Carica" className={ classes.cvAvatar } />
-                                <h2>{personaggio.characterJob.roleName !== null ? personaggio.characterJob.roleName : "Nessuna Carica"}</h2>
+                                <h3>{personaggio.characterJob.roleName !== null ? personaggio.characterJob.roleName : "Nessuna Carica"}</h3>
                                 {personaggio.characterJob.roleName !== null ? <IconButton onClick={openCV} component="span" classes={{ root: classes.root }}>
                                     {isOpen ? <ClearIcon /> : <ArrowDropDownOutlinedIcon />}
                                 </IconButton> : null}
@@ -290,7 +289,7 @@ function ProfiloPg() {
                         {personaggio.characterJob.specification !== "" ? <strong>{personaggio.characterJob.specification}</strong> : null}
                         {isOpen ? <CharacterCV curriculumPg={curriculumPg} /> : null}
                         <CharacterProgress character={ personaggio} />
-                        <div className="descrizione-fisica w3-rest">
+                        <div className="descrizione-fisica w3-rest profilo">
                             <div className="w3-row" style={{ display: 'flex', alignItems: 'center' }}>
                                 <h5 >STORIA PERSONALE</h5>
                                 {mainContext.user.characterId == personaggio.characterId && (

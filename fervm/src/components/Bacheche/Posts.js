@@ -54,7 +54,7 @@ function Posts() {
     },[])
 
     if (loading) {
-        return <div className="App">Loading...</div>;
+        return <div className="loading">Loading...</div>;
     }
 
     const back = ()=>{
@@ -63,21 +63,21 @@ function Posts() {
 
     return(
         <>
-            <header className='w3-center' >
+            <header className='w3-center'>
                 <h1>{subforum.name}</h1>
             </header>
             <div style={{display:'flex', alignItems:'center'}}>
                 <button className='ctrl-btn-M' onClick={back}>INDIETRO</button>
                 <div><Link to="create" className='ctrl-btn-M'>Crea Nuovo</Link></div>
             </div>
-            <table style={{width:'80%', margin:'auto'}}>
+            <table className='contenitori' style={{width:'100%', margin:'auto'}}>
                 <tbody>
                     {
                         list.map((post,index)=>{
                             return(
                                 <tr className='postCard w3-card' key={post.postId} >
                                     <td> <Link to={"/game/forum/post/detail/"+post.postId}><h3>{post.title}</h3></Link></td>
-                                    <td>
+                                    <td style={{lineHeight: '16px'}}>
                                         <span> <strong style={{color:'#554641'}}> Autore: {post.author.characterName +' '+post.author.characterSurname}</strong></span><br></br>
                                         <span> <strong style={{color:'#554641'}}> Creato: {Moment(post.createdAt).format('DD/MM/YYYY - HH:mm')}</strong></span><br></br>
                                         <span> <strong style={{color:'#554641'}}>Ultima Modifica: {Moment(post.lastModified).format('DD/MM/YYYY - HH:mm')}</strong></span><br></br>
