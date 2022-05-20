@@ -14,8 +14,7 @@ public class ForumUtils {
     public static ArrayList<ForumDTO> prepareForumList(Iterable<ForumDTO> dtOs) {
         ArrayList<ForumDTO> arrayForum = new ArrayList<>();
 
-        for (ForumDTO el :
-                dtOs) {
+        for (ForumDTO el : dtOs) {
             arrayForum.add(el);
         }
         return arrayForum;

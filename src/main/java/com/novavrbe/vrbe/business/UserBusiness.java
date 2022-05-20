@@ -9,6 +9,8 @@ import com.novavrbe.vrbe.utils.JwtUtils;
 import com.novavrbe.vrbe.utils.UserUtils;
 import com.novavrbe.vrbe.utils.mail.EmailService;
 import com.novavrbe.vrbe.utils.mail.MailDetails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,7 @@ import java.util.List;
 @Service
 public class UserBusiness {
 
+    static Logger logger = LoggerFactory.getLogger(UserBusiness.class);
     @Autowired
     private UserRepositoryService userRepositoryService;
     @Autowired
@@ -110,7 +113,7 @@ public class UserBusiness {
         loginResponse.setSuccess(true);
         loginResponse.setRole(dto.getRole());
         loginResponse.setUserId(dto.getId());
-
+        logger.info("LOGIN: USER ID " +dto.getId());
         final String jwt = jwtUtils.generateToken(dto);
         loginResponse.setJwt(jwt);
         response = new ResponseEntity<>(loginResponse, HttpStatus.OK);
@@ -126,6 +129,7 @@ public class UserBusiness {
         }
         presRepository.changeOnline(request.getChId(),false);
         presRepository.moveToluogo(0,request.getChId());
+        logger.info("Logout: USER ID " +request.getChId());
         logoutResponse.setSuccess(true);
         response = new ResponseEntity<>(logoutResponse,HttpStatus.OK);
         return response;

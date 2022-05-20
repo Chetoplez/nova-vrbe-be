@@ -31,4 +31,7 @@ public class ForumDTO {
 
     @Column
     private Integer visualOrder;
+
+    @Column
+    private long lastModified;
 }

@@ -21,8 +21,7 @@ public class CharacterDto {
     private String characterSurname;
     @Column(name = "CHARACTER_GENS")
     private String characterGens;
-    @Column(name = "CHARACTER_ICON")
-    private String characterIcon;
+
     @Column
     private String characterImg;
     @Column

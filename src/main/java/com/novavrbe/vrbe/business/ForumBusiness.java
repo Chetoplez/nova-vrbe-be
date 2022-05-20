@@ -8,6 +8,8 @@ import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.ForumRepositoryService;
 import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
 import com.novavrbe.vrbe.utils.ForumUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,7 @@ public class ForumBusiness {
     @Autowired
     private UserRepositoryService userService;
 
+    static Logger logger = LoggerFactory.getLogger(ForumBusiness.class);
     /**
      * Ritorna tutti i forum che l'utente è abilitato a vedere.
      * @param chId Contiene l'id del richiedente
@@ -58,7 +61,7 @@ public class ForumBusiness {
         if(!isAdmin(request.getChId())){
             forumResponse.setForumId(-1);
             forumResponse.setMessage("Non sei autorizzato");
-            //TODO qui dovremmo loggare questo tentativo
+            logger.warn("Il Character "+request.getChId() +" non è autorizzato a creare forum!" );
             response = new ResponseEntity<>(forumResponse, HttpStatus.UNAUTHORIZED);
             return response;
         }
@@ -100,7 +103,7 @@ public class ForumBusiness {
         if(!isAdmin(request.getChId())){
             forumResponse.setForumId(-1);
             forumResponse.setMessage("Non sei autorizzato");
-            //TODO qui dovremmo loggare questo tentativo
+            logger.warn("Il Character "+request.getChId() +" non è autorizzato a editare forum!" );
             response = new ResponseEntity<>(forumResponse, HttpStatus.UNAUTHORIZED);
             return response;
         }
@@ -130,7 +133,7 @@ public class ForumBusiness {
         if (!isAdmin(request.getChId())) {
             forumResponse.setDeleted(false);
             forumResponse.setMessage("Non sei autorizzato");
-            //TODO qui dovremmo loggare questo tentativo
+            logger.warn("Il Character "+request.getChId() +" non è autorizzato a deletare forum!" );
             response = new ResponseEntity<>(forumResponse, HttpStatus.UNAUTHORIZED);
             return response;
         }

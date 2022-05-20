@@ -100,6 +100,7 @@ public class PresentiBusiness {
                 tempPresente.setAvailable(pres.isAvailable());
                 tempPresente.setCharacterId(pres.getCharacterId());
                 tempPresente.setCharacterName(pres.getCharacterName());
+                tempPresente.setCharacterSurname(pres.getCharacterSurname());
                 tempPresente.setMessaggio(pres.getMessaggio());
                 tmp.getPresenteList().add(tempPresente);
             }

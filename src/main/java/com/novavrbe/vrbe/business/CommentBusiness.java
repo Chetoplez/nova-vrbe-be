@@ -1,15 +1,11 @@
 package com.novavrbe.vrbe.business;
 
-import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.dto.CommentDTO;
-import com.novavrbe.vrbe.dto.PostDTO;
+import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.forumcontroller.Comment;
 import com.novavrbe.vrbe.models.forumcontroller.CreateCommentRequest;
 import com.novavrbe.vrbe.models.forumcontroller.CreateCommentResponse;
 import com.novavrbe.vrbe.models.forumcontroller.GetPostCommentResponse;
-import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
-import com.novavrbe.vrbe.repositories.impl.CommentRepositoryService;
-import com.novavrbe.vrbe.repositories.impl.PostRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.*;
 import com.novavrbe.vrbe.utils.ForumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +22,10 @@ public class CommentBusiness {
     CommentRepositoryService commentService;
     @Autowired
     PostRepositoryService postRepositoryService;
+    @Autowired
+    SubforumRepositoryService subforumRepositoryService;
+    @Autowired
+    ForumRepositoryService forumService;
     @Autowired
     CharacterRepositoryService characterRepositoryService;
 
@@ -54,9 +54,7 @@ public class CommentBusiness {
         //a quanto pare va tutto bene. Inseriamo il commento
         CommentDTO newDto =  ForumUtils.createCommentDto(request.getComment());
         Integer idCommento = commentService.createComment(newDto);
-        PostDTO postDTO = postRepositoryService.getPost(newDto.getPostId());
-        postDTO.setLastModified(newDto.getCreatedAt());
-        postRepositoryService.editPost(postDTO);
+        updateLastLettura(newDto);
         commentResponse.setCommentId(idCommento);
         commentResponse.setMessage("Commento creato");
         response = new ResponseEntity<>(commentResponse,HttpStatus.OK);
@@ -103,5 +101,19 @@ public class CommentBusiness {
         commentResponse.setCommentList(commentList);
         response = new ResponseEntity<>(commentResponse,HttpStatus.OK);
         return response;
+    }
+
+    private void updateLastLettura (CommentDTO newDto){
+        PostDTO postDTO = postRepositoryService.getPost(newDto.getPostId());
+        postDTO.setLastModified(newDto.getCreatedAt());
+        postRepositoryService.editPost(postDTO);
+
+        SubForumDTO subForum = subforumRepositoryService.findSubforum(postDTO.getSubforumId());
+        subForum.setLastModified(newDto.getCreatedAt());
+        subforumRepositoryService.editSubForum(subForum);
+
+        ForumDTO forum = forumService.getForumById(postDTO.getForumId());
+        forum.setLastModified(newDto.getCreatedAt());
+        forumService.updateForum(forum);
     }
 }

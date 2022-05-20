@@ -1,14 +1,8 @@
 package com.novavrbe.vrbe.business;
 
-import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.dto.ForumDTO;
-import com.novavrbe.vrbe.dto.GenericUserDto;
-import com.novavrbe.vrbe.dto.PostDTO;
+import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.forumcontroller.*;
-import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
-import com.novavrbe.vrbe.repositories.impl.ForumRepositoryService;
-import com.novavrbe.vrbe.repositories.impl.PostRepositoryService;
-import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.*;
 import com.novavrbe.vrbe.utils.ForumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +25,10 @@ public class PostBusiness {
     private ForumRepositoryService forumRepositoryService;
     @Autowired
     private UserRepositoryService userService;
+    @Autowired
+    private SubforumRepositoryService subforumRepositoryService;
+    @Autowired
+    private ForumRepositoryService forumService;
 
     /**
      * controlla che l'utente abbia il ruolo di ADMIN per poter vedere alcune bacheche
@@ -84,6 +82,7 @@ public class PostBusiness {
         Integer postId =  postRepositoryService.createNewPost(dto);
         createPostResponse.setPostId(postId);
         createPostResponse.setMessage("Nuovo post creato");
+        updateLastLettura(dto);
         response = new ResponseEntity<>(createPostResponse, HttpStatus.OK);
         return response;
     }
@@ -220,5 +219,20 @@ public class PostBusiness {
         postResponse.setMessage("il post "+dto.getTitle()+"è stato chiuso");
         response = new ResponseEntity<>(postResponse, HttpStatus.OK);
         return response;
+    }
+
+    /**
+     * Aggiorna il timestamp di scrittura di Subforum e Forum
+     * @param newDto
+     */
+    private void updateLastLettura (PostDTO newDto){
+
+        SubForumDTO subForum = subforumRepositoryService.findSubforum(newDto.getSubforumId());
+        subForum.setLastModified(newDto.getLastModified());
+        subforumRepositoryService.editSubForum(subForum);
+
+        ForumDTO forum = forumService.getForumById(newDto.getForumId());
+        forum.setLastModified(newDto.getLastModified());
+        forumService.updateForum(forum);
     }
 }

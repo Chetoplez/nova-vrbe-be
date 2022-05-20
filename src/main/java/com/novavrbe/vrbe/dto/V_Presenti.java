@@ -10,17 +10,18 @@ import javax.persistence.Id;
 @Data
 @Immutable
 @Entity
+
 public class V_Presenti {
 
     @Column
     private Integer idLuogo;
     @Column
     private String nomeLuogo;
-    @Id
     @Column
     private String characterName;
     @Column
     private String characterSurname;
+    @Id
     @Column
     private Integer characterId;
     @Column

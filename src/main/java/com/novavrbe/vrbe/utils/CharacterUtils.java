@@ -32,12 +32,7 @@ public class CharacterUtils {
             character.setCharacterName(dto.getCharacterName());
             character.setCharacterSurname(dto.getCharacterSurname());
             character.setCharacterGens(dto.getCharacterGens());
-            try {
-                URL characterIcon = new URL(dto.getCharacterIcon());
-                character.setCharacterIcon(characterIcon);
-            } catch (MalformedURLException e) {
-                logger.error(e.toString());
-            }
+
             character.setGender(Gender.valueOf(dto.getGender()));
             character.setStatus(Status.valueOf(dto.getStatus()));
 
@@ -142,7 +137,7 @@ public class CharacterUtils {
             characterDto.setCharacterName(character.getCharacterName());
             characterDto.setCharacterSurname(character.getCharacterSurname());
             characterDto.setCharacterGens( character.getCharacterGens() != null ? characterDto.getCharacterGens() : "NESSUNA");
-            characterDto.setCharacterIcon(character.getCharacterIcon() != null ? character.getCharacterIcon().toString() : "");
+
             characterDto.setGender(character.getGender().name());
 
             characterDto.setStatus(character.getStatus() != null ? character.getStatus().name() : Status.PLEBEO.name());
