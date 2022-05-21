@@ -43,7 +43,8 @@ public class ForumBusiness {
             return  response;
         }
         Iterable<ForumDTO> DTOs = forumRepositoryService.getAllForums(isAdmin(chId));
-        ArrayList<ForumDTO> allForum = ForumUtils.prepareForumList(DTOs);
+
+        ArrayList<Forum> allForum = ForumUtils.prepareForumList(DTOs, forumRepositoryService , chId);
         GetForumResponse res = new GetForumResponse();
         res.setForumsList(allForum);
         response = new ResponseEntity<>(res,HttpStatus.OK);

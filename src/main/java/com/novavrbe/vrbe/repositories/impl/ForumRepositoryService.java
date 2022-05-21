@@ -1,7 +1,9 @@
 package com.novavrbe.vrbe.repositories.impl;
 
 import com.novavrbe.vrbe.dto.ForumDTO;
+import com.novavrbe.vrbe.dto.PostLettiDto;
 import com.novavrbe.vrbe.repositories.ForumRepository;
+import com.novavrbe.vrbe.repositories.PostLettiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,9 @@ import java.util.Optional;
 public class ForumRepositoryService {
 
     @Autowired
-    ForumRepository forumRepository;
+    private ForumRepository forumRepository;
+    @Autowired
+    private PostLettiRepository postLettiRepository;
 
     /**
      * Ritorna tutti i forum per l'utente che sta richiedendo
@@ -67,5 +71,10 @@ public class ForumRepositoryService {
         Optional<ForumDTO> dto = forumRepository.findById(forumId);
         ForumDTO forumDTO = dto.get();
         return forumDTO;
+    }
+
+    public PostLettiDto getLastReadedForums(Integer chId, Integer forumId) {
+        return  postLettiRepository.findByChIdAndForumIdGroupByForum(chId, forumId);
+
     }
 }

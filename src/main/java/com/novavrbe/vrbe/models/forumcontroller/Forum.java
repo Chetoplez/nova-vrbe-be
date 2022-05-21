@@ -4,6 +4,9 @@ import lombok.Data;
 
 @Data
 public class Forum {
+
+    private Integer forumId;
+
     private String  name;
 
     private String description;
@@ -15,4 +18,6 @@ public class Forum {
     private Integer ownedBy;
 
     private Integer visualOrder;
+
+    private boolean unread;
 }

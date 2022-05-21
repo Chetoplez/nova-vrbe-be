@@ -6,17 +6,34 @@ import com.novavrbe.vrbe.models.forumcontroller.Comment;
 import com.novavrbe.vrbe.models.forumcontroller.Forum;
 import com.novavrbe.vrbe.models.forumcontroller.Post;
 import com.novavrbe.vrbe.models.forumcontroller.SubForum;
+import com.novavrbe.vrbe.repositories.impl.ForumRepositoryService;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class ForumUtils {
-    public static ArrayList<ForumDTO> prepareForumList(Iterable<ForumDTO> dtOs) {
-        ArrayList<ForumDTO> arrayForum = new ArrayList<>();
+    public static ArrayList<Forum> prepareForumList(Iterable<ForumDTO> dtOs, ForumRepositoryService forumRepositoryService, Integer chId) {
+        ArrayList<Forum> arrayForum = new ArrayList<>();
 
-        for (ForumDTO el : dtOs) {
-            arrayForum.add(el);
-        }
+            for (ForumDTO el : dtOs) {
+                Forum temp = new Forum();
+                temp.setForumId(el.getForumId());
+                temp.setForumType(el.getForumType());
+                temp.setAdminOnly(el.isAdminOnly());
+                temp.setDescription(el.getDescription());
+                temp.setName(el.getName());
+                temp.setOwnedBy(el.getOwnedBy());
+                temp.setVisualOrder(el.getVisualOrder());
+
+                PostLettiDto letto = forumRepositoryService.getLastReadedForums(chId, el.getForumId());
+                if(letto == null || letto.getLastLettura() < el.getLastModified()){
+                    temp.setUnread(true);
+                }else { temp.setUnread(false);}
+
+                arrayForum.add(temp);
+            }
+
+
         return arrayForum;
     }
 
