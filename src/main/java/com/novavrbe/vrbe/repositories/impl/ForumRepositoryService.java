@@ -77,4 +77,8 @@ public class ForumRepositoryService {
         return  postLettiRepository.findByChIdAndForumIdGroupByForum(chId, forumId);
 
     }
+
+    public PostLettiDto getLastReadedSubforum(Integer chId, Integer forumId , Integer subforumId) {
+        return  postLettiRepository.findByChIdAndSuForumIdGroupBySubForum(chId, forumId , subforumId);
+    }
 }

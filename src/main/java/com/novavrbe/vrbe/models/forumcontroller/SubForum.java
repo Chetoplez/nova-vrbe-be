@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class SubForum {
 
+    private Integer subforumId;
+
     private String name;
 
     private boolean adminOnly;
@@ -18,4 +20,6 @@ public class SubForum {
     private Integer rankVisibility;
 
     private Integer visualOrder;
+
+    private boolean unread;
 }

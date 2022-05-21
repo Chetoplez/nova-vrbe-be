@@ -26,7 +26,7 @@ public class ForumUtils {
                 temp.setVisualOrder(el.getVisualOrder());
 
                 PostLettiDto letto = forumRepositoryService.getLastReadedForums(chId, el.getForumId());
-                if(letto == null || letto.getLastLettura() < el.getLastModified()){
+                if( (letto == null && el.getLastModified() != 0) || letto != null && (letto.getLastLettura() < el.getLastModified())){
                     temp.setUnread(true);
                 }else { temp.setUnread(false);}
 
@@ -61,15 +61,36 @@ public class ForumUtils {
         return dto;
     }
 
-    public static ArrayList<SubForumDTO> prepareSubforumList(Iterable<SubForumDTO> dtos, V_GuildMembers guildMember, boolean admin) {
-        ArrayList<SubForumDTO> lista = new ArrayList<>();
+    public static ArrayList<SubForum> prepareSubforumList(Iterable<SubForumDTO> dtos, V_GuildMembers guildMember, boolean admin, ForumRepositoryService forumRepositoryService, Integer chId) {
+        ArrayList<SubForum> lista = new ArrayList<>();
         Integer guildId = guildMember == null ? -1 : guildMember.getGuildId(); //mi serve per filtrare i subforum
         Integer rankPg = guildMember == null ? 10 : guildMember.getGuildLevel(); // mi serve per filtrare in base al livello del pg
         for (SubForumDTO dto: dtos) {
             if( (dto.getOwnedBy() == -1  && rankPg >= dto.getRankVisibility())
                     || (Objects.equals(dto.getOwnedBy(), guildId) && rankPg >= dto.getRankVisibility() )
-                    || admin)
-                lista.add(dto);
+                    || admin){
+
+                SubForum temp = new SubForum();
+                temp.setSubforumId(dto.getSubforumId());
+                temp.setName(dto.getName());
+                temp.setSubforumType(dto.getSubforumType());
+                temp.setRankVisibility(dto.getRankVisibility());
+                temp.setAdminOnly(dto.isAdminOnly());
+                temp.setForumId(dto.getForumId());
+                temp.setOwnedBy(dto.getOwnedBy());
+                temp.setVisualOrder(dto.getVisualOrder());
+
+                PostLettiDto letto = forumRepositoryService.getLastReadedSubforum(chId, dto.getForumId() , dto.getSubforumId() );
+                if( (letto == null && dto.getLastModified() != 0) || letto != null && (letto.getLastLettura() < dto.getLastModified())){
+                    temp.setUnread(true);
+                }else { temp.setUnread(false);}
+
+                lista.add(temp);
+            }
+
+
+
+
         }
         return lista;
     }

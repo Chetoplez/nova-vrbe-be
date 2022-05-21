@@ -8,4 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface PostLettiRepository extends JpaRepository<PostLettiDto, IdPostLetti> {
         @Query(value = "select pl.chId, pl.postId,pl.forumId,pl.subforumId, pl.lastLettura from post_letti pl where pl.chId = ?1 and pl.forumId= ?2 group by pl.forumId" , nativeQuery = true)
         PostLettiDto findByChIdAndForumIdGroupByForum(Integer chId, Integer forumId);
+
+        @Query(value = "select pl.chId, pl.postId,pl.forumId,pl.subforumId, pl.lastLettura from post_letti pl where pl.chId = ?1 and pl.forumId= ?2 and pl.subforumId = ?3 group by pl.subforumId" , nativeQuery = true)
+        PostLettiDto findByChIdAndSuForumIdGroupBySubForum(Integer chId, Integer forumId, Integer subforumId);
 }

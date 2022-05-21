@@ -1,9 +1,15 @@
 package com.novavrbe.vrbe.business;
 
-import com.novavrbe.vrbe.dto.*;
+import com.novavrbe.vrbe.dto.ForumDTO;
+import com.novavrbe.vrbe.dto.GenericUserDto;
+import com.novavrbe.vrbe.dto.SubForumDTO;
+import com.novavrbe.vrbe.dto.V_GuildMembers;
 import com.novavrbe.vrbe.models.enumerations.Roles;
 import com.novavrbe.vrbe.models.forumcontroller.*;
-import com.novavrbe.vrbe.repositories.impl.*;
+import com.novavrbe.vrbe.repositories.impl.ForumRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.GuildRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.SubforumRepositoryService;
+import com.novavrbe.vrbe.repositories.impl.UserRepositoryService;
 import com.novavrbe.vrbe.utils.ForumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +30,7 @@ public class SubForumBusiness {
     private UserRepositoryService userService;
     @Autowired
     private GuildRepositoryService guildService;
+
 
     /**
      * Crea una sotto sezione del forum. Se si tratta di un forum che è ADMIN ONLY, si dovrà essere admin per poter creare la sottosezione.
@@ -109,7 +116,7 @@ public class SubForumBusiness {
             return response;
         }
 
-        ArrayList<SubForumDTO> subForumList = new ArrayList<>();
+        ArrayList<SubForum> subForumList = new ArrayList<>();
         Iterable<SubForumDTO> dtos = null;
         Integer fId = Integer.parseInt(request.getForumId());
         if(isProtectedForum(fId)){
@@ -120,7 +127,7 @@ public class SubForumBusiness {
         }
         ForumDTO forum = forumRepositoryService.getForumById(fId);
         dtos = subforumRepositoryService.getSubforum(fId, admin);
-        subForumList = ForumUtils.prepareSubforumList(dtos, guildMember , admin);
+        subForumList = ForumUtils.prepareSubforumList(dtos, guildMember , admin , forumRepositoryService , Integer.parseInt(request.getChId()));
         subForumResponse.setSubForums(subForumList);
         subForumResponse.setForumName(forum.getName());
         response = new ResponseEntity<>(subForumResponse,HttpStatus.OK);
