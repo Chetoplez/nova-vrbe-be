@@ -26,4 +26,7 @@ public class Post {
 
     private long lastModified;
 
+    private boolean unread;
+
+
 }

@@ -54,7 +54,7 @@ public class CommentBusiness {
         //a quanto pare va tutto bene. Inseriamo il commento
         CommentDTO newDto =  ForumUtils.createCommentDto(request.getComment());
         Integer idCommento = commentService.createComment(newDto);
-        updateLastLettura(newDto);
+        updateLastLettura(newDto, request.getChId());
         commentResponse.setCommentId(idCommento);
         commentResponse.setMessage("Commento creato");
         response = new ResponseEntity<>(commentResponse,HttpStatus.OK);
@@ -103,7 +103,7 @@ public class CommentBusiness {
         return response;
     }
 
-    private void updateLastLettura (CommentDTO newDto){
+    private void updateLastLettura (CommentDTO newDto,  Integer chId){
         PostDTO postDTO = postRepositoryService.getPost(newDto.getPostId());
         postDTO.setLastModified(newDto.getCreatedAt());
         postRepositoryService.editPost(postDTO);
@@ -115,5 +115,7 @@ public class CommentBusiness {
         ForumDTO forum = forumService.getForumById(postDTO.getForumId());
         forum.setLastModified(newDto.getCreatedAt());
         forumService.updateForum(forum);
+
+        forumService.updateLastLetturaPost(postDTO, chId.toString());
     }
 }

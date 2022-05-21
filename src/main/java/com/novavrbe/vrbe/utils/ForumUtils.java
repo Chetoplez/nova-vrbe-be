@@ -127,6 +127,31 @@ public class ForumUtils {
         return dto;
     }
 
+    public static Post preparePostDetails(PostDTO postDTO, CharacterDto charDto, ForumRepositoryService forumRepositoryService , Integer chId) {
+        Post dettaglio = new Post();
+        SmallCharacter autore = new SmallCharacter();
+        autore.setCharacterImg(charDto.getCharacterImg());
+        autore.setCharacterName(charDto.getCharacterName());
+        autore.setCharacterSurname(charDto.getCharacterSurname());
+        autore.setCharacterId(charDto.getCharacterId());
+        dettaglio.setAuthor(autore);
+
+        dettaglio.setForumId(postDTO.getForumId());
+        dettaglio.setBody(postDTO.getBody());
+        dettaglio.setClosed(postDTO.isClosed());
+        dettaglio.setPinned(postDTO.isPinned());
+        dettaglio.setTitle(postDTO.getTitle());
+        dettaglio.setCreatedAt(postDTO.getCreatedAt());
+        dettaglio.setLastModified(postDTO.getLastModified());
+        dettaglio.setSubforumId(postDTO.getSubforumId());
+        dettaglio.setPostId(postDTO.getPostId());
+
+        PostLettiDto letto = forumRepositoryService.getLastReadPost(chId, postDTO.getPostId());
+        dettaglio.setUnread((letto == null && postDTO.getLastModified() != 0) || letto != null && (letto.getLastLettura() < postDTO.getLastModified()));
+
+        return dettaglio;
+    }
+
     public static Post preparePostDetails(PostDTO postDTO, CharacterDto charDto) {
         Post dettaglio = new Post();
         SmallCharacter autore = new SmallCharacter();
@@ -173,4 +198,6 @@ public class ForumUtils {
         forum.setSubforumType(dto.getSubforumType());
         return forum;
     }
+
+
 }

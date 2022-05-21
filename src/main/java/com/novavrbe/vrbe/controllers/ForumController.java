@@ -75,14 +75,14 @@ public class ForumController {
         return postBusiness.createNewPost(request);
     }
 
-    @GetMapping("/post/getall/{subforumId}")
-    public ResponseEntity<GetPostListResponse> getPostList(@PathVariable String subforumId){
-        return postBusiness.getPostList(subforumId);
+    @GetMapping("/post/getall/chId={chId}&subforumId={subforumId}")
+    public ResponseEntity<GetPostListResponse> getPostList(@PathVariable String subforumId, @PathVariable String chId){
+        return postBusiness.getPostList(subforumId, chId);
     }
 
-    @GetMapping("/post/postdetail/{postId}")
-    public ResponseEntity<GetPostDetailResponse> getPostDetail (@PathVariable String postId ){
-        return postBusiness.getPostDetail(postId);
+    @GetMapping("/post/postdetail/chId={chId}&postId={postId}")
+    public ResponseEntity<GetPostDetailResponse> getPostDetail (@PathVariable String postId, @PathVariable String chId){
+        return postBusiness.getPostDetail(postId, chId);
     }
 
     @PatchMapping("/post/edit")

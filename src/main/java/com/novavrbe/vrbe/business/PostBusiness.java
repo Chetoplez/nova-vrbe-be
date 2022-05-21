@@ -92,7 +92,7 @@ public class PostBusiness {
      * @param subforumId l'id del subforum di cui stiamo chiedendo i post
      * @return un array list con i post e i loro dati , oppure postList = []
      */
-    public ResponseEntity<GetPostListResponse> getPostList(String subforumId) {
+    public ResponseEntity<GetPostListResponse> getPostList(String subforumId, String chId) {
         ResponseEntity<GetPostListResponse> response;
         GetPostListResponse postResponse = new GetPostListResponse();
         ArrayList<Post> postList = new ArrayList<>();
@@ -104,7 +104,7 @@ public class PostBusiness {
         for (PostDTO dto : dtos ) {
             CharacterDto charDto = characterRepositoryService.retrieveCharacterFromId(dto.getAuthor());
             if(charDto == null) continue;
-            Post detail = ForumUtils.preparePostDetails(dto,charDto);
+            Post detail = ForumUtils.preparePostDetails(dto,charDto , forumRepositoryService, Integer.parseInt(chId));
             postList.add(detail);
         }
 
@@ -158,7 +158,7 @@ public class PostBusiness {
      * @param postId id del post da visualizzare
      * @return oggetto POST con tutte le infot
      */
-    public ResponseEntity<GetPostDetailResponse> getPostDetail(String postId) {
+    public ResponseEntity<GetPostDetailResponse> getPostDetail(String postId, String chId) {
         ResponseEntity<GetPostDetailResponse> response;
         GetPostDetailResponse postResponse = new GetPostDetailResponse();
         if(!StringUtils.hasText(postId)){
@@ -168,6 +168,7 @@ public class PostBusiness {
         PostDTO postDTO = postRepositoryService.getPost(Integer.parseInt(postId));
         CharacterDto charDto = characterRepositoryService.retrieveCharacterFromId(postDTO.getAuthor());
         Post detail = ForumUtils.preparePostDetails(postDTO,charDto);
+        forumRepositoryService.updateLastLetturaPost(postDTO, chId);
         postResponse.setDetail(detail);
         response = new ResponseEntity<>(postResponse,HttpStatus.OK);
         return response;

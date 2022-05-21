@@ -1,7 +1,9 @@
 package com.novavrbe.vrbe.repositories.impl;
 
 import com.novavrbe.vrbe.dto.ForumDTO;
+import com.novavrbe.vrbe.dto.PostDTO;
 import com.novavrbe.vrbe.dto.PostLettiDto;
+import com.novavrbe.vrbe.models.forumcontroller.IdPostLetti;
 import com.novavrbe.vrbe.repositories.ForumRepository;
 import com.novavrbe.vrbe.repositories.PostLettiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +82,22 @@ public class ForumRepositoryService {
 
     public PostLettiDto getLastReadedSubforum(Integer chId, Integer forumId , Integer subforumId) {
         return  postLettiRepository.findByChIdAndSuForumIdGroupBySubForum(chId, forumId , subforumId);
+    }
+
+    public PostLettiDto getLastReadPost(Integer chId, Integer postId) {
+        return postLettiRepository.findByChIdAndPostId(chId, postId);
+    }
+
+    public void updateLastLetturaPost(PostDTO postDto, String chId) {
+        IdPostLetti id = new IdPostLetti();
+
+        PostLettiDto newDto = new PostLettiDto();
+        newDto.setForumId(postDto.getForumId());
+        newDto.setPostId(postDto.getPostId());
+        newDto.setSubforumId(postDto.getSubforumId());
+        newDto.setChId(Integer.parseInt(chId));
+        newDto.setLastLettura(postDto.getLastModified());
+        postLettiRepository.save(newDto);
+
     }
 }
