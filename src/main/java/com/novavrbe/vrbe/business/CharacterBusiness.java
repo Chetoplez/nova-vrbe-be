@@ -1,9 +1,6 @@
 package com.novavrbe.vrbe.business;
 
-import com.novavrbe.vrbe.dto.CharacterDto;
-import com.novavrbe.vrbe.dto.InventoryDto;
-import com.novavrbe.vrbe.dto.InventoryObjectDto;
-import com.novavrbe.vrbe.dto.InventoryObjectEffectDto;
+import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.charactercontroller.*;
 import com.novavrbe.vrbe.models.charactermodels.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
@@ -367,6 +364,11 @@ public class CharacterBusiness {
         return response;
     }
 
+    /**
+     * Verifica se esiste già un pg con quel nome
+     * @param request
+     * @return
+     */
     public ResponseEntity<CheckCharacterNomeResponse> checkCharacterNomi (CheckCharacterNomeRequest request) {
         ResponseEntity<CheckCharacterNomeResponse> response;
         CheckCharacterNomeResponse nomeResponse = new CheckCharacterNomeResponse();
@@ -378,6 +380,41 @@ public class CharacterBusiness {
         boolean valid = characterRepositoryService.checkCharacterNome(request.getNome(), request.getCognome());
         nomeResponse.setValid(valid);
         response = new ResponseEntity<>(nomeResponse, HttpStatus.OK);
+        return response;
+    }
+
+    /**
+     * Torna la lista dei prestavolto
+     * @return
+     */
+    public ResponseEntity<GetPrestavoltoResponse> getPrestavoltoList () {
+        ResponseEntity<GetPrestavoltoResponse> response;
+        GetPrestavoltoResponse prestavoltoResponse = new GetPrestavoltoResponse();
+        ArrayList<Prestavolto> lista = new ArrayList<>();
+
+        List<PrestavoltoDto> dtos = characterRepositoryService.getPrestavoltoList();
+        if(dtos != null) {
+            lista = CharacterUtils.preparePrestavoltoList(dtos, characterRepositoryService);
+        }
+        prestavoltoResponse.setPrestavoltoList(lista);
+        response = new ResponseEntity<>(prestavoltoResponse, HttpStatus.OK);
+        return response;
+    }
+
+    public ResponseEntity<UpdatePrestavoltoResponse> updatePrestavolto(UpdatePrestavoltoRequest request){
+        ResponseEntity<UpdatePrestavoltoResponse> response;
+        UpdatePrestavoltoResponse updateResponse = new UpdatePrestavoltoResponse();
+        if(request.getChId() == null || !StringUtils.hasText(request.getName())){
+            updateResponse.setUpdated(false);
+            updateResponse.setMessage("Nome non aggiornato");
+            response = new ResponseEntity<>(updateResponse,HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
+        characterRepositoryService.UpdatePrestavolto(request.getChId(),request.getName());
+        updateResponse.setUpdated(true);
+        updateResponse.setMessage("Prestavolto Aggiornato! Ricorda di farlo ogni volta che cambi immagine");
+        response = new ResponseEntity<>(updateResponse,HttpStatus.OK);
         return response;
     }
 }

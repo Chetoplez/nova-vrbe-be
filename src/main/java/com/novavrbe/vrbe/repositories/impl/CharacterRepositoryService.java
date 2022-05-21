@@ -43,6 +43,8 @@ public class CharacterRepositoryService {
     private GuildMemberListRepository characterGuildRepository;
     @Autowired
     private MissiveRepositoryService missiveRepository;
+    @Autowired
+    private PrestavoltoRepository prestavoltoRepository;
 
     public CharacterDto retrieveCharacterFromId(Integer characterId){
         CharacterDto characterDto = null;
@@ -445,5 +447,16 @@ public class CharacterRepositoryService {
     public boolean checkCharacterNome(String nome, String cognome) {
         CharacterDto dto = characterRepository.findByCharacterNameAndCharacterSurname(nome,cognome);
         return  dto == null;
+    }
+
+    public List<PrestavoltoDto> getPrestavoltoList() {
+        return (List<PrestavoltoDto>) prestavoltoRepository.findAll();
+    }
+
+    public void UpdatePrestavolto(Integer chId, String name) {
+        PrestavoltoDto dto = new PrestavoltoDto();
+        dto.setName(name);
+        dto.setChId(chId);
+        prestavoltoRepository.save(dto);
     }
 }

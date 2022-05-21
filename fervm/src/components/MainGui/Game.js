@@ -22,6 +22,7 @@ import GuildBank from '../Guild/GuildBank';
 import PrivateGuildRoute from '../../utils/PrivateGuildRoute';
 import PrivateRoute from '../../utils/PrivateRoute';
 import MissivaPage from '../Missive/MissivePage';
+import ListaPrestavolto from './ListaPrestavolto'
 import {API_URL, getJwt} from '../../utils/api'
 
 /**
@@ -82,6 +83,11 @@ function Game() {
                     <Route exact path='/profilo'>
                         <Route path=":idPg" element={<ProfiloPg></ProfiloPg>}></Route>
                     </Route>
+
+                    <Route
+                        exact path="/prestavolto"
+                        element={<ListaPrestavolto />}>    
+                    </Route> 
 
                     <Route
                         exact path="/corporazioni"

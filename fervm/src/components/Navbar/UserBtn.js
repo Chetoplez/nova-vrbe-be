@@ -48,15 +48,13 @@ function UserBtn() {
     return(
         <>
         <div className='pg-name' onClick={openMenu}>
-            {/* <div><strong>{props.pg.nome}</strong></div> */}
-            {/* <img className="user-profile-mini" src={mainContext.user.characterImg} alt="immaginetta profilo"></img> */}
             <Avatar className="usr-btn" src={mainContext.user.characterImg}  classes={classes}/>
         </div>
         
             <div id="menupg" className={menuOpen+' '}>
                 <ul className="menu-interno">
                     <li><Link to={"/game/profilo/"+mainContext.user.characterId} onClick={openMenu}>Profilo</Link></li>
-                    <li><Link to="#">Prestavolto</Link></li>
+                    <li><Link to="/game/prestavolto" onClick={openMenu}>Prestavolto</Link></li>
                     {mainContext.isLoggedIn && (<li><Link to="#" onClick={logout}>Logout</Link></li>)}
                 </ul>
             </div>

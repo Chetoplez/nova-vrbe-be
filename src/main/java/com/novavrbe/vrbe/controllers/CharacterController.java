@@ -86,4 +86,14 @@ public class CharacterController {
         return characterBusiness.checkCharacterNomi(request);
     }
 
+    @GetMapping("/prestavolto")
+    public ResponseEntity<GetPrestavoltoResponse> getPrestavoltoList (){
+        return characterBusiness.getPrestavoltoList();
+    }
+
+    @PatchMapping("/prestavolto/update")
+    public  ResponseEntity<UpdatePrestavoltoResponse> updatePrestavolto(@RequestBody UpdatePrestavoltoRequest request){
+        return characterBusiness.updatePrestavolto(request);
+    }
+
 }

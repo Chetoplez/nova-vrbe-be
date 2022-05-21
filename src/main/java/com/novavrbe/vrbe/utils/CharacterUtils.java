@@ -4,6 +4,7 @@ import com.novavrbe.vrbe.dto.*;
 import com.novavrbe.vrbe.models.charactermodels.Character;
 import com.novavrbe.vrbe.models.charactermodels.*;
 import com.novavrbe.vrbe.models.enumerations.*;
+import com.novavrbe.vrbe.repositories.impl.CharacterRepositoryService;
 import com.sun.istack.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -386,5 +387,23 @@ public class CharacterUtils {
             characterJob.setSpecification("");
         }
         character.setCharacterJob(characterJob);
+    }
+
+    public static ArrayList<Prestavolto> preparePrestavoltoList(@NotNull List<PrestavoltoDto> dtos, CharacterRepositoryService characterRepositoryService) {
+        ArrayList<Prestavolto> temp= new ArrayList<>();
+        for (PrestavoltoDto dto: dtos) {
+            Prestavolto pres = new Prestavolto();
+            SmallCharacter smallCharacter = new SmallCharacter();
+            CharacterDto chDto = characterRepositoryService.retrieveCharacterFromId(dto.getChId());
+            smallCharacter.setCharacterId(dto.getChId());
+            smallCharacter.setCharacterName(chDto.getCharacterName());
+            smallCharacter.setCharacterSurname(chDto.getCharacterSurname());
+            smallCharacter.setCharacterImg(chDto.getCharacterImg());
+            pres.setCharacter(smallCharacter);
+            pres.setNome(dto.getName());
+            temp.add(pres);
+        }
+
+        return temp;
     }
 }
