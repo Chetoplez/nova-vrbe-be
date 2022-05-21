@@ -48,6 +48,7 @@ function ForumCard({ forum , guild }) {
                             <Link className="bachechaLink" to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
                             <div style={{whiteSpace: 'pre-wrap'}}>{parse(forum.description)}</div>
                         </div>
+                        {forum.unread && (<span>NUOVI MESSAGGI</span>)}
                     </div>
             </div>
             )
@@ -60,6 +61,7 @@ function ForumCard({ forum , guild }) {
                             <Link className="bachechaLink" to={"subforums/" + forum.forumId}><h3>{forum.name}</h3></Link>
                             <div style={{ whiteSpace: 'pre-wrap' }}>{parse(forum.description)}</div>
                         </div>
+                        {forum.unread && (<span>NUOVI MESSAGGI</span>)}
                     </div>
                     
                 </div>
@@ -72,6 +74,7 @@ function ForumCard({ forum , guild }) {
                         <h3>{forum.name}</h3>
                     </div>
                     <div style={{ whiteSpace: 'pre-wrap' }}>{parse(forum.description)}</div>
+                    
                 </div>
             )
         }

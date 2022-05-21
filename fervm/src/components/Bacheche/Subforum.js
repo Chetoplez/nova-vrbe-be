@@ -70,7 +70,7 @@ function Subforum() {
                         if (section.subforumType === type) 
                         return (
                             <div className='' style={{ marginLeft: '30px' }} key={section.subforumId} >
-                                <Link to={"posts/" + section.subforumId}><h3>{section.name}</h3></Link>
+                                <Link to={"posts/" + section.subforumId}><h3>{section.name} {section.unread && (<span>( Nuovi Messaggi )</span>)}</h3> </Link>
                             </div>
                         )
                     })
